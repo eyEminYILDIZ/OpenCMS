@@ -1,0 +1,6 @@
+@OpenCMS.CMS.AgentApi_HostAddress = http://localhost:5100
+
+GET {{OpenCMS.CMS.AgentApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

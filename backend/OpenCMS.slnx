@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/agent/">
+    <Project Path="agent/OpenCMS.Agent.AirDefenceGun/OpenCMS.Agent.AirDefenceGun.csproj" />
+    <Project Path="agent/OpenCMS.Agent.AirRadar/OpenCMS.Agent.AirRadar.csproj" />
+    <Project Path="agent/OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj" />
+  </Folder>
+  <Folder Name="/cms/">
+    <Project Path="cms/OpenCMS.CMS.AgentApi/OpenCMS.CMS.AgentApi.csproj" />
+    <Project Path="cms/OpenCMS.CMS.ClientApi/OpenCMS.CMS.ClientApi.csproj" />
+    <Project Path="cms/OpenCMS.CMS.Domain/OpenCMS.CMS.Domain.csproj" />
+    <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />
+  </Folder>
+</Solution>
