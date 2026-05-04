@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using OpenCMS.CMS.AgentApi;
+using OpenCMS.CMS.Infrastructure.Persistence;
 using OpenCMS.CMS.Infrastructure;
 using OpenCMS.CMS.Application.Configurations;
 using OpenCMS.CMS.Application.Configurations.Routes;
@@ -25,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-Seeder.SeedAgents(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>());
+Seeder.Seed(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>());
 
 app.UseHttpsRedirection();
 

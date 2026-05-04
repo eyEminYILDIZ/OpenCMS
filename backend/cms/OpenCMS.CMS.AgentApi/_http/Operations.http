@@ -1,0 +1,6 @@
+@AgentApi = http://localhost:5100
+
+GET {{AgentApi}}/operations/a394835f-ce35-4e6b-8cd7-7e553def2e44
+Accept: application/json
+
+###

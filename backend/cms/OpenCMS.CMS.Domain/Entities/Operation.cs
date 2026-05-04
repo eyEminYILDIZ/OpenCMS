@@ -9,6 +9,9 @@ public class Operation : BaseEntity
     public DateTime? EndDate { get; set; }
     public OperationStatus OperationStatus { get; set; }
     public OperationType OperationType { get; set; }
+
+    public List<OperationAsset> Assets { get; set; }
+    public List<Order> Orders { get; set; }
 }
 
 public enum OperationType
@@ -17,6 +20,7 @@ public enum OperationType
     Rescue = 1,
     Capture = 2,
     Exterminate = 3,
+    Exchange = 4,
 }
 
 
