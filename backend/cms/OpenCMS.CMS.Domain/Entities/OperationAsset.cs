@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Domain.Entities;
 
-public class OperationAsset
+public class OperationAsset : CoreEntity
 {
     public Guid AssetId { get; set; }
     public Asset Asset { get; set; }

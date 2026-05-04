@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>false</Nullable>
+        <Nullable>disable</Nullable>
         <Author>eyEminYILDIZ</Author>
     </PropertyGroup>
 </Project>
