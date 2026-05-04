@@ -15,7 +15,17 @@ Content-Type: application/json
 
 ###
 
-GET {{AgentApi}}/agents/bddaacc6-e3f6-4f72-9549-4b5f3678b6ad
+GET {{AgentApi}}/agents/b394835f-ce35-4e6b-8cd7-7e553def2e23
 Accept: application/json
+
+###
+
+PUT {{AgentApi}}/agents/b394835f-ce35-4e6b-8cd7-7e553def2e23
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Updated Agent Name"
+}
 
 ###
