@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/cms/">
     <Project Path="cms/OpenCMS.CMS.AgentApi/OpenCMS.CMS.AgentApi.csproj" />
+    <Project Path="cms/OpenCMS.CMS.Application/OpenCMS.CMS.Application.csproj" />
     <Project Path="cms/OpenCMS.CMS.ClientApi/OpenCMS.CMS.ClientApi.csproj" />
     <Project Path="cms/OpenCMS.CMS.Domain/OpenCMS.CMS.Domain.csproj" />
     <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />

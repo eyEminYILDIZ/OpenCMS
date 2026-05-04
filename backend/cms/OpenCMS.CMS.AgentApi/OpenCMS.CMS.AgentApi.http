@@ -10,7 +10,12 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "OLD Agent "
+    "name": "New Agent 1"
 }
+
+###
+
+GET {{AgentApi}}/agents/bddaacc6-e3f6-4f72-9549-4b5f3678b6ad
+Accept: application/json
 
 ###
