@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenCMS.CMS.AgentApi;
 using OpenCMS.CMS.Infrastructure;
 using OpenCMS.CMS.Application.Configurations;
-using OpenCMS.CMS.AgentApi.Configurations.Routes;
+using OpenCMS.CMS.Application.Configurations.Routes;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
