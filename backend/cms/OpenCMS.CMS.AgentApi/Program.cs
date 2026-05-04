@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenCMS.CMS.AgentApi;
 using OpenCMS.CMS.Infrastructure;
 using OpenCMS.CMS.Application.Configurations;
+using OpenCMS.CMS.AgentApi.Configurations.Routes;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,17 +30,7 @@ Seeder.SeedAgents(app.Services.CreateScope().ServiceProvider.GetRequiredService<
 app.UseHttpsRedirection();
 
 
-app.MapGet("/agents", ([FromServices] ISender sender) =>
-{
-    var query = new OpenCMS.CMS.Application.Agents.ListAll.Query();
-    System.Console.WriteLine(query.GetType().FullName);
-    return sender.Send(query);
-})
-.WithName("agents");
-
-app.MapPost("/agents", ([FromServices] ISender sender, [FromBody] OpenCMS.CMS.Application.Agents.Create.Command command) =>
-{
-    return sender.Send(command);
-}).WithName("createAgent");
+// register agent endpoint
+RegisterRoutes.MapRoutes(app);
 
 app.Run();

@@ -1,9 +1,5 @@
 namespace OpenCMS.CMS.Application.Agents.ListAll;
 
-public class Query : IRequest<IEnumerable<Agent>>
-{
-}
-
 public class Handler : IRequestHandler<Query, IEnumerable<Agent>>
 {
     private readonly IApplicationDbContext _dbContext;

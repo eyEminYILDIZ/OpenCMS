@@ -1,10 +1,5 @@
 namespace OpenCMS.CMS.Application.Agents.Create;
 
-public class Command : IRequest<Agent>
-{
-    public string Name { get; set; }
-}
-
 public class Handler : IRequestHandler<Command, Agent>
 {
     private readonly IApplicationDbContext _dbContext;
