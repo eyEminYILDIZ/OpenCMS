@@ -1,6 +1,16 @@
 @AgentApi = http://localhost:5100
 
-GET {{AgentApi}}/agents/
+GET {{AgentApi}}/agents
 Accept: application/json
+
+###
+
+POST {{AgentApi}}/agents
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "OLD Agent "
+}
 
 ###

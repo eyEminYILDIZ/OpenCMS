@@ -1,6 +1,9 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OpenCMS.CMS.AgentApi;
 using OpenCMS.CMS.Infrastructure;
+using OpenCMS.CMS.Application.Configurations;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+builder.Services.AddMediatR(o => o.RegisterServicesFromAssembly(typeof(OpenCMS.CMS.Application.Agents.ListAll.Query).Assembly));
+
+builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt =>
     opt.UseInMemoryDatabase("OpenCMS"));
 
 var app = builder.Build();
@@ -24,10 +29,17 @@ Seeder.SeedAgents(app.Services.CreateScope().ServiceProvider.GetRequiredService<
 app.UseHttpsRedirection();
 
 
-app.MapGet("/agents", (ApplicationDbContext context) =>
+app.MapGet("/agents", ([FromServices] ISender sender) =>
 {
-    return context.Agents.ToList();
+    var query = new OpenCMS.CMS.Application.Agents.ListAll.Query();
+    System.Console.WriteLine(query.GetType().FullName);
+    return sender.Send(query);
 })
 .WithName("agents");
+
+app.MapPost("/agents", ([FromServices] ISender sender, [FromBody] OpenCMS.CMS.Application.Agents.Create.Command command) =>
+{
+    return sender.Send(command);
+}).WithName("createAgent");
 
 app.Run();
