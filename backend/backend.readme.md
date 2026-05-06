@@ -5,13 +5,18 @@
 - Clean Architecture
 - Domain Driven Design
 
-
 ## Libraries
 
 - MediatR
 - Microsoft.EntityFrameworkCore
 - Microsoft.AspNetCore.OpenApi
 
+
+## Other Features
+- Minimal API
+- Central package management
+- Central property management
+- XML (slnx) solution file
 
 ## Projects
 
