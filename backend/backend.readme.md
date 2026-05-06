@@ -5,6 +5,14 @@
 - Clean Architecture
 - Domain Driven Design
 
+
+## Libraries
+
+- MediatR
+- Microsoft.EntityFrameworkCore
+- Microsoft.AspNetCore.OpenApi
+
+
 ## Projects
 
 ### OpenCMS.CMS.AgentApi
@@ -38,4 +46,5 @@ Console application for example agent input flow demonstration.
 ### OpenCMS.Agent.AirDefenceGun
 
 Console application for example agent output flow demonstration.
+
 
