@@ -4,6 +4,7 @@
 - Vertical Slice Architecture
 - Clean Architecture
 - Domain Driven Design
+- CQRS
 
 ## Libraries
 
