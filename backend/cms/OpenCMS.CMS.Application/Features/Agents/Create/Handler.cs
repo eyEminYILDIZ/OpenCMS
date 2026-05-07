@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Agents.Create;
+namespace OpenCMS.CMS.Application.Agents.Self.Create;
 
 public class Handler : IRequestHandler<Command, Agent>
 {

@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Operations.GetById;
+namespace OpenCMS.CMS.Application.Operations.Self.GetById;
 
 public class Handler : IRequestHandler<Query, ResponseModel?>
 {

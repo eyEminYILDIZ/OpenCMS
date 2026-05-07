@@ -6,12 +6,12 @@ public static class RegisterRoutes
 {
     public static void MapRoutes(WebApplication app)
     {
-        OpenCMS.CMS.Application.Agents.ListAll.Endpoint.MapEndpoint(app);
-        OpenCMS.CMS.Application.Agents.GetById.Endpoint.MapEndpoint(app);
-        OpenCMS.CMS.Application.Agents.Create.Endpoint.MapEndpoint(app);
-        OpenCMS.CMS.Application.Agents.Update.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Agents.Self.ListAll.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Agents.Self.GetById.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Agents.Self.Create.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Agents.Self.Update.Endpoint.MapEndpoint(app);
         // Operation
-        OpenCMS.CMS.Application.Operations.Create.Endpoint.MapEndpoint(app);
-        OpenCMS.CMS.Application.Operations.GetById.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Operations.Self.Create.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Operations.Self.GetById.Endpoint.MapEndpoint(app);
     }
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using MediatR;
 
-namespace OpenCMS.CMS.Application.Operations.Create;
+namespace OpenCMS.CMS.Application.Operations.Self.Create;
 
 public class Endpoint
 {

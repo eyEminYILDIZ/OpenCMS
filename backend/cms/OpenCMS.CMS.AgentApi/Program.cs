@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddMediatR(o => o.RegisterServicesFromAssembly(typeof(OpenCMS.CMS.Application.Agents.ListAll.Query).Assembly));
+builder.Services.AddMediatR(o => o.RegisterServicesFromAssembly(typeof(OpenCMS.CMS.Application.Agents.Self.ListAll.Query).Assembly));
 
 builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt =>
     opt.UseInMemoryDatabase("OpenCMS"));

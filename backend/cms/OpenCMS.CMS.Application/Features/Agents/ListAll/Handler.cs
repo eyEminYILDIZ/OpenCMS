@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Agents.ListAll;
+namespace OpenCMS.CMS.Application.Agents.Self.ListAll;
 
 public class Handler : IRequestHandler<Query, IEnumerable<Agent>>
 {

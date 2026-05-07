@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Agents.GetById;
+namespace OpenCMS.CMS.Application.Agents.Self.GetById;
 
 public class Handler : IRequestHandler<Query, Agent?>
 {

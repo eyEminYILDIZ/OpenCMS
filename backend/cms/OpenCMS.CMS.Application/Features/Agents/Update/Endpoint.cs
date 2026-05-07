@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using MediatR;
 
-namespace OpenCMS.CMS.Application.Agents.Update;
+namespace OpenCMS.CMS.Application.Agents.Self.Update;
 
 public class Endpoint
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using MediatR;
 
-namespace OpenCMS.CMS.Application.Agents.GetById;
+namespace OpenCMS.CMS.Application.Agents.Self.GetById;
 
 public class Endpoint
 {

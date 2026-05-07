@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Operations.GetById;
+namespace OpenCMS.CMS.Application.Operations.Self.GetById;
 
 using OpenCMS.CMS.Domain.Entities;
 

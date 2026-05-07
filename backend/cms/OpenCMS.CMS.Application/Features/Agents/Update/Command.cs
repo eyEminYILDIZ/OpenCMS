@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Application.Agents.Update;
+namespace OpenCMS.CMS.Application.Agents.Self.Update;
 
 public class Command : IRequest<Agent?>
 {
