@@ -1,0 +1,53 @@
+@AgentApi = http://localhost:5100
+
+### List All Assets
+GET {{AgentApi}}/assets
+Accept: application/json
+
+###
+
+### Create Asset
+POST {{AgentApi}}/assets
+Content-Type: application/json
+
+{
+  "name": "Asset Alpha",
+  "latitude": 41.0082,
+  "longitude": 28.9784,
+  "altitude": 150.0,
+  "heading": 45.0,
+  "speedKmh": 80.0,
+  "assetType": 3,
+  "threatType": 1,
+  "isActive": true
+}
+
+###
+
+GET {{AgentApi}}/assets/f46eaef1-bb52-4669-bcb2-22d201b4ba92
+Accept: application/json
+
+###
+
+
+PUT {{AgentApi}}/assets/f46eaef1-bb52-4669-bcb2-22d201b4ba92
+Content-Type: application/json
+
+{
+  "name": "Updated Asset",
+  "latitude": 41.0082,
+  "longitude": 28.9784,
+  "altitude": 100.0,
+  "heading": 90.0,
+  "speedKmh": 60.0,
+  "assetType": 6,
+  "threatType": 1,
+  "isActive": true
+}
+
+###
+
+DELETE {{AgentApi}}/assets/963a42fa-7f89-4915-9d24-7c00fe30e1fb
+Accept: application/json
+
+###

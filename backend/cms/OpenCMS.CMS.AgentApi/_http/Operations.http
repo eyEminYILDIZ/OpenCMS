@@ -1,5 +1,11 @@
 @AgentApi = http://localhost:5100
 
+### List All Operations
+GET {{AgentApi}}/operations
+Accept: application/json
+
+###
+
 ### Create Operation
 POST {{AgentApi}}/operations
 Content-Type: application/json
@@ -15,15 +21,23 @@ Content-Type: application/json
 
 ###
 
-### Get Operation By Id
+### Get Operation By Id | Seed value
 GET {{AgentApi}}/operations/a394835f-ce35-4e6b-8cd7-7e553def2e44
 Accept: application/json
 
 ###
 
 ### Get Operation By Id
-GET {{AgentApi}}/operations/b55be671-a2cf-4c4f-8601-17f69be4bb4c
+GET {{AgentApi}}/operations/bc306839-b4a0-4525-9589-31eb7aed1e80
 Accept: application/json
 
 ###
 
+### Create Operation
+POST {{AgentApi}}/operations/assets
+Content-Type: application/json
+
+{
+  "operationId": "bc306839-b4a0-4525-9589-31eb7aed1e80",
+  "assetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25"
+}
