@@ -1,6 +1,29 @@
 @AgentApi = http://localhost:5100
 
+### Create Operation
+POST {{AgentApi}}/operations
+Content-Type: application/json
+
+{
+  "name": "Operation Hammer",
+  "description": "Intercept and neutralize unauthorized aerial threats in sector north east.",
+  "startDate": "2026-05-10T08:00:00Z",
+  "estimatedEndDate": "2026-05-15T18:00:00Z",
+  "operationStatus": 0,
+  "operationType": 0
+}
+
+###
+
+### Get Operation By Id
 GET {{AgentApi}}/operations/a394835f-ce35-4e6b-8cd7-7e553def2e44
 Accept: application/json
 
 ###
+
+### Get Operation By Id
+GET {{AgentApi}}/operations/b55be671-a2cf-4c4f-8601-17f69be4bb4c
+Accept: application/json
+
+###
+

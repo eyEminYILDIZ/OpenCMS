@@ -10,7 +10,8 @@ public static class RegisterRoutes
         OpenCMS.CMS.Application.Agents.GetById.Endpoint.MapEndpoint(app);
         OpenCMS.CMS.Application.Agents.Create.Endpoint.MapEndpoint(app);
         OpenCMS.CMS.Application.Agents.Update.Endpoint.MapEndpoint(app);
-        // Operation 
+        // Operation
+        OpenCMS.CMS.Application.Operations.Create.Endpoint.MapEndpoint(app);
         OpenCMS.CMS.Application.Operations.GetById.Endpoint.MapEndpoint(app);
     }
 }

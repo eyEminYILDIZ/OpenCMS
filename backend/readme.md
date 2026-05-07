@@ -1,10 +1,12 @@
 # OpenCMS Backend
 
+
 ## Architecture
 - Vertical Slice Architecture
 - Clean Architecture
 - Domain Driven Design
 - CQRS
+
 
 ## Libraries
 
@@ -18,6 +20,7 @@
 - Central package management
 - Central property management
 - XML (slnx) solution file
+
 
 ## Projects
 
