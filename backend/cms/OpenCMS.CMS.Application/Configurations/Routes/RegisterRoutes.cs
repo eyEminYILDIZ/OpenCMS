@@ -26,5 +26,9 @@ public static class RegisterRoutes
         // Operation Assets
         OpenCMS.CMS.Application.Operations.OperationAssets.Create.Endpoint.MapEndpoint(app);
         OpenCMS.CMS.Application.Operations.OperationAssets.Delete.Endpoint.MapEndpoint(app);
+        // Operation Orders
+        OpenCMS.CMS.Application.Operations.Orders.Create.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Operations.Orders.Update.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Operations.Orders.Delete.Endpoint.MapEndpoint(app);
     }
 }

@@ -28,16 +28,70 @@ Accept: application/json
 ###
 
 ### Get Operation By Id
-GET {{AgentApi}}/operations/bc306839-b4a0-4525-9589-31eb7aed1e80
+GET {{AgentApi}}/operations/3924dddd-e325-45b2-bfef-dc77f1831259
 Accept: application/json
 
 ###
 
-### Create Operation
+### Create Operation Asset
 POST {{AgentApi}}/operations/assets
 Content-Type: application/json
 
 {
-  "operationId": "bc306839-b4a0-4525-9589-31eb7aed1e80",
+  "operationId": "3924dddd-e325-45b2-bfef-dc77f1831259",
   "assetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25"
 }
+
+###
+
+### Create Order
+POST {{AgentApi}}/operations/orders
+Content-Type: application/json
+
+{
+  "operationId": "3924dddd-e325-45b2-bfef-dc77f1831259",
+  "description": "Move to grid reference 42N 38E and hold position.",
+  "issuedDate": "2026-05-07T06:00:00Z",
+  "completedDate": "2026-05-07T12:00:00Z",
+  "orderStatus": 0,
+  "orderType": 0,
+  "targetDatePeriodStart": "2026-05-07T08:00:00Z",
+  "targetDatePeriodEnd": "2026-05-07T10:00:00Z",
+  "targetPointLatitude": 42.0,
+  "targetPointLongitude": 38.0,
+  "targetPointAltitude": 500.0,
+  "targetPointHeading": 90.0,
+  "targetPointSpeedKmh": 120.0,
+  "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "nextOrderId": null,
+  "previousOrderId": null
+}
+
+###
+
+### Update Order
+PUT {{AgentApi}}/operations/orders/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "description": "Move to grid reference 42N 38E and hold position — updated.",
+  "issuedDate": "2026-05-07T06:00:00Z",
+  "completedDate": "2026-05-07T14:00:00Z",
+  "orderStatus": 1,
+  "orderType": 0,
+  "targetDatePeriodStart": "2026-05-07T08:00:00Z",
+  "targetDatePeriodEnd": "2026-05-07T12:00:00Z",
+  "targetPointLatitude": 42.0,
+  "targetPointLongitude": 38.0,
+  "targetPointAltitude": 500.0,
+  "targetPointHeading": 90.0,
+  "targetPointSpeedKmh": 100.0,
+  "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "nextOrderId": null,
+  "previousOrderId": null
+}
+
+###
+
+### Delete Order
+DELETE {{AgentApi}}/operations/orders/00000000-0000-0000-0000-000000000000
