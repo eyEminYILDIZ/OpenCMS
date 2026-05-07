@@ -1,4 +1,48 @@
-# OpenCMS Backend — Claude Code Guidelines
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```bash
+# Build
+dotnet build
+
+# Run AgentApi (port 5100)
+dotnet run --project cms/OpenCMS.CMS.AgentApi
+
+# Run ClientApi (port 5039)
+dotnet run --project cms/OpenCMS.CMS.ClientApi
+```
+
+No test projects exist yet.
+
+## Architecture
+
+.NET 10 backend using **Vertical Slice Architecture + CQRS via MediatR**. Two APIs share a common Application and Infrastructure layer:
+
+```
+/agent/          — Console apps that integrate with the CMS via Agent.Library
+/cms/
+  AgentApi       — ASP.NET Core minimal API, port 5100
+  ClientApi      — ASP.NET Core minimal API, port 5039
+  Application    — Features, commands, queries, endpoints, route registration
+  Domain         — Entities, enums (no dependencies)
+  Infrastructure — EF Core DbContext (in-memory), seeder
+```
+
+**Feature folder layout** (every feature follows this pattern):
+
+```
+Features/{Feature}/_Self/{Operation}/
+  Endpoint.cs   — registers the route, calls mediator.Send()
+  Command.cs    — IRequest<T> for writes  /  Query.cs for reads
+  Handler.cs    — IRequestHandler<TRequest, TResponse>
+```
+
+MediatR handlers are auto-registered from the Application assembly. DbContext is registered as an in-memory database (`"OpenCMS"`); `Seeder.Seed()` runs at startup.
+
+**Entity hierarchy:** `CoreEntity (Guid Id)` → `BaseEntity (timestamps)` → `Agent`, `Asset`, `Operation`, `OperationAsset`, `Order`.
 
 ## Endpoint conventions
 
