@@ -18,6 +18,7 @@ public class Handler : IRequestHandler<Command, Agent?>
 
         agent.Name = request.Name;
         agent.AgentType = request.AgentType;
+        agent.Description = request.Description;
         _dbContext.Agents.Update(agent);
         await _dbContext.SaveChangesAsync(cancellationToken);
 

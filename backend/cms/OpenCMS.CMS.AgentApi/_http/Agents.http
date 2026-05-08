@@ -10,7 +10,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "New Agent 1"
+    "name": "New Agent 1",
+    "agentType": 0,
+    "description": "This is a description for New Agent 1"
 }
 
 ###
@@ -25,7 +27,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Updated Agent Name"
+    "name": "Updated Agent Name",
+    "agentType": 0,
+    "description": "This is a description for New Agent 1"
 }
 
 ###
