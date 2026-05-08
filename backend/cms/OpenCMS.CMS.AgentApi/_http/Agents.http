@@ -17,12 +17,12 @@ Content-Type: application/json
 
 ###
 
-GET {{AgentApi}}/agents/b394835f-ce35-4e6b-8cd7-7e553def2e23
+GET {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
 Accept: application/json
 
 ###
 
-PUT {{AgentApi}}/agents/b394835f-ce35-4e6b-8cd7-7e553def2e23
+PUT {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
 Accept: application/json
 Content-Type: application/json
 
@@ -30,6 +30,17 @@ Content-Type: application/json
     "name": "Updated Agent Name",
     "agentType": 0,
     "description": "This is a description for New Agent 1"
+}
+
+###
+
+PUT {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3/ping
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": "2457b6da-77ce-46bc-aaae-d59748ff2ec3",
+    "sentAt": "2025-05-11T15:00:00Z"
 }
 
 ###
