@@ -1,0 +1,12 @@
+using Microsoft.AspNetCore.Builder;
+
+namespace OpenCMS.CMS.ClientApi.Routes;
+
+public static class RegisterRoutes
+{
+    public static void MapRoutes(WebApplication app)
+    {
+        // Agents
+        OpenCMS.CMS.Application.Agents.Self.Ping.Endpoint.MapEndpoint(app);
+    }
+}

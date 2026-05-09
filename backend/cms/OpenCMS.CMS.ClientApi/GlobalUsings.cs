@@ -1,7 +1,7 @@
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using OpenCMS.CMS.Infrastructure.Persistence;
-using OpenCMS.CMS.Infrastructure;
-using OpenCMS.CMS.Application.Configurations;
-using OpenCMS.CMS.Application.Configurations.Routes;
-using Microsoft.AspNetCore.Mvc;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using OpenCMS.CMS.Infrastructure.Persistence;
+global using OpenCMS.CMS.Infrastructure;
+global using OpenCMS.CMS.Application.Configurations;
+global using OpenCMS.CMS.ClientApi.Routes;
+global using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace OpenCMS.CMS.Application.Configurations.Routes;
+namespace OpenCMS.CMS.ClientApi.Routes;
 
 public static class RegisterRoutes
 {
