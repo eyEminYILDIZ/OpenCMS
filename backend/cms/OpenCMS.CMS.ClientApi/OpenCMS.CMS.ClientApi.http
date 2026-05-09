@@ -1,4 +1,4 @@
-@OpenCMS.CMS.ClientApi_HostAddress = http://localhost:5039
+@OpenCMS.CMS.ClientApi_HostAddress = http://localhost:5020
 
 GET {{OpenCMS.CMS.ClientApi_HostAddress}}/weatherforecast/
 Accept: application/json

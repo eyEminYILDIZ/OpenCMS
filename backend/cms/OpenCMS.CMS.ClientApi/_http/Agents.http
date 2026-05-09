@@ -1,0 +1,35 @@
+@AgentApi = http://localhost:5200
+
+GET {{AgentApi}}/agents
+Accept: application/json
+
+###
+
+POST {{AgentApi}}/agents
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "New Agent 1",
+    "agentType": 0,
+    "description": "This is a description for New Agent 1"
+}
+
+###
+
+GET {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
+Accept: application/json
+
+###
+
+PUT {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Updated Agent Name",
+    "agentType": 0,
+    "description": "This is a description for New Agent 1"
+}
+
+###
