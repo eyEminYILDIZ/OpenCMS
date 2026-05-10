@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Build
 dotnet build
 
-# Run AgentApi (port 5100)
+# Run AgentApi (port 5010)
 dotnet run --project cms/OpenCMS.CMS.AgentApi
 
 # Run ClientApi (port 5020)
@@ -24,7 +24,7 @@ No test projects exist yet.
 ```
 /agent/          — Console apps that integrate with the CMS via Agent.Library
 /cms/
-  AgentApi       — ASP.NET Core minimal API, port 5100
+  AgentApi       — ASP.NET Core minimal API, port 5010
   ClientApi      — ASP.NET Core minimal API, port 5020
   Application    — Features, commands, queries, endpoints, route registration
   Domain         — Entities, enums (no dependencies)
