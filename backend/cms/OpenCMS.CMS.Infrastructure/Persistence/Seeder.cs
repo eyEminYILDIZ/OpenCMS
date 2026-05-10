@@ -10,7 +10,8 @@ public class Seeder
         {
             new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "Agent A" },
             new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e24"), Name = "Agent B" },
-            new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e25"), Name = "Agent C" }
+            new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e25"), Name = "Agent C" },
+            new Domain.Entities.Agent { Id = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"), Name = "Air Radar" },
         };
 
         context.Agents.AddRange(agents);
