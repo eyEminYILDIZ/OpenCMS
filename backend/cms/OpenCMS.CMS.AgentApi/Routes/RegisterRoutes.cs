@@ -10,5 +10,6 @@ public static class RegisterRoutes
         OpenCMS.CMS.Application.Agents.Self.Ping.Endpoint.MapEndpoint(app);
         // Assets
         OpenCMS.CMS.Application.Assets.Self.Feed.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Assets.Self.ListAll.Endpoint.MapEndpoint(app);
     }
 }

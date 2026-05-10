@@ -19,4 +19,19 @@ public class InputClient
         var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/agents/{_agentId}/ping", body);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> FeedAsset(Guid assetId,
+                                        string name,
+                                        double latitude,
+                                        double longitude,
+                                        double altitude,
+                                        double heading,
+                                        double speed,
+                                        int assetType,
+                                        int threatType)
+    {
+        var body = new { assetId, name, latitude, longitude, altitude, heading, speed, assetType, threatType };
+        var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{assetId}/feed", body);
+        return response.IsSuccessStatusCode;
+    }
 }

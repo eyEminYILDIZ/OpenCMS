@@ -1,8 +1,11 @@
-﻿using OpenCMS.Agent.Library;
+﻿using OpenCMS.Agent.AirRadar;
+using OpenCMS.Agent.Library;
 
 var agentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
 var baseUrl = "http://localhost:5010";
 var inputClient = new InputClient(agentId, baseUrl);
+
+var radar = new Radar();
 
 System.Console.WriteLine(">> AirRadar agent is started.");
 
@@ -11,15 +14,26 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
 {
     try
     {
-        var result = await inputClient.Ping();
-        if (result)
+        var agentPingResult = await inputClient.Ping();
+        Console.WriteLine($"Ping was: {(agentPingResult ? "Succeeded" : "Failed")}.");
+
+        var aircrafts = await radar.Scan();
+        foreach (var aircraft in aircrafts)
         {
-            Console.WriteLine("Ping successful.");
+            var assetFeedResult = await inputClient.FeedAsset(
+                assetId: aircraft.Id,
+                name: aircraft.Callsign,
+                latitude: aircraft.Latitude,
+                longitude: aircraft.Longitude,
+                altitude: aircraft.Altitude,
+                heading: aircraft.Heading,
+                speed: aircraft.Speed,
+                assetType: 0,
+                threatType: 0
+            );
+            Console.WriteLine($"Asset Feed for {aircraft.Id} was: {(assetFeedResult ? "Succeeded" : "Failed")}.");
         }
-        else
-        {
-            Console.WriteLine("Ping failed.");
-        }
+
     }
     catch (Exception ex)
     {
@@ -27,7 +41,7 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
     }
 
     // Wait for a short period before polling for new inputs
-    await Task.Delay(5000, cancellationTokenSource.Token);
+    await Task.Delay(2000, cancellationTokenSource.Token);
 }
 
 System.Console.WriteLine(">> AirRadar agent is shutting down.");

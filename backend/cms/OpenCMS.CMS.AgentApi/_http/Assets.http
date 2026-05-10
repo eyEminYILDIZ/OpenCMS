@@ -1,5 +1,11 @@
 @AgentApi = http://localhost:5010
 
+### List All Assets
+GET {{AgentApi}}/assets
+Accept: application/json
+
+###
+
 PUT {{AgentApi}}/assets/3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6/feed
 Accept: application/json
 Content-Type: application/json
