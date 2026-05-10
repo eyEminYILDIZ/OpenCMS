@@ -6,6 +6,7 @@ public class InputClient
 {
     private readonly Guid _agentId;
     private readonly string _baseUrl;
+    private readonly HttpClient httpClient = new HttpClient();
     public InputClient(Guid agentId, string baseUrl)
     {
         _agentId = agentId;
@@ -14,9 +15,8 @@ public class InputClient
 
     public async Task<bool> Ping()
     {
-        var httpClient = new HttpClient();
-        var body = new { AgentId = _agentId, SentAt = DateTime.UtcNow };
-        var response = await httpClient.PostAsJsonAsync($"{_baseUrl}/agents/{_agentId}/ping", body);
+        var body = new { agentId = _agentId, sentAt = DateTime.UtcNow };
+        var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/agents/{_agentId}/ping", body);
         return response.IsSuccessStatusCode;
     }
 }
