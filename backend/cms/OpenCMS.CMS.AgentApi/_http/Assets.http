@@ -1,0 +1,20 @@
+@AgentApi = http://localhost:5010
+
+PUT {{AgentApi}}/assets/3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6/feed
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": "3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6",
+    "name": "Asset 1",
+    "latitude": 40.7128,
+    "longitude": 37.0060,
+    "altitude": 10.0,
+    "heading": 90.0,
+    "speed": 50.0,
+    "assetType": 0,
+    "threatType":0,
+    "isActive": true
+}
+
+###
