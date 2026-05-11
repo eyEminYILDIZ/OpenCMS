@@ -3,7 +3,7 @@ using OpenCMS.Agent.Library;
 
 var agentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
 var baseUrl = "http://localhost:5010";
-var inputClient = new InputClient(agentId, baseUrl);
+var openCmsClient = new OpenCmsClient(agentId, baseUrl);
 
 var radar = new Radar();
 
@@ -14,13 +14,13 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
 {
     try
     {
-        var agentPingResult = await inputClient.Ping();
+        var agentPingResult = await openCmsClient.Ping();
         Console.WriteLine($"Ping was: {(agentPingResult ? "Succeeded" : "Failed")}.");
 
         var aircrafts = await radar.Scan();
         foreach (var aircraft in aircrafts)
         {
-            var assetFeedResult = await inputClient.FeedAsset(
+            var assetFeedResult = await openCmsClient.FeedAsset(
                 assetId: aircraft.Id,
                 name: aircraft.Callsign,
                 latitude: aircraft.Latitude,

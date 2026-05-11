@@ -2,12 +2,12 @@
 
 namespace OpenCMS.Agent.Library;
 
-public class InputClient
+public class OpenCmsClient
 {
     private readonly Guid _agentId;
     private readonly string _baseUrl;
     private readonly HttpClient httpClient = new HttpClient();
-    public InputClient(Guid agentId, string baseUrl)
+    public OpenCmsClient(Guid agentId, string baseUrl)
     {
         _agentId = agentId;
         _baseUrl = baseUrl;
