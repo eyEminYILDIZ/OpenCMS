@@ -28,8 +28,8 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
                 altitude: aircraft.Altitude,
                 heading: aircraft.Heading,
                 speed: aircraft.Speed,
-                assetType: 0,
-                threatType: 0
+                assetType: 6,
+                threatType: 1
             );
             Console.WriteLine($"Asset Feed for {aircraft.Id} was: {(assetFeedResult ? "Succeeded" : "Failed")}.");
         }
