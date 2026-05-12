@@ -9,6 +9,29 @@ public class AssetContract
     public double Altitude { get; set; }
     public double Heading { get; set; }
     public double Speed { get; set; }
-    public int AssetType { get; set; }
-    public int ThreatType { get; set; }
+    public AssetTypesContract AssetType { get; set; }
+    public ThreatTypesContract ThreatType { get; set; }
+}
+
+
+public enum AssetTypesContract
+{
+    Unknown = 0,
+    Person = 1,
+    GroupOfPeople = 2,
+    Aircraft = 3,
+    Ship = 4,
+    Submarine = 5,
+    Vehicle = 6,
+    Building = 7,
+    Other = 8
+}
+
+public enum ThreatTypesContract
+{
+    Unknown = 0,
+    Own = 1,
+    Friend = 2,
+    Neutral = 3,
+    Hostile = 4
 }
