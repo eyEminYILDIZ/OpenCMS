@@ -20,17 +20,18 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
         var aircrafts = await radar.Scan();
         foreach (var aircraft in aircrafts)
         {
-            var assetFeedResult = await openCmsClient.FeedAsset(
-                assetId: aircraft.Id,
-                name: aircraft.Callsign,
-                latitude: aircraft.Latitude,
-                longitude: aircraft.Longitude,
-                altitude: aircraft.Altitude,
-                heading: aircraft.Heading,
-                speed: aircraft.Speed,
-                assetType: 6,
-                threatType: 1
-            );
+            var assetFeedResult = await openCmsClient.FeedAsset(new OpenCMS.Agent.Library.Models.AssetContract()
+            {
+                Id = aircraft.Id,
+                Name = aircraft.Callsign,
+                Latitude = aircraft.Latitude,
+                Longitude = aircraft.Longitude,
+                Altitude = aircraft.Altitude,
+                Heading = aircraft.Heading,
+                Speed = aircraft.Speed,
+                AssetType = 6,
+                ThreatType = 1
+            });
             Console.WriteLine($"Asset Feed for {aircraft.Id} was: {(assetFeedResult ? "Succeeded" : "Failed")}.");
         }
 

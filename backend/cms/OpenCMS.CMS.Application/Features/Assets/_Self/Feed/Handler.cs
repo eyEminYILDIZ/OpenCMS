@@ -18,7 +18,6 @@ public class Handler : IRequestHandler<Command, Asset?>
             asset = new Asset
             {
                 Id = request.Id,
-                // fill the properties
                 Name = request.Name,
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,

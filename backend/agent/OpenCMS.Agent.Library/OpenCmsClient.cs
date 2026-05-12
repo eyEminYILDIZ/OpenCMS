@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using OpenCMS.Agent.Library.Models;
 
 namespace OpenCMS.Agent.Library;
 
@@ -7,6 +9,7 @@ public class OpenCmsClient
     private readonly Guid _agentId;
     private readonly string _baseUrl;
     private readonly HttpClient httpClient = new HttpClient();
+    private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions { };
     public OpenCmsClient(Guid agentId, string baseUrl)
     {
         _agentId = agentId;
@@ -20,18 +23,10 @@ public class OpenCmsClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> FeedAsset(Guid assetId,
-                                        string name,
-                                        double latitude,
-                                        double longitude,
-                                        double altitude,
-                                        double heading,
-                                        double speed,
-                                        int assetType,
-                                        int threatType)
+    public async Task<bool> FeedAsset(AssetContract asset)
     {
-        var body = new { assetId, name, latitude, longitude, altitude, heading, speed, assetType, threatType };
-        var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{assetId}/feed", body);
+        System.Console.WriteLine($">> Feeding asset: {asset}");
+        var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{asset.Id}/feed", asset);
         return response.IsSuccessStatusCode;
     }
 }
