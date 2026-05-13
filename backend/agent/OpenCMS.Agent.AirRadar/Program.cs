@@ -6,9 +6,10 @@ var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
 
 var radar = new Radar();
-var agentState = new AgentState();
+var agentState = new AgentState(agentId, "Air Radar Agent", AssetTypesContract.Vehicle, ThreatTypesContract.Own);
+agentState.UpdateState(37.7749, 41.4194, 100, 205, 0);
 
-System.Console.WriteLine(">> AirRadar agent is started.");
+System.Console.WriteLine(">> Air Radar agent is started.");
 
 var cancellationTokenSource = new CancellationTokenSource();
 while (!cancellationTokenSource.Token.IsCancellationRequested)
@@ -42,7 +43,6 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
             });
             Console.WriteLine($"Asset Feed for {aircraft.Id} was: {(assetFeedResult ? "Succeeded" : "Failed")}.");
         }
-
     }
     catch (Exception ex)
     {
