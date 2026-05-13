@@ -1,17 +1,13 @@
-﻿using OpenCMS.Agent.AirRadar;
-using OpenCMS.Agent.Library;
-
+﻿// Setup OpenCMS client and agent state
 var agentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
 var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
-
 var radar = new Radar();
 var agentState = new AgentState(agentId, "Air Radar Agent", AssetTypesContract.Vehicle, ThreatTypesContract.Own);
 agentState.UpdateState(37.7749, 41.4194, 100, 205, 0);
+var cancellationTokenSource = new CancellationTokenSource();
 
 System.Console.WriteLine(">> Air Radar agent is started.");
-
-var cancellationTokenSource = new CancellationTokenSource();
 while (!cancellationTokenSource.Token.IsCancellationRequested)
 {
     try
