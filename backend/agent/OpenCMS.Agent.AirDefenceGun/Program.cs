@@ -19,6 +19,20 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
         var selfAsset = agentState.GetSelfAsset();
         var selfAssetFeedResult = await openCmsClient.FeedAsset(selfAsset);
         Console.WriteLine($"Self Asset Feed was: {(selfAssetFeedResult ? "Succeeded" : "Failed")}.");
+
+        // 3 - Get assigned order from OpenCMS
+        // var assignedOrders = await openCmsClient.GetAssignedOrders(agentId);
+        // if (assignedOrders != null && assignedOrders.Count > 0)
+        // {
+        //     Console.WriteLine($"Received {assignedOrders.Count} assigned order(s).");
+        //     foreach (var order in assignedOrders)            {
+        //         Console.WriteLine($"Processing Order: {order.Id}, Type: {order.Type}, Target: {order.TargetAssetId}");
+        //         // Here you would implement logic to execute the order, such as moving to a location, engaging a target, etc.
+        //         // For this example, we will just print the order details and mark it as completed.
+        //         var orderCompletionResult = await openCmsClient.MarkOrderCompleted(order.Id);
+        //         Console.WriteLine($"Order {order.Id} marked as completed: {(orderCompletionResult ? "Success" : "Failed")}.");
+        //     } 
+        // }
     }
     catch (Exception ex)
     {

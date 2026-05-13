@@ -29,4 +29,16 @@ public class OpenCmsClient
         var response = await httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{asset.Id}/feed", asset);
         return response.IsSuccessStatusCode;
     }
+
+    // public async Task<OrderContract> GetAssignedOrders()
+    // {
+    //     var response = await httpClient.GetAsync($"{_baseUrl}/agents/{_agentId}/assigned-order");
+    //     if (response.IsSuccessStatusCode)
+    //     {
+    //         var content = await response.Content.ReadAsStringAsync();
+    //         var order = JsonSerializer.Deserialize<OrderContract>(content, jsonOptions);
+    //         return order;
+    //     }
+    //     return null;
+    // }
 }
