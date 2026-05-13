@@ -6,6 +6,7 @@ var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
 
 var radar = new Radar();
+var agentState = new AgentState();
 
 System.Console.WriteLine(">> AirRadar agent is started.");
 
@@ -14,9 +15,16 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
 {
     try
     {
+        // 1 - Ping the OpenCMS server to check connectivity
         var agentPingResult = await openCmsClient.Ping();
         Console.WriteLine($"Ping was: {(agentPingResult ? "Succeeded" : "Failed")}.");
 
+        // 2 - Send self asset information to OpenCMS
+        var selfAsset = agentState.GetSelfAsset();
+        var selfAssetFeedResult = await openCmsClient.FeedAsset(selfAsset);
+        Console.WriteLine($"Self Asset Feed was: {(selfAssetFeedResult ? "Succeeded" : "Failed")}.");
+
+        // 3 - Send radar scan results to OpenCMS
         var aircrafts = await radar.Scan();
         foreach (var aircraft in aircrafts)
         {
