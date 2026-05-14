@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\OpenCMS.CMS.Domain\OpenCMS.CMS.Domain.csproj" />
+        <ProjectReference Include="..\..\common\OpenCMS.Common.Contracts\OpenCMS.Common.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

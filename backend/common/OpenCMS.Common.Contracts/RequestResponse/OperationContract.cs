@@ -1,6 +1,6 @@
 namespace OpenCMS.Common.Contracts.RequestResponse;
 
-public class Operation
+public class OperationContract
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
