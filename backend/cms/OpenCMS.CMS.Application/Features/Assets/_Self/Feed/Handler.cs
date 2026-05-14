@@ -27,7 +27,8 @@ public class Handler : IRequestHandler<Command, Asset?>
                 AssetType = request.AssetType,
                 ThreatType = request.ThreatType,
                 IsActive = request.IsActive,
-                LastUpdated = DateTime.UtcNow
+                LastUpdated = DateTime.UtcNow,
+                RelatedAgentId = request.RelatedAgentId
             };
             _dbContext.Assets.Add(asset);
         }
@@ -43,6 +44,7 @@ public class Handler : IRequestHandler<Command, Asset?>
             asset.ThreatType = request.ThreatType;
             asset.IsActive = request.IsActive;
             asset.LastUpdated = DateTime.UtcNow;
+            asset.RelatedAgentId = request.RelatedAgentId;
 
             _dbContext.Assets.Update(asset);
         }

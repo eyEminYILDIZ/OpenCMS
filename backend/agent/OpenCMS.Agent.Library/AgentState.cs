@@ -5,11 +5,12 @@ namespace OpenCMS.Agent.Library;
 public class AgentState
 {
     private readonly AssetContract _selfAsset;
-    public AgentState(Guid agentId, string name, AssetTypesContract assetType, ThreatTypesContract threatType)
+    public AgentState(Guid agentId, Guid assetId, string name, AssetTypesContract assetType, ThreatTypesContract threatType)
     {
         _selfAsset = new AssetContract
         {
-            Id = agentId,
+            Id = assetId,
+            RelatedAgentId = agentId,
             Name = name,
             Latitude = 0,
             Longitude = 0,

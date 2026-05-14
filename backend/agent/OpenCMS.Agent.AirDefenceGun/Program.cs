@@ -1,8 +1,9 @@
 ﻿// Setup OpenCMS client and agent state
-var agentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
+var agentId = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23");
+var assetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24");
 var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
-var agentState = new AgentState(agentId, "Air Defence Gun Agent", AssetTypesContract.Vehicle, ThreatTypesContract.Own);
+var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypesContract.Vehicle, ThreatTypesContract.Own);
 agentState.UpdateState(37.7749, 41.4199, 100, 205, 0);
 var cancellationTokenSource = new CancellationTokenSource();
 

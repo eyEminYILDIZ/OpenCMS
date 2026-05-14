@@ -14,7 +14,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<Operation>>
         var operations = await _dbContext.Operations
                                           .Include(x => x.Assets).ThenInclude(x => x.Asset)
                                           .Include(x => x.Orders)
-                                          .Where(x => x.Assets.Any(a => a.AssetId == request.AgentId)
+                                          .Where(x => x.Assets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
                                                 && (x.OperationStatus == OperationStatus.NotStarted
                                                     || x.OperationStatus == OperationStatus.InProgress
                                                     || x.OperationStatus == OperationStatus.OnHold))

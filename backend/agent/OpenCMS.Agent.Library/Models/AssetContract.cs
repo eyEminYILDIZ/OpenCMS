@@ -11,6 +11,7 @@ public class AssetContract
     public double Speed { get; set; }
     public AssetTypesContract AssetType { get; set; }
     public ThreatTypesContract ThreatType { get; set; }
+    public Guid RelatedAgentId { get; set; }
 }
 
 

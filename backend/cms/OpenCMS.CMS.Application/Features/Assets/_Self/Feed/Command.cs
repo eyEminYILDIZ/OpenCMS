@@ -12,4 +12,5 @@ public class Command : IRequest<Asset?>
     public AssetTypes AssetType { get; set; }
     public ThreatTypes ThreatType { get; set; }
     public bool IsActive { get; set; }
+    public Guid RelatedAgentId { get; set; }
 }
