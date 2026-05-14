@@ -10,7 +10,6 @@ public class OrderContract
     public OrderTypesContract OrderType { get; set; }
     public Guid OperationId { get; set; }
 
-
     public DateTime TargetDatePeriodStart { get; set; }
     public DateTime TargetDatePeriodEnd { get; set; }
 
