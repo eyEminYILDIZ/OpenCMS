@@ -1,4 +1,4 @@
-namespace OpenCMS.CMS.Library.Models;
+namespace OpenCMS.Common.Contracts.RequestResponse;
 
 public class OrderContract
 {

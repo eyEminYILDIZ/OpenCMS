@@ -1,4 +1,4 @@
-namespace OpenCMS.Agent.Library.Models;
+namespace OpenCMS.Common.Contracts.RequestResponse;
 
 public class AssetContract
 {

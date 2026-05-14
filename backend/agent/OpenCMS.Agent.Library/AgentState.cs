@@ -1,5 +1,3 @@
-using OpenCMS.Agent.Library.Models;
-
 namespace OpenCMS.Agent.Library;
 
 public class AgentState
