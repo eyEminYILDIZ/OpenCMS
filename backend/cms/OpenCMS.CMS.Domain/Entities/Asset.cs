@@ -13,6 +13,9 @@ public class Asset : BaseEntity
     public DateTime FirstUpdated { get; set; }
     public DateTime LastUpdated { get; set; }
     public bool IsActive { get; set; }
+
+    public Guid RelatedAgentId { get; set; }
+    public Agent RelatedAgent { get; set; }
 }
 
 public enum AssetTypes
