@@ -6,7 +6,7 @@ public class Endpoint
 {
     public static RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
-        return app.MapGet("/operations/GetActivesByAgent", async (Query query, [FromServices] IMediator mediator) =>
+        return app.MapGet("/operations/GetActivesByAgent", async ([FromBody] Query query, [FromServices] IMediator mediator) =>
         {
             var operations = await mediator.Send(query);
             return operations;

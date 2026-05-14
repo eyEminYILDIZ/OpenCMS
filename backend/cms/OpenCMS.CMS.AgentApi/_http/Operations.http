@@ -1,0 +1,10 @@
+@AgentApi = http://localhost:5010
+
+### Get active operations by agent id
+GET {{AgentApi}}/operations/GetActivesByAgent
+Accept: application/json
+Content-Type: application/json
+
+{
+    "agentId": "b394835f-ce35-4e6b-8cd7-7e553def2e23"
+}
