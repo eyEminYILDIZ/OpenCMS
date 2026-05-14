@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using MediatR;
-
 namespace OpenCMS.CMS.Application.Assets.Self.Create;
 
 public class Endpoint
