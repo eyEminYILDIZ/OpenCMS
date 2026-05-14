@@ -17,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-Seeder.Seed(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>());
+Seeder.SeedOperationVersion1(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>());
 
 app.UseHttpsRedirection();
 

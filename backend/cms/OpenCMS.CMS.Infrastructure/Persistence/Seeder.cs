@@ -4,7 +4,69 @@ namespace OpenCMS.CMS.Infrastructure.Persistence;
 
 public class Seeder
 {
-    public static void Seed(ApplicationDbContext context)
+    public static void SeedOperationVersion1(ApplicationDbContext context)
+    {
+        var agents = new[]
+        {
+            new Domain.Entities.Agent { Id = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"), Name = "AirRadar Agent" },
+            new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirDefenceGun Agent" },
+        };
+
+        context.Agents.AddRange(agents);
+        context.SaveChanges();
+
+        var assets = new[]
+        {
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirRadar Asset", AssetType = Domain.Entities.AssetTypes.Vehicle, RelatedAgentId=Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24"), Name = "AirDefenceGun Asset", AssetType = Domain.Entities.AssetTypes.Vehicle, RelatedAgentId=Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"), Name = "Hostile Aircraft", AssetType = Domain.Entities.AssetTypes.Aircraft },
+        };
+
+        context.Assets.AddRange(assets);
+        context.SaveChanges();
+
+        var operation = new Domain.Entities.Operation
+        {
+            Id = Guid.Parse("a394835f-ce35-4e6b-8cd7-7e553def2e45"),
+            Name = "Hostile Aircraft Interception - a394835f",
+            OperationType = Domain.Entities.OperationType.Intercept,
+            OperationStatus = Domain.Entities.OperationStatus.InProgress,
+            Assets = new List<Domain.Entities.OperationAsset>
+            {
+                // air radar
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23") },
+                // air defence gun
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24") },
+                // hostile aircraft
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25") }
+            },
+            Orders = new List<Domain.Entities.Order>
+            {
+                new Domain.Entities.Order
+                {
+                    Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e55"),
+                    Description = "AirDefenceGun - Shut down the Hostile Aircraft",
+                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderType = Domain.Entities.OrderTypes.Attack,
+                    ResponsibleAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"),
+                    TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:00:00Z"),
+                    TargetDatePeriodEnd=DateTime.Parse("2025-06-01T08:05:00Z"),
+                    TargetPointLatitude=41.045524,
+                    TargetPointLongitude=29.064697,
+                    TargetPointAltitude=-1,
+                    TargetPointHeading=-1,
+                    TargetPointSpeedKmh=-1,
+                },
+            }
+        };
+
+        context.Operations.AddRange(operation);
+        context.SaveChanges();
+    }
+
+
+
+    public static void SeedOperationVersion2(ApplicationDbContext context)
     {
         var agents = new[]
         {
