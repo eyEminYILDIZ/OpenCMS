@@ -66,7 +66,6 @@ OpenCmsClient.cs
 ../../cms/
  OpenCMS.CMS.Application/obj/Debug/net10.0/ref/OpenCMS.CMS.Application.dll
  OpenCMS.CMS.Domain/obj/Debug/net10.0/ref/OpenCMS.CMS.Domain.dll
-../../common/OpenCMS.Common.Contracts/obj/Debug/net10.0/ref/OpenCMS.Common.Contracts.dll
 <DOTNET>/packs/Microsoft.AspNetCore.App.Ref/10.0.7/ref/net10.0/
  Microsoft.AspNetCore.Antiforgery.dll
  Microsoft.AspNetCore.Authentication.Abstractions.dll

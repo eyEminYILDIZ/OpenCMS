@@ -65,7 +65,6 @@ Routes/RegisterRoutes.cs
 
 [metadataReferences]
 ../
- ../common/OpenCMS.Common.Contracts/obj/Debug/net10.0/ref/OpenCMS.Common.Contracts.dll
  OpenCMS.CMS.Application/obj/Debug/net10.0/ref/OpenCMS.CMS.Application.dll
  OpenCMS.CMS.Domain/obj/Debug/net10.0/ref/OpenCMS.CMS.Domain.dll
  OpenCMS.CMS.Infrastructure/obj/Debug/net10.0/ref/OpenCMS.CMS.Infrastructure.dll

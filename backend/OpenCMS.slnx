@@ -11,7 +11,4 @@
     <Project Path="cms/OpenCMS.CMS.Domain/OpenCMS.CMS.Domain.csproj" />
     <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />
   </Folder>
-  <Folder Name="/common/">
-    <Project Path="common/OpenCMS.Common.Contracts/OpenCMS.Common.Contracts.csproj" />
-  </Folder>
 </Solution>
