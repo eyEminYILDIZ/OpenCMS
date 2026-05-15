@@ -23,7 +23,7 @@ public class Handler : IRequestHandler<Command, Asset?>
                 Longitude = request.Longitude,
                 Altitude = request.Altitude,
                 Heading = request.Heading,
-                SpeedKmh = request.Speed,
+                Speed = request.Speed,
                 AssetType = request.AssetType,
                 ThreatType = request.ThreatType,
                 IsActive = request.IsActive,
@@ -39,7 +39,7 @@ public class Handler : IRequestHandler<Command, Asset?>
             asset.Longitude = request.Longitude;
             asset.Altitude = request.Altitude;
             asset.Heading = request.Heading;
-            asset.SpeedKmh = request.Speed;
+            asset.Speed = request.Speed;
             asset.AssetType = request.AssetType;
             asset.ThreatType = request.ThreatType;
             asset.IsActive = request.IsActive;

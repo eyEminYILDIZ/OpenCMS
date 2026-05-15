@@ -38,7 +38,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
                 Longitude = a.Asset.Longitude,
                 Altitude = a.Asset.Altitude,
                 Heading = a.Asset.Heading,
-                Speed = a.Asset.SpeedKmh,
+                Speed = a.Asset.Speed,
                 AssetType = a.Asset.AssetType,
                 ThreatType = a.Asset.ThreatType,
                 RelatedAgentId = a.Asset.RelatedAgentId,

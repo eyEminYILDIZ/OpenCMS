@@ -1,11 +1,13 @@
+using OpenCMS.CMS.Domain.Entities;
+
 namespace OpenCMS.Agent.Library;
 
 public class AgentState
 {
-    private readonly AssetContract _selfAsset;
-    public AgentState(Guid agentId, Guid assetId, string name, AssetTypesContract assetType, ThreatTypesContract threatType)
+    private readonly Asset _selfAsset;
+    public AgentState(Guid agentId, Guid assetId, string name, AssetTypes assetType, ThreatTypes threatType)
     {
-        _selfAsset = new AssetContract
+        _selfAsset = new Asset
         {
             Id = assetId,
             RelatedAgentId = agentId,
@@ -29,7 +31,7 @@ public class AgentState
         _selfAsset.Speed = speed;
     }
 
-    public AssetContract GetSelfAsset()
+    public Asset GetSelfAsset()
     {
         return _selfAsset;
     }

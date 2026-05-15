@@ -4,7 +4,7 @@ var assetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23");
 var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
 var radar = new Radar();
-var agentState = new AgentState(agentId, assetId, "Air Radar Agent", AssetTypesContract.Vehicle, ThreatTypesContract.Own);
+var agentState = new AgentState(agentId, assetId, "Air Radar Agent", AssetTypes.Vehicle, ThreatTypes.Own);
 agentState.UpdateState(37.7749, 41.4194, 100, 205, 0);
 var cancellationTokenSource = new CancellationTokenSource();
 
@@ -26,7 +26,7 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
         var aircrafts = await radar.Scan();
         foreach (var aircraft in aircrafts)
         {
-            var assetFeedResult = await openCmsClient.FeedAsset(new AssetContract()
+            var assetFeedResult = await openCmsClient.FeedAsset(new Asset()
             {
                 Id = aircraft.Id,
                 Name = aircraft.Callsign,
@@ -35,8 +35,8 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
                 Altitude = aircraft.Altitude,
                 Heading = aircraft.Heading,
                 Speed = aircraft.Speed,
-                AssetType = AssetTypesContract.Vehicle,
-                ThreatType = ThreatTypesContract.Own
+                AssetType = AssetTypes.Vehicle,
+                ThreatType = ThreatTypes.Own
             });
             Console.WriteLine($"Asset Feed for {aircraft.Id} was: {(assetFeedResult ? "Succeeded" : "Failed")}.");
         }

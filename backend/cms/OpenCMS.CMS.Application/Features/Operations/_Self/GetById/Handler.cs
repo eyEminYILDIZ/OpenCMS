@@ -60,7 +60,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                     Longitude = a.Asset.Longitude,
                     Altitude = a.Asset.Altitude,
                     Heading = a.Asset.Heading,
-                    SpeedKmh = a.Asset.SpeedKmh,
+                    SpeedKmh = a.Asset.Speed,
                     AssetType = a.Asset.AssetType,
                     ThreatType = a.Asset.ThreatType,
                     FirstUpdated = a.Asset.FirstUpdated,

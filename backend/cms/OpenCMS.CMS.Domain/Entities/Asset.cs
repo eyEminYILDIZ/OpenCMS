@@ -7,7 +7,7 @@ public class Asset : BaseEntity
     public double Longitude { get; set; }
     public double Altitude { get; set; }
     public double Heading { get; set; }
-    public double SpeedKmh { get; set; }
+    public double Speed { get; set; }
     public AssetTypes AssetType { get; set; }
     public ThreatTypes ThreatType { get; set; }
     public DateTime FirstUpdated { get; set; }

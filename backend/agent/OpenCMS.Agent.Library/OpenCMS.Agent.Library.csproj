@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\common\OpenCMS.Common.Contracts\OpenCMS.Common.Contracts.csproj" />
+    <ProjectReference Include="..\..\cms\OpenCMS.CMS.Application\OpenCMS.CMS.Application.csproj" />
   </ItemGroup>
 </Project>
