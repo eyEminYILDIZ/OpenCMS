@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent;
 
-public class Handler : IRequestHandler<Query, IEnumerable<OperationContract>>
+public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,7 +9,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<OperationContract>>
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<OperationContract>> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
     {
         var operations = await _dbContext.Operations
                                           .Include(x => x.Assets).ThenInclude(x => x.Asset)
@@ -20,7 +20,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<OperationContract>>
                                                     || x.OperationStatus == OperationStatus.OnHold))
                                           .ToListAsync(cancellationToken);
 
-        return operations.Select(o => new OperationContract
+        return operations.Select(o => new QueryResponse
         {
             Id = o.Id,
             Name = o.Name,
@@ -28,9 +28,9 @@ public class Handler : IRequestHandler<Query, IEnumerable<OperationContract>>
             StartDate = o.StartDate,
             EstimatedEndDate = o.EstimatedEndDate,
             EndDate = o.EndDate,
-            OperationStatus = (OperationStatusContract)o.OperationStatus,
-            OperationType = (OperationTypeContract)o.OperationType,
-            Assets = o.Assets.Select(a => new AssetContract
+            OperationStatus = o.OperationStatus,
+            OperationType = o.OperationType,
+            Assets = o.Assets.Select(a => new AssetResponse
             {
                 Id = a.Asset.Id,
                 Name = a.Asset.Name,
@@ -39,18 +39,18 @@ public class Handler : IRequestHandler<Query, IEnumerable<OperationContract>>
                 Altitude = a.Asset.Altitude,
                 Heading = a.Asset.Heading,
                 Speed = a.Asset.SpeedKmh,
-                AssetType = (AssetTypesContract)a.Asset.AssetType,
-                ThreatType = (ThreatTypesContract)a.Asset.ThreatType,
+                AssetType = a.Asset.AssetType,
+                ThreatType = a.Asset.ThreatType,
                 RelatedAgentId = a.Asset.RelatedAgentId,
             }).ToList(),
-            Orders = o.Orders.Select(or => new OrderContract
+            Orders = o.Orders.Select(or => new OrderResponse
             {
                 Id = or.Id,
                 Description = or.Description,
                 IssuedDate = or.IssuedDate,
                 CompletedDate = or.CompletedDate,
-                OrderStatus = (OrderStatusContract)or.OrderStatus,
-                OrderType = (OrderTypesContract)or.OrderType,
+                OrderStatus = or.OrderStatus,
+                OrderType = or.OrderType,
                 OperationId = or.OperationId,
                 TargetDatePeriodStart = or.TargetDatePeriodStart,
                 TargetDatePeriodEnd = or.TargetDatePeriodEnd,
