@@ -23,6 +23,9 @@ public class Order : BaseEntity
     public Guid ResponsibleAssetId { get; set; }
     public OperationAsset ResponsibleAsset { get; set; }
 
+    public Guid? TargetAssetId { get; set; }
+    public OperationAsset TargetAsset { get; set; }
+
     public Guid? NextOrderId { get; set; }
     public Order NextOrder { get; set; }
 
