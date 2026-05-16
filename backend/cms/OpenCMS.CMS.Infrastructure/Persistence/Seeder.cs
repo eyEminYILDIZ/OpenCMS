@@ -49,6 +49,7 @@ public class Seeder
                     OrderStatus = Domain.Entities.OrderStatus.Active,
                     OrderType = Domain.Entities.OrderTypes.Attack,
                     ResponsibleAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"),
+                    TargetAssetId=Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:00:00Z"),
                     TargetDatePeriodEnd=DateTime.Parse("2025-06-01T08:05:00Z"),
                     TargetPointLatitude=41.045524,

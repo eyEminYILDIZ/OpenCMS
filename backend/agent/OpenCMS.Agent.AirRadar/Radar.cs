@@ -11,7 +11,7 @@ public class Radar
         {
             new Aircraft
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"),
                 Callsign = "ISO9986",
                 Longitude = 48.4194,
                 Latitude = 37.7749,

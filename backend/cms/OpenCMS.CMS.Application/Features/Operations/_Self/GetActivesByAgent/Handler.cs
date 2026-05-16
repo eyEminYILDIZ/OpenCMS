@@ -13,7 +13,8 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
     {
         var operations = await _dbContext.Operations
                                           .Include(x => x.Assets).ThenInclude(x => x.Asset)
-                                          .Include(x => x.Orders)
+                                          .Include(x => x.Orders).ThenInclude(x => x.TargetAsset).ThenInclude(x => x.Asset)
+                                          .Include(x => x.Orders).ThenInclude(x => x.ResponsibleAsset).ThenInclude(x => x.Asset)
                                           .Where(x => x.Assets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
                                                 && (x.OperationStatus == OperationStatus.NotStarted
                                                     || x.OperationStatus == OperationStatus.InProgress
