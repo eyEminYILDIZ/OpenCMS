@@ -18,7 +18,7 @@ public class Handler : IRequestHandler<Command, CommandResponse>
             Longitude = request.Longitude,
             Altitude = request.Altitude,
             Heading = request.Heading,
-            Speed = request.SpeedKmh,
+            Speed = request.Speed,
             AssetType = request.AssetType,
             ThreatType = request.ThreatType,
             IsActive = request.IsActive,

@@ -62,7 +62,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
                 TargetPointLongitude = or.TargetAsset?.Asset.Longitude ?? or.TargetPointLongitude,
                 TargetPointAltitude = or.TargetAsset?.Asset.Altitude ?? or.TargetPointAltitude,
                 TargetPointHeading = or.TargetAsset?.Asset.Heading ?? or.TargetPointHeading,
-                TargetPointSpeedKmh = or.TargetAsset?.Asset.Speed ?? or.TargetPointSpeedKmh,
+                TargetPointSpeed = or.TargetAsset?.Asset.Speed ?? or.TargetPointSpeed,
             }).ToList(),
         });
     }

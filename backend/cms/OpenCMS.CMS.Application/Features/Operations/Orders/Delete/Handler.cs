@@ -34,7 +34,7 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
             TargetPointLongitude = order.TargetPointLongitude,
             TargetPointAltitude = order.TargetPointAltitude,
             TargetPointHeading = order.TargetPointHeading,
-            TargetPointSpeedKmh = order.TargetPointSpeedKmh,
+            TargetPointSpeed = order.TargetPointSpeed,
             ResponsibleAssetId = order.ResponsibleAssetId,
             NextOrderId = order.NextOrderId,
             PreviousOrderId = order.PreviousOrderId,

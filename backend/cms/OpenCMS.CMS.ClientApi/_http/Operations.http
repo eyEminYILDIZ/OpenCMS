@@ -61,7 +61,7 @@ Content-Type: application/json
   "targetPointLongitude": 38.0,
   "targetPointAltitude": 500.0,
   "targetPointHeading": 90.0,
-  "targetPointSpeedKmh": 120.0,
+  "targetPointSpeed": 120.0,
   "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
   "nextOrderId": null,
   "previousOrderId": null
@@ -85,7 +85,7 @@ Content-Type: application/json
   "targetPointLongitude": 38.0,
   "targetPointAltitude": 500.0,
   "targetPointHeading": 90.0,
-  "targetPointSpeedKmh": 100.0,
+  "targetPointSpeed": 100.0,
   "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
   "nextOrderId": null,
   "previousOrderId": null

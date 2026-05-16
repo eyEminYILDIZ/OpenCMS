@@ -30,7 +30,7 @@ public class OrderResponse
     public double TargetPointLongitude { get; set; }
     public double TargetPointAltitude { get; set; }
     public double TargetPointHeading { get; set; }
-    public double TargetPointSpeedKmh { get; set; }
+    public double TargetPointSpeed { get; set; }
     public Guid ResponsibleAssetId { get; set; }
     public Guid? NextOrderId { get; set; }
     public Guid? PreviousOrderId { get; set; }
@@ -51,7 +51,7 @@ public class AssetResponse
     public double Longitude { get; set; }
     public double Altitude { get; set; }
     public double Heading { get; set; }
-    public double SpeedKmh { get; set; }
+    public double Speed { get; set; }
     public AssetTypes AssetType { get; set; }
     public ThreatTypes ThreatType { get; set; }
     public DateTime FirstUpdated { get; set; }

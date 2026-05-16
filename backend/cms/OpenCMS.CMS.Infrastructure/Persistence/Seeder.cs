@@ -56,7 +56,7 @@ public class Seeder
                     TargetPointLongitude=29.064697,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
             }
         };
@@ -120,7 +120,7 @@ public class Seeder
                     TargetPointLongitude=29.064697,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 new Domain.Entities.Order
                 {
@@ -135,7 +135,7 @@ public class Seeder
                     TargetPointLongitude=-1,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 new Domain.Entities.Order
                 {
@@ -150,7 +150,7 @@ public class Seeder
                     TargetPointLongitude=29.052079,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 new Domain.Entities.Order
                 {
@@ -165,7 +165,7 @@ public class Seeder
                     TargetPointLongitude=-1,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 /////////
                 new Domain.Entities.Order
@@ -181,7 +181,7 @@ public class Seeder
                     TargetPointLongitude=29.052079,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 new Domain.Entities.Order
                 {
@@ -196,7 +196,7 @@ public class Seeder
                     TargetPointLongitude=-1,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
                 new Domain.Entities.Order
                 {
@@ -211,7 +211,7 @@ public class Seeder
                     TargetPointLongitude=29.043388,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
-                    TargetPointSpeedKmh=-1,
+                    TargetPointSpeed=-1,
                 },
             }
         };

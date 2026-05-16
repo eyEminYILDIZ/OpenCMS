@@ -27,7 +27,7 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         order.TargetPointLongitude = request.TargetPointLongitude;
         order.TargetPointAltitude = request.TargetPointAltitude;
         order.TargetPointHeading = request.TargetPointHeading;
-        order.TargetPointSpeedKmh = request.TargetPointSpeedKmh;
+        order.TargetPointSpeed = request.TargetPointSpeed;
         order.ResponsibleAssetId = request.ResponsibleAssetId;
         order.NextOrderId = request.NextOrderId;
         order.PreviousOrderId = request.PreviousOrderId;
@@ -50,7 +50,7 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
             TargetPointLongitude = order.TargetPointLongitude,
             TargetPointAltitude = order.TargetPointAltitude,
             TargetPointHeading = order.TargetPointHeading,
-            TargetPointSpeedKmh = order.TargetPointSpeedKmh,
+            TargetPointSpeed = order.TargetPointSpeed,
             ResponsibleAssetId = order.ResponsibleAssetId,
             NextOrderId = order.NextOrderId,
             PreviousOrderId = order.PreviousOrderId,

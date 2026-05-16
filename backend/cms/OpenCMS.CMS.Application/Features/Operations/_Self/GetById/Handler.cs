@@ -43,7 +43,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                 TargetPointLongitude = o.TargetPointLongitude,
                 TargetPointAltitude = o.TargetPointAltitude,
                 TargetPointHeading = o.TargetPointHeading,
-                TargetPointSpeedKmh = o.TargetPointSpeedKmh,
+                TargetPointSpeed = o.TargetPointSpeed,
                 ResponsibleAssetId = o.ResponsibleAssetId,
                 NextOrderId = o.NextOrderId,
                 PreviousOrderId = o.PreviousOrderId
@@ -60,7 +60,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                     Longitude = a.Asset.Longitude,
                     Altitude = a.Asset.Altitude,
                     Heading = a.Asset.Heading,
-                    SpeedKmh = a.Asset.Speed,
+                    Speed = a.Asset.Speed,
                     AssetType = a.Asset.AssetType,
                     ThreatType = a.Asset.ThreatType,
                     FirstUpdated = a.Asset.FirstUpdated,
