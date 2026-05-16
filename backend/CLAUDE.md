@@ -46,7 +46,7 @@ MediatR handlers are auto-registered from the Application assembly. DbContext is
 
 ## Endpoint conventions
 
-- **Return entities directly.** Never use `Results.Ok()`, `Results.NotFound()`, `Results.NoContent()`, or any other `Results.*` helpers. Just `return` the entity or value from the endpoint lambda. Returning `null` is acceptable for not-found cases.
+- **Use response models, not entities.** Define a `CommandResponse` (for writes) or `QueryResponse` (for reads) record/class inside the existing `Command.cs` or `Query.cs` file — do not create a separate file. Use it as the handler's return type. Never return domain entities directly from endpoints. Never use `Results.Ok()`, `Results.NotFound()`, `Results.NoContent()`, or any other `Results.*` helpers. Just `return` the response model from the endpoint lambda. Returning `null` is acceptable for not-found cases.
 
 - **Register every new endpoint in `RegisterRoutes.cs`.** Endpoints are not discovered automatically. For every new endpoint add the corresponding `Endpoint.MapEndpoint(app)` call in the correct feature group section of `cms/OpenCMS.CMS.ClientApi/Routes/RegisterRoutes.cs`.
 

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.ListAll;
 
-public class Handler : IRequestHandler<Query, IEnumerable<Agent>>
+public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,9 +9,20 @@ public class Handler : IRequestHandler<Query, IEnumerable<Agent>>
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Agent>> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
     {
         var agents = await _dbContext.Agents.ToListAsync(cancellationToken);
-        return agents;
+
+        return agents.Select(agent => new QueryResponse
+        {
+            Id = agent.Id,
+            Name = agent.Name,
+            Description = agent.Description,
+            AgentType = agent.AgentType,
+            LastSeen = agent.LastSeen,
+            IsActive = agent.IsActive,
+            CreatedAt = agent.CreatedAt,
+            UpdatedAt = agent.UpdatedAt
+        });
     }
 }
