@@ -15,7 +15,7 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
     {
         // 1 - Ping the OpenCMS server to check connectivity
         var agentPingResult = await openCmsClient.Ping();
-        Console.WriteLine($"Ping was: {(agentPingResult ? "Succeeded" : "Failed")}.");
+        Console.WriteLine($"\nPing was: {(agentPingResult ? "Succeeded" : "Failed")}.");
 
         // 2 - Send self asset information to OpenCMS
         var selfAsset = agentState.GetSelfAsset();
@@ -29,7 +29,7 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
             Console.WriteLine($">> Active Operation: {operation.Id}, Name: {operation.Name}, Type: {operation.OperationType}, Status: {operation.OperationStatus}");
             // Here you would implement logic to execute the operation, such as
 
-            var operationAsset = operation.Assets.FirstOrDefault(a => a.RelatedAgentId == agentId);
+            var operationAsset = operation.OperationAssets.FirstOrDefault(a => a.RelatedAgentId == agentId);
             if (operationAsset == null)
             {
                 Console.WriteLine($">> No asset assigned to this agent in the operation.");
@@ -38,8 +38,11 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
 
             foreach (var order in operation.Orders)
             {
-                if (order.OrderStatus == OrderStatus.Passive || order.OrderType != OrderTypes.Attack || order.ResponsibleOperationAssetId != assetId)
+                if (order.OrderStatus == OrderStatus.Passive || order.OrderType != OrderTypes.Attack || order.ResponsibleOperationAssetId != operationAsset.Id)
+                {
+                    System.Console.WriteLine($">> Skipping Order: {order.Id}, Type: {order.OrderType}, Status: {order.OrderStatus}, Responsible Asset: {order.ResponsibleOperationAssetId}");
                     continue;
+                }
 
                 Console.WriteLine($">> Active Order: {order.Id}, Type: {order.OrderType}, Status: {order.OrderStatus}, Target: {order.TargetPointLatitude}/{order.TargetPointLongitude}");
 

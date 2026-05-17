@@ -21,7 +21,7 @@ namespace OpenCMS.Agent.AirDefenceGun
             // fake waiting for the gun to fire
             await Task.Delay(100);
 
-            System.Console.WriteLine(">>Fired");
+            System.Console.WriteLine(">>>>>>>>>>>>>>>> Fired <<<<<<<<<<<<<<<<<");
         }
     }
 }

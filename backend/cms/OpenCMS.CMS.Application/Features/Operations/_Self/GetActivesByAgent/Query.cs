@@ -17,13 +17,14 @@ public class QueryResponse
     public DateTime? EndDate { get; set; }
     public OperationStatus OperationStatus { get; set; }
     public OperationType OperationType { get; set; }
-    public List<AssetResponse> Assets { get; set; } = [];
+    public List<AssetResponse> OperationAssets { get; set; } = [];
     public List<OrderResponse> Orders { get; set; } = [];
 }
 
 public class AssetResponse
 {
     public Guid Id { get; set; }
+    public Guid AssetId { get; set; }
     public string Name { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }

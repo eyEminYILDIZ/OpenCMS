@@ -13,7 +13,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
     {
         var operation = await _dbContext.Operations
                                             .Include(o => o.Orders)
-                                            .Include(o => o.Assets).ThenInclude(a => a.Asset)
+                                            .Include(o => o.OperationAssets).ThenInclude(a => a.Asset)
                                             .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
         if (operation == null)
@@ -48,7 +48,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                 NextOrderId = o.NextOrderId,
                 PreviousOrderId = o.PreviousOrderId
             }).ToList() ?? new(),
-            Assets = operation.Assets?.Select(a => new OperationAssetResponse
+            Assets = operation.OperationAssets?.Select(a => new OperationAssetResponse
             {
                 Id = a.Id,
                 AssetId = a.AssetId,

@@ -10,7 +10,7 @@ public class Operation : BaseEntity
     public OperationStatus OperationStatus { get; set; }
     public OperationType OperationType { get; set; }
 
-    public List<OperationAsset> Assets { get; set; }
+    public List<OperationAsset> OperationAssets { get; set; }
     public List<Order> Orders { get; set; }
 }
 

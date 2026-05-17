@@ -31,7 +31,7 @@ public class Seeder
             Name = "Hostile Aircraft Interception - a394835f",
             OperationType = Domain.Entities.OperationType.Intercept,
             OperationStatus = Domain.Entities.OperationStatus.InProgress,
-            Assets = new List<Domain.Entities.OperationAsset>
+            OperationAssets = new List<Domain.Entities.OperationAsset>
             {
                 // air radar
                 new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23") },
@@ -96,7 +96,7 @@ public class Seeder
             Name = "Getting X11 item to headquarter",
             OperationType = Domain.Entities.OperationType.Exchange,
             OperationStatus = Domain.Entities.OperationStatus.NotStarted,
-            Assets = new List<Domain.Entities.OperationAsset>
+            OperationAssets = new List<Domain.Entities.OperationAsset>
             {
                 // field agent 1001
                 new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23") },

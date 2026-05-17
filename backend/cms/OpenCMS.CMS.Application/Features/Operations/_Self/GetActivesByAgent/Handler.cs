@@ -12,10 +12,10 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
     public async Task<IEnumerable<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
     {
         var operations = await _dbContext.Operations
-                                          .Include(x => x.Assets).ThenInclude(x => x.Asset)
+                                          .Include(x => x.OperationAssets).ThenInclude(x => x.Asset)
                                           .Include(x => x.Orders).ThenInclude(x => x.TargetOperationAsset).ThenInclude(x => x.Asset)
                                           .Include(x => x.Orders).ThenInclude(x => x.ResponsibleOperationAsset).ThenInclude(x => x.Asset)
-                                          .Where(x => x.Assets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
+                                          .Where(x => x.OperationAssets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
                                                 && (x.OperationStatus == OperationStatus.NotStarted
                                                     || x.OperationStatus == OperationStatus.InProgress
                                                     || x.OperationStatus == OperationStatus.OnHold))
@@ -33,9 +33,10 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
             EndDate = o.EndDate,
             OperationStatus = o.OperationStatus,
             OperationType = o.OperationType,
-            Assets = o.Assets.Select(a => new AssetResponse
+            OperationAssets = o.OperationAssets.Select(a => new AssetResponse
             {
-                Id = a.Asset.Id,
+                Id = a.Id,
+                AssetId = a.Asset.Id,
                 Name = a.Asset.Name,
                 Latitude = a.Asset.Latitude,
                 Longitude = a.Asset.Longitude,
