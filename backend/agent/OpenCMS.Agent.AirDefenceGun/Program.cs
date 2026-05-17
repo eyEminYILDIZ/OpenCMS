@@ -4,6 +4,7 @@ var assetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24");
 var baseUrl = "http://localhost:5010";
 var openCmsClient = new OpenCmsClient(agentId, baseUrl);
 var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypes.Vehicle, ThreatTypes.Own);
+var defenceGun = new DefenceGun(agentState);
 agentState.UpdateState(37.7749, 41.4199, 100, 205, 0);
 var cancellationTokenSource = new CancellationTokenSource();
 
@@ -20,6 +21,19 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
         var selfAsset = agentState.GetSelfAsset();
         var selfAssetFeedResult = await openCmsClient.FeedAsset(selfAsset);
         Console.WriteLine($"Self Asset Feed was: {(selfAssetFeedResult ? "Succeeded" : "Failed")}.");
+
+        // 3 - Simulate taking position and firing at a target
+        await defenceGun.TakePosition(new Asset
+        {
+            Id = Guid.NewGuid(),
+            AssetType = AssetTypes.Aircraft,
+            Latitude = 37.7749,
+            Longitude = 41.4199,
+            Altitude = 1000,
+            Heading = 90,
+            Speed = 250
+        });
+        await defenceGun.Fire();
 
         // 3 - Get assigned order from OpenCMS
         // var assignedOrders = await openCmsClient.GetAssignedOrders(agentId);
