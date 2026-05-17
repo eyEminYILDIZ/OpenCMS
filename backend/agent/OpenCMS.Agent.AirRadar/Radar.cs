@@ -4,10 +4,10 @@ namespace OpenCMS.Agent.AirRadar;
 
 public class Radar
 {
-    private List<Aircraft> _aircrafts;
+    private List<Aircraft> _detectedAircrafts;
     public Radar()
     {
-        _aircrafts = new List<Aircraft>
+        _detectedAircrafts = new List<Aircraft>
         {
             new Aircraft
             {
@@ -25,7 +25,7 @@ public class Radar
     private void RandomizeMoveAircrafts()
     {
         var random = new Random();
-        foreach (var aircraft in _aircrafts)
+        foreach (var aircraft in _detectedAircrafts)
         {
             var changeLocation = random.Next() % 2 == 0;
             if (changeLocation)
@@ -58,6 +58,6 @@ public class Radar
 
         RandomizeMoveAircrafts();
 
-        return _aircrafts;
+        return _detectedAircrafts;
     }
 }

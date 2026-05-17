@@ -41,7 +41,7 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
     }
 
     // Wait for a short period before polling for new inputs
-    await Task.Delay(2000, cancellationTokenSource.Token);
+    await Task.Delay(1000, cancellationTokenSource.Token);
 }
 
 System.Console.WriteLine(">> AirDefenceGun agent is shutting down.");
