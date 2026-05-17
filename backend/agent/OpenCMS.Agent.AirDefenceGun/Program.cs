@@ -22,18 +22,43 @@ while (!cancellationTokenSource.Token.IsCancellationRequested)
         var selfAssetFeedResult = await openCmsClient.FeedAsset(selfAsset);
         Console.WriteLine($"Self Asset Feed was: {(selfAssetFeedResult ? "Succeeded" : "Failed")}.");
 
-        // 3 - Simulate taking position and firing at a target
-        await defenceGun.TakePosition(new Asset
+        var assignedOperations = await openCmsClient.GetActiveOperations();
+        Console.WriteLine($"Received {assignedOperations.Count} active operation(s).");
+        foreach (var operation in assignedOperations)
         {
-            Id = Guid.NewGuid(),
-            AssetType = AssetTypes.Aircraft,
-            Latitude = 37.7749,
-            Longitude = 41.4199,
-            Altitude = 1000,
-            Heading = 90,
-            Speed = 250
-        });
-        await defenceGun.Fire();
+            Console.WriteLine($">> Active Operation: {operation.Id}, Name: {operation.Name}, Type: {operation.OperationType}, Status: {operation.OperationStatus}");
+            // Here you would implement logic to execute the operation, such as
+
+            var operationAsset = operation.Assets.FirstOrDefault(a => a.RelatedAgentId == agentId);
+            if (operationAsset == null)
+            {
+                Console.WriteLine($">> No asset assigned to this agent in the operation.");
+                continue;
+            }
+
+            foreach (var order in operation.Orders)
+            {
+                if (order.OrderStatus == OrderStatus.Passive || order.OrderType != OrderTypes.Attack || order.ResponsibleOperationAssetId != assetId)
+                    continue;
+
+                Console.WriteLine($">> Active Order: {order.Id}, Type: {order.OrderType}, Status: {order.OrderStatus}, Target: {order.TargetPointLatitude}/{order.TargetPointLongitude}");
+
+                // 3 - Simulate taking position and firing at a target
+                await defenceGun.TakePosition(new Asset
+                {
+                    Id = order.TargetOperationAssetId ?? Guid.NewGuid(), // TODO: Get actual target asset ID if available, this is opeation asset not actual asset
+                    AssetType = AssetTypes.Aircraft,
+                    Latitude = order.TargetPointLatitude,
+                    Longitude = order.TargetPointLongitude,
+                    Altitude = order.TargetPointAltitude,
+                    Heading = order.TargetPointHeading,
+                    Speed = order.TargetPointSpeed,
+                });
+                await defenceGun.Fire();
+            }
+        }
+
+
 
         // 3 - Get assigned order from OpenCMS
         // var assignedOrders = await openCmsClient.GetAssignedOrders(agentId);

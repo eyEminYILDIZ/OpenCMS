@@ -13,13 +13,15 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
     {
         var operations = await _dbContext.Operations
                                           .Include(x => x.Assets).ThenInclude(x => x.Asset)
-                                          .Include(x => x.Orders).ThenInclude(x => x.TargetAsset).ThenInclude(x => x.Asset)
-                                          .Include(x => x.Orders).ThenInclude(x => x.ResponsibleAsset).ThenInclude(x => x.Asset)
+                                          .Include(x => x.Orders).ThenInclude(x => x.TargetOperationAsset).ThenInclude(x => x.Asset)
+                                          .Include(x => x.Orders).ThenInclude(x => x.ResponsibleOperationAsset).ThenInclude(x => x.Asset)
                                           .Where(x => x.Assets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
                                                 && (x.OperationStatus == OperationStatus.NotStarted
                                                     || x.OperationStatus == OperationStatus.InProgress
                                                     || x.OperationStatus == OperationStatus.OnHold))
                                           .ToListAsync(cancellationToken);
+
+        System.Console.WriteLine(operations.Count);
 
         return operations.Select(o => new QueryResponse
         {
@@ -53,16 +55,17 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
                 OrderStatus = or.OrderStatus,
                 OrderType = or.OrderType,
                 OperationId = or.OperationId,
-                ResponsibleAssetId = or.ResponsibleAssetId,
+                ResponsibleOperationAssetId = or.ResponsibleOperationAssetId,
+                TargetOperationAssetId = or.TargetOperationAssetId,
                 NextOrderId = or.NextOrderId,
                 PreviousOrderId = or.PreviousOrderId,
                 TargetDatePeriodStart = or.TargetDatePeriodStart,
                 TargetDatePeriodEnd = or.TargetDatePeriodEnd,
-                TargetPointLatitude = or.TargetAsset?.Asset.Latitude ?? or.TargetPointLatitude,
-                TargetPointLongitude = or.TargetAsset?.Asset.Longitude ?? or.TargetPointLongitude,
-                TargetPointAltitude = or.TargetAsset?.Asset.Altitude ?? or.TargetPointAltitude,
-                TargetPointHeading = or.TargetAsset?.Asset.Heading ?? or.TargetPointHeading,
-                TargetPointSpeed = or.TargetAsset?.Asset.Speed ?? or.TargetPointSpeed,
+                TargetPointLatitude = or.TargetOperationAsset?.Asset.Latitude ?? or.TargetPointLatitude,
+                TargetPointLongitude = or.TargetOperationAsset?.Asset.Longitude ?? or.TargetPointLongitude,
+                TargetPointAltitude = or.TargetOperationAsset?.Asset.Altitude ?? or.TargetPointAltitude,
+                TargetPointHeading = or.TargetOperationAsset?.Asset.Heading ?? or.TargetPointHeading,
+                TargetPointSpeed = or.TargetOperationAsset?.Asset.Speed ?? or.TargetPointSpeed,
             }).ToList(),
         });
     }

@@ -20,11 +20,11 @@ public class Order : BaseEntity
     public double TargetPointHeading { get; set; }
     public double TargetPointSpeed { get; set; }
 
-    public Guid ResponsibleAssetId { get; set; }
-    public OperationAsset ResponsibleAsset { get; set; }
+    public Guid ResponsibleOperationAssetId { get; set; }
+    public OperationAsset ResponsibleOperationAsset { get; set; }
 
-    public Guid? TargetAssetId { get; set; }
-    public OperationAsset TargetAsset { get; set; }
+    public Guid? TargetOperationAssetId { get; set; }
+    public OperationAsset TargetOperationAsset { get; set; }
 
     public Guid? NextOrderId { get; set; }
     public Order NextOrder { get; set; }

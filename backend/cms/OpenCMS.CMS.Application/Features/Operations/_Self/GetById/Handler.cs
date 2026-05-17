@@ -44,7 +44,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                 TargetPointAltitude = o.TargetPointAltitude,
                 TargetPointHeading = o.TargetPointHeading,
                 TargetPointSpeed = o.TargetPointSpeed,
-                ResponsibleAssetId = o.ResponsibleAssetId,
+                ResponsibleAssetId = o.ResponsibleOperationAssetId,
                 NextOrderId = o.NextOrderId,
                 PreviousOrderId = o.PreviousOrderId
             }).ToList() ?? new(),

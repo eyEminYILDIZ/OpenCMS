@@ -13,7 +13,7 @@ namespace OpenCMS.Agent.AirDefenceGun
             // fake waiting for the gun to take position
             await Task.Delay(1000);
 
-            System.Console.WriteLine(">>Positioned to target");
+            System.Console.WriteLine($">>Positioned to target: {targetAsset.Id} at {targetAsset.Latitude}/{targetAsset.Longitude}");
         }
 
         public async Task Fire()

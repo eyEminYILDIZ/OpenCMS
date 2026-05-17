@@ -51,7 +51,8 @@ public class OrderResponse
     public double TargetPointAltitude { get; set; }
     public double TargetPointHeading { get; set; }
     public double TargetPointSpeed { get; set; }
-    public Guid ResponsibleAssetId { get; set; }
+    public Guid ResponsibleOperationAssetId { get; set; }
+    public Guid? TargetOperationAssetId { get; set; }
     public Guid? NextOrderId { get; set; }
     public Guid? PreviousOrderId { get; set; }
 }
