@@ -4,6 +4,9 @@
     <Project Path="agent/OpenCMS.Agent.AirRadar/OpenCMS.Agent.AirRadar.csproj" />
     <Project Path="agent/OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj" />
   </Folder>
+  <Folder Name="/aspire/">
+    <Project Path="aspire/OpenCMS.Aspire.AppHost/OpenCMS.Aspire.AppHost.csproj" />
+  </Folder>
   <Folder Name="/cms/">
     <Project Path="cms/OpenCMS.CMS.AgentApi/OpenCMS.CMS.AgentApi.csproj" />
     <Project Path="cms/OpenCMS.CMS.Application/OpenCMS.CMS.Application.csproj" />
