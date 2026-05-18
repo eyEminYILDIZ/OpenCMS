@@ -38,11 +38,45 @@ Features/{Feature}/_Self/{Operation}/
   Endpoint.cs   — registers the route, calls mediator.Send()
   Command.cs    — IRequest<T> for writes  /  Query.cs for reads
   Handler.cs    — IRequestHandler<TRequest, TResponse>
+  Validator.cs  — AbstractValidator<Command> or AbstractValidator<Query> (when the class has properties)
 ```
 
 MediatR handlers are auto-registered from the Application assembly. DbContext is registered as an in-memory database (`"OpenCMS"`); `Seeder.Seed()` runs at startup.
 
 **Entity hierarchy:** `CoreEntity (Guid Id)` → `BaseEntity (timestamps)` → `Agent`, `Asset`, `Operation`, `OperationAsset`, `Order`.
+
+## Validation conventions
+
+- **Create a `Validator.cs` for every Command or Query that has properties/fields.** Place it in the same folder as the `Command.cs` or `Query.cs` it validates. Name the class `Validator` and inherit from `AbstractValidator<Command>` (or `AbstractValidator<Query>`).
+
+- Validators are auto-discovered by the `ValidationBehavior` MediatR pipeline and run before the handler. You do not need to register them manually.
+
+- **Do not create a `Validator.cs` for parameter-less commands/queries** (i.e., classes with no properties). A validator with no rules is unnecessary.
+
+- Use FluentValidation rule methods (`.NotEmpty()`, `.MaximumLength()`, `.InclusiveBetween()`, `.IsInEnum()`, etc.) with `.WithMessage()` on every rule.
+
+Example (`Validator.cs`):
+
+```csharp
+using FluentValidation;
+
+namespace OpenCMS.CMS.Application.Features.{Feature}._Self.{Operation};
+
+public class Validator : AbstractValidator<Command>
+{
+    public Validator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Id is required.");
+
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Name is required.")
+            .MaximumLength(200).WithMessage("Name must not exceed 200 characters.");
+    }
+}
+```
+
+Validation failures are caught by `ValidationBehavior<TRequest, TResponse>` and surfaced as HTTP 400 with `ValidationProblemDetails` via `ValidationExceptionHandler`.
 
 ## Endpoint conventions
 
