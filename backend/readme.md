@@ -11,6 +11,7 @@
 ## Libraries
 
 - MediatR
+- FluentValidation
 - Microsoft.EntityFrameworkCore
 - Microsoft.AspNetCore.OpenApi
 
@@ -20,6 +21,7 @@
 - Central package management
 - Central property management
 - XML (slnx) solution file
+- Aspire
 
 
 ## Projects
@@ -55,5 +57,9 @@ Console application for example agent input flow demonstration.
 ### OpenCMS.Agent.AirDefenceGun
 
 Console application for example agent output flow demonstration.
+
+### OpenCMS.Aspire.AppHost
+
+AppHost project uses for Aspire services.
 
 
