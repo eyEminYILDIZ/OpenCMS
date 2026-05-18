@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Assets.Self.Feed;
 
-public class Endpoint
+public class Endpoint : IAgentEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPut("/assets/{id}/feed", async (Guid id, Command command, IMediator mediator) =>
         {

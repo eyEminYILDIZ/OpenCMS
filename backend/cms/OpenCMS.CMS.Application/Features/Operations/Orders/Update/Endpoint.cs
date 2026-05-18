@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Operations.Orders.Update;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPut("/operations/orders/{id}", async (Guid id, Command command, IMediator mediator) =>
         {

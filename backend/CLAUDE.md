@@ -82,6 +82,4 @@ Validation failures are caught by `ValidationBehavior<TRequest, TResponse>` and 
 
 - **Use response models, not entities.** Define a `CommandResponse` (for writes) or `QueryResponse` (for reads) record/class inside the existing `Command.cs` or `Query.cs` file — do not create a separate file. Use it as the handler's return type. Never return domain entities directly from endpoints. Never use `Results.Ok()`, `Results.NotFound()`, `Results.NoContent()`, or any other `Results.*` helpers. Just `return` the response model from the endpoint lambda. Returning `null` is acceptable for not-found cases.
 
-- **Register every new endpoint in `RegisterRoutes.cs`.** Endpoints are not discovered automatically. For every new endpoint add the corresponding `Endpoint.MapEndpoint(app)` call in the correct feature group section of `cms/OpenCMS.CMS.ClientApi/Routes/RegisterRoutes.cs`.
-
 - **Add an HTTP example for every new endpoint.** For every new endpoint (ListAll, GetById, Create, Update, Delete) add a matching example request block to the relevant `_http/*.http` file in the ClientApi project (e.g. `Operations.http`, `Agents.http`, `Assets.http`).

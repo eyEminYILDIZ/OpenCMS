@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Update;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPut("/agents/{id}", async (Guid id, Command command, IMediator mediator) =>
         {

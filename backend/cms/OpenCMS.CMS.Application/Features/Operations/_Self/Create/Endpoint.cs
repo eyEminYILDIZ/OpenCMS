@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Operations.Self.Create;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPost("/operations", async (Command command, IMediator mediator) =>
         {

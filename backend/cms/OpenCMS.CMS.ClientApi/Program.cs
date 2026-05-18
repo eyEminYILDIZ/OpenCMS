@@ -1,3 +1,5 @@
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,6 +26,6 @@ app.UseHttpsRedirection();
 
 
 // register agent endpoint
-RegisterRoutes.MapRoutes(app);
+RegisterRoutes.MapRoutes(app, Assembly.GetAssembly(typeof(OpenCMS.CMS.Application.Configurations.Interfaces.IAgentEndpoint)));
 
 app.Run();

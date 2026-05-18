@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Create;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPost("/agents", async (Command command, IMediator mediator) =>
         {
