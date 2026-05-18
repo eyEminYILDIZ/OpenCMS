@@ -17,7 +17,7 @@ Content-Type: application/json
     "longitude": 37.0060,
     "altitude": 10.0,
     "heading": 90.0,
-    "speed": 50.0,
+    "speed": -50.0,
     "assetType": 0,
     "threatType":0,
     "isActive": true
