@@ -8,3 +8,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.AspNetCore.Builder;
 global using System.Text.Json;
+global using OpenCMS.CMS.Application.Configurations.Interfaces;

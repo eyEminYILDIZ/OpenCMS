@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Agents.Self.ListAll;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint, IAgentEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapGet("/agents", async (IMediator mediator) =>
         {

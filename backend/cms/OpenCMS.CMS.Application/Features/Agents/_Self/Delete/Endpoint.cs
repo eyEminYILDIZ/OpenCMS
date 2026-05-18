@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Delete;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapDelete("/agents/{id}", async (Guid id, IMediator mediator) =>
         {

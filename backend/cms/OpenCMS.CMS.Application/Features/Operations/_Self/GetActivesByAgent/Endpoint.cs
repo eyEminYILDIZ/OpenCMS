@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint, IAgentEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapPost("/operations/GetActivesByAgent", async ([FromBody] Query query, [FromServices] IMediator mediator) =>
         {

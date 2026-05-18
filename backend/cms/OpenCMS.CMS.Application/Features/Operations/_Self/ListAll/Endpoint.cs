@@ -1,8 +1,8 @@
 namespace OpenCMS.CMS.Application.Operations.Self.ListAll;
 
-public class Endpoint
+public class Endpoint : IClientEndpoint
 {
-    public static RouteHandlerBuilder MapEndpoint(WebApplication app)
+    public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {
         return app.MapGet("/operations", async (IMediator mediator) =>
         {
