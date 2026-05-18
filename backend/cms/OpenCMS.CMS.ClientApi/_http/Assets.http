@@ -1,4 +1,4 @@
-@AgentApi = http://localhost:5200
+@AgentApi = http://localhost:5020
 
 ### List All Assets
 GET {{AgentApi}}/assets

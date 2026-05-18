@@ -8,9 +8,10 @@ public static class RegisterRoutes
     {
         // Agents
         OpenCMS.CMS.Application.Agents.Self.Ping.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Agents.Self.ListAll.Endpoint.MapEndpoint(app); // temporary registering
         // Assets
         OpenCMS.CMS.Application.Assets.Self.Feed.Endpoint.MapEndpoint(app);
-        OpenCMS.CMS.Application.Assets.Self.ListAll.Endpoint.MapEndpoint(app);
+        OpenCMS.CMS.Application.Assets.Self.ListAll.Endpoint.MapEndpoint(app); // temporary registering
         // Operations
         OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent.Endpoint.MapEndpoint(app);
     }

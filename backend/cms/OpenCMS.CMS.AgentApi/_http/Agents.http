@@ -1,5 +1,11 @@
 @AgentApi = http://localhost:5010
 
+
+GET {{AgentApi}}/agents
+Accept: application/json
+
+###
+
 PUT {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3/ping
 Accept: application/json
 Content-Type: application/json
