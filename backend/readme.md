@@ -12,6 +12,7 @@
 
 - MediatR
 - FluentValidation
+- OpenTelemetry
 - Microsoft.EntityFrameworkCore
 - Microsoft.AspNetCore.OpenApi
 
