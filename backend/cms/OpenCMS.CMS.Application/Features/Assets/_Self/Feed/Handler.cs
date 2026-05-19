@@ -3,10 +3,12 @@ namespace OpenCMS.CMS.Application.Assets.Self.Feed;
 public class Handler : IRequestHandler<Command, CommandResponse?>
 {
     private readonly IApplicationDbContext _dbContext;
+    private readonly ILogger<Handler> _logger;
 
-    public Handler(IApplicationDbContext dbContext)
+    public Handler(IApplicationDbContext dbContext, ILogger<Handler> logger)
     {
         _dbContext = dbContext;
+        _logger = logger;
     }
 
     public async Task<CommandResponse?> Handle(Command request, CancellationToken cancellationToken)
@@ -50,6 +52,9 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Asset with ID {AssetId} has been processed. Name: {AssetName}, Latitude: {Latitude}, Longitude: {Longitude}, Altitude: {Altitude}, Heading: {Heading}, Speed: {Speed}, AssetType: {AssetType}, ThreatType: {ThreatType}, IsActive: {IsActive}, RelatedAgentId: {RelatedAgentId}",
+            asset.Id, asset.Name, asset.Latitude, asset.Longitude, asset.Altitude, asset.Heading, asset.Speed, asset.AssetType, asset.ThreatType, asset.IsActive, asset.RelatedAgentId);
 
         return new CommandResponse
         {

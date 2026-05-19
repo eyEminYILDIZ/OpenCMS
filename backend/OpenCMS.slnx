@@ -14,4 +14,7 @@
     <Project Path="cms/OpenCMS.CMS.Domain/OpenCMS.CMS.Domain.csproj" />
     <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/shared/">
+    <Project Path="shared/OpenCMS.ServiceDefaults/OpenCMS.ServiceDefaults.csproj" />
+  </Folder>
 </Solution>
