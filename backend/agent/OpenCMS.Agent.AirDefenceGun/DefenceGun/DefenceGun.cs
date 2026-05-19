@@ -1,27 +1,29 @@
+using Microsoft.Extensions.Logging;
+
 namespace OpenCMS.Agent.AirDefenceGun
 {
     public class DefenceGun
     {
         private readonly AgentState _selfAgent;
-        public DefenceGun(AgentState selfAgent)
+        private readonly ILogger<DefenceGun> _logger;
+
+        public DefenceGun(AgentState selfAgent, ILogger<DefenceGun> logger)
         {
             _selfAgent = selfAgent;
+            _logger = logger;
         }
 
         public async Task TakePosition(Asset targetAsset)
         {
-            // fake waiting for the gun to take position
             await Task.Delay(1000);
-
-            System.Console.WriteLine($">>Positioned to target: {targetAsset.Id} at {targetAsset.Latitude}/{targetAsset.Longitude}");
+            _logger.LogInformation("Positioned to target {AssetId} at {Latitude}/{Longitude}/{Altitude}",
+                targetAsset.Id, targetAsset.Latitude, targetAsset.Longitude, targetAsset.Altitude);
         }
 
         public async Task Fire()
         {
-            // fake waiting for the gun to fire
             await Task.Delay(100);
-
-            System.Console.WriteLine(">>>>>>>>>>>>>>>> Fired <<<<<<<<<<<<<<<<<");
+            _logger.LogWarning("FIRED at target");
         }
     }
 }

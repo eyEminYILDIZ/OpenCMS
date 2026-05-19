@@ -1,11 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\OpenCMS.Agent.Library\OpenCMS.Agent.Library.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCMS.Agent.Library\OpenCMS.Agent.Library.csproj" />
+    <ProjectReference Include="..\..\shared\OpenCMS.ServiceDefaults\OpenCMS.ServiceDefaults.csproj" />
+  </ItemGroup>
 
 </Project>

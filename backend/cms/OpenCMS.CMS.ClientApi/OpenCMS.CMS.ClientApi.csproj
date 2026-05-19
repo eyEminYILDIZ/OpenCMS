@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenCMS.CMS.Infrastructure\OpenCMS.CMS.Infrastructure.csproj" />
     <ProjectReference Include="..\OpenCMS.CMS.Application\OpenCMS.CMS.Application.csproj" />
+    <ProjectReference Include="..\..\shared\OpenCMS.ServiceDefaults\OpenCMS.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
