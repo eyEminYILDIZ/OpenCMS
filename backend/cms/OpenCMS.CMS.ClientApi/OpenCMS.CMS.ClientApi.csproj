@@ -3,12 +3,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OpenCMS.CMS.Infrastructure\OpenCMS.CMS.Infrastructure.csproj" />
     <ProjectReference Include="..\OpenCMS.CMS.Application\OpenCMS.CMS.Application.csproj" />
-    <ProjectReference Include="..\..\shared\OpenCMS.ServiceDefaults\OpenCMS.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

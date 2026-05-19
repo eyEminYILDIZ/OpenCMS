@@ -4,6 +4,7 @@ global using OpenCMS.CMS.Infrastructure.Persistence;
 global using OpenCMS.CMS.Infrastructure;
 global using OpenCMS.CMS.Application.Configurations;
 global using OpenCMS.CMS.ClientApi.Routes;
+global using OpenCMS.CMS.AgentApi.Extensions;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Reflection;
 global using Microsoft.AspNetCore.Builder;

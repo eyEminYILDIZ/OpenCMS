@@ -1,6 +1,3 @@
-using System.Reflection;
-using OpenCMS.ServiceDefaults;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

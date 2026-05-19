@@ -5,9 +5,9 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace OpenCMS.ServiceDefaults;
+namespace OpenCMS.CMS.ClientApi.Extensions;
 
-public static class Extensions
+public static class ServiceDefaults
 {
     public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
     {
