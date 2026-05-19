@@ -7,16 +7,16 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
 
+var agentId = Guid.Parse(builder.Configuration["Agent:AgentId"]!);
+var assetId = Guid.Parse(builder.Configuration["Agent:AssetId"]!);
+var baseUrl = builder.Configuration["OpenCMS:BaseUrl"]!;
+
 var host = builder.Build();
 await host.StartAsync();
 
 var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
 var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirDefenceGun");
-
-var agentId = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23");
-var assetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24");
-var baseUrl = "http://localhost:5010";
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
 var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypes.Vehicle, ThreatTypes.Own);

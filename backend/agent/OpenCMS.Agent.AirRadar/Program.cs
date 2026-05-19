@@ -7,16 +7,16 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
 
+var agentId = Guid.Parse(builder.Configuration["Agent:AgentId"]!);
+var assetId = Guid.Parse(builder.Configuration["Agent:AssetId"]!);
+var baseUrl = builder.Configuration["OpenCMS:BaseUrl"]!;
+
 var host = builder.Build();
 await host.StartAsync();
 
 var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
 var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirRadar");
-
-var agentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
-var assetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23");
-var baseUrl = "http://localhost:5010";
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
 var radar = new Radar();

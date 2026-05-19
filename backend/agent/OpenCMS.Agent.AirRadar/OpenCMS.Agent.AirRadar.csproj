@@ -9,6 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OpenCMS.Agent.Library\OpenCMS.Agent.Library.csproj" />
     <ProjectReference Include="..\..\shared\OpenCMS.ServiceDefaults\OpenCMS.ServiceDefaults.csproj" />
   </ItemGroup>
