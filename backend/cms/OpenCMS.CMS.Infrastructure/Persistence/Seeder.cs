@@ -6,6 +6,8 @@ public class Seeder
 {
     public static void SeedOperationVersion1(ApplicationDbContext context)
     {
+        if (context.Agents.Any()) return;
+
         var agents = new[]
         {
             new Domain.Entities.Agent { Id = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"), Name = "AirRadar Agent" },

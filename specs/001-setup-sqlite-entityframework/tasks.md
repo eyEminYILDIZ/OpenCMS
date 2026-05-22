@@ -19,8 +19,8 @@
 
 **Purpose**: Package and repository infrastructure that must be in place before any code changes.
 
-- [ ] T001 In `backend/cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj`, remove `<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />` and add `<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />`
-- [ ] T002 [P] Add `backend/data/` to `.gitignore` at the repository root so the SQLite database file is never committed
+- [x] T001 In `backend/cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj`, remove `<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />` and add `<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />`
+- [x] T002 [P] Add `backend/data/` to `.gitignore` at the repository root so the SQLite database file is never committed
 
 **Checkpoint**: `dotnet build` should fail after T001 (InMemory usages removed but Program.cs still references it) — this is expected and resolved in Phase 3.
 
@@ -32,9 +32,9 @@
 
 **⚠️ CRITICAL**: Phases 3 and 4 depend on this phase being complete.
 
-- [ ] T003 [P] [US2] In `backend/cms/OpenCMS.CMS.AgentApi/appsettings.json`, add a `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
-- [ ] T004 [P] [US2] In `backend/cms/OpenCMS.CMS.ClientApi/appsettings.json`, add the same `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
-- [ ] T005 [US2] Create `backend/cms/OpenCMS.CMS.Infrastructure/Configurations/InfrastructureServiceRegistration.cs` with a static `AddInfrastructureServices(this IServiceCollection, IConfiguration, IWebHostEnvironment)` extension method that: (1) reads `ConnectionStrings:DefaultConnection`, (2) resolves the `Data Source` path to an absolute path using `Path.GetFullPath(Path.Combine(environment.ContentRootPath, dataSourceValue))`, (3) calls `Directory.CreateDirectory` on the parent directory, (4) registers `AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseSqlite(connectionString))`
+- [x] T003 [P] [US2] In `backend/cms/OpenCMS.CMS.AgentApi/appsettings.json`, add a `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
+- [x] T004 [P] [US2] In `backend/cms/OpenCMS.CMS.ClientApi/appsettings.json`, add the same `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
+- [x] T005 [US2] Create `backend/cms/OpenCMS.CMS.Infrastructure/Configurations/InfrastructureServiceRegistration.cs` with a static `AddInfrastructureServices(this IServiceCollection, IConfiguration, IWebHostEnvironment)` extension method that: (1) reads `ConnectionStrings:DefaultConnection`, (2) resolves the `Data Source` path to an absolute path using `Path.GetFullPath(Path.Combine(environment.ContentRootPath, dataSourceValue))`, (3) calls `Directory.CreateDirectory` on the parent directory, (4) registers `AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseSqlite(connectionString))`
 
 **Checkpoint**: `dotnet build` should succeed after T005 (new file compiles, but Program.cs still uses old registration).
 
@@ -46,8 +46,8 @@
 
 **Independent Test**: Start AgentApi, verify seed data is present via any GET endpoint. Stop AgentApi, restart it, verify the same data is still returned (not re-seeded from scratch).
 
-- [ ] T006 [US1] Update `backend/cms/OpenCMS.CMS.AgentApi/Program.cs`: replace `builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseInMemoryDatabase("OpenCMS"))` with `builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment)`. Then replace the inline `Seeder.SeedOperationVersion1(...)` startup call with a scoped block that calls `context.Database.EnsureCreated()`, then `context.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;")`, then `Seeder.SeedOperationVersion1(context)`
-- [ ] T007 [P] [US1] Apply the identical Program.cs change to `backend/cms/OpenCMS.CMS.ClientApi/Program.cs`
+- [x] T006 [US1] Update `backend/cms/OpenCMS.CMS.AgentApi/Program.cs`: replace `builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseInMemoryDatabase("OpenCMS"))` with `builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment)`. Then replace the inline `Seeder.SeedOperationVersion1(...)` startup call with a scoped block that calls `context.Database.EnsureCreated()`, then `context.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;")`, then `Seeder.SeedOperationVersion1(context)`
+- [x] T007 [P] [US1] Apply the identical Program.cs change to `backend/cms/OpenCMS.CMS.ClientApi/Program.cs`
 
 **Checkpoint**: `dotnet build` succeeds. Running either API for the first time creates `backend/data/opencms.db`. Stopping and restarting retains all data.
 
@@ -59,7 +59,7 @@
 
 **Independent Test**: Start AgentApi (seeds DB). Start ClientApi. Verify no exceptions and no duplicate agent/operation records in the database. Restart both — data intact, no duplicates.
 
-- [ ] T008 [US3] In `backend/cms/OpenCMS.CMS.Infrastructure/Persistence/Seeder.cs`, add `if (context.Agents.Any()) return;` as the first line of `SeedOperationVersion1` to make seeding idempotent and safe for concurrent dual-API startup
+- [x] T008 [US3] In `backend/cms/OpenCMS.CMS.Infrastructure/Persistence/Seeder.cs`, add `if (context.Agents.Any()) return;` as the first line of `SeedOperationVersion1` to make seeding idempotent and safe for concurrent dual-API startup
 
 **Checkpoint**: Both APIs can start simultaneously against the same `opencms.db` without throwing primary key violations. Restarting either API multiple times produces no duplicate records.
 
@@ -69,8 +69,8 @@
 
 **Purpose**: Keep documentation in sync and verify the full build after all changes.
 
-- [ ] T009 [P] Update `backend/CLAUDE.md`: in the Architecture section replace "EF Core DbContext (in-memory), seeder" with "EF Core DbContext (SQLite, `backend/data/opencms.db`), seeder" and update the inline code comment about `UseInMemoryDatabase`
-- [ ] T010 Run `dotnet build` from `backend/` and confirm zero errors and zero warnings related to the InMemory package or missing usings
+- [x] T009 [P] Update `backend/CLAUDE.md`: in the Architecture section replace "EF Core DbContext (in-memory), seeder" with "EF Core DbContext (SQLite, `backend/data/opencms.db`), seeder" and update the inline code comment about `UseInMemoryDatabase`
+- [x] T010 Run `dotnet build` from `backend/` and confirm zero errors and zero warnings related to the InMemory package or missing usings
 
 ---
 
