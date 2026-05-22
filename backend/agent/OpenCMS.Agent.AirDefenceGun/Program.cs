@@ -78,7 +78,7 @@ while (!cts.Token.IsCancellationRequested)
         logger.LogError(ex, "Error in agent loop");
     }
 
-    await Task.Delay(1000, cts.Token);
+    await Task.Delay(5000, cts.Token);
 }
 
 logger.LogInformation("Air Defence Gun agent shutting down");

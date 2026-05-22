@@ -7,9 +7,7 @@ builder.AddServiceDefaults();
 builder.Services.AddOpenApi();
 
 builder.Services.AddApplicationServices();
-
-builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt =>
-    opt.UseInMemoryDatabase("OpenCMS"));
+builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
 var app = builder.Build();
 
@@ -19,7 +17,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-Seeder.SeedOperationVersion1(app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>());
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.EnsureCreated();
+    context.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;");
+    Seeder.SeedOperationVersion1(context);
+}
 
 app.UseApplicationExceptionHandling();
 app.UseHttpsRedirection();
