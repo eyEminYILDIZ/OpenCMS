@@ -8,7 +8,9 @@ public class Endpoint : IClientEndpoint
         {
             command.Id = id;
             var order = await mediator.Send(command);
-            return order;
+            return order is null
+                ? TypedResults.Json(ApiResponse.NotFound("Order not found."), statusCode: 404)
+                : TypedResults.Json(ApiResponse.Ok(order), statusCode: 200);
         });
     }
 }

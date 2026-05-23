@@ -7,7 +7,9 @@ public class Endpoint : IClientEndpoint
         return app.MapDelete("/operations/assets/{id}", async (Guid id, IMediator mediator) =>
         {
             var deleted = await mediator.Send(new Command { Id = id });
-            return deleted;
+            return deleted is null
+                ? TypedResults.Json(ApiResponse.NotFound("OperationAsset not found."), statusCode: 404)
+                : TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200);
         });
     }
 }

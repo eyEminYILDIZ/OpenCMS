@@ -31,9 +31,9 @@ No project initialization required — the backend project already exists and no
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T001 Create `ApiResponse` record with `int StatusCode`, `object? Data`, `string[]? Error` properties and static factory methods `Ok(object data)`, `NotFound(string message)`, `BadRequest(IReadOnlyDictionary<string, string[]> errors)` in `backend/cms/OpenCMS.CMS.Application/Configurations/ApiResponse.cs`. `Ok` sets StatusCode=200 and Error=null. `NotFound` sets StatusCode=404, Data=null, Error=[message]. `BadRequest` flattens all dictionary values with `.SelectMany(e => e.Value).ToArray()` into Error, sets StatusCode=400, Data=null.
+- [x] T001 Create `ApiResponse` record with `int StatusCode`, `object? Data`, `string[]? Error` properties and static factory methods `Ok(object data)`, `NotFound(string message)`, `BadRequest(IReadOnlyDictionary<string, string[]> errors)` in `backend/cms/OpenCMS.CMS.Application/Configurations/ApiResponse.cs`. `Ok` sets StatusCode=200 and Error=null. `NotFound` sets StatusCode=404, Data=null, Error=[message]. `BadRequest` flattens all dictionary values with `.SelectMany(e => e.Value).ToArray()` into Error, sets StatusCode=400, Data=null.
 
-- [ ] T002 Update `ValidationExceptionHandler` to write `ApiResponse.BadRequest(validationException.Errors)` as JSON and set `context.Response.StatusCode = 400` instead of writing `ValidationProblemDetails` in `backend/cms/OpenCMS.CMS.Application/Configurations/Exceptions/ValidationExceptionHandler.cs`. Remove the `ValidationProblemDetails` construction entirely.
+- [x] T002 Update `ValidationExceptionHandler` to write `ApiResponse.BadRequest(validationException.Errors)` as JSON and set `context.Response.StatusCode = 400` instead of writing `ValidationProblemDetails` in `backend/cms/OpenCMS.CMS.Application/Configurations/Exceptions/ValidationExceptionHandler.cs`. Remove the `ValidationProblemDetails` construction entirely.
 
 **Checkpoint**: `ApiResponse` compiles and validation failures now return the unified envelope. No endpoint migration yet.
 
@@ -45,17 +45,17 @@ No project initialization required — the backend project already exists and no
 
 **Independent Test**: Start ClientApi or AgentApi, call `GET /agents` (list), `GET /agents/{valid-id}` (found), `GET /agents/{invalid-id}` (not found), and `POST /agents` with an invalid body (validation failure). Confirm all four responses have exactly the fields `statusCode`, `data`, and `error` at the top level, with correct null/non-null values.
 
-- [ ] T003 [P] [US1] Update `Agents/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(agents), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/ListAll/Endpoint.cs`
+- [x] T003 [P] [US1] Update `Agents/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(agents), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/ListAll/Endpoint.cs`
 
-- [ ] T004 [P] [US1] Update `Agents/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/GetById/Endpoint.cs`
+- [x] T004 [P] [US1] Update `Agents/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/GetById/Endpoint.cs`
 
-- [ ] T005 [P] [US1] Update `Agents/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Create/Endpoint.cs`
+- [x] T005 [P] [US1] Update `Agents/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Create/Endpoint.cs`
 
-- [ ] T006 [P] [US1] Update `Agents/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Update/Endpoint.cs`
+- [x] T006 [P] [US1] Update `Agents/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Update/Endpoint.cs`
 
-- [ ] T007 [P] [US1] Update `Agents/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Delete/Endpoint.cs`
+- [x] T007 [P] [US1] Update `Agents/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Delete/Endpoint.cs`
 
-- [ ] T008 [P] [US1] Update `Agents/Ping/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Ping/Endpoint.cs`
+- [x] T008 [P] [US1] Update `Agents/Ping/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Agents/_Self/Ping/Endpoint.cs`
 
 **Checkpoint**: All Agents endpoints return the unified envelope. User Story 1 is independently testable and deliverable.
 
@@ -67,17 +67,17 @@ No project initialization required — the backend project already exists and no
 
 **Independent Test**: Start ClientApi or AgentApi, call `GET /assets`, `GET /assets/{valid-id}`, `GET /assets/{invalid-id}`, and `PUT /assets/{id}/feed`. Confirm all responses follow the unified envelope.
 
-- [ ] T009 [P] [US2] Update `Assets/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(assets), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/ListAll/Endpoint.cs`
+- [x] T009 [P] [US2] Update `Assets/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(assets), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/ListAll/Endpoint.cs`
 
-- [ ] T010 [P] [US2] Update `Assets/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/GetById/Endpoint.cs`
+- [x] T010 [P] [US2] Update `Assets/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/GetById/Endpoint.cs`
 
-- [ ] T011 [P] [US2] Update `Assets/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Create/Endpoint.cs`
+- [x] T011 [P] [US2] Update `Assets/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Create/Endpoint.cs`
 
-- [ ] T012 [P] [US2] Update `Assets/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Update/Endpoint.cs`
+- [x] T012 [P] [US2] Update `Assets/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Update/Endpoint.cs`
 
-- [ ] T013 [P] [US2] Update `Assets/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Delete/Endpoint.cs`
+- [x] T013 [P] [US2] Update `Assets/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Delete/Endpoint.cs`
 
-- [ ] T014 [P] [US2] Update `Assets/Feed/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Feed/Endpoint.cs`
+- [x] T014 [P] [US2] Update `Assets/Feed/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Assets/_Self/Feed/Endpoint.cs`
 
 **Checkpoint**: Agents and Assets groups both return the unified envelope. User Story 2 is independently testable.
 
@@ -91,37 +91,37 @@ No project initialization required — the backend project already exists and no
 
 ### Operations — _Self (5 endpoints)
 
-- [ ] T015 [P] [US3] Update `Operations/_Self/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operations), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/ListAll/Endpoint.cs`
+- [x] T015 [P] [US3] Update `Operations/_Self/ListAll/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operations), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/ListAll/Endpoint.cs`
 
-- [ ] T016 [P] [US3] Update `Operations/_Self/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Operation not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(operation), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/GetById/Endpoint.cs`
+- [x] T016 [P] [US3] Update `Operations/_Self/GetById/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Operation not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(operation), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/GetById/Endpoint.cs`
 
-- [ ] T017 [P] [US3] Update `Operations/_Self/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operation), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/Create/Endpoint.cs`
+- [x] T017 [P] [US3] Update `Operations/_Self/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operation), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/Create/Endpoint.cs`
 
-- [ ] T018 [P] [US3] Update `Operations/_Self/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Operation not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/Delete/Endpoint.cs`
+- [x] T018 [P] [US3] Update `Operations/_Self/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Operation not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/Delete/Endpoint.cs`
 
-- [ ] T019 [P] [US3] Update `Operations/_Self/GetActivesByAgent/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operations), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/GetActivesByAgent/Endpoint.cs`
+- [x] T019 [P] [US3] Update `Operations/_Self/GetActivesByAgent/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operations), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/_Self/GetActivesByAgent/Endpoint.cs`
 
 ### Operations — Orders (3 endpoints)
 
-- [ ] T020 [P] [US3] Update `Operations/Orders/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(order), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Create/Endpoint.cs`
+- [x] T020 [P] [US3] Update `Operations/Orders/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(order), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Create/Endpoint.cs`
 
-- [ ] T021 [P] [US3] Update `Operations/Orders/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Order not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(order), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Update/Endpoint.cs`
+- [x] T021 [P] [US3] Update `Operations/Orders/Update/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Order not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(order), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Update/Endpoint.cs`
 
-- [ ] T022 [P] [US3] Update `Operations/Orders/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Order not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Delete/Endpoint.cs`
+- [x] T022 [P] [US3] Update `Operations/Orders/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("Order not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/Orders/Delete/Endpoint.cs`
 
 ### Operations — OperationAssets (2 endpoints)
 
-- [ ] T023 [P] [US3] Update `Operations/OperationAssets/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operationAsset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/OperationAssets/Create/Endpoint.cs`
+- [x] T023 [P] [US3] Update `Operations/OperationAssets/Create/Endpoint.cs` to return `TypedResults.Json(ApiResponse.Ok(operationAsset), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/OperationAssets/Create/Endpoint.cs`
 
-- [ ] T024 [P] [US3] Update `Operations/OperationAssets/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("OperationAsset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/OperationAssets/Delete/Endpoint.cs`
+- [x] T024 [P] [US3] Update `Operations/OperationAssets/Delete/Endpoint.cs` to return `TypedResults.Json(ApiResponse.NotFound("OperationAsset not found."), statusCode: 404)` when result is null, otherwise `TypedResults.Json(ApiResponse.Ok(deleted), statusCode: 200)` in `backend/cms/OpenCMS.CMS.Application/Features/Operations/OperationAssets/Delete/Endpoint.cs`
 
 ### HTTP Example Files (3 files)
 
-- [ ] T025 [US3] Update `Agents.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Agents.http`
+- [x] T025 [US3] Update `Agents.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Agents.http`
 
-- [ ] T026 [P] [US3] Update `Assets.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Assets.http`
+- [x] T026 [P] [US3] Update `Assets.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Assets.http`
 
-- [ ] T027 [P] [US3] Update `Operations.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Operations.http`
+- [x] T027 [P] [US3] Update `Operations.http` response comment blocks to show the unified envelope shape — success list, success single, 404, and 400 examples — in `backend/cms/OpenCMS.CMS.ClientApi/_http/Operations.http`
 
 **Checkpoint**: All 22 endpoints migrated, all HTTP example files updated. User Story 3 complete.
 
@@ -131,9 +131,9 @@ No project initialization required — the backend project already exists and no
 
 **Purpose**: Build verification across both APIs to confirm no endpoint was missed.
 
-- [ ] T028 Build and run `ClientApi` (`dotnet run --project cms/OpenCMS.CMS.ClientApi`), call at least one endpoint from each feature group via the `.http` files, and confirm all responses conform to the unified envelope in `backend/cms/OpenCMS.CMS.ClientApi`
+- [x] T028 Build and run `ClientApi` (`dotnet run --project cms/OpenCMS.CMS.ClientApi`), call at least one endpoint from each feature group via the `.http` files, and confirm all responses conform to the unified envelope in `backend/cms/OpenCMS.CMS.ClientApi`
 
-- [ ] T029 [P] Build and run `AgentApi` (`dotnet run --project cms/OpenCMS.CMS.AgentApi`), call `GET /agents` and `PUT /assets/{id}/feed`, and confirm both return the unified envelope in `backend/cms/OpenCMS.CMS.AgentApi`
+- [x] T029 [P] Build and run `AgentApi` (`dotnet run --project cms/OpenCMS.CMS.AgentApi`), call `GET /agents` and `PUT /assets/{id}/feed`, and confirm both return the unified envelope in `backend/cms/OpenCMS.CMS.AgentApi`
 
 ---
 

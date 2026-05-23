@@ -8,7 +8,9 @@ public class Endpoint : IClientEndpoint
         {
             command.Id = id;
             var agent = await mediator.Send(command);
-            return agent;
+            return agent is null
+                ? TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)
+                : TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200);
         });
     }
 }

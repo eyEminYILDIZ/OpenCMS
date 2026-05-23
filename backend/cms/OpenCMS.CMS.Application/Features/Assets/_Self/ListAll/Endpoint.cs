@@ -7,7 +7,7 @@ public class Endpoint : IClientEndpoint, IAgentEndpoint
         return app.MapGet("/assets", async (IMediator mediator) =>
         {
             var assets = await mediator.Send(new Query());
-            return assets;
+            return TypedResults.Json(ApiResponse.Ok(assets), statusCode: 200);
         });
     }
 }

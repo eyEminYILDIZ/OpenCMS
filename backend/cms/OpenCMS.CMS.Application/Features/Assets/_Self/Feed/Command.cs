@@ -12,7 +12,7 @@ public class Command : IRequest<CommandResponse?>
     public AssetTypes AssetType { get; set; }
     public ThreatTypes ThreatType { get; set; }
     public bool IsActive { get; set; }
-    public Guid RelatedAgentId { get; set; }
+    public Guid? RelatedAgentId { get; set; }
 }
 
 public class CommandResponse
