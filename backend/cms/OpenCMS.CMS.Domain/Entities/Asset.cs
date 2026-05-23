@@ -14,7 +14,7 @@ public class Asset : BaseEntity
     public DateTime LastUpdated { get; set; }
     public bool IsActive { get; set; }
 
-    public Guid RelatedAgentId { get; set; }
+    public Guid? RelatedAgentId { get; set; }
     public Agent RelatedAgent { get; set; }
 }
 

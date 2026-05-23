@@ -27,7 +27,7 @@ public class CommandResponse
     public bool IsActive { get; set; }
     public DateTime FirstUpdated { get; set; }
     public DateTime LastUpdated { get; set; }
-    public Guid RelatedAgentId { get; set; }
+    public Guid? RelatedAgentId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 }

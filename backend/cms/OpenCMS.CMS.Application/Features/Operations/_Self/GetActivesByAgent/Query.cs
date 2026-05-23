@@ -33,7 +33,7 @@ public class AssetResponse
     public double Speed { get; set; }
     public AssetTypes AssetType { get; set; }
     public ThreatTypes ThreatType { get; set; }
-    public Guid RelatedAgentId { get; set; }
+    public Guid? RelatedAgentId { get; set; }
 }
 
 public class OrderResponse
