@@ -7,7 +7,7 @@ public class Endpoint : IClientEndpoint
         return app.MapPost("/operations/orders", async (Command command, IMediator mediator) =>
         {
             var order = await mediator.Send(command);
-            return order;
+            return TypedResults.Json(ApiResponse.Ok(order), statusCode: 200);
         });
     }
 }

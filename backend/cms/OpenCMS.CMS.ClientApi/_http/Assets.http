@@ -1,5 +1,11 @@
 @AgentApi = http://localhost:5020
 
+# Response envelope (all endpoints):
+# { "statusCode": 200, "data": { ... }, "error": null }           — success (single object)
+# { "statusCode": 200, "data": [ ... ], "error": null }           — success (list)
+# { "statusCode": 404, "data": null, "error": ["Asset not found."] }  — not found
+# { "statusCode": 400, "data": null, "error": ["Name is required."] } — validation failure
+
 ### List All Assets
 GET {{AgentApi}}/assets
 Accept: application/json

@@ -1,10 +1,18 @@
 @AgentApi = http://localhost:5020
 
+# Response envelope (all endpoints):
+# { "statusCode": 200, "data": { ... }, "error": null }          — success (single object)
+# { "statusCode": 200, "data": [ ... ], "error": null }          — success (list)
+# { "statusCode": 404, "data": null, "error": ["Agent not found."] }  — not found
+# { "statusCode": 400, "data": null, "error": ["Name is required."] } — validation failure
+
+### List All Agents
 GET {{AgentApi}}/agents
 Accept: application/json
 
 ###
 
+### Create Agent
 POST {{AgentApi}}/agents
 Accept: application/json
 Content-Type: application/json
@@ -17,11 +25,13 @@ Content-Type: application/json
 
 ###
 
+### Get Agent By Id
 GET {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
 Accept: application/json
 
 ###
 
+### Update Agent
 PUT {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
 Accept: application/json
 Content-Type: application/json
@@ -31,5 +41,11 @@ Content-Type: application/json
     "agentType": 0,
     "description": "This is a description for New Agent 1"
 }
+
+###
+
+### Delete Agent
+DELETE {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
+Accept: application/json
 
 ###

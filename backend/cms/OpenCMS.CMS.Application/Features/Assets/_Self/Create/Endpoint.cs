@@ -7,7 +7,7 @@ public class Endpoint : IClientEndpoint
         return app.MapPost("/assets", async (Command command, IMediator mediator) =>
         {
             var asset = await mediator.Send(command);
-            return asset;
+            return TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200);
         });
     }
 }

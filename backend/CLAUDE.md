@@ -76,10 +76,24 @@ public class Validator : AbstractValidator<Command>
 }
 ```
 
-Validation failures are caught by `ValidationBehavior<TRequest, TResponse>` and surfaced as HTTP 400 with `ValidationProblemDetails` via `ValidationExceptionHandler`.
+Validation failures are caught by `ValidationBehavior<TRequest, TResponse>` and surfaced as HTTP 400 via `ValidationExceptionHandler`, which writes a unified `ApiResponse` envelope (see below).
 
 ## Endpoint conventions
 
-- **Use response models, not entities.** Define a `CommandResponse` (for writes) or `QueryResponse` (for reads) record/class inside the existing `Command.cs` or `Query.cs` file — do not create a separate file. Use it as the handler's return type. Never return domain entities directly from endpoints. Never use `Results.Ok()`, `Results.NotFound()`, `Results.NoContent()`, or any other `Results.*` helpers. Just `return` the response model from the endpoint lambda. Returning `null` is acceptable for not-found cases.
+- **Use response models, not entities.** Define a `CommandResponse` (for writes) or `QueryResponse` (for reads) record/class inside the existing `Command.cs` or `Query.cs` file — do not create a separate file. Use it as the handler's return type. Never return domain entities directly from endpoints.
+
+- **Wrap all returns in `ApiResponse`.** Every endpoint lambda must return `TypedResults.Json(ApiResponse.Ok(result), statusCode: 200)` on success, or `TypedResults.Json(ApiResponse.NotFound("Resource not found."), statusCode: 404)` when the handler returns null. Never use `Results.Ok()`, `Results.NotFound()`, `Results.NoContent()`, or any other semantic `Results.*` helpers. `TypedResults.Json` is the only allowed low-level serialization helper.
+
+  ```csharp
+  // Non-nullable handler result
+  return TypedResults.Json(ApiResponse.Ok(result), statusCode: 200);
+
+  // Nullable handler result
+  return result is null
+      ? TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)
+      : TypedResults.Json(ApiResponse.Ok(result), statusCode: 200);
+  ```
+
+  The `ApiResponse` envelope shape: `{ statusCode, data, error }` — `error` is always `string[] | null`, never a plain string or object.
 
 - **Add an HTTP example for every new endpoint.** For every new endpoint (ListAll, GetById, Create, Update, Delete) add a matching example request block to the relevant `_http/*.http` file in the ClientApi project (e.g. `Operations.http`, `Agents.http`, `Assets.http`).

@@ -8,7 +8,9 @@ public class Endpoint : IClientEndpoint
         {
             command.Id = id;
             var asset = await mediator.Send(command);
-            return asset;
+            return asset is null
+                ? TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)
+                : TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200);
         });
     }
 }

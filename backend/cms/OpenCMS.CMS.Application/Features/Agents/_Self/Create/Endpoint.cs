@@ -7,7 +7,7 @@ public class Endpoint : IClientEndpoint
         return app.MapPost("/agents", async (Command command, IMediator mediator) =>
         {
             var agent = await mediator.Send(command);
-            return agent;
+            return TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200);
         });
     }
 }
