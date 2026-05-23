@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using OpenCMS.CMS.Application.Configurations;
 using OpenCMS.CMS.Domain.Entities;
 
 namespace OpenCMS.Agent.Library;
@@ -61,6 +62,12 @@ public class OpenCmsClient
             throw new Exception($"Failed to get active operations: {response.StatusCode}");
         }
         var content = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<List<OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent.QueryResponse>>(content, _jsonOptions)!;
+        var responseBody = JsonSerializer.Deserialize<ApiResponse>(content, _jsonOptions);
+        if (responseBody == null || responseBody.Data == null || responseBody.Error != null)
+        {
+            _logger.LogError("Invalid response body: {Content}", string.Join(',', responseBody?.Error) ?? "invalid response body");
+            throw new Exception("Error: " + responseBody?.Error ?? "invalid response body");
+        }
+        return JsonSerializer.Deserialize<List<OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent.QueryResponse>>(responseBody.Data.ToString(), _jsonOptions);
     }
 }
