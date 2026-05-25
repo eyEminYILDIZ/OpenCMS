@@ -23,6 +23,7 @@
 - Central property management
 - XML (slnx) solution file
 - Aspire
+- Result Pattern
 
 
 ## Projects
