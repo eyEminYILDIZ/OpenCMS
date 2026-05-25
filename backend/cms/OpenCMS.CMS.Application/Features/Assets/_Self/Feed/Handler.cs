@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Assets.Self.Feed;
 
-public class Handler : IRequestHandler<Command, CommandResponse?>
+public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly ILogger<Handler> _logger;
@@ -11,7 +11,7 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         _logger = logger;
     }
 
-    public async Task<CommandResponse?> Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
         var asset = await _dbContext.Assets.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.GetById;
 
-public class Handler : IRequestHandler<Query, QueryResponse?>
+public class Handler : IRequestHandler<Query, Result<QueryResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,12 +9,12 @@ public class Handler : IRequestHandler<Query, QueryResponse?>
         _dbContext = dbContext;
     }
 
-    public async Task<QueryResponse?> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<Result<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
     {
         var agent = await _dbContext.Agents.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 
         if (agent == null)
-            return null;
+            return Error.NotFound;
 
         return new QueryResponse
         {

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Orders.Create;
 
-public class Command : IRequest<CommandResponse>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public Guid OperationId { get; set; }
     public string Description { get; set; }

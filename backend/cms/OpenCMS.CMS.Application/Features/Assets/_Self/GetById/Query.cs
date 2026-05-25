@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Assets.Self.GetById;
 
-public class Query : IRequest<QueryResponse?>
+public class Query : IRequest<Result<QueryResponse>>
 {
     public Guid Id { get; set; }
 }

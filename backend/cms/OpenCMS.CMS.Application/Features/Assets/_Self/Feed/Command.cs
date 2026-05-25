@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Assets.Self.Feed;
 
-public class Command : IRequest<CommandResponse?>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

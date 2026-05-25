@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Assets.Self.ListAll;
 
-public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
+public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,7 +9,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
         var assets = await _dbContext.Assets.ToListAsync(cancellationToken);
 
@@ -30,6 +30,6 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
             RelatedAgentId = asset.RelatedAgentId,
             CreatedAt = asset.CreatedAt,
             UpdatedAt = asset.UpdatedAt
-        });
+        }).ToList();
     }
 }

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Self.ListAll;
 
-public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
+public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,7 +9,7 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
         var operations = await _dbContext.Operations.ToListAsync(cancellationToken);
 
@@ -25,6 +25,6 @@ public class Handler : IRequestHandler<Query, IEnumerable<QueryResponse>>
             OperationType = operation.OperationType,
             CreatedAt = operation.CreatedAt,
             UpdatedAt = operation.UpdatedAt
-        });
+        }).ToList();
     }
 }

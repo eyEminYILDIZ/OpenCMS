@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.ListAll;
 
-public class Query : IRequest<IEnumerable<QueryResponse>>
+public class Query : IRequest<Result<List<QueryResponse>>>
 {
 }
 

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Create;
 
-public class Command : IRequest<CommandResponse>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public string Name { get; set; }
     public AgentTypes AgentType { get; set; }
