@@ -5,5 +5,5 @@ This file contains shared conventions that apply across all sub-projects (backen
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan at:
-`specs/002-unified-api-response/plan.md`
+`specs/003-custom-result-pattern/plan.md`
 <!-- SPECKIT END -->
