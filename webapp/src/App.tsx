@@ -1,4 +1,4 @@
-import ExamplePage from './components/ExamplePage';
+import ExamplePage from './pages/ExamplePage';
 
 const App = () => {
   return <ExamplePage />;
