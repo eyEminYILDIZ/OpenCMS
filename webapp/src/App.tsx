@@ -1,7 +1,8 @@
-import ExamplePage from './pages/ExamplePage';
+import './styles/globals.css';
+import StudentsPage from './pages/StudentsPage';
 
 const App = () => {
-  return <ExamplePage />;
+  return <StudentsPage />;
 };
 
 export default App;

@@ -21,6 +21,10 @@ module.exports = (env, argv) => {
           use: 'ts-loader',
           exclude: /node_modules/,
         },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
       ],
     },
     plugins: [
@@ -31,7 +35,7 @@ module.exports = (env, argv) => {
     devServer: {
       port: 3000,
       hot: true,
-      open: true,
+      open: false,
     },
     optimization: {
       minimize: isProduction,

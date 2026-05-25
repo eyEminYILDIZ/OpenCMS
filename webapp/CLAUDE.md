@@ -26,7 +26,7 @@ webapp/
 - **One component per file.** File name matches the component name (PascalCase).
 - **No `any` types.** Fix the underlying type instead of using `any`.
 - **No `as` type assertions** to silence compiler errors. Fix the type.
-- **UI Library** Shadcn, consider using prebuilt components.
+- **UI Library** Shadcn, consider using prebuilt components. Tailwind not allowed.
 - **No state management libraries** (no Redux, MobX, Zustand, Jotai, etc.).
 - **npm only** — do not generate `yarn.lock` or `pnpm-lock.yaml`.
 - TypeScript `strict` mode is enabled. All new code must pass `npm run type-check`.
