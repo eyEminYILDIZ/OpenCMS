@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Self.Delete;
 
-public class Handler : IRequestHandler<Command, CommandResponse?>
+public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,12 +9,12 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         _dbContext = dbContext;
     }
 
-    public async Task<CommandResponse?> Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
         var operation = await _dbContext.Operations.FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
         if (operation == null)
-            return null;
+            return Error.NotFound;
 
         _dbContext.Operations.Remove(operation);
         await _dbContext.SaveChangesAsync(cancellationToken);

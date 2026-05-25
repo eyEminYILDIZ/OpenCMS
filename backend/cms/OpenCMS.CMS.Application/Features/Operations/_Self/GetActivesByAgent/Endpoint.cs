@@ -8,8 +8,8 @@ public class Endpoint : IClientEndpoint, IAgentEndpoint
     {
         return app.MapPost("/operations/GetActivesByAgent", async ([FromBody] Query query, [FromServices] IMediator mediator) =>
         {
-            var operations = await mediator.Send(query);
-            return TypedResults.Json(ApiResponse.Ok(operations), statusCode: 200);
+            var result = await mediator.Send(query);
+            return result.ToHttpResult();
         });
     }
 }

@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Self.GetById;
 
-public class Handler : IRequestHandler<Query, ResponseModel?>
+public class Handler : IRequestHandler<Query, Result<ResponseModel>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,7 +9,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
         _dbContext = dbContext;
     }
 
-    public async Task<ResponseModel?> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<Result<ResponseModel>> Handle(Query request, CancellationToken cancellationToken)
     {
         var operation = await _dbContext.Operations
                                             .Include(o => o.Orders)
@@ -17,7 +17,7 @@ public class Handler : IRequestHandler<Query, ResponseModel?>
                                             .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
         if (operation == null)
-            return null;
+            return Error.NotFound;
 
         return new ResponseModel
         {

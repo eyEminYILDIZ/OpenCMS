@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Orders.Delete;
 
-public class Handler : IRequestHandler<Command, CommandResponse?>
+public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,12 +9,12 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         _dbContext = dbContext;
     }
 
-    public async Task<CommandResponse?> Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
         if (order == null)
-            return null;
+            return Error.NotFound;
 
         _dbContext.Orders.Remove(order);
         await _dbContext.SaveChangesAsync(cancellationToken);

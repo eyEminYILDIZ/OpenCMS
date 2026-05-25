@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Delete;
 
-public class Handler : IRequestHandler<Command, CommandResponse?>
+public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,12 +9,12 @@ public class Handler : IRequestHandler<Command, CommandResponse?>
         _dbContext = dbContext;
     }
 
-    public async Task<CommandResponse?> Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
         var agent = await _dbContext.Agents.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 
         if (agent == null)
-            return null;
+            return Error.NotFound;
 
         _dbContext.Agents.Remove(agent);
         await _dbContext.SaveChangesAsync(cancellationToken);

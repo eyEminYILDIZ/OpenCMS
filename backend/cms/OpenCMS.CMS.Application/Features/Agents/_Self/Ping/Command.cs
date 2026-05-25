@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.Ping;
 
-public class Command : IRequest<CommandResponse?>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public Guid Id { get; set; }
     public DateTime SentAt { get; set; }

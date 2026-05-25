@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.OperationAssets.Create;
 
-public class Handler : IRequestHandler<Command, CommandResponse>
+public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -9,7 +9,7 @@ public class Handler : IRequestHandler<Command, CommandResponse>
         _context = context;
     }
 
-    public async Task<CommandResponse> Handle(Command request, CancellationToken cancellationToken)
+    public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
         var operationAsset = new OperationAsset
         {

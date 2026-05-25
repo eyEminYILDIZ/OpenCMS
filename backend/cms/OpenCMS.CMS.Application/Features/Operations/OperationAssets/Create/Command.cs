@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.OperationAssets.Create;
 
-public class Command : IRequest<CommandResponse>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public Guid OperationId { get; set; }
     public Guid AssetId { get; set; }

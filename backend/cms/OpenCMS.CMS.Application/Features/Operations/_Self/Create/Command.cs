@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Operations.Self.Create;
 
-public class Command : IRequest<CommandResponse>
+public class Command : IRequest<Result<CommandResponse>>
 {
     public string Name { get; set; }
     public string Description { get; set; }

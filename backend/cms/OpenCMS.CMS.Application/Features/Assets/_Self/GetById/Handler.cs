@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Assets.Self.GetById;
 
-public class Handler : IRequestHandler<Query, QueryResponse?>
+public class Handler : IRequestHandler<Query, Result<QueryResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -9,12 +9,12 @@ public class Handler : IRequestHandler<Query, QueryResponse?>
         _dbContext = dbContext;
     }
 
-    public async Task<QueryResponse?> Handle(Query request, CancellationToken cancellationToken)
+    public async Task<Result<QueryResponse>> Handle(Query request, CancellationToken cancellationToken)
     {
         var asset = await _dbContext.Assets.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 
         if (asset == null)
-            return null;
+            return Error.NotFound;
 
         return new QueryResponse
         {

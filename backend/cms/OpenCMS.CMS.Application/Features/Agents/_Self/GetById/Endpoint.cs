@@ -6,10 +6,8 @@ public class Endpoint : IClientEndpoint
     {
         return app.MapGet("/agents/{id}", async (Guid id, IMediator mediator) =>
         {
-            var agent = await mediator.Send(new Query { Id = id });
-            return agent is null
-                ? TypedResults.Json(ApiResponse.NotFound("Agent not found."), statusCode: 404)
-                : TypedResults.Json(ApiResponse.Ok(agent), statusCode: 200);
+            var result = await mediator.Send(new Query { Id = id });
+            return result.ToHttpResult();
         });
     }
 }

@@ -2,7 +2,7 @@ namespace OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent;
 
 using OpenCMS.CMS.Domain.Entities;
 
-public class Query : IRequest<IEnumerable<QueryResponse>>
+public class Query : IRequest<Result<List<QueryResponse>>>
 {
     public Guid AgentId { get; set; }
 }

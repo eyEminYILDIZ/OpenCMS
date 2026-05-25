@@ -7,10 +7,8 @@ public class Endpoint : IClientEndpoint
         return app.MapPut("/assets/{id}", async (Guid id, Command command, IMediator mediator) =>
         {
             command.Id = id;
-            var asset = await mediator.Send(command);
-            return asset is null
-                ? TypedResults.Json(ApiResponse.NotFound("Asset not found."), statusCode: 404)
-                : TypedResults.Json(ApiResponse.Ok(asset), statusCode: 200);
+            var result = await mediator.Send(command);
+            return result.ToHttpResult();
         });
     }
 }
