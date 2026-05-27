@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { ApiClient } from "../api/axios_setup";
 import { AssetApi } from "../api/AssetApiDocumentation";
 
@@ -11,12 +11,10 @@ export class ApplicationStore {
 
     loadItemCounts = async () => {
         try {
-            const response = await ApiClient.get(AssetApi.GetItemCounts.path);
-            console.log(response);
-
+            const response = await AssetApi.GetItemCounts.call();
             this.assetItemCounts = response.data;
-            console.log(this.assetItemCounts);
 
+            console.log(toJS(this.assetItemCounts));
         } catch (error) {
             console.error("Error loading item counts:", error);
         }
