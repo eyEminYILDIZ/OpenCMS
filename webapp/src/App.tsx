@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import './styles/globals.css';
 import SplashScreen from './components/SplashScreen';
-import StudentsPage from './pages/StudentsPage';
+import AppLayout from './components/layout/AppLayout';
 
 const App = () => {
   const [splashDone, setSplashDone] = useState(false);
@@ -11,7 +11,7 @@ const App = () => {
     return <SplashScreen duration={2000} onDone={handleSplashDone} />;
   }
 
-  return <StudentsPage />;
+  return <AppLayout />;
 };
 
 export default App;
