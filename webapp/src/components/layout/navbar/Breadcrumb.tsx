@@ -18,11 +18,11 @@ const Breadcrumb = () => {
     <nav className="navbar-breadcrumb breadcrumb" aria-label="breadcrumb">
       <ol className="breadcrumb-list">
         <li className="breadcrumb-item">
-          <Home size={13} aria-hidden="true" />
+          <Home size={16} aria-hidden="true" />
           <span className="breadcrumb-home-label">Home</span>
         </li>
         <li className="breadcrumb-separator" aria-hidden="true">
-          <ChevronRight size={13} />
+          <ChevronRight size={16} />
         </li>
         <li className="breadcrumb-item" aria-current="page">
           <span className="breadcrumb-current">{SECTION_LABELS[activeSection]}</span>

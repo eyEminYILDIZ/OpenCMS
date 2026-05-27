@@ -20,7 +20,7 @@ const Sheet = ({ open, onClose, title, children }: SheetProps) => (
         <div className="sheet-header">
           <DialogPrimitive.Title className="sheet-title">{title}</DialogPrimitive.Title>
           <button className="sheet-close" onClick={onClose} aria-label="Close panel">
-            <X size={16} />
+            <X size={18} />
           </button>
         </div>
         <div className="sheet-body">{children}</div>

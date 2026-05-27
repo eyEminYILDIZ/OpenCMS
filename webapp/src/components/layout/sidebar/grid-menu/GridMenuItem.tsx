@@ -21,7 +21,7 @@ const GridMenuItem = ({ label, badgeCount, icon: Icon, isActive, onClick, sectio
     data-section={section}
   >
     <span className="grid-menu-badge" aria-hidden="true">{badgeCount}</span>
-    <Icon size={20} aria-hidden="true" />
+    <Icon size={24} aria-hidden="true" />
     <span>{label}</span>
   </button>
 );

@@ -23,7 +23,7 @@ const ItemListItem = ({ item, onSelect, onEdit, onDelete }: ItemListItemProps) =
       aria-label={`Edit ${item.label}`}
       onClick={(e) => { e.stopPropagation(); onEdit(item.id); }}
     >
-      <Pencil size={14} aria-hidden="true" />
+      <Pencil size={16} aria-hidden="true" />
     </button>
     <button
       type="button"
@@ -31,7 +31,7 @@ const ItemListItem = ({ item, onSelect, onEdit, onDelete }: ItemListItemProps) =
       aria-label={`Delete ${item.label}`}
       onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
     >
-      <Trash2 size={14} aria-hidden="true" />
+      <Trash2 size={16} aria-hidden="true" />
     </button>
   </div>
 );

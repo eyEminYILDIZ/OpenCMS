@@ -13,7 +13,7 @@ const SelectTrigger = ({ className, children, ...props }: SelectTriggerProps) =>
   <SelectPrimitive.Trigger className={cn('select-trigger', className)} {...props}>
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="select-icon" size={16} />
+      <ChevronDown className="select-icon" size={18} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 );
@@ -40,7 +40,7 @@ const SelectItem = ({ className, children, ...props }: SelectItemProps) => (
   <SelectPrimitive.Item className={cn('select-item', className)} {...props}>
     <span className="select-item-indicator">
       <SelectPrimitive.ItemIndicator>
-        <Check size={14} />
+        <Check size={16} />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
