@@ -49,3 +49,9 @@ DELETE {{AgentApi}}/agents/2457b6da-77ce-46bc-aaae-d59748ff2ec3
 Accept: application/json
 
 ###
+
+### Get Agent Item Counts
+GET {{AgentApi}}/agents/counts
+Accept: application/json
+
+###

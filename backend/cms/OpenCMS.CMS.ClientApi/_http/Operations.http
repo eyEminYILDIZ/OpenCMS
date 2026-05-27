@@ -99,5 +99,11 @@ Content-Type: application/json
 
 ###
 
+### Get Operation Item Counts
+GET {{AgentApi}}/operations/counts
+Accept: application/json
+
+###
+
 ### Delete Order
 DELETE {{AgentApi}}/operations/orders/00000000-0000-0000-0000-000000000000
