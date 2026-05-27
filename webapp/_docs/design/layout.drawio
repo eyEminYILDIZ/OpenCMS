@@ -5,34 +5,34 @@
                 <mxCell id="0"/>
                 <mxCell id="2" value="Front" parent="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="3" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="80" width="560" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="Status bar" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="4" value="Status bar" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="390" width="560" height="10" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="Logo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="5" value="Logo" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="89" y="85" width="105" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="User Box" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="8" value="User Box" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="570" y="85" width="64" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="Boxed Grid Menu" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="10" value="Boxed Grid Menu" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="120" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="Item List" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="11" value="Item List" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="200" width="120" height="190" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="Map View" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="12" value="Map View" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="200" y="120" width="360" height="270" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="Create&lt;br&gt;Update&lt;br&gt;Delete&lt;br&gt;&lt;br&gt;Section" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="120" width="80" height="270" as="geometry"/>
+                <mxCell id="13" value="Right Panel&lt;br&gt;Create&lt;br&gt;Update&lt;br&gt;Delete&lt;br&gt;&lt;br&gt;Section" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="120" width="90" height="270" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="Item List Menu" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="85" y="206" width="110" height="20" as="geometry"/>
+                <mxCell id="14" value="Item List Commands" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="83" y="203" width="115" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="Breadcrumb" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="15" value="Breadcrumb" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="314" y="87" width="120" height="25" as="geometry"/>
                 </mxCell>
             </root>
