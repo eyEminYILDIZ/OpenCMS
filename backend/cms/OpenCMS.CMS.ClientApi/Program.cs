@@ -9,6 +9,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +33,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseApplicationExceptionHandling();
 app.UseHttpsRedirection();
+app.UseCors();
 
 
 // register agent endpoint
