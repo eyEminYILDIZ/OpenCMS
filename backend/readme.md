@@ -1,5 +1,14 @@
 # OpenCMS Backend
 
+Backend parts of OpenCMS
+
+## Baseline
+
+- C# Language
+- Dotnet Framework
+- Aspnet Core WebApi
+- Dotnet Console Application
+
 
 ## Architecture
 - Vertical Slice Architecture
