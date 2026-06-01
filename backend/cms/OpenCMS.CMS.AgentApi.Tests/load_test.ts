@@ -2,11 +2,11 @@
 ////////////////////// K6 LOAD TESTING //////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-import http from "k6/http";
+import http, { RefinedResponse, ResponseType } from "k6/http";
 import { check, sleep } from "k6";
+import { Options } from "k6/options";
 
-// Test configuration
-export const options = {
+export const options: Options = {
     thresholds: {
         // Assert that 99% of requests finish within 3000ms.
         http_req_duration: ["p(99) < 3000"],
@@ -20,9 +20,9 @@ export const options = {
 };
 
 // Simulated user behavior
-export default function () {
-    let res = http.get("http://localhost:5010/assets");
+export default function (): void {
+    const res: RefinedResponse<ResponseType> = http.get("http://localhost:5010/assets");
     // Validate response status
-    check(res, { "status was 200": (r) => r.status == 200 });
+    check(res, { "status was 200": (r) => r.status === 200 });
     sleep(1);
 }
