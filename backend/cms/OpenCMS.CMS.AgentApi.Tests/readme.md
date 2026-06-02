@@ -16,7 +16,7 @@ To run via web ui:
 K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=true k6 run load_test.ts
 ```
 
-To run for just reporting html:
+To run for just generating report html:
 ```sh
 K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html k6 run load_test.ts
 ```
@@ -37,7 +37,7 @@ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=true k6 run stress_test.ts
 ```
 
 
-To run for just reporting html:
+To run for just generating report html:
 ```sh
 K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html k6 run stress_test.ts
 ```
