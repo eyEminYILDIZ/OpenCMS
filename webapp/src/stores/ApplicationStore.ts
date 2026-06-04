@@ -1,6 +1,6 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { ApiClient } from "../api/axios_setup";
-import { AssetApi } from "../api/AssetApiDocumentation";
+import { AssetApi } from "../api";
 
 export class ApplicationStore {
     constructor() {

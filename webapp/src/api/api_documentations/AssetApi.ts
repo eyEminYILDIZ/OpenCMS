@@ -1,5 +1,5 @@
-import { ApiResponse } from "./ApiModels";
-import { ApiClient } from "./axios_setup";
+import { ApiResponse } from "../ApiModels";
+import { ApiClient } from "../axios_setup";
 
 export namespace AssetApi {
     export namespace GetItemCounts {
