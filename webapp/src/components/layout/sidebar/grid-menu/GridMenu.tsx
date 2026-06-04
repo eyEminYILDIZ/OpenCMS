@@ -3,6 +3,8 @@ import type { LucideIcon } from 'lucide-react';
 import type { MenuSection } from '../../../../types/layout';
 import { useLayout } from '../../../../context/LayoutContext';
 import GridMenuItem from './GridMenuItem';
+import { stores } from "../../../../stores";
+import { observer } from "mobx-react-lite"
 
 interface MenuConfig {
   section: MenuSection;
@@ -11,17 +13,18 @@ interface MenuConfig {
   icon: LucideIcon;
 }
 
-const MENU_ITEMS: MenuConfig[] = [
-  { section: 'assets',       label: 'Assets',       badgeCount: 12, icon: Box },
-  { section: 'agents',       label: 'Agents',       badgeCount: 5,  icon: Bot },
-  { section: 'operations',   label: 'Operations',   badgeCount: 8,  icon: Activity },
-  { section: 'placeholder1', label: 'Placeholder 1', badgeCount: 3,  icon: Circle },
-  { section: 'placeholder2', label: 'Placeholder 2', badgeCount: 7,  icon: Circle },
-  { section: 'placeholder3', label: 'Placeholder 3', badgeCount: 2,  icon: Circle },
-];
-
-const GridMenu = () => {
+const GridMenu = observer(() => {
   const { activeSection, setActiveSection } = useLayout();
+  const { applicationStore } = stores;
+
+  const MENU_ITEMS: MenuConfig[] = [
+    { section: 'assets', label: 'Assets', badgeCount: applicationStore.assetItemCounts?.activeCount ?? 0, icon: Box },
+    { section: 'agents', label: 'Agents', badgeCount: applicationStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
+    { section: 'operations', label: 'Operations', badgeCount: applicationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
+    { section: 'placeholder1', label: 'Placeholder 1', badgeCount: 0, icon: Circle },
+    { section: 'placeholder2', label: 'Placeholder 2', badgeCount: 0, icon: Circle },
+    { section: 'placeholder3', label: 'Placeholder 3', badgeCount: 0, icon: Circle },
+  ];
 
   return (
     <nav className="grid-menu" aria-label="Main navigation">
@@ -38,6 +41,6 @@ const GridMenu = () => {
       ))}
     </nav>
   );
-};
+});
 
 export default GridMenu;
