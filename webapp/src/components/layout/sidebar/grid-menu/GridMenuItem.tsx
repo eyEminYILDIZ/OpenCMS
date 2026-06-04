@@ -17,10 +17,10 @@ const GridMenuItem = ({ label, badgeCount, icon: Icon, isActive, onClick, sectio
     className={cn('grid-menu-item', isActive && 'active')}
     onClick={onClick}
     aria-current={isActive ? 'page' : undefined}
-    aria-label={`${label}, ${badgeCount} items`}
+    aria-label={`${label}${badgeCount > 0 ? `, ${badgeCount} items` : ''}`}
     data-section={section}
   >
-    <span className="grid-menu-badge" aria-hidden="true">{badgeCount}</span>
+    {badgeCount > 0 && <span className="grid-menu-badge" aria-hidden="true">{badgeCount}</span>}
     <Icon size={24} aria-hidden="true" />
     <span>{label}</span>
   </button>
