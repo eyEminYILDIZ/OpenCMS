@@ -3,12 +3,13 @@ import Navbar from './navbar/Navbar';
 import Sidebar from './sidebar/Sidebar';
 import RightPanel from './right-panel/RightPanel';
 import StatusBar from './StatusBar';
-import { ApplicationStore } from '../../stores/ApplicationStore';
 import { useEffect } from 'react';
+import { stores } from "../../stores"
 
-const applicationStore = new ApplicationStore();
 
 const AppLayout = () => {
+  const { applicationStore } = stores;
+
   useEffect(() => {
     applicationStore.loadItemCounts();
   }, []);
