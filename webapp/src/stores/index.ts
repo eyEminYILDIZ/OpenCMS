@@ -1,5 +1,10 @@
+import { AgentStore } from "./AgentStore";
 import { ApplicationStore } from "./ApplicationStore";
 
+const agentStore = new AgentStore();
+const applicationStore = new ApplicationStore(agentStore);
+
 export const stores = {
-    applicationStore: new ApplicationStore()
+    agentStore,
+    applicationStore,
 }

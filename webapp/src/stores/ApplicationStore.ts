@@ -1,14 +1,16 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { ApiClient } from "../api/axios_setup";
 import { AgentApi, AssetApi, OperationApi } from "../api";
+import { AgentStore } from "./AgentStore";
 
 export class ApplicationStore {
-    constructor() {
+    constructor(_agentStore: AgentStore) {
         makeAutoObservable(this);
+        this.agentStore = _agentStore;
     }
+    agentStore: AgentStore;
 
     assetItemCounts: AssetApi.GetItemCounts.Response | null = null;
-    agentItemCounts: AgentApi.GetItemCounts.Response | null = null;
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
 
     loadItemCounts = async () => {
@@ -22,15 +24,8 @@ export class ApplicationStore {
             console.error("Error loading asset item counts:", error);
         }
 
-        try {
-            const response = await AgentApi.GetItemCounts.call();
-            runInAction(() => {
-                this.agentItemCounts = response.data;
-                console.log(toJS(this.agentItemCounts));
-            });
-        } catch (error) {
-            console.error("Error loading agent item counts:", error);
-        }
+        // load agent item counts
+        await this.agentStore.loadItemCounts();
 
         try {
             const response = await OperationApi.GetItemCounts.call();

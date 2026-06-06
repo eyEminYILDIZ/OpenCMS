@@ -15,11 +15,11 @@ interface MenuConfig {
 
 const GridMenu = observer(() => {
   const { activeSection, setActiveSection } = useLayout();
-  const { applicationStore } = stores;
+  const { applicationStore, agentStore } = stores;
 
   const MENU_ITEMS: MenuConfig[] = [
     { section: 'assets', label: 'Assets', badgeCount: applicationStore.assetItemCounts?.activeCount ?? 0, icon: Box },
-    { section: 'agents', label: 'Agents', badgeCount: applicationStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
+    { section: 'agents', label: 'Agents', badgeCount: agentStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
     { section: 'operations', label: 'Operations', badgeCount: applicationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
     { section: 'placeholder1', label: 'Placeholder 1', badgeCount: 0, icon: Circle },
     { section: 'placeholder2', label: 'Placeholder 2', badgeCount: 0, icon: Circle },
