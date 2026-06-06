@@ -5,6 +5,7 @@ import RightPanel from './right-panel/RightPanel';
 import StatusBar from './StatusBar';
 import { useEffect } from 'react';
 import { stores } from "../../stores"
+import CenterPanel from './center-panel/CenterPanel';
 
 
 const AppLayout = () => {
@@ -25,7 +26,9 @@ const AppLayout = () => {
             <Sidebar />
           </aside>
           <main className="app-layout-center">
-            <div className="center-placeholder">Map area — coming soon</div>
+            <div className="center-placeholder">
+              <CenterPanel />
+            </div>
           </main>
         </div>
         <footer className="app-layout-statusbar">
