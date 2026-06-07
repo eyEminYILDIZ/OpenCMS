@@ -14,4 +14,7 @@ builder.AddProject<Projects.OpenCMS_Agent_AirDefenceGun>("air-defence-gun")
     .WithReference(agentApi)
     .WaitFor(agentApi);
 
+builder.AddNpmApp("webapp", "../../../webapp", scriptName: "start")
+    .WithHttpEndpoint(port: 3000, env: "PORT");
+
 builder.Build().Run();

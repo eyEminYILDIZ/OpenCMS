@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
       }),
     ],
     devServer: {
-      port: 3000,
+      port: parseInt(process.env.PORT || '3000', 10),
       hot: true,
       open: false,
     },

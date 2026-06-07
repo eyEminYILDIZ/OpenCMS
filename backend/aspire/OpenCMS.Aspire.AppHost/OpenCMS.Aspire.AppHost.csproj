@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\agent\OpenCMS.Agent.AirDefenceGun\OpenCMS.Agent.AirDefenceGun.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.NodeJs" />
+  </ItemGroup>
+
 </Project>
