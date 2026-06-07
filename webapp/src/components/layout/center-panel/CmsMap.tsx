@@ -52,7 +52,7 @@ export default function CmsMap() {
         <Map
             initialViewState={{ latitude: 41.0082, longitude: 28.9784, zoom: 8 }}
             style={{ width: '100%', height: '100vh' }}
-            mapStyle="https://demotiles.maplibre.org/style.json" // free OSM style
+            mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
         >
             <GeolocateControl position="top-left" />
             <FullscreenControl position="top-left" />
@@ -68,13 +68,7 @@ export default function CmsMap() {
                     onClose={() => setPopupInfo(null)}
                 >
                     <div>
-                        {popupInfo.city}, {popupInfo.state} |{' '}
-                        <a
-                            target="_new"
-                            href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${popupInfo.city}, ${popupInfo.state}`}
-                        >
-                            Wikipedia
-                        </a>
+                        {popupInfo.city}, {popupInfo.state}
                     </div>
                     <img width="100%" src={popupInfo.image} />
                 </Popup>
