@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { AgentStore } from "./AgentStore";
 import { AssetStore } from "./AssetStore";
 import { OperationStore } from "./OperationStore";
@@ -6,11 +6,12 @@ import { MenuTypes } from "../types/MenuTypes";
 
 export class ApplicationStore {
     constructor(_agentStore: AgentStore, _assetStore: AssetStore, _operationStore: OperationStore) {
-        makeAutoObservable(this);
         this.agentStore = _agentStore;
         this.assetStore = _assetStore;
         this.operationStore = _operationStore;
         this.currentMenu = MenuTypes.Assets;
+        // use this bottom of constructor, otherwise MobX cant detect observables.
+        makeAutoObservable(this);
     }
     agentStore: AgentStore;
     assetStore: AssetStore;
@@ -21,7 +22,6 @@ export class ApplicationStore {
         this.currentMenu = menu;
         console.log(menu);
         console.log(this.currentMenu);
-
     }
 
     loadItemCounts = async () => {

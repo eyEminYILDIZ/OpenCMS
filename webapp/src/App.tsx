@@ -8,6 +8,8 @@ const App = observer(() => {
   const [splashDone, setSplashDone] = useState(false);
   const handleSplashDone = useCallback(() => setSplashDone(true), []);
 
+  console.log("App render");
+
   if (!splashDone) {
     return <SplashScreen duration={2000} onDone={handleSplashDone} />;
   }

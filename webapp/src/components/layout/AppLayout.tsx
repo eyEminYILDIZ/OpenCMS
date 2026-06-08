@@ -14,7 +14,7 @@ const AppLayout = observer(() => {
 
   useEffect(() => {
     applicationStore.loadItemCounts();
-  }, []);
+  }, [applicationStore.currentMenu]);
 
   return (
     <LayoutProvider>

@@ -5,9 +5,10 @@ import ItemListItem from './ItemListItem';
 import { stores } from '../../../../stores';
 import { AssetList } from './AssetList';
 import { MenuTypes } from '../../../../types/MenuTypes';
+import { observer } from 'mobx-react-lite';
 
 
-const ItemList = () => {
+const ItemList = observer(() => {
   const { activeSection, openRightPanel } = useLayout();
   const { applicationStore } = stores;
 
@@ -28,6 +29,6 @@ const ItemList = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ItemList;
