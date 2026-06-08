@@ -1,5 +1,5 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
     Map,
     Marker,
@@ -16,18 +16,27 @@ import { observer } from 'mobx-react-lite';
 import { AssetApi } from '../../../api';
 import { AircraftMarker, AirGunMarker, BuildingMarker, PersonMarker, PersonGroupMarker, ShipMarker, SubmarineMarker, UnknownMarker, VehicleMarker, RadarMarker } from './markers';
 
-interface City {
-    city: string;
-    population: number;
+interface Point {
+    name: string;
     latitude: number;
     longitude: number;
-    image: string;
-    state: string;
 }
 
 export const CmsMap: React.FC = observer(() => {
-    const [popupInfo, setPopupInfo] = useState<City | null>(null);
+    const [selectedMarker, setSelectedMarker] = useState<Point | undefined>(undefined);
     const { applicationStore, assetStore } = stores;
+
+    useEffect(() => {
+        if (assetStore.selectedItem != undefined) {
+            setSelectedMarker({
+                name: assetStore.selectedItem.name,
+                latitude: assetStore.selectedItem.latitude,
+                longitude: assetStore.selectedItem.longitude
+            });
+        } else {
+            setSelectedMarker(undefined)
+        }
+    }, [assetStore.selectedItem])
 
     const renderPin = (item: AssetApi.ListAll.Response) => {
         switch (item.assetType) {
@@ -115,17 +124,19 @@ export const CmsMap: React.FC = observer(() => {
 
                 {renderMarkers()}
 
-                {popupInfo && (
+                {selectedMarker != undefined && (
                     <Popup
                         anchor="top"
-                        longitude={Number(popupInfo.longitude)}
-                        latitude={Number(popupInfo.latitude)}
-                        onClose={() => setPopupInfo(null)}
+                        longitude={Number(selectedMarker.longitude)}
+                        latitude={Number(selectedMarker.latitude)}
+                        onClose={() => {
+                            setSelectedMarker(undefined);
+                            assetStore.setSelectedItem(undefined);
+                        }}
                     >
                         <div>
-                            {popupInfo.city}, {popupInfo.state}
+                            {selectedMarker.name}
                         </div>
-                        <img width="100%" src={popupInfo.image} />
                     </Popup>
                 )}
             </Map>

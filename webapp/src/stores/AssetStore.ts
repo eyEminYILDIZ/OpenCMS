@@ -21,7 +21,7 @@ export class AssetStore {
         }
     }
 
-    setSelectedItem = (item: AssetApi.ListAll.Response) => {
+    setSelectedItem = (item: AssetApi.ListAll.Response | undefined) => {
         this.selectedItem = item;
     }
 
