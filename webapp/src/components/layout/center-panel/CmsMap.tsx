@@ -9,10 +9,12 @@ import {
     ScaleControl,
     GeolocateControl
 } from 'react-map-gl/maplibre';
-import Pin from './Pin';
+import Pin from './markers/PinMarker';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
 import { observer } from 'mobx-react-lite';
+import { AssetApi } from '../../../api';
+import AircraftMarker from './markers/AircraftMarker';
 
 interface City {
     city: string;
@@ -27,7 +29,14 @@ export const CmsMap: React.FC = observer(() => {
     const [popupInfo, setPopupInfo] = useState<City | null>(null);
     const { applicationStore, assetStore } = stores;
 
-    const renderPins = () => {
+    const renderPin = (item: AssetApi.ListAll.Response) => {
+        switch (item.assetType) {
+            case AssetApi.Enums.AssetTypes.Aircraft:
+                return <AircraftMarker />;
+        }
+    }
+
+    const renderMarkers = () => {
         assetStore.allItems.forEach((item) => {
             console.log(item.latitude, item.longitude);
         })
@@ -83,7 +92,7 @@ export const CmsMap: React.FC = observer(() => {
                 <NavigationControl position="top-left" />
                 <ScaleControl />
 
-                {renderPins()}
+                {renderMarkers()}
 
                 {popupInfo && (
                     <Popup
