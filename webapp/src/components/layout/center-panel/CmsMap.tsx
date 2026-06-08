@@ -75,7 +75,7 @@ export const CmsMap: React.FC = observer(() => {
                             anchor="bottom"
                             onClick={e => {
                                 e.originalEvent.stopPropagation();
-                                // setPopupInfo(item as any);
+                                assetStore.setSelectedItem(item);
                             }}
                         >
                             {renderPin(item)}
