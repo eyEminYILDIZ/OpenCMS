@@ -14,9 +14,10 @@ interface DataListProps<T> {
   columns: DataListColumn<T>[];
   className?: string;
   emptyText?: string;
+  onRowClicked?: (item: T) => void;
 }
 
-function DataList<T extends object>({ items, columns, className, emptyText = 'No data' }: DataListProps<T>) {
+function DataList<T extends object>({ items, columns, className, emptyText = 'No data', onRowClicked }: DataListProps<T>) {
   return (
     <div className={cn('table-wrapper', className)}>
       <table className="table">
@@ -38,7 +39,7 @@ function DataList<T extends object>({ items, columns, className, emptyText = 'No
             </tr>
           ) : (
             items.map((item, rowIndex) => (
-              <tr key={rowIndex} className="table-row">
+              <tr key={rowIndex} className="table-row" onClick={() => onRowClicked?.(item)}>
                 {columns.map((col) => {
                   const value = item[col.key];
                   return (
@@ -46,8 +47,8 @@ function DataList<T extends object>({ items, columns, className, emptyText = 'No
                       {col.render
                         ? col.render(value, item)
                         : col.type === 'number'
-                        ? Number(value).toLocaleString()
-                        : String(value ?? '')}
+                          ? Number(value).toLocaleString()
+                          : String(value ?? '')}
                     </td>
                   );
                 })}
