@@ -8,6 +8,7 @@ export class AssetStore {
 
     assetItemCounts: AssetApi.GetItemCounts.Response | null = null;
     allItems: AssetApi.ListAll.Response[] = [];
+    selectedItem: AssetApi.ListAll.Response | undefined = undefined;
 
     loadItemCounts = async () => {
         try {
@@ -19,6 +20,10 @@ export class AssetStore {
         } catch (error) {
             console.error("Error loading asset item counts:", error);
         }
+    }
+
+    setSelectedItem = (item: AssetApi.ListAll.Response) => {
+        this.selectedItem = item;
     }
 
     getAllItems = async () => {

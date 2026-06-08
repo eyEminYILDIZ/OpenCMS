@@ -3,6 +3,10 @@ import Sheet from '../../ui/Sheet';
 import RightPanelDetails from './RightPanelDetails';
 import RightPanelCreateForm from './RightPanelCreateForm';
 import RightPanelDeleteConfirm from './RightPanelDeleteConfirm';
+import { observer } from 'mobx-react-lite';
+import { stores } from '../../../stores';
+import { MenuTypes } from '../../../types/MenuTypes';
+import { AssetDetail } from './AssetDetail';
 
 const PANEL_TITLES: Record<string, string> = {
   details: 'Item Details',
@@ -10,8 +14,18 @@ const PANEL_TITLES: Record<string, string> = {
   delete: 'Delete Item',
 };
 
-const RightPanel = () => {
+const RightPanel = observer(() => {
   const { rightPanelMode, selectedItemId, closeRightPanel } = useLayout();
+  const { applicationStore, assetStore } = stores;
+
+  const renderPanel = () => {
+    switch (applicationStore.currentMenu) {
+      case MenuTypes.Assets:
+        return <AssetDetail />
+      default:
+        return <p>No matched panel found.</p>
+    }
+  }
 
   return (
     <Sheet
@@ -19,11 +33,9 @@ const RightPanel = () => {
       onClose={closeRightPanel}
       title={rightPanelMode ? PANEL_TITLES[rightPanelMode] : ''}
     >
-      {rightPanelMode === 'details' && <RightPanelDetails itemId={selectedItemId} />}
-      {rightPanelMode === 'create' && <RightPanelCreateForm />}
-      {rightPanelMode === 'delete' && <RightPanelDeleteConfirm itemId={selectedItemId} />}
+      {renderPanel()}
     </Sheet>
   );
-};
+});
 
 export default RightPanel;

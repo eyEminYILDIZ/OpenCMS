@@ -24,6 +24,7 @@ export const AssetList: React.FC = observer(() => {
         <DataList<AssetApi.ListAll.Response>
             columns={columns}
             items={assetStore.allItems}
+            onRowClicked={(item) => assetStore.setSelectedItem(item)}
         />
     );
 });
