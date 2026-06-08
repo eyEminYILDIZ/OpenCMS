@@ -1,50 +1,32 @@
 import { observer } from "mobx-react-lite";
-import { AssetApi } from "../../../api";
-import { stores } from "../../../stores"
-
-const ASSET_TYPE_LABELS: Record<AssetApi.Enums.AssetTypes, string> = {
-    [AssetApi.Enums.AssetTypes.Unknown]: "Unknown",
-    [AssetApi.Enums.AssetTypes.Person]: "Person",
-    [AssetApi.Enums.AssetTypes.GroupOfPeople]: "Group of People",
-    [AssetApi.Enums.AssetTypes.Aircraft]: "Aircraft",
-    [AssetApi.Enums.AssetTypes.Ship]: "Ship",
-    [AssetApi.Enums.AssetTypes.Submarine]: "Submarine",
-    [AssetApi.Enums.AssetTypes.Vehicle]: "Vehicle",
-    [AssetApi.Enums.AssetTypes.Building]: "Building",
-    [AssetApi.Enums.AssetTypes.Other]: "Other",
-};
-
-const THREAT_TYPE_LABELS: Record<AssetApi.Enums.ThreatTypes, string> = {
-    [AssetApi.Enums.ThreatTypes.Unknown]: "Unknown",
-    [AssetApi.Enums.ThreatTypes.Own]: "Own",
-    [AssetApi.Enums.ThreatTypes.Friend]: "Friend",
-    [AssetApi.Enums.ThreatTypes.Neutral]: "Neutral",
-    [AssetApi.Enums.ThreatTypes.Hostile]: "Hostile",
-};
+import { useTranslation } from "react-i18next";
+import { stores } from "../../../stores";
+import { assetTypeLabels, threatTypeLabels } from "../../../types";
 
 export const AssetDetail: React.FC = observer(() => {
     const { assetStore } = stores;
+    const { t } = useTranslation();
     const item = assetStore.selectedItem;
 
     if (item == undefined)
-        return (<p>No item selected</p>);
+        return (<p>{t('asset.noItemSelected')}</p>);
 
     const rows: { label: string; value: string }[] = [
-        { label: "ID", value: item.id },
-        { label: "Name", value: item.name },
-        { label: "Latitude", value: item.latitude.toString() },
-        { label: "Longitude", value: item.longitude.toString() },
-        { label: "Altitude", value: item.altitude.toString() },
-        { label: "Heading", value: item.heading.toString() },
-        { label: "Speed", value: item.speed.toString() },
-        { label: "Asset Type", value: ASSET_TYPE_LABELS[item.assetType] },
-        { label: "Threat Type", value: THREAT_TYPE_LABELS[item.threatType] },
-        { label: "Active", value: item.isActive ? "Yes" : "No" },
-        { label: "First Updated", value: item.firstUpdated },
-        { label: "Last Updated", value: item.lastUpdated },
-        { label: "Related Agent ID", value: item.relatedAgentId ?? "—" },
-        { label: "Created At", value: item.createdAt },
-        { label: "Updated At", value: item.updatedAt ?? "—" },
+        { label: t('asset.fields.id'), value: item.id },
+        { label: t('asset.fields.name'), value: item.name },
+        { label: t('asset.fields.latitude'), value: item.latitude.toString() },
+        { label: t('asset.fields.longitude'), value: item.longitude.toString() },
+        { label: t('asset.fields.altitude'), value: item.altitude.toString() },
+        { label: t('asset.fields.heading'), value: item.heading.toString() },
+        { label: t('asset.fields.speed'), value: item.speed.toString() },
+        { label: t('asset.fields.assetType'), value: assetTypeLabels[item.assetType] },
+        { label: t('asset.fields.threatType'), value: threatTypeLabels[item.threatType] },
+        { label: t('asset.fields.active'), value: item.isActive ? t('asset.active.yes') : t('asset.active.no') },
+        { label: t('asset.fields.firstUpdated'), value: item.firstUpdated },
+        { label: t('asset.fields.lastUpdated'), value: item.lastUpdated },
+        { label: t('asset.fields.relatedAgentId'), value: item.relatedAgentId ?? "—" },
+        { label: t('asset.fields.createdAt'), value: item.createdAt },
+        { label: t('asset.fields.updatedAt'), value: item.updatedAt ?? "—" },
     ];
 
     return (
