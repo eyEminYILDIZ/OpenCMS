@@ -1,5 +1,5 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
     Map,
     Marker,
@@ -7,7 +7,8 @@ import {
     NavigationControl,
     FullscreenControl,
     ScaleControl,
-    GeolocateControl
+    GeolocateControl,
+    MapRef
 } from 'react-map-gl/maplibre';
 import Pin from './markers/PinMarker';
 import { stores } from '../../../stores';
@@ -23,6 +24,7 @@ interface Point {
 }
 
 export const CmsMap: React.FC = observer(() => {
+    const mapRef = useRef<MapRef>(null);
     const [selectedMarker, setSelectedMarker] = useState<Point | undefined>(undefined);
     const { applicationStore, assetStore } = stores;
 
@@ -33,10 +35,13 @@ export const CmsMap: React.FC = observer(() => {
                 latitude: assetStore.selectedItem.latitude,
                 longitude: assetStore.selectedItem.longitude
             });
+
+            mapRef.current?.flyTo({ center: [assetStore.selectedItem.longitude, assetStore.selectedItem.latitude], zoom: 14, duration: 2000 });
         } else {
             setSelectedMarker(undefined)
         }
     }, [assetStore.selectedItem])
+
 
     const renderPin = (item: AssetApi.ListAll.Response) => {
         switch (item.assetType) {
@@ -113,6 +118,7 @@ export const CmsMap: React.FC = observer(() => {
     return (
         <>
             <Map
+                ref={mapRef}
                 initialViewState={{ latitude: 41.0082, longitude: 28.9784, zoom: 10 }}
                 style={{ width: '100%', height: '100vh' }}
                 mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
