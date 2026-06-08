@@ -7,6 +7,7 @@ export class AssetStore {
     }
 
     assetItemCounts: AssetApi.GetItemCounts.Response | null = null;
+    allItems: AssetApi.ListAll.Response[] = [];
 
     loadItemCounts = async () => {
         try {
@@ -17,6 +18,16 @@ export class AssetStore {
             });
         } catch (error) {
             console.error("Error loading asset item counts:", error);
+        }
+    }
+
+    getAllItems = async () => {
+        try {
+            const response = await AssetApi.ListAll.call();
+            this.allItems = response.data;
+            console.log(toJS(this.allItems));
+        } catch (error) {
+            console.error("Error getAllItems method:", error);
         }
     }
 }
