@@ -17,6 +17,7 @@ export const LayoutProvider = ({ children }: LayoutProviderProps) => {
   const [activeSection, setActiveSectionState] = useState<MenuSection>('assets');
   const [rightPanelMode, setRightPanelMode] = useState<RightPanelMode>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [rightPanelOpen, setRightPanelOpen] = useState(true);
 
   const setActiveSection = (section: MenuSection) => {
     setActiveSectionState(section);
@@ -34,9 +35,11 @@ export const LayoutProvider = ({ children }: LayoutProviderProps) => {
     setSelectedItemId(null);
   };
 
+  const toggleRightPanel = () => setRightPanelOpen(prev => !prev);
+
   return (
     <LayoutContext.Provider
-      value={{ activeSection, rightPanelMode, selectedItemId, setActiveSection, openRightPanel, closeRightPanel }}
+      value={{ activeSection, rightPanelMode, selectedItemId, rightPanelOpen, setActiveSection, openRightPanel, closeRightPanel, toggleRightPanel }}
     >
       {children}
     </LayoutContext.Provider>

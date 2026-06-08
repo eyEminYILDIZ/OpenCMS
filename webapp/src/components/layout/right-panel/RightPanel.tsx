@@ -1,40 +1,38 @@
-import { useLayout } from '../../../context/LayoutContext';
-import Sheet from '../../ui/Sheet';
-import RightPanelDetails from './RightPanelDetails';
-import RightPanelCreateForm from './RightPanelCreateForm';
-import RightPanelDeleteConfirm from './RightPanelDeleteConfirm';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
+import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
 import { AssetDetail } from './AssetDetail';
 
-const PANEL_TITLES: Record<string, string> = {
-  details: 'Item Details',
-  create: 'Create Item',
-  delete: 'Delete Item',
-};
-
 const RightPanel = observer(() => {
-  const { rightPanelMode, selectedItemId, closeRightPanel } = useLayout();
-  const { applicationStore, assetStore } = stores;
+  const { rightPanelOpen, toggleRightPanel } = useLayout();
+  const { applicationStore } = stores;
 
-  const renderPanel = () => {
+  const renderContent = () => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
-        return <AssetDetail />
+        return <AssetDetail />;
       default:
-        return <p>No matched panel found.</p>
+        return <p className="right-panel-empty">No panel for this section.</p>;
     }
-  }
+  };
 
   return (
-    <Sheet
-      open={rightPanelMode !== null}
-      onClose={closeRightPanel}
-      title={rightPanelMode ? PANEL_TITLES[rightPanelMode] : ''}
-    >
-      {renderPanel()}
-    </Sheet>
+    <aside className={`right-panel${rightPanelOpen ? ' right-panel--open' : ''}`}>
+      <button
+        className="right-panel-toggle"
+        onClick={toggleRightPanel}
+        aria-label={rightPanelOpen ? 'Collapse panel' : 'Expand panel'}
+      >
+        {rightPanelOpen ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+      </button>
+      {rightPanelOpen && (
+        <div className="right-panel-body">
+          {renderContent()}
+        </div>
+      )}
+    </aside>
   );
 });
 

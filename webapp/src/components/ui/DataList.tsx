@@ -39,7 +39,7 @@ function DataList<T extends object>({ items, columns, className, emptyText = 'No
             </tr>
           ) : (
             items.map((item, rowIndex) => (
-              <tr key={rowIndex} className="table-row" onClick={() => onRowClicked?.(item)}>
+              <tr key={rowIndex} className={cn('table-row', onRowClicked && 'cursor-pointer')} onClick={() => onRowClicked?.(item)}>
                 {columns.map((col) => {
                   const value = item[col.key];
                   return (

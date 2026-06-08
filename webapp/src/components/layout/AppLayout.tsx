@@ -31,12 +31,12 @@ const AppLayout = observer(() => {
               <CenterPanel />
             </div>
           </main>
+          <RightPanel />
         </div>
         <footer className="app-layout-statusbar">
           <StatusBar />
         </footer>
       </div>
-      <RightPanel />
     </LayoutProvider>
   )
 });

@@ -15,9 +15,11 @@ export interface LayoutState {
 }
 
 export interface LayoutContextValue extends LayoutState {
+  rightPanelOpen: boolean;
   setActiveSection: (section: MenuSection) => void;
   openRightPanel: (mode: Exclude<RightPanelMode, null>, itemId?: string) => void;
   closeRightPanel: () => void;
+  toggleRightPanel: () => void;
 }
 
 export interface FakeListItem {
