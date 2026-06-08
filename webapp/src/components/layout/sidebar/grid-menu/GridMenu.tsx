@@ -1,5 +1,6 @@
 import { Activity, Bot, Box, Circle } from 'lucide-react';
 import { observer } from "mobx-react-lite";
+import { useTranslation } from 'react-i18next';
 import { stores } from "../../../../stores";
 import { MenuConfig } from '../../../../types/Menu';
 import { MenuTypes } from '../../../../types/MenuTypes';
@@ -7,14 +8,15 @@ import GridMenuItem from './GridMenuItem';
 
 const GridMenu = observer(() => {
   const { applicationStore, agentStore, assetStore, operationStore } = stores;
+  const { t } = useTranslation();
 
   const MENU_ITEMS: MenuConfig[] = [
-    { type: MenuTypes.Assets, section: 'assets', label: 'Assets', badgeCount: assetStore.assetItemCounts?.activeCount ?? 0, icon: Box },
-    { type: MenuTypes.Agents, section: 'agents', label: 'Agents', badgeCount: agentStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
-    { type: MenuTypes.Operations, section: 'operations', label: 'Operations', badgeCount: operationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
-    { type: MenuTypes.PlaceHolder1, section: 'placeholder1', label: 'Placeholder 1', badgeCount: 0, icon: Circle },
-    { type: MenuTypes.PlaceHolder2, section: 'placeholder2', label: 'Placeholder 2', badgeCount: 0, icon: Circle },
-    { type: MenuTypes.PlaceHolder3, section: 'placeholder3', label: 'Placeholder 3', badgeCount: 0, icon: Circle },
+    { type: MenuTypes.Assets, section: 'assets', label: t('menu.assets'), badgeCount: assetStore.assetItemCounts?.activeCount ?? 0, icon: Box },
+    { type: MenuTypes.Agents, section: 'agents', label: t('menu.agents'), badgeCount: agentStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
+    { type: MenuTypes.Operations, section: 'operations', label: t('menu.operations'), badgeCount: operationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
+    { type: MenuTypes.PlaceHolder1, section: 'placeholder1', label: t('menu.placeholder1'), badgeCount: 0, icon: Circle },
+    { type: MenuTypes.PlaceHolder2, section: 'placeholder2', label: t('menu.placeholder2'), badgeCount: 0, icon: Circle },
+    { type: MenuTypes.PlaceHolder3, section: 'placeholder3', label: t('menu.placeholder3'), badgeCount: 0, icon: Circle },
   ];
 
   return (
