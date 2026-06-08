@@ -19,9 +19,10 @@ public class Seeder
 
         var assets = new[]
         {
-            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirRadar Asset", AssetType = Domain.Entities.AssetTypes.Vehicle, RelatedAgentId=Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6") },
-            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24"), Name = "AirDefenceGun Asset", AssetType = Domain.Entities.AssetTypes.Vehicle, RelatedAgentId=Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirRadar Asset", AssetType = Domain.Entities.AssetTypes.Radar, RelatedAgentId=Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24"), Name = "AirDefenceGun Asset", AssetType = Domain.Entities.AssetTypes.AirGun, RelatedAgentId=Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23") },
             new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"), Name = "Hostile Aircraft", AssetType = Domain.Entities.AssetTypes.Aircraft },
+            new Domain.Entities.Asset { Id = Guid.Parse("8e1a6d78-9746-4522-b437-8c14562fa2e1"), Name = "Headquarter", AssetType = Domain.Entities.AssetTypes.Building },
         };
 
         context.Assets.AddRange(assets);

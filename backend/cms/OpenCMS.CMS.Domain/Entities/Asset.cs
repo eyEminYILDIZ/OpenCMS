@@ -28,7 +28,9 @@ public enum AssetTypes
     Submarine = 5,
     Vehicle = 6,
     Building = 7,
-    Other = 8
+    Radar = 8,
+    AirGun = 9,
+    Other = 10
 }
 
 public enum ThreatTypes
