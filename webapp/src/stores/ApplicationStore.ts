@@ -1,8 +1,8 @@
-import { makeAutoObservable, runInAction, toJS } from "mobx";
-import { AssetApi, OperationApi } from "../api";
+import { makeAutoObservable } from "mobx";
 import { AgentStore } from "./AgentStore";
 import { AssetStore } from "./AssetStore";
 import { OperationStore } from "./OperationStore";
+import { MenuTypes } from "../types/MenuTypes";
 
 export class ApplicationStore {
     constructor(_agentStore: AgentStore, _assetStore: AssetStore, _operationStore: OperationStore) {
@@ -10,13 +10,16 @@ export class ApplicationStore {
         this.agentStore = _agentStore;
         this.assetStore = _assetStore;
         this.operationStore = _operationStore;
+        this.currentMenu = MenuTypes.Assets;
     }
     agentStore: AgentStore;
     assetStore: AssetStore;
     operationStore: OperationStore;
+    currentMenu: MenuTypes;
 
-    assetItemCounts: AssetApi.GetItemCounts.Response | null = null;
-    operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
+    changeMenu = (menu: MenuTypes) => {
+        this.currentMenu = menu;
+    }
 
     loadItemCounts = async () => {
         // assets
