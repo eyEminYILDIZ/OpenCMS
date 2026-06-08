@@ -12,5 +12,7 @@ export const assetTypeLabels: Record<AssetApi.Enums.AssetTypes, string> = {
     [AssetApi.Enums.AssetTypes.Submarine]: t('asset.assetTypes.submarine'),
     [AssetApi.Enums.AssetTypes.Vehicle]: t('asset.assetTypes.vehicle'),
     [AssetApi.Enums.AssetTypes.Building]: t('asset.assetTypes.building'),
+    [AssetApi.Enums.AssetTypes.Radar]: t('asset.assetTypes.radar'),
+    [AssetApi.Enums.AssetTypes.AirGun]: t('asset.assetTypes.airGun'),
     [AssetApi.Enums.AssetTypes.Other]: t('asset.assetTypes.other'),
 };

@@ -4,24 +4,35 @@ const radarStyle = {
     cursor: 'pointer',
     fill: 'none',
     stroke: '#d00',
-    strokeWidth: 1.5
+    strokeWidth: 1.5,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const
 };
 
 function RadarMarker({ size = 40 }) {
     return (
         <svg height={size} viewBox="0 0 24 24" style={radarStyle}>
-            {/* concentric arcs */}
-            <path d="M12 12 m-8 0 a8 8 0 0 1 8-8" />
-            <path d="M12 12 m-5 0 a5 5 0 0 1 5-5" />
-            <path d="M12 12 m-2.5 0 a2.5 2.5 0 0 1 2.5-2.5" />
-            {/* sweep line */}
-            <line x1="12" y1="12" x2="17.66" y2="5.34" />
-            {/* center dot */}
-            <circle cx="12" cy="12" r="1" fill="#d00" />
-            {/* base pole */}
-            <line x1="12" y1="12" x2="12" y2="21" />
-            {/* base feet */}
-            <line x1="8" y1="21" x2="16" y2="21" />
+            {/* dish assembly: rotate 30° CW from vertical → 60° elevation pointing upper-right */}
+            <g transform="rotate(30, 12, 8)">
+                {/* outer arc – back of dish, control point bows DOWN so concave face is UP */}
+                <path d="M 2,8 Q 12,16 22,8" />
+                {/* inner arc – reflector face, shallower bow */}
+                <path d="M 2,8 Q 12,11 22,8" />
+                {/* left rim strut to feed horn */}
+                <line x1="2" y1="8" x2="12" y2="4" />
+                {/* right rim strut to feed horn */}
+                <line x1="22" y1="8" x2="12" y2="4" />
+                {/* feed horn */}
+                <circle cx="12" cy="4" r="1.3" />
+            </g>
+            {/* elevation pivot / azimuth pillar */}
+            <line x1="12" y1="8" x2="12" y2="18" />
+            {/* trailer axle */}
+            <line x1="6" y1="18" x2="18" y2="18" />
+            {/* left wheel */}
+            <circle cx="7.5" cy="20.5" r="1.8" />
+            {/* right wheel */}
+            <circle cx="16.5" cy="20.5" r="1.8" />
         </svg>
     );
 }

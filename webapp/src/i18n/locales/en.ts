@@ -35,6 +35,8 @@ const en = {
       submarine: 'Submarine',
       vehicle: 'Vehicle',
       building: 'Building',
+      radar: 'Radar',
+      airGun: 'Air Gun',
       other: 'Other',
     },
     threatTypes: {

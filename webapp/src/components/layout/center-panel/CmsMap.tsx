@@ -14,7 +14,7 @@ import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
 import { observer } from 'mobx-react-lite';
 import { AssetApi } from '../../../api';
-import AircraftMarker from './markers/AircraftMarker';
+import { AircraftMarker, AirGunMarker, BuildingMarker, PersonMarker, PersonGroupMarker, ShipMarker, SubmarineMarker, UnknownMarker, VehicleMarker, RadarMarker } from './markers';
 
 interface City {
     city: string;
@@ -33,6 +33,27 @@ export const CmsMap: React.FC = observer(() => {
         switch (item.assetType) {
             case AssetApi.Enums.AssetTypes.Aircraft:
                 return <AircraftMarker />;
+            case AssetApi.Enums.AssetTypes.Ship:
+                return <ShipMarker />;
+            case AssetApi.Enums.AssetTypes.Submarine:
+                return <SubmarineMarker />;
+            case AssetApi.Enums.AssetTypes.Vehicle:
+                return <VehicleMarker />;
+            case AssetApi.Enums.AssetTypes.Building:
+                return <BuildingMarker />;
+            case AssetApi.Enums.AssetTypes.Person:
+                return <PersonMarker />;
+            case AssetApi.Enums.AssetTypes.GroupOfPeople:
+                return <PersonGroupMarker />;
+            case AssetApi.Enums.AssetTypes.Radar:
+                return <RadarMarker />;
+            case AssetApi.Enums.AssetTypes.AirGun:
+                return <AirGunMarker />;
+            case AssetApi.Enums.AssetTypes.Other:
+                return <UnknownMarker />;
+            case AssetApi.Enums.AssetTypes.Unknown:
+            default:
+                return <UnknownMarker />;
         }
     }
 
@@ -57,7 +78,7 @@ export const CmsMap: React.FC = observer(() => {
                                 // setPopupInfo(item as any);
                             }}
                         >
-                            <Pin />
+                            {renderPin(item)}
                         </Marker>
                     ))
                 }

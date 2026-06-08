@@ -9,18 +9,23 @@ const airGunStyle = {
 function AirGunMarker({ size = 40 }) {
     return (
         <svg height={size} viewBox="0 0 24 24" style={airGunStyle}>
-            {/* barrel */}
-            <rect x="2" y="9" width="14" height="3" rx="1" />
-            {/* muzzle tip */}
-            <rect x="16" y="10" width="4" height="1" />
-            {/* body / grip block */}
-            <rect x="5" y="12" width="7" height="5" rx="1" />
-            {/* trigger guard */}
-            <path d="M7 17 Q8 21 10 17" fill="#d00" />
-            {/* trigger */}
-            <rect x="8.5" y="14" width="1" height="3" fill="white" />
-            {/* stock */}
-            <rect x="2" y="12" width="4" height="7" rx="1" />
+            {/* barrel + muzzle brake rotated 60° right from vertical */}
+            <g transform="rotate(60, 12, 10)">
+                <rect x="9.5" y="1" width="5" height="1.5" rx="0.3" />
+                <rect x="11" y="1" width="2" height="11" rx="0.5" />
+            </g>
+            {/* breech block */}
+            <rect x="8" y="10" width="8" height="5" rx="1" />
+            {/* gun shield */}
+            <rect x="5.5" y="10" width="2.5" height="4" rx="0.5" />
+            {/* pivot mount */}
+            <rect x="10.5" y="14" width="3" height="4" />
+            {/* axle */}
+            <rect x="5" y="17.5" width="14" height="1.5" rx="0.5" />
+            {/* left wheel */}
+            <circle cx="6" cy="20.5" r="2.2" />
+            {/* right wheel */}
+            <circle cx="18" cy="20.5" r="2.2" />
         </svg>
     );
 }
