@@ -32,6 +32,35 @@ webapp/
 - **npm only** — do not generate `yarn.lock` or `pnpm-lock.yaml`.
 - TypeScript `strict` mode is enabled. All new code must pass `npm run type-check`.
 
+## Internationalisation (i18n)
+
+**Never hardcode user-visible strings.** All UI text must go through i18next.
+
+- Config: `src/i18n/index.ts` — initialised once, imported in `src/index.tsx` before `<App />` renders.
+- Translations: `src/i18n/locales/en.ts` — single English source of truth, organised by feature namespace.
+- Usage in components: `const { t } = useTranslation();` → `t('namespace.key')`.
+
+### Adding a new string
+
+1. Add the key under the appropriate namespace in `src/i18n/locales/en.ts`:
+   ```ts
+   // existing namespace
+   menu: {
+     myNewLabel: 'My New Label',
+   }
+   // or a new namespace
+   myFeature: {
+     title: 'My Feature',
+   }
+   ```
+2. Use it in the component:
+   ```tsx
+   const { t } = useTranslation();
+   <span>{t('myFeature.title')}</span>
+   ```
+
+No other config changes are needed.
+
 ## Adding a New Component
 
 1. Create `src/components/MyComponent.tsx` with a named, typed props interface.
