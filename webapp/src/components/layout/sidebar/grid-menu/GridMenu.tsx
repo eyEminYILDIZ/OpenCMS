@@ -17,9 +17,6 @@ const GridMenu = observer(() => {
     { type: MenuTypes.PlaceHolder3, section: 'placeholder3', label: 'Placeholder 3', badgeCount: 0, icon: Circle },
   ];
 
-  console.log("::", applicationStore.currentMenu);
-
-
   return (
     <nav className="grid-menu" aria-label="Main navigation">
       {MENU_ITEMS.map((item) => (

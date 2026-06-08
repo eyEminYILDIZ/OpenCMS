@@ -15,7 +15,6 @@ export class AssetStore {
             const response = await AssetApi.GetItemCounts.call();
             runInAction(() => {
                 this.assetItemCounts = response.data;
-                console.log(toJS(this.assetItemCounts));
             });
         } catch (error) {
             console.error("Error loading asset item counts:", error);
@@ -30,7 +29,6 @@ export class AssetStore {
         try {
             const response = await AssetApi.ListAll.call();
             this.allItems = response.data;
-            console.log(toJS(this.allItems));
         } catch (error) {
             console.error("Error getAllItems method:", error);
         }

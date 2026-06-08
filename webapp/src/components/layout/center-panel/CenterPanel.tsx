@@ -1,7 +1,8 @@
-import CmsMap from "./CmsMap";
+import { observer } from "mobx-react-lite";
+import { CmsMap } from "./CmsMap";
 
-const CenterPanel = () => (
+const CenterPanel: React.FC = observer(() => (
   <CmsMap />
-);
+));
 
 export default CenterPanel;

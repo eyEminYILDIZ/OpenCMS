@@ -13,7 +13,6 @@ export class OperationStore {
             const response = await OperationApi.GetItemCounts.call();
             runInAction(() => {
                 this.operationItemCounts = response.data;
-                console.log(toJS(this.operationItemCounts));
             });
         } catch (error) {
             console.error("Error loading operation item counts:", error);

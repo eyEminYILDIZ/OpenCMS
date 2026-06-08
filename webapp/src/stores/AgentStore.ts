@@ -13,7 +13,6 @@ export class AgentStore {
             const response = await AgentApi.GetItemCounts.call();
             runInAction(() => {
                 this.agentItemCounts = response.data;
-                console.log(toJS(this.agentItemCounts));
             });
         } catch (error) {
             console.error("Error loading agent item counts:", error);

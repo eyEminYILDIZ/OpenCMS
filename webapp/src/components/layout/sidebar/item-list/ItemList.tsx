@@ -23,7 +23,7 @@ const ItemList = observer(() => {
 
   return (
     <div className="item-list">
-      <ItemListCommandBar onAdd={() => openRightPanel('create')} />
+      {/* <ItemListCommandBar onAdd={() => openRightPanel('create')} /> */}
       <div className="item-list-scroll">
         {renderMenuList()}
       </div>
