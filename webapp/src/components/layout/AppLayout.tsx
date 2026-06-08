@@ -6,9 +6,10 @@ import StatusBar from './StatusBar';
 import { useEffect } from 'react';
 import { stores } from "../../stores"
 import CenterPanel from './center-panel/CenterPanel';
+import { observer } from 'mobx-react-lite';
 
 
-const AppLayout = () => {
+const AppLayout = observer(() => {
   const { applicationStore } = stores;
 
   useEffect(() => {
@@ -38,6 +39,6 @@ const AppLayout = () => {
       <RightPanel />
     </LayoutProvider>
   )
-};
+});
 
 export default AppLayout;
