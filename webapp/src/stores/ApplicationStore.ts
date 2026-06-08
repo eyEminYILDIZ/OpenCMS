@@ -19,6 +19,9 @@ export class ApplicationStore {
 
     changeMenu = (menu: MenuTypes) => {
         this.currentMenu = menu;
+        console.log(menu);
+        console.log(this.currentMenu);
+
     }
 
     loadItemCounts = async () => {
