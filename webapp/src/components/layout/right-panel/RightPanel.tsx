@@ -48,7 +48,7 @@ const RightPanel = observer(() => {
         {rightPanelOpen ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
       </button>
       {rightPanelOpen && (
-        <div className="right-panel-body">
+        <div className="right-panel-body" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
           {renderContent()}
         </div>
       )}
