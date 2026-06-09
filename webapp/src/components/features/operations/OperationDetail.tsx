@@ -26,7 +26,8 @@ export const OperationDetail: React.FC = observer(() => {
 
     return (
         <>
-            <h6></h6>
+            <h4>Operation Detail</h4>
+            <hr />
             <table>
                 <tbody>
                     {rows.map(({ label, value }) => (

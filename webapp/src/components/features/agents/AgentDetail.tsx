@@ -24,7 +24,8 @@ export const AgentDetail: React.FC = observer(() => {
 
     return (
         <>
-            <h6></h6>
+            <h4>Agent Detail</h4>
+            <hr />
             <table>
                 <tbody>
                     {rows.map(({ label, value }) => (

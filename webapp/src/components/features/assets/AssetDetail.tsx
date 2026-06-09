@@ -31,7 +31,8 @@ export const AssetDetail: React.FC = observer(() => {
 
     return (
         <>
-            <h6></h6>
+            <h4>Asset Detail</h4>
+            <hr />
             <table>
                 <tbody>
                     {rows.map(({ label, value }) => (
