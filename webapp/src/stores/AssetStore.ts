@@ -17,7 +17,7 @@ export class AssetStore {
                 this.assetItemCounts = response.data;
             });
         } catch (error) {
-            console.error("Error loading asset item counts:", error);
+            console.error("Error assets/loading asset item counts:", error);
         }
     }
 
@@ -30,7 +30,7 @@ export class AssetStore {
             const response = await AssetApi.ListAll.call();
             this.allItems = response.data;
         } catch (error) {
-            console.error("Error getAllItems method:", error);
+            console.error("Error assets/getAllItems method:", error);
         }
     }
 }

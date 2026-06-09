@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
-import { OperationApi } from "../api";
+import { AssetApi, OperationApi } from "../api";
 
 export class OperationStore {
     constructor() {
@@ -7,6 +7,8 @@ export class OperationStore {
     }
 
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
+    allItems: OperationApi.ListAll.Response[] = [];
+    selectedItem: OperationApi.ListAll.Response | undefined = undefined;
 
     loadItemCounts = async () => {
         try {
@@ -16,6 +18,19 @@ export class OperationStore {
             });
         } catch (error) {
             console.error("Error loading operation item counts:", error);
+        }
+    }
+
+    setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
+        this.selectedItem = item;
+    }
+
+    getAllItems = async () => {
+        try {
+            const response = await OperationApi.ListAll.call();
+            this.allItems = response.data;
+        } catch (error) {
+            console.error("Error assets/getAllItems method:", error);
         }
     }
 }

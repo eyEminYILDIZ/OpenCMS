@@ -7,6 +7,8 @@ export class AgentStore {
     }
 
     agentItemCounts: AgentApi.GetItemCounts.Response | null = null;
+    allItems: AgentApi.ListAll.Response[] = [];
+    selectedItem: AgentApi.ListAll.Response | undefined = undefined;
 
     loadItemCounts = async () => {
         try {
@@ -15,7 +17,20 @@ export class AgentStore {
                 this.agentItemCounts = response.data;
             });
         } catch (error) {
-            console.error("Error loading agent item counts:", error);
+            console.error("Error agents/loading agent item counts:", error);
+        }
+    }
+
+    setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
+        this.selectedItem = item;
+    }
+
+    getAllItems = async () => {
+        try {
+            const response = await AgentApi.ListAll.call();
+            this.allItems = response.data;
+        } catch (error) {
+            console.error("Error agents/getAllItems method:", error);
         }
     }
 }
