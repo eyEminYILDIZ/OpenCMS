@@ -16,7 +16,7 @@ export const AgentDetail: React.FC = observer(() => {
         { label: t('agent.fields.name'), value: item.name },
         { label: t('agent.fields.description'), value: item.description },
         { label: t('agent.fields.agentType'), value: agentTypeLabels[item.agentType] },
-        { label: t('agent.fields.active'), value: item.isActive ? t('common.active.yes') : t('common.active.no') },
+        { label: t('agent.fields.isActive'), value: item.isActive ? t('common.active.yes') : t('common.active.no') },
         { label: t('agent.fields.lastSeen'), value: item.lastSeen ?? "—" },
         { label: t('agent.fields.createdAt'), value: item.createdAt },
         { label: t('agent.fields.updatedAt'), value: item.updatedAt ?? "—" },

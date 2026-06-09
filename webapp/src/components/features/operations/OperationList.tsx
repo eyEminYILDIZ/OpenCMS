@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import { OperationApi } from "../../../api";
 import { stores } from "../../../stores";
 import DataList, { DataListColumn } from "../../ui/DataList";
+import { operationStatusLabels } from "../../../types";
+import { useTranslation } from "react-i18next";
 
 export const OperationList: React.FC = observer(() => {
     const { applicationStore, operationStore } = stores;
+    const { t } = useTranslation();
 
     useEffect(() => {
         operationStore.getAllItems();
@@ -14,8 +17,13 @@ export const OperationList: React.FC = observer(() => {
     const columns: DataListColumn<OperationApi.ListAll.Response>[] = [
         {
             key: "name",
-            header: "Name",
+            header: t("operation.fields.name"),
             type: "string",
+        },
+        {
+            key: "operationStatus",
+            header: t("operation.fields.operationStatus"),
+            render: (value, item) => (value == OperationApi.Enums.OperationStatus.InProgress || value == OperationApi.Enums.OperationStatus.NotStarted) ? <p style={{ color: "green" }}>{operationStatusLabels[item.operationStatus]}</p> : <p style={{ color: "red" }}>{operationStatusLabels[item.operationStatus]}</p>
         }
     ];
 
