@@ -30,15 +30,18 @@ export const AssetDetail: React.FC = observer(() => {
     ];
 
     return (
-        <table>
-            <tbody>
-                {rows.map(({ label, value }) => (
-                    <tr key={label}>
-                        <td><strong>{label}</strong></td>
-                        <td>{value}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <>
+            <h6></h6>
+            <table>
+                <tbody>
+                    {rows.map(({ label, value }) => (
+                        <tr key={label}>
+                            <td><strong>{label}</strong></td>
+                            <td>{value}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
     );
 })

@@ -1,12 +1,8 @@
-import type { MenuSection, FakeListItem } from '../../../../types/layout';
-import { useLayout } from '../../../../context/LayoutContext';
-import ItemListCommandBar from './ItemListCommandBar';
-import ItemListItem from './ItemListItem';
-import { stores } from '../../../../stores';
-import { AssetList } from './AssetList';
-import { MenuTypes } from '../../../../types/MenuTypes';
 import { observer } from 'mobx-react-lite';
-
+import { useLayout } from '../../../../context/LayoutContext';
+import { stores } from '../../../../stores';
+import { MenuTypes } from '../../../../types/MenuTypes';
+import { AssetList } from '../../../features';
 
 const ItemList = observer(() => {
   const { activeSection, openRightPanel } = useLayout();

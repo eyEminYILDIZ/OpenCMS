@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AssetDetail } from './AssetDetail';
+import { AssetDetail } from '../../features';
 
 const RightPanel = observer(() => {
   const { rightPanelOpen, toggleRightPanel } = useLayout();
