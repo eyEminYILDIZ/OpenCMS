@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AssetDetail } from '../../features';
+import { AgentDetail, AssetDetail } from '../../features';
 
 const RightPanel = observer(() => {
   const { rightPanelOpen, toggleRightPanel } = useLayout();
@@ -13,6 +13,8 @@ const RightPanel = observer(() => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
         return <AssetDetail />;
+      case MenuTypes.Agents:
+        return <AgentDetail />;
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;
     }

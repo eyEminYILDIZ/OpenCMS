@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../../context/LayoutContext';
 import { stores } from '../../../../stores';
 import { MenuTypes } from '../../../../types/MenuTypes';
-import { AssetList } from '../../../features';
+import { AgentList, AssetList } from '../../../features';
 
 const ItemList = observer(() => {
   const { activeSection, openRightPanel } = useLayout();
@@ -12,6 +12,8 @@ const ItemList = observer(() => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
         return <AssetList />
+      case MenuTypes.Agents:
+        return <AgentList />
       default:
         return <p>No matching menu list found</p>
     }

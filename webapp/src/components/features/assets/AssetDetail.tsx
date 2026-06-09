@@ -21,7 +21,7 @@ export const AssetDetail: React.FC = observer(() => {
         { label: t('asset.fields.speed'), value: item.speed.toString() },
         { label: t('asset.fields.assetType'), value: assetTypeLabels[item.assetType] },
         { label: t('asset.fields.threatType'), value: threatTypeLabels[item.threatType] },
-        { label: t('asset.fields.active'), value: item.isActive ? t('asset.active.yes') : t('asset.active.no') },
+        { label: t('asset.fields.active'), value: item.isActive ? t('common.active.yes') : t('common.active.no') },
         { label: t('asset.fields.firstUpdated'), value: item.firstUpdated },
         { label: t('asset.fields.lastUpdated'), value: item.lastUpdated },
         { label: t('asset.fields.relatedAgentId'), value: item.relatedAgentId ?? "—" },

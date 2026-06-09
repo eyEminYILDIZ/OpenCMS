@@ -1,4 +1,8 @@
 const en = {
+  common: {
+    no: "No",
+    yes: "Yes",
+  },
   menu: {
     assets: 'Assets',
     agents: 'Agents',
@@ -6,6 +10,25 @@ const en = {
     placeholder1: 'Placeholder 1',
     placeholder2: 'Placeholder 2',
     placeholder3: 'Placeholder 3',
+  },
+  agent: {
+    agentTypes: {
+      computerProgram: "Computer Program",
+      person: "Person",
+      inputOutput: 'Input-Output',
+      inputOnly: "Input Only",
+      outputOnly: 'Output Only',
+    },
+    fields: {
+      id: 'ID',
+      name: 'Name',
+      description: 'Description',
+      agentType: 'Agent Type',
+      active: 'Active',
+      lastSeen: 'Last Seen',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
+    },
   },
   asset: {
     noItemSelected: 'No item selected',
