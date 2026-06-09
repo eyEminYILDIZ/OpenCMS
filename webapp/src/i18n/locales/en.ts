@@ -73,7 +73,36 @@ const en = {
       yes: 'Yes',
       no: 'No',
     },
-  }
+  },
+  operation: {
+    noItemSelected: 'No item selected',
+    fields: {
+      id: 'ID',
+      name: 'Name',
+      description: 'Description',
+      startDate: 'Start Date',
+      estimatedEndDate: 'Estimated End Date',
+      endDate: 'End Date',
+      operationStatus: 'Status',
+      operationType: 'Type',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
+    },
+    operationStatuses: {
+      notStarted: 'Not Started',
+      inProgress: 'In Progress',
+      completed: 'Completed',
+      onHold: 'On Hold',
+      cancelled: 'Cancelled',
+    },
+    operationTypes: {
+      intercept: 'Intercept',
+      rescue: 'Rescue',
+      capture: 'Capture',
+      exterminate: 'Exterminate',
+      exchange: 'Exchange',
+    },
+  },
 } as const;
 
 export default en;
