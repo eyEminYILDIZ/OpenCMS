@@ -27,13 +27,12 @@ export const OperationDetail: React.FC = observer(() => {
     return (
         <>
             <h4>Operation Detail</h4>
-            <hr />
-            <table>
+            <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
                 <tbody>
                     {rows.map(({ label, value }) => (
                         <tr key={label}>
-                            <td><strong>{label}</strong></td>
-                            <td>{value}</td>
+                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}><strong>{label}</strong></td>
+                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}>{value}</td>
                         </tr>
                     ))}
                 </tbody>

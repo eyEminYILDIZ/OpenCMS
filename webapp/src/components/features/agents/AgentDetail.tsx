@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 import { stores } from "../../../stores";
-import { agentTypeLabels, threatTypeLabels } from "../../../types";
+import { agentTypeLabels } from "../../../types";
 
 export const AgentDetail: React.FC = observer(() => {
     const { agentStore } = stores;
@@ -25,13 +25,12 @@ export const AgentDetail: React.FC = observer(() => {
     return (
         <>
             <h4>Agent Detail</h4>
-            <hr />
-            <table>
+            <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
                 <tbody>
                     {rows.map(({ label, value }) => (
                         <tr key={label}>
-                            <td><strong>{label}</strong></td>
-                            <td>{value}</td>
+                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}><strong>{label}</strong></td>
+                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}>{value}</td>
                         </tr>
                     ))}
                 </tbody>
