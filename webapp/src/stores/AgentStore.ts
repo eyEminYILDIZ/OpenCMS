@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { AgentApi } from "../api";
+import { PanelModes } from "../types";
 
 export class AgentStore {
     constructor() {
@@ -9,6 +10,15 @@ export class AgentStore {
     agentItemCounts: AgentApi.GetItemCounts.Response | null = null;
     allItems: AgentApi.ListAll.Response[] = [];
     selectedItem: AgentApi.ListAll.Response | undefined = undefined;
+    panelMode: PanelModes = PanelModes.Detail;
+
+    setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
+        this.selectedItem = item;
+    }
+
+    setPanelMode = (mode: PanelModes) => {
+        this.panelMode = mode;
+    }
 
     loadItemCounts = async () => {
         try {
@@ -19,10 +29,6 @@ export class AgentStore {
         } catch (error) {
             console.error("Error agents/loading agent item counts:", error);
         }
-    }
-
-    setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
-        this.selectedItem = item;
     }
 
     getAllItems = async () => {
