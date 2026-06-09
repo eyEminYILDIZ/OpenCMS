@@ -2,6 +2,8 @@ const en = {
   common: {
     no: "No",
     yes: "Yes",
+    delete: "Delete",
+    cancel: "Cancel",
   },
   menu: {
     assets: 'Assets',

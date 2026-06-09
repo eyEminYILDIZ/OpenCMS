@@ -1,9 +1,11 @@
 import { observer } from "mobx-react-lite";
 import DataList, { DataListColumn } from "../../ui/DataList";
 import { AssetApi } from "../../../api";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { stores } from "../../../stores";
 import { useTranslation } from "react-i18next";
+import { Pencil, Trash2 } from "lucide-react";
+import { PanelModes } from "../../../types";
 
 
 export const AssetList: React.FC = observer(() => {
@@ -24,6 +26,24 @@ export const AssetList: React.FC = observer(() => {
             key: "isActive",
             header: t("agent.fields.isActive"),
             render: (value, item) => item.isActive ? <p style={{ color: "green" }}>{t("common.yes")}</p> : <p style={{ color: "red" }}>{t("common.no")}</p>
+        },
+        {
+            key: "edit",
+            type: "button",
+            icon: <Pencil size={16} />,
+            onButtonClick: (item) => {
+                assetStore.setSelectedItem(item);
+                assetStore.setPanelMode(PanelModes.Edit);
+            }
+        },
+        {
+            key: "delete",
+            type: "button",
+            icon: <Trash2 size={16} />,
+            onButtonClick: (item) => {
+                assetStore.setSelectedItem(item);
+                assetStore.setPanelMode(PanelModes.Delete);
+            }
         }
     ]
 
@@ -31,7 +51,10 @@ export const AssetList: React.FC = observer(() => {
         <DataList<AssetApi.ListAll.Response>
             columns={columns}
             items={assetStore.allItems}
-            onRowClicked={(item) => assetStore.setSelectedItem(item)}
+            onRowClicked={(item) => {
+                assetStore.setSelectedItem(item);
+                assetStore.setPanelMode(PanelModes.Detail);
+            }}
         />
     );
 });

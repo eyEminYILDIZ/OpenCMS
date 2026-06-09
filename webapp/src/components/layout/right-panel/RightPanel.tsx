@@ -3,20 +3,36 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AssetDetail, OperationDetail } from '../../features';
+import { AgentDetail, AssetDelete, AssetDetail, OperationDetail } from '../../features';
+import { PanelModes } from '../../../types';
 
 const RightPanel = observer(() => {
   const { rightPanelOpen, toggleRightPanel } = useLayout();
-  const { applicationStore } = stores;
+  const { applicationStore, assetStore, agentStore, operationStore } = stores;
 
   const renderContent = () => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
-        return <AssetDetail />;
+        switch (assetStore.panelMode) {
+          case PanelModes.Detail:
+            return <AssetDetail />;
+          case PanelModes.Delete:
+            return <AssetDelete />;
+        }
       case MenuTypes.Agents:
-        return <AgentDetail />;
+        switch (agentStore.panelMode) {
+          case PanelModes.Detail:
+            return <AgentDetail />;
+          case PanelModes.Delete:
+            return <AssetDelete />;
+        }
       case MenuTypes.Operations:
-        return <OperationDetail />;
+        switch (operationStore.panelMode) {
+          case PanelModes.Detail:
+            return <OperationDetail />;
+          case PanelModes.Delete:
+            return <AssetDelete />;
+        }
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;
     }
