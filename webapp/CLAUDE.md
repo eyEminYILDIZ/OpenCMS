@@ -27,6 +27,7 @@ webapp/
 - **No `any` types.** Fix the underlying type instead of using `any`.
 - **No `as` type assertions** to silence compiler errors. Fix the type.
 - **UI Library** Shadcn, consider using prebuilt components. Tailwind not allowed.
+- **Icon Library** Use `lucide-react` for all icons. It is already installed. Do not use inline SVGs unless explicitly told to.
 - **State management: MobX.** Use `mobx-react-lite` (`observer`) for reactive components. Do not use Redux, Zustand, Jotai, or other state libraries.
 - **MobX rules:** Wrap components that read observable store values with `observer`. Never memoize observable-derived values with an empty dependency array (`useMemo(() => ..., [])`) — MobX tracks reads at render time and memoizing with `[]` breaks reactivity.
 - **npm only** — do not generate `yarn.lock` or `pnpm-lock.yaml`.
