@@ -33,10 +33,10 @@
 
 **Decision**: Store the path as a standard `ConnectionStrings:DefaultConnection` entry in `appsettings.json`. Resolve it to an absolute path at startup using `IWebHostEnvironment.ContentRootPath` so that both APIs resolve to the same file regardless of working directory.
 
-**Path value**: `../../data/opencms.db`  
+**Path value**: `../../cms_data/opencms.db`  
 **Resolved from** `ContentRootPath` (project directory when using `dotnet run`):
-- `backend/cms/OpenCMS.CMS.ClientApi/` + `../../data/opencms.db` → `backend/data/opencms.db`
-- `backend/cms/OpenCMS.CMS.AgentApi/` + `../../data/opencms.db` → `backend/data/opencms.db`
+- `backend/cms/OpenCMS.CMS.ClientApi/` + `../../cms_data/opencms.db` → `backend/cms_data/opencms.db`
+- `backend/cms/OpenCMS.CMS.AgentApi/` + `../../cms_data/opencms.db` → `backend/cms_data/opencms.db`
 
 Both APIs resolve to the same `backend/data/` directory.
 

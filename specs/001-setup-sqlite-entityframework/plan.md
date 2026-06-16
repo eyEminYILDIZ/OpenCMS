@@ -14,7 +14,7 @@ Replace the EF Core InMemory provider with SQLite so that both ClientApi and Age
 
 **Primary Dependencies**: ASP.NET Core Minimal API, EF Core (SQLite provider replaces InMemory), MediatR, FluentValidation
 
-**Storage**: SQLite — single file at `backend/data/opencms.db`, shared by both APIs
+**Storage**: SQLite — single file at `backend/cms_data/opencms.db`, shared by both APIs
 
 **Testing**: No test projects exist
 
@@ -91,12 +91,12 @@ Remove `Microsoft.EntityFrameworkCore.InMemory`, add `Microsoft.EntityFrameworkC
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=../../data/opencms.db"
+    "DefaultConnection": "Data Source=../../cms_data/opencms.db"
   }
 }
 ```
 
-The relative path resolves to `backend/data/opencms.db` from both API project directories when run via `dotnet run`.
+The relative path resolves to `backend/cms_data/opencms.db` from both API project directories when run via `dotnet run`.
 
 ### 3. New: `InfrastructureServiceRegistration.cs`
 
@@ -109,7 +109,7 @@ public static IServiceCollection AddInfrastructureServices(
     IWebHostEnvironment environment)
 {
     var relativePath = configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=../../data/opencms.db";
+        ?? "Data Source=../../cms_data/opencms.db";
 
     // Resolve the Data Source path to absolute, relative to content root
     var dataSourceValue = relativePath.Replace("Data Source=", "").Trim();

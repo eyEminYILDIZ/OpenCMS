@@ -32,8 +32,8 @@
 
 **⚠️ CRITICAL**: Phases 3 and 4 depend on this phase being complete.
 
-- [x] T003 [P] [US2] In `backend/cms/OpenCMS.CMS.AgentApi/appsettings.json`, add a `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
-- [x] T004 [P] [US2] In `backend/cms/OpenCMS.CMS.ClientApi/appsettings.json`, add the same `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../data/opencms.db"`
+- [x] T003 [P] [US2] In `backend/cms/OpenCMS.CMS.AgentApi/appsettings.json`, add a `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../cms_data/opencms.db"`
+- [x] T004 [P] [US2] In `backend/cms/OpenCMS.CMS.ClientApi/appsettings.json`, add the same `ConnectionStrings` section: `"DefaultConnection": "Data Source=../../cms_data/opencms.db"`
 - [x] T005 [US2] Create `backend/cms/OpenCMS.CMS.Infrastructure/Configurations/InfrastructureServiceRegistration.cs` with a static `AddInfrastructureServices(this IServiceCollection, IConfiguration, IWebHostEnvironment)` extension method that: (1) reads `ConnectionStrings:DefaultConnection`, (2) resolves the `Data Source` path to an absolute path using `Path.GetFullPath(Path.Combine(environment.ContentRootPath, dataSourceValue))`, (3) calls `Directory.CreateDirectory` on the parent directory, (4) registers `AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseSqlite(connectionString))`
 
 **Checkpoint**: `dotnet build` should succeed after T005 (new file compiles, but Program.cs still uses old registration).
@@ -49,7 +49,7 @@
 - [x] T006 [US1] Update `backend/cms/OpenCMS.CMS.AgentApi/Program.cs`: replace `builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt => opt.UseInMemoryDatabase("OpenCMS"))` with `builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment)`. Then replace the inline `Seeder.SeedOperationVersion1(...)` startup call with a scoped block that calls `context.Database.EnsureCreated()`, then `context.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;")`, then `Seeder.SeedOperationVersion1(context)`
 - [x] T007 [P] [US1] Apply the identical Program.cs change to `backend/cms/OpenCMS.CMS.ClientApi/Program.cs`
 
-**Checkpoint**: `dotnet build` succeeds. Running either API for the first time creates `backend/data/opencms.db`. Stopping and restarting retains all data.
+**Checkpoint**: `dotnet build` succeeds. Running either API for the first time creates `backend/cms_data/opencms.db`. Stopping and restarting retains all data.
 
 ---
 
@@ -69,7 +69,7 @@
 
 **Purpose**: Keep documentation in sync and verify the full build after all changes.
 
-- [x] T009 [P] Update `backend/CLAUDE.md`: in the Architecture section replace "EF Core DbContext (in-memory), seeder" with "EF Core DbContext (SQLite, `backend/data/opencms.db`), seeder" and update the inline code comment about `UseInMemoryDatabase`
+- [x] T009 [P] Update `backend/CLAUDE.md`: in the Architecture section replace "EF Core DbContext (in-memory), seeder" with "EF Core DbContext (SQLite, `backend/cms_data/opencms.db`), seeder" and update the inline code comment about `UseInMemoryDatabase`
 - [x] T010 Run `dotnet build` from `backend/` and confirm zero errors and zero warnings related to the InMemory package or missing usings
 
 ---
@@ -117,7 +117,7 @@ Task T007: Update ClientApi/Program.cs
 1. Complete Phase 1: Setup (T001, T002)
 2. Complete Phase 2: Foundational (T003–T005)
 3. Complete Phase 3: US1 Persistence (T006, T007)
-4. **STOP and VALIDATE**: Start both APIs, confirm `backend/data/opencms.db` is created, data persists across restart
+4. **STOP and VALIDATE**: Start both APIs, confirm `backend/cms_data/opencms.db` is created, data persists across restart
 5. Complete Phase 4: US3 Seeding (T008) — prevents dual-startup conflict
 6. Complete Phase 5: Polish (T009, T010)
 

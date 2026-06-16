@@ -16,14 +16,14 @@ dotnet run --project cms/OpenCMS.CMS.AgentApi
 dotnet run --project cms/OpenCMS.CMS.ClientApi
 ```
 
-Both APIs connect to the same file: `backend/data/opencms.db`.
+Both APIs connect to the same file: `backend/cms_data/opencms.db`.
 
 ## Resetting the Database
 
 To start fresh (e.g., reseed with clean data), delete the database file:
 
 ```bash
-rm backend/data/opencms.db
+rm backend/cms_data/opencms.db
 ```
 
 On the next startup either API will recreate the schema and reseed automatically.
@@ -41,7 +41,7 @@ backend/
 Use any SQLite browser (e.g., DB Browser for SQLite, TablePlus, or the `sqlite3` CLI):
 
 ```bash
-sqlite3 backend/data/opencms.db
+sqlite3 backend/cms_data/opencms.db
 .tables
 SELECT * FROM Agents;
 .quit
