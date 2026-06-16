@@ -14,7 +14,7 @@ public static class InfrastructureServiceRegistration
         string contentRootPath)
     {
         var rawConnectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? "Data Source=../../data/opencms.db";
+            ?? "Data Source=../../cms_data/opencms.db";
 
         var dataSourceValue = rawConnectionString.Replace("Data Source=", string.Empty).Trim();
         var absoluteDbPath = Path.GetFullPath(Path.Combine(contentRootPath, dataSourceValue));
