@@ -14,6 +14,7 @@ Web part of OpenCMS
 - Shadcn
 - Axios 
 - MobX
+- Lucide Icons
 
 
 ## Projects
