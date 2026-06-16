@@ -28,7 +28,7 @@ No test projects exist yet.
   ClientApi      — ASP.NET Core minimal API, port 5020
   Application    — Features, commands, queries, endpoints, route registration
   Domain         — Entities, enums (no dependencies)
-  Infrastructure — EF Core DbContext (SQLite, `backend/data/opencms.db`), seeder
+  Infrastructure — EF Core DbContext (SQLite, `backend/cms_data/opencms.db`), seeder
 ```
 
 **Feature folder layout** (every feature follows this pattern):
@@ -41,7 +41,7 @@ Features/{Feature}/_Self/{Operation}/
   Validator.cs  — AbstractValidator<Command> or AbstractValidator<Query> (when the class has properties)
 ```
 
-MediatR handlers are auto-registered from the Application assembly. DbContext is registered via `AddInfrastructureServices()` using SQLite (`backend/data/opencms.db`); schema is created with `EnsureCreated()` and `Seeder.SeedOperationVersion1()` runs at startup (idempotent — safe to call from both APIs).
+MediatR handlers are auto-registered from the Application assembly. DbContext is registered via `AddInfrastructureServices()` using SQLite (`backend/cms_data/opencms.db`); schema is created with `EnsureCreated()` and `Seeder.SeedOperationVersion1()` runs at startup (idempotent — safe to call from both APIs).
 
 **Entity hierarchy:** `CoreEntity (Guid Id)` → `BaseEntity (timestamps)` → `Agent`, `Asset`, `Operation`, `OperationAsset`, `Order`.
 
