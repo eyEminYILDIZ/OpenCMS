@@ -29,3 +29,8 @@ OpenCMS managed via web application.
 - Asset Management
 - Agent Management
 - Operation Management
+
+
+## References
+
+[Lucide Icons](https://lucide.dev/icons/)
