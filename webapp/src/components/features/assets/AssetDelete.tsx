@@ -6,7 +6,6 @@ import Button from "../../ui/Button";
 import ButtonStack from "../../ui/ButtonStack";
 import { CircleX, Trash2 } from "lucide-react";
 
-
 export const AssetDelete: React.FC = observer(() => {
     const { assetStore } = stores;
     const { t } = useTranslation();
