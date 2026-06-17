@@ -11,7 +11,7 @@ const App = observer(() => {
   console.log("App render");
 
   if (!splashDone) {
-    return <SplashScreen duration={2000} onDone={handleSplashDone} />;
+    return <SplashScreen duration={2500} onDone={handleSplashDone} />;
   }
 
   return <AppLayout />;
