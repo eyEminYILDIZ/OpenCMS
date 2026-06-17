@@ -2,13 +2,16 @@ import { AgentStore } from "./AgentStore";
 import { ApplicationStore } from "./ApplicationStore";
 import { AssetStore } from "./AssetStore";
 import { OperationStore } from "./OperationStore";
+import { StatusBarStore } from "./StatusBarStore";
 
-const agentStore = new AgentStore();
-const assetStore = new AssetStore();
-const operationStore = new OperationStore();
-const applicationStore = new ApplicationStore(agentStore, assetStore, operationStore);
+const statusBarStore = new StatusBarStore();
+const agentStore = new AgentStore(statusBarStore);
+const assetStore = new AssetStore(statusBarStore);
+const operationStore = new OperationStore(statusBarStore);
+const applicationStore = new ApplicationStore(statusBarStore, agentStore, assetStore, operationStore);
 
 export const stores = {
+    statusBarStore,
     agentStore,
     assetStore,
     operationStore,
