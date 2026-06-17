@@ -105,6 +105,11 @@ const en = {
       exchange: 'Exchange',
     },
   },
+  statusBar: {
+    errors: {
+      loadFailed: 'Failed to load items.',
+    },
+  },
 } as const;
 
 export default en;
