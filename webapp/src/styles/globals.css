@@ -897,11 +897,17 @@ body {
 .status-bar {
   display: flex;
   align-items: center;
+  gap: 0.375rem;
   padding: 0 1rem;
   height: 36px;
   font-size: 0.875rem;
   color: var(--muted-foreground);
+  transition: opacity 300ms ease-out, color 150ms ease;
 }
+
+.status-bar--warning { color: #f59e0b; }
+.status-bar--error   { color: var(--destructive); }
+.status-bar--fading  { opacity: 0; }
 
 /* ============================================================
    CENTER PLACEHOLDER
