@@ -2,10 +2,17 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { AgentStore } from "./AgentStore";
 import { AssetStore } from "./AssetStore";
 import { OperationStore } from "./OperationStore";
+import { StatusBarStore } from "./StatusBarStore";
 import { MenuTypes } from "../types/MenuTypes";
 
 export class ApplicationStore {
-    constructor(_agentStore: AgentStore, _assetStore: AssetStore, _operationStore: OperationStore) {
+    constructor(
+        _statusBarStore: StatusBarStore,
+        _agentStore: AgentStore,
+        _assetStore: AssetStore,
+        _operationStore: OperationStore,
+    ) {
+        this.statusBarStore = _statusBarStore;
         this.agentStore = _agentStore;
         this.assetStore = _assetStore;
         this.operationStore = _operationStore;
@@ -13,6 +20,7 @@ export class ApplicationStore {
         // use this bottom of constructor, otherwise MobX cant detect observables.
         makeAutoObservable(this);
     }
+    statusBarStore: StatusBarStore;
     agentStore: AgentStore;
     assetStore: AssetStore;
     operationStore: OperationStore;

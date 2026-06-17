@@ -1,9 +1,13 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { AgentApi } from "../api";
 import { PanelModes } from "../types";
+import { StatusBarStore } from "./StatusBarStore";
 
 export class AgentStore {
-    constructor() {
+    statusBarStore: StatusBarStore;
+
+    constructor(statusBarStore: StatusBarStore) {
+        this.statusBarStore = statusBarStore;
         makeAutoObservable(this);
     }
 
