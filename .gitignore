@@ -50,5 +50,5 @@ package-lock.json
 .tmp
 
 # backend
-./backend/cms_cms_data/opencms.db-shm
-./backend/cms_cms_data/opencms.db-wal
+./backend/cms_data/opencms.db-shm
+./backend/cms_data/opencms.db-wal
