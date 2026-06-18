@@ -13,7 +13,7 @@ const StatusBar = observer(() => {
 
     return (
         <div className={classes} role="status" aria-live="polite">
-            {Icon && <Icon size={14} />}
+            {Icon && <Icon size={15} strokeWidth={2.5} />}
             <span>{statusBarStore.message}</span>
         </div>
     );

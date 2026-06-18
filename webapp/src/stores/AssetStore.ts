@@ -40,7 +40,9 @@ export class AssetStore {
         try {
             const response = await AssetApi.ListAll.call();
             this.allItems = response.data;
-            throw new Error("Test error for getAllItems"); // This line is for testing error handling
+
+            // This line is for testing error handling
+            throw new Error("Test error for getAllItems");
         } catch (error) {
             console.error("Error assets/getAllItems method:", error);
             this.statusBarStore.showError(i18next.t('statusBar.errors.loadFailed'));
