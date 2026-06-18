@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
+import i18next from "i18next";
 import { AgentApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
@@ -31,7 +32,7 @@ export class AgentStore {
                 this.agentItemCounts = response.data;
             });
         } catch (error) {
-            console.error("Error agents/loading agent item counts:", error);
+            this.statusBarStore.showError(i18next.t('agent.errors.loadCountFailed'));
         }
     }
 
@@ -40,7 +41,7 @@ export class AgentStore {
             const response = await AgentApi.ListAll.call();
             this.allItems = response.data;
         } catch (error) {
-            console.error("Error agents/getAllItems method:", error);
+            this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));
         }
     }
 }

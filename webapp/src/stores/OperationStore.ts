@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx";
+import i18next from "i18next";
 import { AssetApi, OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
@@ -30,7 +31,7 @@ export class OperationStore {
                 this.operationItemCounts = response.data;
             });
         } catch (error) {
-            console.error("Error loading operation item counts:", error);
+            this.statusBarStore.showError(i18next.t('operation.errors.loadCountFailed'));
         }
     }
 
@@ -39,7 +40,7 @@ export class OperationStore {
             const response = await OperationApi.ListAll.call();
             this.allItems = response.data;
         } catch (error) {
-            console.error("Error assets/getAllItems method:", error);
+            this.statusBarStore.showError(i18next.t('operation.errors.loadItemsFailed'));
         }
     }
 }

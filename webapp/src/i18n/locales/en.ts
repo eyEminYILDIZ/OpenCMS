@@ -14,6 +14,10 @@ const en = {
     placeholder3: 'Placeholder 3',
   },
   agent: {
+    errors: {
+      loadCountFailed: 'Failed to load agent counts.',
+      loadItemsFailed: 'Failed to load agents.',
+    },
     agentTypes: {
       computerProgram: "Computer Program",
       person: "Person",
@@ -33,6 +37,10 @@ const en = {
     },
   },
   asset: {
+    errors: {
+      loadCountFailed: 'Failed to load asset counts.',
+      loadItemsFailed: 'Failed to load assets.',
+    },
     noItemSelected: 'No item selected',
     fields: {
       id: 'ID',
@@ -77,6 +85,10 @@ const en = {
     },
   },
   operation: {
+    errors: {
+      loadCountFailed: 'Failed to load operation counts.',
+      loadItemsFailed: 'Failed to load operations.',
+    },
     noItemSelected: 'No item selected',
     fields: {
       id: 'ID',

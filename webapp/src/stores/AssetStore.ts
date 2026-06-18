@@ -32,7 +32,7 @@ export class AssetStore {
                 this.assetItemCounts = response.data;
             });
         } catch (error) {
-            console.error("Error assets/loading asset item counts:", error);
+            this.statusBarStore.showError(i18next.t('asset.errors.loadCountFailed'));
         }
     }
 
@@ -44,8 +44,7 @@ export class AssetStore {
             // This line is for testing error handling
             throw new Error("Test error for getAllItems");
         } catch (error) {
-            console.error("Error assets/getAllItems method:", error);
-            this.statusBarStore.showError(i18next.t('statusBar.errors.loadFailed'));
+            this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
         }
     }
 }
