@@ -59,6 +59,6 @@ export class StatusBarStore {
         this.clearTimer = setTimeout(() => {
             this.clear();
             this.clearTimer = null;
-        }, 3000);
+        }, 5000);
     };
 }
