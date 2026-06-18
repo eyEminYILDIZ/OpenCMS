@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { LucideIcon } from "lucide-react";
+import { Info, TriangleAlert, CircleX, LucideIcon } from "lucide-react";
 
 export type StatusLevel = "info" | "warning" | "error";
 
@@ -16,7 +16,7 @@ export class StatusBarStore {
         makeAutoObservable(this);
     }
 
-    showInfo = (icon: LucideIcon, message: string) => {
+    showInfo = (message: string, icon: LucideIcon = Info) => {
         this.icon = icon;
         this.message = message;
         this.level = "info";
@@ -24,7 +24,7 @@ export class StatusBarStore {
         this.scheduleAutoClear();
     };
 
-    showWarning = (icon: LucideIcon, message: string) => {
+    showWarning = (message: string, icon: LucideIcon = TriangleAlert) => {
         this.icon = icon;
         this.message = message;
         this.level = "warning";
@@ -32,7 +32,7 @@ export class StatusBarStore {
         this.scheduleAutoClear();
     };
 
-    showError = (icon: LucideIcon, message: string) => {
+    showError = (message: string, icon: LucideIcon = CircleX) => {
         this.icon = icon;
         this.message = message;
         this.level = "error";
