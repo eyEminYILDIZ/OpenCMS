@@ -6,6 +6,7 @@ import { stores } from "../../../stores";
 import { OperationApi } from "../../../api";
 import { operationStatusOptions, operationTypeOptions, PanelModes } from "../../../types";
 import Input from "../../ui/Input";
+import DatePicker from "../../ui/DatePicker";
 import Form, { FormMode } from "../../ui/Form";
 import FormItem from "../../ui/FormItem";
 import Button from "../../ui/Button";
@@ -73,23 +74,11 @@ export const OperationUpdate: React.FC = observer(() => {
             </FormItem>
 
             <FormItem<FormValues> name="startDate" label={t('operation.fields.startDate')}>
-                <Input<FormValues>
-                    id="startDate"
-                    name="startDate"
-                    value={formik.values.startDate}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <DatePicker<FormValues> name="startDate" />
             </FormItem>
 
             <FormItem<FormValues> name="estimatedEndDate" label={t('operation.fields.estimatedEndDate')}>
-                <Input<FormValues>
-                    id="estimatedEndDate"
-                    name="estimatedEndDate"
-                    value={formik.values.estimatedEndDate}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <DatePicker<FormValues> name="estimatedEndDate" />
             </FormItem>
 
             <FormItem label={t('operation.fields.operationStatus')}>

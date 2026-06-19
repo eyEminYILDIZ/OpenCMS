@@ -2,6 +2,9 @@ const en = {
   common: {
     no: "No",
     yes: "Yes",
+    datePicker: {
+      placeholder: 'Pick a date',
+    },
     delete: "Delete",
     cancel: "Cancel",
     save: "Save",
