@@ -996,6 +996,8 @@ body {
 .right-panel-empty {
   font-size: 0.875rem;
   color: var(--muted-foreground);
+  text-align: center;
+  width: 100%;
 }
 
 /* ============================================================

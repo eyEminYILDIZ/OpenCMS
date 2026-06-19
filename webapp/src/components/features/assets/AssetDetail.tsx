@@ -9,7 +9,7 @@ export const AssetDetail: React.FC = observer(() => {
     const item = assetStore.selectedItem;
 
     if (item == undefined)
-        return (<p>{t('asset.noItemSelected')}</p>);
+        return (<p className="right-panel-empty">{t('asset.noItemSelected')}</p>);
 
     const rows: { label: string; value: string }[] = [
         { label: t('asset.fields.id'), value: item.id },

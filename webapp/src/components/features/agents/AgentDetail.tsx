@@ -9,7 +9,7 @@ export const AgentDetail: React.FC = observer(() => {
     const item = agentStore.selectedItem;
 
     if (item == undefined)
-        return (<p>{t('agent.noItemSelected')}</p>);
+        return (<p className="right-panel-empty">{t('agent.noItemSelected')}</p>);
 
     const rows: { label: string; value: string }[] = [
         { label: t('agent.fields.id'), value: item.id },

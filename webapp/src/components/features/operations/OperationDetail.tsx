@@ -9,7 +9,7 @@ export const OperationDetail: React.FC = observer(() => {
     const item = operationStore.selectedItem;
 
     if (item == undefined)
-        return (<p>{t('operation.noItemSelected')}</p>);
+        return (<p className="right-panel-empty">{t('operation.noItemSelected')}</p>);
 
     const rows: { label: string; value: string }[] = [
         { label: t('operation.fields.id'), value: item.id },
