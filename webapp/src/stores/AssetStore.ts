@@ -62,6 +62,7 @@ export class AssetStore {
             this.setSelectedItem(undefined);
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
+            await this.loadItemCounts();
             this.statusBarStore.showInfo(i18next.t('asset.errors.deleteSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.deleteFailed'));
