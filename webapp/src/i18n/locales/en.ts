@@ -18,7 +18,6 @@ const en = {
       loadCountFailed: 'Failed to load agent counts.',
       loadItemsFailed: 'Failed to load agents.',
     },
-    noItemSelected: 'No agent selected',
     agentTypes: {
       computerProgram: "Computer Program",
       person: "Person",
