@@ -1,9 +1,12 @@
 import { cn } from '../../lib/utils';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface InputProps<T extends Record<string, unknown> = Record<string, unknown>>
+    extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
+    name?: keyof T & string;
+}
 
-const Input = ({ className, type, ...props }: InputProps) => {
-  return <input type={type} className={cn('input', className)} {...props} />;
-};
+function Input<T extends Record<string, unknown> = Record<string, unknown>>({ className, type, ...props }: InputProps<T>) {
+    return <input type={type} className={cn('input', className)} {...props} />;
+}
 
 export default Input;
