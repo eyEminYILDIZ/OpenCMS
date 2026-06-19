@@ -54,7 +54,19 @@ export class AssetStore {
         this.setSelectedItem(undefined);
     }
 
-    createItem = async () => {
+    createItem = async (values: AssetApi.Create.Request) => {
+        try {
+            const response = await AssetApi.Create.call(values);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((a) => a.id === response.data.id);
+                this.panelMode = PanelModes.Detail;
+            });
+            await this.loadItemCounts();
+            this.statusBarStore.showInfo(i18next.t('asset.errors.createSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('asset.errors.createFailed'));
+        }
     }
 
     updateItem = async (values: Omit<AssetApi.Update.Request, 'id'>) => {

@@ -1001,7 +1001,8 @@ body {
   place-items: center;
 }
 
-.update-form {
+.update-form,
+.create-form {
   align-self: start;
   width: 100%;
 }

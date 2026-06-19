@@ -63,9 +63,14 @@ const en = {
       deleteSucceeded: 'Asset deleted successfully.',
       updateFailed: 'Failed to update asset.',
       updateSucceeded: 'Asset updated successfully.',
+      createFailed: 'Failed to create asset.',
+      createSucceeded: 'Asset created successfully.',
       noItemSelected: 'No asset selected.',
     },
     noItemSelected: 'No item selected',
+    create: {
+      title: 'Create Asset',
+    },
     update: {
       title: 'Update Asset',
     },
