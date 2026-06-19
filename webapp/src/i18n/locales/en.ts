@@ -30,6 +30,11 @@ const en = {
       noItemSelected: 'No agent selected.',
       deleteFailed: 'Failed to delete agent.',
       deleteSucceeded: 'Agent deleted successfully.',
+      updateFailed: 'Failed to update agent.',
+      updateSucceeded: 'Agent updated successfully.',
+    },
+    update: {
+      title: 'Update Agent',
     },
     noItemSelected: 'No item selected',
     agentTypes: {

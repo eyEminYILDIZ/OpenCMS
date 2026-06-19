@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
 import { AgentApi } from "../api";
 import { PanelModes } from "../types";
@@ -42,6 +42,26 @@ export class AgentStore {
             this.allItems = response.data;
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));
+        }
+    }
+
+    updateItem = async (values: Omit<AgentApi.Update.Request, 'id'>) => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('agent.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const id = this.selectedItem.id;
+            const request: AgentApi.Update.Request = { id, ...values };
+            await AgentApi.Update.call(request);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((a) => a.id === id);
+            });
+            this.statusBarStore.showInfo(i18next.t('agent.errors.updateSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.updateFailed'));
         }
     }
 
