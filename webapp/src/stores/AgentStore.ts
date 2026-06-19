@@ -44,4 +44,23 @@ export class AgentStore {
             this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));
         }
     }
+
+    deleteItem = async () => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('agent.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedItem.id };
+            await AgentApi.Delete.call(request);
+
+            this.setSelectedItem(undefined);
+            this.setPanelMode(PanelModes.Detail);
+            await this.getAllItems();
+            this.statusBarStore.showInfo(i18next.t('agent.errors.deleteSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.deleteFailed'));
+        }
+    }
 }

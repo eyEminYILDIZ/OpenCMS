@@ -39,4 +39,24 @@ export namespace AgentApi {
             return response.data;
         }
     }
+    export namespace Delete {
+        export const path = "/Agents";
+        export interface Request {
+            id: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            agentType: Enums.AgentTypes;
+            lastSeen: string;
+            isActive: boolean;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.delete(`${path}/${request.id}`);
+            return response.data;
+        }
+    }
 }
