@@ -4,6 +4,7 @@ const en = {
     yes: "Yes",
     datePicker: {
       placeholder: 'Pick a date',
+      time: 'Time',
     },
     delete: "Delete",
     cancel: "Cancel",

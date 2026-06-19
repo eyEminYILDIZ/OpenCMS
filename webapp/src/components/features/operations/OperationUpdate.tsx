@@ -74,11 +74,11 @@ export const OperationUpdate: React.FC = observer(() => {
             </FormItem>
 
             <FormItem<FormValues> name="startDate" label={t('operation.fields.startDate')}>
-                <DatePicker<FormValues> name="startDate" />
+                <DatePicker<FormValues> name="startDate" mode="datetime" />
             </FormItem>
 
             <FormItem<FormValues> name="estimatedEndDate" label={t('operation.fields.estimatedEndDate')}>
-                <DatePicker<FormValues> name="estimatedEndDate" />
+                <DatePicker<FormValues> name="estimatedEndDate" mode="datetime" />
             </FormItem>
 
             <FormItem label={t('operation.fields.operationStatus')}>

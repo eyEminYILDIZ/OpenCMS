@@ -5,6 +5,7 @@ import { useFormContext } from './Form';
 
 interface DatePickerProps<T extends Record<string, unknown> = Record<string, unknown>> {
     name: keyof T & string;
+    mode?: 'date' | 'datetime';
 }
 
 const MONTH_NAMES = [
@@ -14,33 +15,58 @@ const MONTH_NAMES = [
 
 const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-function toIsoLocal(year: number, month: number, day: number): string {
-    const y = String(year);
-    const m = String(month + 1).padStart(2, '0');
-    const d = String(day).padStart(2, '0');
-    return `${y}-${m}-${d}T00:00:00`;
+function pad(n: number): string {
+    return String(n).padStart(2, '0');
 }
 
-function parseLocalDate(iso: string): Date | null {
-    const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+function toIsoLocal(year: number, month: number, day: number, hour: number, minute: number): string {
+    return `${year}-${pad(month + 1)}-${pad(day)}T${pad(hour)}:${pad(minute)}:00`;
+}
+
+interface ParsedDateTime {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+    minute: number;
+}
+
+function parseIso(iso: string): ParsedDateTime | null {
+    const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/);
     if (!match) return null;
-    return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    return {
+        year: Number(match[1]),
+        month: Number(match[2]) - 1,
+        day: Number(match[3]),
+        hour: Number(match[4] ?? 0),
+        minute: Number(match[5] ?? 0),
+    };
 }
 
-function formatDisplay(date: Date): string {
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+function formatDisplay(dt: ParsedDateTime, mode: 'date' | 'datetime'): string {
+    const date = new Date(dt.year, dt.month, dt.day);
+    const datePart = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    if (mode === 'date') return datePart;
+    return `${datePart} ${pad(dt.hour)}:${pad(dt.minute)}`;
 }
 
-function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>({ name }: DatePickerProps<T>) {
+function clamp(value: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, value));
+}
+
+function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>({
+    name,
+    mode = 'date',
+}: DatePickerProps<T>) {
     const { values, setFieldValue } = useFormContext();
     const { t } = useTranslation();
 
     const rawValue = values[name] as string | undefined;
-    const selectedDate = rawValue ? parseLocalDate(rawValue) : null;
+    const parsed = rawValue ? parseIso(rawValue) : null;
 
     const today = new Date();
-    const [viewYear, setViewYear] = useState(selectedDate?.getFullYear() ?? today.getFullYear());
-    const [viewMonth, setViewMonth] = useState(selectedDate?.getMonth() ?? today.getMonth());
+    const [viewYear, setViewYear] = useState(parsed?.year ?? today.getFullYear());
+    const [viewMonth, setViewMonth] = useState(parsed?.month ?? today.getMonth());
     const [open, setOpen] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -67,8 +93,22 @@ function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>
     };
 
     const handleSelectDay = (day: number) => {
-        setFieldValue(name, toIsoLocal(viewYear, viewMonth, day));
-        setOpen(false);
+        const hour = parsed?.hour ?? 0;
+        const minute = parsed?.minute ?? 0;
+        setFieldValue(name, toIsoLocal(viewYear, viewMonth, day, hour, minute));
+        if (mode === 'date') setOpen(false);
+    };
+
+    const handleHourChange = (raw: string) => {
+        if (!parsed) return;
+        const hour = clamp(Number(raw), 0, 23);
+        setFieldValue(name, toIsoLocal(parsed.year, parsed.month, parsed.day, hour, parsed.minute));
+    };
+
+    const handleMinuteChange = (raw: string) => {
+        if (!parsed) return;
+        const minute = clamp(Number(raw), 0, 59);
+        setFieldValue(name, toIsoLocal(parsed.year, parsed.month, parsed.day, parsed.hour, minute));
     };
 
     const firstWeekday = new Date(viewYear, viewMonth, 1).getDay();
@@ -90,10 +130,10 @@ function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>
     }
 
     const isSelected = (day: number) =>
-        !!selectedDate &&
-        selectedDate.getFullYear() === viewYear &&
-        selectedDate.getMonth() === viewMonth &&
-        selectedDate.getDate() === day;
+        !!parsed &&
+        parsed.year === viewYear &&
+        parsed.month === viewMonth &&
+        parsed.day === day;
 
     const isToday = (day: number) =>
         today.getFullYear() === viewYear &&
@@ -107,8 +147,8 @@ function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>
                 className="datepicker-trigger"
                 onClick={() => setOpen(o => !o)}
             >
-                {selectedDate ? (
-                    <span>{formatDisplay(selectedDate)}</span>
+                {parsed ? (
+                    <span>{formatDisplay(parsed, mode)}</span>
                 ) : (
                     <span className="datepicker-placeholder">{t('common.datePicker.placeholder')}</span>
                 )}
@@ -150,6 +190,33 @@ function DatePicker<T extends Record<string, unknown> = Record<string, unknown>>
                             </button>
                         ))}
                     </div>
+
+                    {mode === 'datetime' && (
+                        <div className="datepicker-time">
+                            <span className="datepicker-time-label">{t('common.datePicker.time')}</span>
+                            <div className="datepicker-time-inputs">
+                                <input
+                                    type="number"
+                                    className="datepicker-time-input"
+                                    min={0}
+                                    max={23}
+                                    value={pad(parsed?.hour ?? 0)}
+                                    disabled={!parsed}
+                                    onChange={e => handleHourChange(e.target.value)}
+                                />
+                                <span className="datepicker-time-sep">:</span>
+                                <input
+                                    type="number"
+                                    className="datepicker-time-input"
+                                    min={0}
+                                    max={59}
+                                    value={pad(parsed?.minute ?? 0)}
+                                    disabled={!parsed}
+                                    onChange={e => handleMinuteChange(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
