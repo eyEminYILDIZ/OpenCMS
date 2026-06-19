@@ -39,6 +39,21 @@ Accept: application/json
 
 ###
 
+### Update Operation
+PUT {{AgentApi}}/operations/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "name": "Operation Hammer — updated",
+  "description": "Intercept and neutralize unauthorized aerial threats in sector north east — updated.",
+  "startDate": "2026-05-10T08:00:00Z",
+  "estimatedEndDate": "2026-05-20T18:00:00Z",
+  "operationStatus": 1,
+  "operationType": 0
+}
+
+###
+
 ### Create Operation Asset
 POST {{AgentApi}}/operations/assets
 Content-Type: application/json
