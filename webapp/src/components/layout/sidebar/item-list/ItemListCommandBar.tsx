@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import Button from '../../../ui/Button';
 import { stores } from '../../../../stores';
 import { MenuTypes, PanelModes } from '../../../../types';
-import { AssetCommandBar } from '../../../features';
+import { AssetCommandBar, AgentCommandBar } from '../../../features';
 
 interface ItemListCommandBarProps {
 }
@@ -16,7 +16,7 @@ export const ItemListCommandBar = observer(() => {
       case MenuTypes.Assets:
         return <AssetCommandBar />;
       case MenuTypes.Agents:
-      // return <AgentCommandBar />;
+        return <AgentCommandBar />;
       case MenuTypes.Operations:
       // return <OperationCommandBar />;
       default:

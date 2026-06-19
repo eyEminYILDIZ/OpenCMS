@@ -32,6 +32,11 @@ const en = {
       deleteSucceeded: 'Agent deleted successfully.',
       updateFailed: 'Failed to update agent.',
       updateSucceeded: 'Agent updated successfully.',
+      createFailed: 'Failed to create agent.',
+      createSucceeded: 'Agent created successfully.',
+    },
+    create: {
+      title: 'Create Agent',
     },
     update: {
       title: 'Update Agent',

@@ -45,6 +45,26 @@ export class AgentStore {
         }
     }
 
+    onCreateItem() {
+        this.setPanelMode(PanelModes.Create);
+        this.setSelectedItem(undefined);
+    }
+
+    createItem = async (values: AgentApi.Create.Request) => {
+        try {
+            const response = await AgentApi.Create.call(values);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((a) => a.id === response.data.id);
+                this.panelMode = PanelModes.Detail;
+            });
+            await this.loadItemCounts();
+            this.statusBarStore.showInfo(i18next.t('agent.errors.createSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.createFailed'));
+        }
+    }
+
     updateItem = async (values: Omit<AgentApi.Update.Request, 'id'>) => {
         if (!this.selectedItem) {
             this.statusBarStore.showError(i18next.t('agent.errors.noItemSelected'));
