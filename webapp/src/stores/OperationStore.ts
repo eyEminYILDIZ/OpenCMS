@@ -44,6 +44,26 @@ export class OperationStore {
         }
     }
 
+    onCreateItem() {
+        this.setPanelMode(PanelModes.Create);
+        this.setSelectedItem(undefined);
+    }
+
+    createItem = async (values: OperationApi.Create.Request) => {
+        try {
+            const response = await OperationApi.Create.call(values);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((o) => o.id === response.data.id);
+                this.panelMode = PanelModes.Detail;
+            });
+            await this.loadItemCounts();
+            this.statusBarStore.showInfo(i18next.t('operation.errors.createSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.createFailed'));
+        }
+    }
+
     updateItem = async (values: Omit<OperationApi.Update.Request, 'id'>) => {
         if (!this.selectedItem) {
             this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));

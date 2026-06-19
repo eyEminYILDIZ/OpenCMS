@@ -130,8 +130,13 @@ const en = {
       deleteSucceeded: 'Operation deleted successfully.',
       updateFailed: 'Failed to update operation.',
       updateSucceeded: 'Operation updated successfully.',
+      createFailed: 'Failed to create operation.',
+      createSucceeded: 'Operation created successfully.',
     },
     noItemSelected: 'No item selected',
+    create: {
+      title: 'Create Operation',
+    },
     update: {
       title: 'Update Operation',
     },

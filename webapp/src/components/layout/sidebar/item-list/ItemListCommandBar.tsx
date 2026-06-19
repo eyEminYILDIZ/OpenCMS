@@ -1,15 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import Button from '../../../ui/Button';
 import { stores } from '../../../../stores';
-import { MenuTypes, PanelModes } from '../../../../types';
-import { AssetCommandBar, AgentCommandBar } from '../../../features';
-
-interface ItemListCommandBarProps {
-}
+import { MenuTypes } from '../../../../types';
+import { AssetCommandBar, AgentCommandBar, OperationCommandBar } from '../../../features';
 
 export const ItemListCommandBar = observer(() => {
-  const { assetStore, agentStore, applicationStore } = stores;
-
+  const { applicationStore } = stores;
 
   const renderContent = () => {
     switch (applicationStore.currentMenu) {
@@ -18,7 +13,7 @@ export const ItemListCommandBar = observer(() => {
       case MenuTypes.Agents:
         return <AgentCommandBar />;
       case MenuTypes.Operations:
-      // return <OperationCommandBar />;
+        return <OperationCommandBar />;
       default:
         return <p className="right-panel-empty">No matched commandbar found</p>;
     }
@@ -28,4 +23,3 @@ export const ItemListCommandBar = observer(() => {
     {renderContent()}
   </div>)
 });
-
