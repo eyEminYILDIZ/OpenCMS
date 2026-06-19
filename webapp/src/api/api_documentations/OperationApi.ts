@@ -48,4 +48,26 @@ export namespace OperationApi {
             return response.data;
         }
     }
+    export namespace Delete {
+        export const path = "/Operations";
+        export interface Request {
+            id: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            startDate: string;
+            estimatedEndDate: string;
+            endDate: string | null;
+            operationStatus: Enums.OperationStatus;
+            operationType: Enums.OperationType;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.delete(`${path}/${request.id}`);
+            return response.data;
+        }
+    }
 }

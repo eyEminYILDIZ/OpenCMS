@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AssetDelete, AssetDetail, OperationDetail } from '../../features';
+import { AgentDetail, AgentDelete, AssetDelete, AssetDetail, OperationDetail, OperationDelete } from '../../features';
 import { PanelModes } from '../../../types';
 
 const RightPanel = observer(() => {
@@ -24,14 +24,14 @@ const RightPanel = observer(() => {
           case PanelModes.Detail:
             return <AgentDetail />;
           case PanelModes.Delete:
-            return <AssetDelete />;
+            return <AgentDelete />;
         }
       case MenuTypes.Operations:
         switch (operationStore.panelMode) {
           case PanelModes.Detail:
             return <OperationDetail />;
           case PanelModes.Delete:
-            return <AssetDelete />;
+            return <OperationDelete />;
         }
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;

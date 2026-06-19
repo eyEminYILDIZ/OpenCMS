@@ -17,6 +17,9 @@ const en = {
     errors: {
       loadCountFailed: 'Failed to load agent counts.',
       loadItemsFailed: 'Failed to load agents.',
+      noItemSelected: 'No agent selected.',
+      deleteFailed: 'Failed to delete agent.',
+      deleteSucceeded: 'Agent deleted successfully.',
     },
     noItemSelected: 'No item selected',
     agentTypes: {
@@ -91,6 +94,9 @@ const en = {
     errors: {
       loadCountFailed: 'Failed to load operation counts.',
       loadItemsFailed: 'Failed to load operations.',
+      noItemSelected: 'No operation selected.',
+      deleteFailed: 'Failed to delete operation.',
+      deleteSucceeded: 'Operation deleted successfully.',
     },
     noItemSelected: 'No item selected',
     fields: {
