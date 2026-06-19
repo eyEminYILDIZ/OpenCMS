@@ -5,6 +5,7 @@ import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 
 export class AssetStore {
+
     statusBarStore: StatusBarStore;
 
     constructor(statusBarStore: StatusBarStore) {
@@ -46,6 +47,14 @@ export class AssetStore {
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
         }
+    }
+
+    onCreateItem() {
+        this.setPanelMode(PanelModes.Create);
+        this.setSelectedItem(undefined);
+    }
+
+    createItem = async () => {
     }
 
     updateItem = async (values: Omit<AssetApi.Update.Request, 'id'>) => {

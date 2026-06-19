@@ -1,15 +1,31 @@
+import { observer } from 'mobx-react-lite';
 import Button from '../../../ui/Button';
+import { stores } from '../../../../stores';
+import { MenuTypes, PanelModes } from '../../../../types';
+import { AssetCommandBar } from '../../../features';
 
 interface ItemListCommandBarProps {
-  onAdd: () => void;
 }
 
-const ItemListCommandBar = ({ onAdd }: ItemListCommandBarProps) => (
-  <div className="item-list-command-bar">
-    <Button size="sm" onClick={onAdd} aria-label="Add new item">
-      + Add
-    </Button>
-  </div>
-);
+export const ItemListCommandBar = observer(() => {
+  const { assetStore, agentStore, applicationStore } = stores;
 
-export default ItemListCommandBar;
+
+  const renderContent = () => {
+    switch (applicationStore.currentMenu) {
+      case MenuTypes.Assets:
+        return <AssetCommandBar />;
+      case MenuTypes.Agents:
+      // return <AgentCommandBar />;
+      case MenuTypes.Operations:
+      // return <OperationCommandBar />;
+      default:
+        return <p className="right-panel-empty">No matched commandbar found</p>;
+    }
+  };
+
+  return (<div className="item-list-command-bar">
+    {renderContent()}
+  </div>)
+});
+

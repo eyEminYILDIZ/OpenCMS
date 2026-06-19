@@ -3,6 +3,7 @@ import { useLayout } from '../../../../context/LayoutContext';
 import { stores } from '../../../../stores';
 import { MenuTypes } from '../../../../types/MenuTypes';
 import { AgentList, AssetList, OperationList } from '../../../features';
+import { ItemListCommandBar } from './ItemListCommandBar';
 
 const ItemList = observer(() => {
   const { activeSection, openRightPanel } = useLayout();
@@ -23,7 +24,7 @@ const ItemList = observer(() => {
 
   return (
     <div className="item-list">
-      {/* <ItemListCommandBar onAdd={() => openRightPanel('create')} /> */}
+      <ItemListCommandBar />
       <div className="item-list-scroll">
         {renderMenuList()}
       </div>
