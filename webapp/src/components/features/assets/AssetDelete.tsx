@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 import { stores } from "../../../stores";
-import { assetTypeLabels, threatTypeLabels } from "../../../types";
+import { assetTypeLabels, PanelModes, threatTypeLabels } from "../../../types";
 import Button from "../../ui/Button";
 import ButtonStack from "../../ui/ButtonStack";
 import { CircleX, Trash2 } from "lucide-react";
@@ -35,11 +35,11 @@ export const AssetDelete: React.FC = observer(() => {
             <br />
             <h5>Are you sure to delete this assset ?</h5>
             <ButtonStack>
-                <Button variant="destructive" onClick={() => { }}>
+                <Button variant="destructive" onClick={() => { assetStore.deleteItem(); }}>
                     <Trash2 size={16} />
                     {t('common.delete')}
                 </Button>
-                <Button variant="outline" onClick={() => { }}>
+                <Button variant="outline" onClick={() => { assetStore.setPanelMode(PanelModes.Detail); }}>
                     <CircleX size={16} />
                     {t('common.cancel')}
                 </Button>

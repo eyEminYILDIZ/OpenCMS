@@ -41,6 +41,8 @@ const en = {
     errors: {
       loadCountFailed: 'Failed to load asset counts.',
       loadItemsFailed: 'Failed to load assets.',
+      deleteFailed: 'Failed to delete asset.',
+      deleteSucceeded: 'Asset deleted successfully.',
     },
     noItemSelected: 'No item selected',
     fields: {

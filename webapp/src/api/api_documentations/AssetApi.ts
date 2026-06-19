@@ -59,4 +59,31 @@ export namespace AssetApi {
             return response.data;
         }
     }
+    export namespace Delete {
+        export const path = "/Assets";
+        export interface Request {
+            id: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            latitude: number;
+            longitude: number;
+            altitude: number;
+            heading: number;
+            speed: number;
+            assetType: Enums.AssetTypes;
+            threatType: Enums.ThreatTypes;
+            isActive: boolean;
+            firstUpdated: string;
+            lastUpdated: string;
+            relatedAgentId: string | null;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.delete(`${path}/${request.id}`);
+            return response.data;
+        }
+    }
 }

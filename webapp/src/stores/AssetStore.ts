@@ -47,4 +47,24 @@ export class AssetStore {
             this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
         }
     }
+
+    deleteItem = async () => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('asset.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedItem.id };
+            await AssetApi.Delete.call(request);
+
+            // after success
+            this.setSelectedItem(undefined);
+            this.setPanelMode(PanelModes.Detail);
+            await this.getAllItems();
+            this.statusBarStore.showInfo(i18next.t('asset.errors.deleteSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('asset.errors.deleteFailed'));
+        }
+    }
 }
