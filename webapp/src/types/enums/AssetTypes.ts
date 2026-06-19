@@ -3,6 +3,10 @@ import i18n from "../../i18n";
 
 const { t } = i18n;
 
+export const assetTypeOptions = Object.values(AssetApi.Enums.AssetTypes).filter(
+    (v): v is AssetApi.Enums.AssetTypes => typeof v === 'number'
+);
+
 export const assetTypeLabels: Record<AssetApi.Enums.AssetTypes, string> = {
     [AssetApi.Enums.AssetTypes.Unknown]: t('asset.assetTypes.unknown'),
     [AssetApi.Enums.AssetTypes.Person]: t('asset.assetTypes.person'),

@@ -1,47 +1,214 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { stores } from "../../../stores";
-import { assetTypeLabels, threatTypeLabels } from "../../../types";
+import { AssetApi } from "../../../api";
+import { assetTypeLabels, assetTypeOptions, threatTypeLabels, threatTypeOptions, PanelModes } from "../../../types";
+import Input from "../../ui/Input";
+import Form, { FormMode } from "../../ui/Form";
+import FormItem from "../../ui/FormItem";
+import Button from "../../ui/Button";
+import ButtonStack from "../../ui/ButtonStack";
+import { CircleX, Save } from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../../ui/Select";
+
+type FormValues = Omit<AssetApi.Update.Request, 'id'>;
+
 
 export const AssetUpdate: React.FC = observer(() => {
     const { assetStore } = stores;
     const { t } = useTranslation();
     const item = assetStore.selectedItem;
 
+    const validationSchema = Yup.object({
+        name: Yup.string().required(t('common.validation.required')),
+        latitude: Yup.number().required(t('common.validation.required')),
+        longitude: Yup.number().required(t('common.validation.required')),
+        altitude: Yup.number().required(t('common.validation.required')),
+        heading: Yup.number().required(t('common.validation.required')),
+        speed: Yup.number().min(0, t('common.validation.nonNegative')).required(t('common.validation.required')),
+        assetType: Yup.number().required(t('common.validation.required')),
+        threatType: Yup.number().required(t('common.validation.required')),
+        isActive: Yup.boolean().required(t('common.validation.required')),
+        relatedAgentId: Yup.string().nullable().default(null),
+    });
+
+    const formik = useFormik<FormValues>({
+        enableReinitialize: true,
+        initialValues: {
+            name: item?.name ?? '',
+            latitude: item?.latitude ?? 0,
+            longitude: item?.longitude ?? 0,
+            altitude: item?.altitude ?? 0,
+            heading: item?.heading ?? 0,
+            speed: item?.speed ?? 0,
+            assetType: item?.assetType ?? AssetApi.Enums.AssetTypes.Unknown,
+            threatType: item?.threatType ?? AssetApi.Enums.ThreatTypes.Unknown,
+            isActive: item?.isActive ?? false,
+            relatedAgentId: item?.relatedAgentId ?? null,
+        },
+        validationSchema,
+        onSubmit: async (values) => {
+            await assetStore.updateItem(values);
+        },
+    });
+
     if (item == undefined)
         return (<p className="right-panel-empty">{t('asset.noItemSelected')}</p>);
 
-    const rows: { label: string; value: string }[] = [
-        { label: t('asset.fields.id'), value: item.id },
-        { label: t('asset.fields.name'), value: item.name },
-        { label: t('asset.fields.latitude'), value: item.latitude.toString() },
-        { label: t('asset.fields.longitude'), value: item.longitude.toString() },
-        { label: t('asset.fields.altitude'), value: item.altitude.toString() },
-        { label: t('asset.fields.heading'), value: item.heading.toString() },
-        { label: t('asset.fields.speed'), value: item.speed.toString() },
-        { label: t('asset.fields.assetType'), value: assetTypeLabels[item.assetType] },
-        { label: t('asset.fields.threatType'), value: threatTypeLabels[item.threatType] },
-        { label: t('asset.fields.isActive'), value: item.isActive ? t('common.active.yes') : t('common.active.no') },
-        { label: t('asset.fields.firstUpdated'), value: item.firstUpdated },
-        { label: t('asset.fields.lastUpdated'), value: item.lastUpdated },
-        { label: t('asset.fields.relatedAgentId'), value: item.relatedAgentId ?? "—" },
-        { label: t('asset.fields.createdAt'), value: item.createdAt },
-        { label: t('asset.fields.updatedAt'), value: item.updatedAt ?? "—" },
-    ];
-
     return (
-        <>
-            <h4>Asset Update</h4>
-            <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
-                <tbody>
-                    {rows.map(({ label, value }) => (
-                        <tr key={label}>
-                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}><strong>{label}</strong></td>
-                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}>{value}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </>
+        <Form formik={formik} mode={FormMode.Update}>
+            <h4>{t('asset.update.title')}</h4>
+
+            <FormItem<FormValues> name="name" label={t('asset.fields.name')}>
+                <Input<FormValues>
+                    id="name"
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="latitude" label={t('asset.fields.latitude')}>
+                <Input<FormValues>
+                    id="latitude"
+                    name="latitude"
+                    type="number"
+                    value={formik.values.latitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="longitude" label={t('asset.fields.longitude')}>
+                <Input<FormValues>
+                    id="longitude"
+                    name="longitude"
+                    type="number"
+                    value={formik.values.longitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="altitude" label={t('asset.fields.altitude')}>
+                <Input<FormValues>
+                    id="altitude"
+                    name="altitude"
+                    type="number"
+                    value={formik.values.altitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="heading" label={t('asset.fields.heading')}>
+                <Input<FormValues>
+                    id="heading"
+                    name="heading"
+                    type="number"
+                    value={formik.values.heading}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="speed" label={t('asset.fields.speed')}>
+                <Input<FormValues>
+                    id="speed"
+                    name="speed"
+                    type="number"
+                    value={formik.values.speed}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem label={t('asset.fields.assetType')}>
+                <Select
+                    value={String(formik.values.assetType)}
+                    onValueChange={(val) => formik.setFieldValue('assetType', Number(val))}
+                >
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {assetTypeOptions.map((type) => (
+                            <SelectItem key={type} value={String(type)}>
+                                {assetTypeLabels[type]}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </FormItem>
+
+            <FormItem label={t('asset.fields.threatType')}>
+                <Select
+                    value={String(formik.values.threatType)}
+                    onValueChange={(val) => formik.setFieldValue('threatType', Number(val))}
+                >
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {threatTypeOptions.map((type) => (
+                            <SelectItem key={type} value={String(type)}>
+                                {threatTypeLabels[type]}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </FormItem>
+
+            <FormItem label={t('asset.fields.isActive')}>
+                <Select
+                    value={formik.values.isActive ? 'true' : 'false'}
+                    onValueChange={(val) => formik.setFieldValue('isActive', val === 'true')}
+                >
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="true">{t('common.active.yes')}</SelectItem>
+                        <SelectItem value="false">{t('common.active.no')}</SelectItem>
+                    </SelectContent>
+                </Select>
+            </FormItem>
+
+            <FormItem label={t('asset.fields.relatedAgentId')}>
+                <Input
+                    id="relatedAgentId"
+                    name="relatedAgentId"
+                    value={formik.values.relatedAgentId ?? ''}
+                    onChange={(e) =>
+                        formik.setFieldValue('relatedAgentId', e.target.value || null)
+                    }
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <ButtonStack>
+                <Button type="submit" disabled={formik.isSubmitting}>
+                    <Save size={16} />
+                    {formik.isSubmitting ? t('common.saving') : t('common.save')}
+                </Button>
+                <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => assetStore.setPanelMode(PanelModes.Detail)}
+                >
+                    <CircleX size={16} />
+                    {t('common.cancel')}
+                </Button>
+            </ButtonStack>
+        </Form>
     );
-})
+});

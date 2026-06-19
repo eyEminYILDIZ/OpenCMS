@@ -3,6 +3,10 @@ import i18n from "../../i18n";
 
 const { t } = i18n;
 
+export const threatTypeOptions = Object.values(AssetApi.Enums.ThreatTypes).filter(
+    (v): v is AssetApi.Enums.ThreatTypes => typeof v === 'number'
+);
+
 export const threatTypeLabels: Record<AssetApi.Enums.ThreatTypes, string> = {
     [AssetApi.Enums.ThreatTypes.Unknown]: t('asset.threatTypes.unknown'),
     [AssetApi.Enums.ThreatTypes.Own]: t('asset.threatTypes.own'),

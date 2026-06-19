@@ -48,6 +48,7 @@ node_modules/
 package-lock.json
 
 .tmp
+temp
 
 # backend
 backend/cms_data/opencms.db-shm

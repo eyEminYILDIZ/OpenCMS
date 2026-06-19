@@ -4,6 +4,16 @@ const en = {
     yes: "Yes",
     delete: "Delete",
     cancel: "Cancel",
+    save: "Save",
+    saving: "Saving...",
+    active: {
+      yes: 'Yes',
+      no: 'No',
+    },
+    validation: {
+      required: 'This field is required.',
+      nonNegative: 'Value must be 0 or greater.',
+    },
   },
   menu: {
     assets: 'Assets',
@@ -46,8 +56,14 @@ const en = {
       loadItemsFailed: 'Failed to load assets.',
       deleteFailed: 'Failed to delete asset.',
       deleteSucceeded: 'Asset deleted successfully.',
+      updateFailed: 'Failed to update asset.',
+      updateSucceeded: 'Asset updated successfully.',
+      noItemSelected: 'No asset selected.',
     },
     noItemSelected: 'No item selected',
+    update: {
+      title: 'Update Asset',
+    },
     fields: {
       id: 'ID',
       name: 'Name',

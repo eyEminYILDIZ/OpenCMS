@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
 import { AssetApi } from "../api";
 import { PanelModes } from "../types";
@@ -45,6 +45,26 @@ export class AssetStore {
             throw new Error("Test error for getAllItems");
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
+        }
+    }
+
+    updateItem = async (values: Omit<AssetApi.Update.Request, 'id'>) => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('asset.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const id = this.selectedItem.id;
+            const request: AssetApi.Update.Request = { id, ...values };
+            await AssetApi.Update.call(request);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((a) => a.id === id);
+            });
+            this.statusBarStore.showInfo(i18next.t('asset.errors.updateSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('asset.errors.updateFailed'));
         }
     }
 
