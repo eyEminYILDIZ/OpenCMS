@@ -59,7 +59,7 @@ export class AgentStore {
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('agent.errors.createSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.createSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.createFailed'));
         }
@@ -79,7 +79,7 @@ export class AgentStore {
             runInAction(() => {
                 this.selectedItem = this.allItems.find((a) => a.id === id);
             });
-            this.statusBarStore.showInfo(i18next.t('agent.errors.updateSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.updateSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.updateFailed'));
         }
@@ -99,7 +99,7 @@ export class AgentStore {
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('agent.errors.deleteSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.deleteSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.deleteFailed'));
         }

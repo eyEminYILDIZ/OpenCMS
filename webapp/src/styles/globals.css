@@ -1031,6 +1031,10 @@ body {
   transition: opacity 300ms ease-out, color 150ms ease, background-color 150ms ease;
 }
 
+.status-bar--success {
+  color: #16a34a;
+}
+
 .status-bar--info {
   color: #2563eb;
 }

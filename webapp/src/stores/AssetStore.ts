@@ -63,7 +63,7 @@ export class AssetStore {
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('asset.errors.createSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('asset.errors.createSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.createFailed'));
         }
@@ -83,7 +83,7 @@ export class AssetStore {
             runInAction(() => {
                 this.selectedItem = this.allItems.find((a) => a.id === id);
             });
-            this.statusBarStore.showInfo(i18next.t('asset.errors.updateSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('asset.errors.updateSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.updateFailed'));
         }
@@ -104,7 +104,7 @@ export class AssetStore {
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('asset.errors.deleteSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('asset.errors.deleteSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.deleteFailed'));
         }

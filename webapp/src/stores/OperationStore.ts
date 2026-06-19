@@ -58,7 +58,7 @@ export class OperationStore {
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('operation.errors.createSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.createSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.createFailed'));
         }
@@ -78,7 +78,7 @@ export class OperationStore {
             runInAction(() => {
                 this.selectedItem = this.allItems.find((o) => o.id === id);
             });
-            this.statusBarStore.showInfo(i18next.t('operation.errors.updateSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.updateSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.updateFailed'));
         }
@@ -98,7 +98,7 @@ export class OperationStore {
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();
-            this.statusBarStore.showInfo(i18next.t('operation.errors.deleteSucceeded'));
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteFailed'));
         }

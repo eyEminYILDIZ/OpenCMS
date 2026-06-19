@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Info, TriangleAlert, CircleX, LucideIcon } from "lucide-react";
+import { Info, TriangleAlert, CircleX, CircleCheck, LucideIcon } from "lucide-react";
 
-export type StatusLevel = "info" | "warning" | "error";
+export type StatusLevel = "info" | "success" | "warning" | "error";
 
 export class StatusBarStore {
     message: string = "Ready";
@@ -15,6 +15,14 @@ export class StatusBarStore {
     constructor() {
         makeAutoObservable(this);
     }
+
+    showSuccess = (message: string, icon: LucideIcon = CircleCheck) => {
+        this.icon = icon;
+        this.message = message;
+        this.level = "success";
+        this.fading = false;
+        this.scheduleAutoClear();
+    };
 
     showInfo = (message: string, icon: LucideIcon = Info) => {
         this.icon = icon;
