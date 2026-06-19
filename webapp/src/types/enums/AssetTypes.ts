@@ -1,11 +1,8 @@
 import { AssetApi } from "../../api";
 import i18n from "../../i18n";
+import type { DropdownOption } from "../../components/ui/Dropdown";
 
 const { t } = i18n;
-
-export const assetTypeOptions = Object.values(AssetApi.Enums.AssetTypes).filter(
-    (v): v is AssetApi.Enums.AssetTypes => typeof v === 'number'
-);
 
 export const assetTypeLabels: Record<AssetApi.Enums.AssetTypes, string> = {
     [AssetApi.Enums.AssetTypes.Unknown]: t('asset.assetTypes.unknown'),
@@ -20,3 +17,7 @@ export const assetTypeLabels: Record<AssetApi.Enums.AssetTypes, string> = {
     [AssetApi.Enums.AssetTypes.AirGun]: t('asset.assetTypes.airGun'),
     [AssetApi.Enums.AssetTypes.Other]: t('asset.assetTypes.other'),
 };
+
+export const assetTypeOptions: DropdownOption[] = Object.values(AssetApi.Enums.AssetTypes)
+    .filter((v): v is AssetApi.Enums.AssetTypes => typeof v === 'number')
+    .map((type) => ({ value: type, label: assetTypeLabels[type] }));

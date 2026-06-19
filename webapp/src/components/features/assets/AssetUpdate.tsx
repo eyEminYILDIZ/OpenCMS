@@ -4,20 +4,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { stores } from "../../../stores";
 import { AssetApi } from "../../../api";
-import { assetTypeLabels, assetTypeOptions, threatTypeLabels, threatTypeOptions, PanelModes } from "../../../types";
+import { assetTypeOptions, threatTypeOptions, isActiveOptions, PanelModes } from "../../../types";
 import Input from "../../ui/Input";
 import Form, { FormMode } from "../../ui/Form";
 import FormItem from "../../ui/FormItem";
 import Button from "../../ui/Button";
 import ButtonStack from "../../ui/ButtonStack";
 import { CircleX, Save } from "lucide-react";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../../ui/Select";
+import Dropdown from "../../ui/Dropdown";
 
 type FormValues = Omit<AssetApi.Update.Request, 'id'>;
 
@@ -133,54 +127,24 @@ export const AssetUpdate: React.FC = observer(() => {
             </FormItem>
 
             <FormItem label={t('asset.fields.assetType')}>
-                <Select
-                    value={String(formik.values.assetType)}
-                    onValueChange={(val) => formik.setFieldValue('assetType', Number(val))}
-                >
-                    <SelectTrigger>
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {assetTypeOptions.map((type) => (
-                            <SelectItem key={type} value={String(type)}>
-                                {assetTypeLabels[type]}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                <Dropdown<FormValues>
+                    name="assetType"
+                    options={assetTypeOptions}
+                />
             </FormItem>
 
             <FormItem label={t('asset.fields.threatType')}>
-                <Select
-                    value={String(formik.values.threatType)}
-                    onValueChange={(val) => formik.setFieldValue('threatType', Number(val))}
-                >
-                    <SelectTrigger>
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {threatTypeOptions.map((type) => (
-                            <SelectItem key={type} value={String(type)}>
-                                {threatTypeLabels[type]}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                <Dropdown<FormValues>
+                    name="threatType"
+                    options={threatTypeOptions}
+                />
             </FormItem>
 
             <FormItem label={t('asset.fields.isActive')}>
-                <Select
-                    value={formik.values.isActive ? 'true' : 'false'}
-                    onValueChange={(val) => formik.setFieldValue('isActive', val === 'true')}
-                >
-                    <SelectTrigger>
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="true">{t('common.active.yes')}</SelectItem>
-                        <SelectItem value="false">{t('common.active.no')}</SelectItem>
-                    </SelectContent>
-                </Select>
+                <Dropdown<FormValues>
+                    name="isActive"
+                    options={isActiveOptions}
+                />
             </FormItem>
 
             <FormItem label={t('asset.fields.relatedAgentId')}>

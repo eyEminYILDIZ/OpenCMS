@@ -14,6 +14,8 @@ const formModeClassNames: Record<FormMode, string> = {
 interface FormContextValue {
     touched: Record<string, unknown>;
     errors: Record<string, unknown>;
+    values: Record<string, unknown>;
+    setFieldValue: (field: string, value: unknown) => void;
 }
 
 const FormContext = createContext<FormContextValue | null>(null);
@@ -34,6 +36,8 @@ function Form<T>({ formik, mode, children }: FormProps<T>) {
     const value: FormContextValue = {
         touched: formik.touched as Record<string, unknown>,
         errors: formik.errors as Record<string, unknown>,
+        values: formik.values as Record<string, unknown>,
+        setFieldValue: formik.setFieldValue,
     };
 
     return (
