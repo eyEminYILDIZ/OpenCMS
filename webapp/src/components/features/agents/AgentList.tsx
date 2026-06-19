@@ -32,7 +32,7 @@ export const AgentList: React.FC = observer(() => {
             icon: <Pencil size={16} />,
             onButtonClick: (item) => {
                 agentStore.setSelectedItem(item);
-                agentStore.setPanelMode(PanelModes.Edit);
+                agentStore.setPanelMode(PanelModes.Update);
             }
         },
         {

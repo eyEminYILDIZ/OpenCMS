@@ -86,4 +86,41 @@ export namespace AssetApi {
             return response.data;
         }
     }
+    export namespace Update {
+        export const path = "/assets";
+        export interface Request {
+            id: string;
+            name: string;
+            latitude: number;
+            longitude: number;
+            altitude: number;
+            heading: number;
+            speed: number;
+            assetType: Enums.AssetTypes;
+            threatType: Enums.ThreatTypes;
+            isActive: boolean;
+            relatedAgentId: string | null;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            latitude: number;
+            longitude: number;
+            altitude: number;
+            heading: number;
+            speed: number;
+            assetType: Enums.AssetTypes;
+            threatType: Enums.ThreatTypes;
+            isActive: boolean;
+            firstUpdated: string;
+            lastUpdated: string;
+            relatedAgentId: string | null;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.put(`${path}/${request.id}`, request);
+            return response.data;
+        }
+    }
 }

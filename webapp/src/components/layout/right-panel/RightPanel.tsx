@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AssetDelete, AssetDetail, OperationDetail, OperationDelete } from '../../features';
+import { AgentDetail, AgentDelete, AssetDelete, AssetDetail, OperationDetail, OperationDelete, AssetCreate, AssetUpdate } from '../../features';
 import { PanelModes } from '../../../types';
 
 const RightPanel = observer(() => {
@@ -18,6 +18,10 @@ const RightPanel = observer(() => {
             return <AssetDetail />;
           case PanelModes.Delete:
             return <AssetDelete />;
+          case PanelModes.Create:
+            return <AssetCreate />;
+          case PanelModes.Update:
+            return <AssetUpdate />;
         }
       case MenuTypes.Agents:
         switch (agentStore.panelMode) {

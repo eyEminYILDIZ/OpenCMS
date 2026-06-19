@@ -33,7 +33,7 @@ export const AssetList: React.FC = observer(() => {
             icon: <Pencil size={16} />,
             onButtonClick: (item) => {
                 assetStore.setSelectedItem(item);
-                assetStore.setPanelMode(PanelModes.Edit);
+                assetStore.setPanelMode(PanelModes.Update);
             }
         },
         {

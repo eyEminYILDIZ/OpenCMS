@@ -32,7 +32,7 @@ export const OperationList: React.FC = observer(() => {
             icon: <Pencil size={16} />,
             onButtonClick: (item) => {
                 operationStore.setSelectedItem(item);
-                operationStore.setPanelMode(PanelModes.Edit);
+                operationStore.setPanelMode(PanelModes.Update);
             }
         },
         {
