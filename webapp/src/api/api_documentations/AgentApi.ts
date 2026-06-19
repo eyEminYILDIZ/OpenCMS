@@ -59,4 +59,69 @@ export namespace AgentApi {
             return response.data;
         }
     }
+    export namespace Create {
+        export const path = "/agents";
+        export interface Request {
+            name: string;
+            agentType: Enums.AgentTypes;
+            description: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            agentType: Enums.AgentTypes;
+            lastSeen: string;
+            isActive: boolean;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.post(path, request);
+            return response.data;
+        }
+    }
+    export namespace GetById {
+        export const path = "/agents";
+        export interface Request {
+            id: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            agentType: Enums.AgentTypes;
+            lastSeen: string;
+            isActive: boolean;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.get(`${path}/${request.id}`);
+            return response.data;
+        }
+    }
+    export namespace Update {
+        export const path = "/agents";
+        export interface Request {
+            id: string;
+            name: string;
+            agentType: Enums.AgentTypes;
+            description: string;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            agentType: Enums.AgentTypes;
+            lastSeen: string;
+            isActive: boolean;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.put(`${path}/${request.id}`, request);
+            return response.data;
+        }
+    }
 }
