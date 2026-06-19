@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, AssetCreate, AssetUpdate } from '../../features';
+import { AgentDetail, AgentDelete, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationUpdate, AssetCreate, AssetUpdate } from '../../features';
 import { PanelModes } from '../../../types';
 
 const RightPanel = observer(() => {
@@ -38,6 +38,8 @@ const RightPanel = observer(() => {
             return <OperationDetail />;
           case PanelModes.Delete:
             return <OperationDelete />;
+          case PanelModes.Update:
+            return <OperationUpdate />;
         }
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;

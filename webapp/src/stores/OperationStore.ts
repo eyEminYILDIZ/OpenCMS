@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
 import { OperationApi } from "../api";
 import { PanelModes } from "../types";
@@ -41,6 +41,26 @@ export class OperationStore {
             this.allItems = response.data;
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.loadItemsFailed'));
+        }
+    }
+
+    updateItem = async (values: Omit<OperationApi.Update.Request, 'id'>) => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const id = this.selectedItem.id;
+            const request: OperationApi.Update.Request = { id, ...values };
+            await OperationApi.Update.call(request);
+            await this.getAllItems();
+            runInAction(() => {
+                this.selectedItem = this.allItems.find((o) => o.id === id);
+            });
+            this.statusBarStore.showInfo(i18next.t('operation.errors.updateSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.updateFailed'));
         }
     }
 

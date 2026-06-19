@@ -110,6 +110,34 @@ export namespace OperationApi {
             return response.data;
         }
     }
+    export namespace Update {
+        export const path = "/operations";
+        export interface Request {
+            id: string;
+            name: string;
+            description: string;
+            startDate: string;
+            estimatedEndDate: string;
+            operationStatus: Enums.OperationStatus;
+            operationType: Enums.OperationType;
+        }
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            startDate: string;
+            estimatedEndDate: string;
+            endDate: string | null;
+            operationStatus: Enums.OperationStatus;
+            operationType: Enums.OperationType;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.put(`${path}/${request.id}`, request);
+            return response.data;
+        }
+    }
     export namespace GetById {
         export const path = "/operations";
         export interface Request {

@@ -118,8 +118,13 @@ const en = {
       noItemSelected: 'No operation selected.',
       deleteFailed: 'Failed to delete operation.',
       deleteSucceeded: 'Operation deleted successfully.',
+      updateFailed: 'Failed to update operation.',
+      updateSucceeded: 'Operation updated successfully.',
     },
     noItemSelected: 'No item selected',
+    update: {
+      title: 'Update Operation',
+    },
     fields: {
       id: 'ID',
       name: 'Name',
