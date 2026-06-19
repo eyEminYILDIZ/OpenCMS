@@ -141,6 +141,19 @@ const en = {
       exterminate: 'Exterminate',
       exchange: 'Exchange',
     },
+    orderStatuses: {
+      passive: 'Passive',
+      active: 'Active',
+    },
+    orderTypes: {
+      move: 'Move',
+      attack: 'Attack',
+      defend: 'Defend',
+      gatherIntelligence: 'Gather Intelligence',
+      exchange: 'Exchange',
+      take: 'Take',
+      give: 'Give',
+    },
   },
   statusBar: {
     errors: {
