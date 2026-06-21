@@ -395,11 +395,11 @@ body {
 }
 
 .table-header-row {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #c4c4c8;
 }
 
 .table-head {
-  height: 3rem;
+  height: 2.25rem;
   padding: 0 1rem;
   text-align: left;
   vertical-align: middle;
