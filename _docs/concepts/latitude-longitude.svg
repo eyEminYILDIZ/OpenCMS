@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480" font-family="Georgia, serif">
+
+  <!-- Background -->
+  <rect width="600" height="480" fill="white"/>
+
+  <!-- Title -->
+  <text x="300" y="36" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Latitude / Longitude Reference</text>
+
+  <!-- Map rectangle (lon 28–45 → x 100–500, lat 36–42 → y 80–320) -->
+  <rect x="100" y="80" width="400" height="240" fill="#f5f8ff" stroke="#c8a800" stroke-width="2.5" rx="4"/>
+
+  <!-- Grid lines: longitude 29 vertical -->
+  <line x1="123.5" y1="80" x2="123.5" y2="320" stroke="#ddd" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Grid lines: latitude 41 horizontal -->
+  <line x1="100" y1="120" x2="500" y2="120" stroke="#ddd" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ── Latitude axis labels (left side) ── -->
+  <!-- lat 42 (top edge) -->
+  <line x1="94" y1="80"  x2="100" y2="80"  stroke="#c8a800" stroke-width="1.5"/>
+  <text x="88" y="84"  text-anchor="end" font-size="13" fill="#c8a800">42°N</text>
+
+  <!-- lat 41 (grid) -->
+  <line x1="94" y1="120" x2="100" y2="120" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="88" y="124" text-anchor="end" font-size="13" fill="#c8a800">41°N</text>
+
+  <!-- lat 36 (bottom edge) -->
+  <line x1="94" y1="320" x2="100" y2="320" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="88" y="324" text-anchor="end" font-size="13" fill="#c8a800">36°N</text>
+
+  <!-- ── Longitude axis labels (top side) ── -->
+  <!-- lon 28 (left edge) -->
+  <line x1="100" y1="80" x2="100" y2="74" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="100" y="68" text-anchor="middle" font-size="13" fill="#c8a800">28°E</text>
+
+  <!-- lon 29 (grid) -->
+  <line x1="123.5" y1="80" x2="123.5" y2="74" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="123.5"  y="68" text-anchor="middle" font-size="13" fill="#c8a800">29°E</text>
+
+  <!-- lon 45 (right edge) -->
+  <line x1="500" y1="80" x2="500" y2="74" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="500" y="68" text-anchor="middle" font-size="13" fill="#c8a800">45°E</text>
+
+  <!-- Dashed guide lines to the point (41°N, 29°E) -->
+  <!-- vertical from top edge down to point -->
+  <line x1="123.5" y1="80" x2="123.5" y2="120" stroke="#444" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <!-- horizontal from left edge to point -->
+  <line x1="100" y1="120" x2="123.5" y2="120" stroke="#444" stroke-width="1.2" stroke-dasharray="5,4"/>
+
+  <!-- Point marker -->
+  <circle cx="123.5" cy="120" r="6" fill="#2a9d5c" stroke="white" stroke-width="2"/>
+
+  <!-- Point label -->
+  <text x="136" y="116" font-size="14" font-weight="bold" fill="#222">(41°N, 29°E)</text>
+
+  <!-- ── Legend ── -->
+  <rect x="100" y="350" width="400" height="96" rx="6" fill="#fffde7" stroke="#c8a800" stroke-width="1.2"/>
+
+  <text x="300" y="372" text-anchor="middle" font-size="13" font-weight="bold" fill="#555">Legend</text>
+
+  <rect x="120" y="384" width="14" height="14" rx="2" fill="#f5f8ff" stroke="#c8a800" stroke-width="1.5"/>
+  <text x="142" y="396" font-size="12" fill="#333">Bounding region  (lat 36°–42°N, lon 28°–45°E)</text>
+
+  <line x1="120" y1="416" x2="134" y2="416" stroke="#444" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="142" y="420" font-size="12" fill="#333">Projection lines to selected point</text>
+
+  <circle cx="127" cy="434" r="5" fill="#2a9d5c" stroke="white" stroke-width="1.5"/>
+  <text x="142" y="438" font-size="12" fill="#333">Selected point  — lat: 41°N, lon: 29°E</text>
+
+</svg>
