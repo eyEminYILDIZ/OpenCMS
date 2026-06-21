@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../../context/LayoutContext';
 import { stores } from '../../../../stores';
 import { MenuTypes } from '../../../../types/MenuTypes';
-import { AgentList, AssetList, OperationList } from '../../../features';
+import { AgentSidebar, AssetSidebar, OperationSidebar, } from '../../../features';
 import { ItemListCommandBar } from './ItemListCommandBar';
 import { ItemListSearchBar } from './ItemListSearchBar';
 
@@ -13,11 +13,11 @@ const ItemList = observer(() => {
   const renderMenuList = () => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
-        return <AssetList />
+        return <AssetSidebar />
       case MenuTypes.Agents:
-        return <AgentList />
+        return <AgentSidebar />
       case MenuTypes.Operations:
-        return <OperationList />
+        return <OperationSidebar />
       default:
         return <p>No matching menu list found</p>
     }

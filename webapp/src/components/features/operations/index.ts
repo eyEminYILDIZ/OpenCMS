@@ -4,3 +4,4 @@ export * from "./OperationList";
 export * from "./OperationCreate";
 export * from "./OperationUpdate";
 export * from "./OperationCommandBar";
+export * from "./OperationSidebar";

@@ -11,7 +11,17 @@ export const ItemListSearchBar = observer(() => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setSearchValue('');
+    switch (applicationStore.currentMenu) {
+      case MenuTypes.Assets:
+        setSearchValue(assetStore.listSearchValue);
+        break;
+      case MenuTypes.Agents:
+        setSearchValue(agentStore.listSearchValue);
+        break;
+      case MenuTypes.Operations:
+        setSearchValue(operationStore.listSearchValue);
+        break;
+    }
   }, [applicationStore.currentMenu]);
 
   useEffect(() => {
