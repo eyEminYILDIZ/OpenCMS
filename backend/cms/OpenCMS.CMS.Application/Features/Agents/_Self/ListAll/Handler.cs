@@ -11,7 +11,14 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 
     public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
-        var agents = await _dbContext.Agents.ToListAsync(cancellationToken);
+        var agentQuery = _dbContext.Agents.AsQueryable();
+
+        if (!string.IsNullOrEmpty(request.SearchValue))
+        {
+            agentQuery = agentQuery.Where(a => a.Name.ToLower().Contains(request.SearchValue.ToLower()));
+        }
+
+        var agents = await agentQuery.ToListAsync(cancellationToken);
 
         return agents.Select(agent => new QueryResponse
         {

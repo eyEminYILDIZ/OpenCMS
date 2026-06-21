@@ -2,6 +2,7 @@ namespace OpenCMS.CMS.Application.Agents.Self.ListAll;
 
 public class Query : IRequest<Result<List<QueryResponse>>>
 {
+    public string SearchValue { get; set; }
 }
 
 public class QueryResponse

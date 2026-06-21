@@ -12,6 +12,12 @@ Accept: application/json
 
 ###
 
+### List All Agents with query
+GET {{AgentApi}}/agents?search=agent
+Accept: application/json
+
+###
+
 ### Create Agent
 POST {{AgentApi}}/agents
 Accept: application/json
