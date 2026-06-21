@@ -29,7 +29,7 @@ export const AgentList: React.FC = observer(() => {
         {
             key: "edit",
             type: "button",
-            icon: <Pencil size={16} />,
+            icon: <Pencil size={18} />,
             onButtonClick: (item) => {
                 agentStore.setSelectedItem(item);
                 agentStore.setPanelMode(PanelModes.Update);
@@ -38,7 +38,7 @@ export const AgentList: React.FC = observer(() => {
         {
             key: "delete",
             type: "button",
-            icon: <Trash2 size={16} />,
+            icon: <Trash2 size={18} />,
             onButtonClick: (item) => {
                 agentStore.setSelectedItem(item);
                 agentStore.setPanelMode(PanelModes.Delete);

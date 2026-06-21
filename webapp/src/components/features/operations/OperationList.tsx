@@ -5,7 +5,7 @@ import { stores } from "../../../stores";
 import DataList, { DataListColumn } from "../../ui/DataList";
 import { operationStatusLabels, PanelModes } from "../../../types";
 import { useTranslation } from "react-i18next";
-import { Pencil, Trash2 } from "lucide-react";
+import { Ghost, Pencil, SquareArrowRightEnter, Trash2 } from "lucide-react";
 
 export const OperationList: React.FC = observer(() => {
     const { applicationStore, operationStore } = stores;
@@ -27,21 +27,12 @@ export const OperationList: React.FC = observer(() => {
             render: (value, item) => (value == OperationApi.Enums.OperationStatus.InProgress || value == OperationApi.Enums.OperationStatus.NotStarted) ? <p style={{ color: "green" }}>{operationStatusLabels[item.operationStatus]}</p> : <p style={{ color: "red" }}>{operationStatusLabels[item.operationStatus]}</p>
         },
         {
-            key: "edit",
+            key: "go",
             type: "button",
-            icon: <Pencil size={16} />,
+            icon: <SquareArrowRightEnter size={20} />,
             onButtonClick: (item) => {
                 operationStore.setSelectedItem(item);
-                operationStore.setPanelMode(PanelModes.Update);
-            }
-        },
-        {
-            key: "delete",
-            type: "button",
-            icon: <Trash2 size={16} />,
-            onButtonClick: (item) => {
-                operationStore.setSelectedItem(item);
-                operationStore.setPanelMode(PanelModes.Delete);
+                operationStore.setPanelMode(PanelModes.Detail);
             }
         }
     ];

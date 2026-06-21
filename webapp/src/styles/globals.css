@@ -81,6 +81,15 @@ body {
   background-color: #27272a;
 }
 
+.btn-command {
+  background-color: #52525b;
+  color: #fafafa;
+}
+
+.btn-command:hover {
+  background-color: #71717a;
+}
+
 .btn-destructive {
   background-color: var(--destructive);
   color: var(--destructive-foreground);

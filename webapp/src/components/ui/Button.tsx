@@ -9,6 +9,7 @@ const buttonVariants = cva('btn', {
       destructive: 'btn-destructive',
       outline: 'btn-outline',
       ghost: 'btn-ghost',
+      command: 'btn-command',
     },
     size: {
       default: '',
@@ -24,7 +25,7 @@ const buttonVariants = cva('btn', {
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 

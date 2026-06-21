@@ -3,7 +3,7 @@ import React from 'react';
 
 type ColumnType = 'string' | 'number' | 'button';
 
-type ColumnKey<T> = keyof T | 'edit' | 'delete';
+type ColumnKey<T> = keyof T | 'edit' | 'delete' | 'go';
 
 interface BaseColumn<T> {
   key: ColumnKey<T>;

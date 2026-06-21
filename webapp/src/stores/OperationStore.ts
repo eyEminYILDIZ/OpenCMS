@@ -11,6 +11,7 @@ export enum OperationTabs {
 }
 
 export class OperationStore {
+
     statusBarStore: StatusBarStore;
 
     constructor(statusBarStore: StatusBarStore) {
@@ -40,6 +41,10 @@ export class OperationStore {
     setSearchValue(searchValue: string) {
         this.listSearchValue = searchValue;
         this.getAllItems();
+    }
+
+    onBackToList() {
+        this.setSelectedItem(undefined);
     }
 
     loadItemCounts = async () => {
