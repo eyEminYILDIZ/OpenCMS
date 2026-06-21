@@ -6,6 +6,12 @@ Accept: application/json
 
 ###
 
+### List All Assets with query
+GET {{AgentApi}}/assets?search=head
+Accept: application/json
+
+###
+
 PUT {{AgentApi}}/assets/3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6/feed
 Accept: application/json
 Content-Type: application/json

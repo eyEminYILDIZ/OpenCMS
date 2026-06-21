@@ -11,7 +11,14 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 
     public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
-        var operations = await _dbContext.Operations.ToListAsync(cancellationToken);
+        var operationQuery = _dbContext.Operations.AsQueryable();
+
+        if (!string.IsNullOrEmpty(request.SearchValue))
+        {
+            operationQuery = operationQuery.Where(o => o.Name.ToLower().Contains(request.SearchValue.ToLower()));
+        }
+
+        var operations = await operationQuery.ToListAsync(cancellationToken);
 
         return operations.Select(operation => new QueryResponse
         {

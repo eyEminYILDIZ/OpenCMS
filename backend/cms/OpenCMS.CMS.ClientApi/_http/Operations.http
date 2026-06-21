@@ -12,6 +12,12 @@ Accept: application/json
 
 ###
 
+### List All Operations with query
+GET {{AgentApi}}/operations?search=hammer
+Accept: application/json
+
+###
+
 ### Create Operation
 POST {{AgentApi}}/operations
 Content-Type: application/json
