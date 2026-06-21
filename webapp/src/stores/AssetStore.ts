@@ -6,6 +6,7 @@ import { StatusBarStore } from "./StatusBarStore";
 
 export class AssetStore {
 
+
     statusBarStore: StatusBarStore;
 
     constructor(statusBarStore: StatusBarStore) {
@@ -17,6 +18,7 @@ export class AssetStore {
     allItems: AssetApi.ListAll.Response[] = [];
     selectedItem: AssetApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
+    listSearchValue: string = '';
 
     setSelectedItem = (item: AssetApi.ListAll.Response | undefined) => {
         this.selectedItem = item;
@@ -24,6 +26,10 @@ export class AssetStore {
 
     setPanelMode = (mode: PanelModes) => {
         this.panelMode = mode;
+    }
+
+    setSearchValue(searchValue: string) {
+        this.listSearchValue = searchValue;
     }
 
     loadItemCounts = async () => {

@@ -16,12 +16,18 @@ export class OperationStore {
     allItems: OperationApi.ListAll.Response[] = [];
     selectedItem: OperationApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
+    listSearchValue: string = '';
 
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
         this.selectedItem = item;
     }
+
     setPanelMode = (mode: PanelModes) => {
         this.panelMode = mode;
+    }
+
+    setSearchValue(searchValue: string) {
+        this.listSearchValue = searchValue;
     }
 
     loadItemCounts = async () => {

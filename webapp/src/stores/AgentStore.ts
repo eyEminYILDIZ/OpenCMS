@@ -16,6 +16,7 @@ export class AgentStore {
     allItems: AgentApi.ListAll.Response[] = [];
     selectedItem: AgentApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
+    listSearchValue: string = '';
 
     setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
         this.selectedItem = item;
@@ -23,6 +24,10 @@ export class AgentStore {
 
     setPanelMode = (mode: PanelModes) => {
         this.panelMode = mode;
+    }
+
+    setSearchValue(searchValue: string) {
+        this.listSearchValue = searchValue;
     }
 
     loadItemCounts = async () => {

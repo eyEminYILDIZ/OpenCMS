@@ -181,6 +181,9 @@ const en = {
       give: 'Give',
     },
   },
+  itemList: {
+    searchPlaceholder: 'Search...',
+  },
   statusBar: {
     errors: {
       loadFailed: 'Failed to load items.',
