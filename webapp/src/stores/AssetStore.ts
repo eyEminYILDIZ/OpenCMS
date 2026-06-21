@@ -30,6 +30,7 @@ export class AssetStore {
 
     setSearchValue(searchValue: string) {
         this.listSearchValue = searchValue;
+        this.getAllItems();
     }
 
     loadItemCounts = async () => {
@@ -46,10 +47,9 @@ export class AssetStore {
     getAllItems = async () => {
         try {
             const response = await AssetApi.ListAll.call(this.listSearchValue);
-            this.allItems = response.data;
-
-            // This line is for testing error handling
-            throw new Error("Test error for getAllItems");
+            runInAction(() => {
+                this.allItems = response.data;
+            });
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
         }
