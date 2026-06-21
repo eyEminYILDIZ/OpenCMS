@@ -1,10 +1,7 @@
 export type MenuSection =
   | 'assets'
   | 'agents'
-  | 'operations'
-  | 'placeholder1'
-  | 'placeholder2'
-  | 'placeholder3';
+  | 'operations';
 
 export type RightPanelMode = 'details' | 'create' | 'delete' | null;
 

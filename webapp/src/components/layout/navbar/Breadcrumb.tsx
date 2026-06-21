@@ -3,12 +3,9 @@ import type { MenuSection } from '../../../types/layout';
 import { useLayout } from '../../../context/LayoutContext';
 
 const SECTION_LABELS: Record<MenuSection, string> = {
-  assets:       'Assets',
-  agents:       'Agents',
-  operations:   'Operations',
-  placeholder1: 'Placeholder 1',
-  placeholder2: 'Placeholder 2',
-  placeholder3: 'Placeholder 3',
+  assets:     'Assets',
+  agents:     'Agents',
+  operations: 'Operations',
 };
 
 const Breadcrumb = () => {

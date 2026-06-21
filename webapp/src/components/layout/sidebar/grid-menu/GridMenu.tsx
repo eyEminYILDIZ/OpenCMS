@@ -1,4 +1,4 @@
-import { Activity, Bot, Box, Circle } from 'lucide-react';
+import { Activity, Bot, Box } from 'lucide-react';
 import { observer } from "mobx-react-lite";
 import { useTranslation } from 'react-i18next';
 import { stores } from "../../../../stores";
@@ -14,9 +14,6 @@ const GridMenu = observer(() => {
     { type: MenuTypes.Assets, section: 'assets', label: t('menu.assets'), badgeCount: assetStore.assetItemCounts?.activeCount ?? 0, icon: Box },
     { type: MenuTypes.Agents, section: 'agents', label: t('menu.agents'), badgeCount: agentStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
     { type: MenuTypes.Operations, section: 'operations', label: t('menu.operations'), badgeCount: operationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
-    { type: MenuTypes.PlaceHolder1, section: 'placeholder1', label: t('menu.placeholder1'), badgeCount: 0, icon: Circle },
-    { type: MenuTypes.PlaceHolder2, section: 'placeholder2', label: t('menu.placeholder2'), badgeCount: 0, icon: Circle },
-    { type: MenuTypes.PlaceHolder3, section: 'placeholder3', label: t('menu.placeholder3'), badgeCount: 0, icon: Circle },
   ];
 
   return (
