@@ -45,7 +45,7 @@ export class AssetStore {
 
     getAllItems = async () => {
         try {
-            const response = await AssetApi.ListAll.call();
+            const response = await AssetApi.ListAll.call(this.listSearchValue);
             this.allItems = response.data;
 
             // This line is for testing error handling

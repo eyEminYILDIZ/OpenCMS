@@ -43,7 +43,7 @@ export class OperationStore {
 
     getAllItems = async () => {
         try {
-            const response = await OperationApi.ListAll.call();
+            const response = await OperationApi.ListAll.call(this.listSearchValue);
             this.allItems = response.data;
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.loadItemsFailed'));

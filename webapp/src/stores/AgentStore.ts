@@ -43,7 +43,7 @@ export class AgentStore {
 
     getAllItems = async () => {
         try {
-            const response = await AgentApi.ListAll.call();
+            const response = await AgentApi.ListAll.call(this.listSearchValue);
             this.allItems = response.data;
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));

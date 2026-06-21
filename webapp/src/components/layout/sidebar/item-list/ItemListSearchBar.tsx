@@ -18,12 +18,15 @@ export const ItemListSearchBar = observer(() => {
     switch (applicationStore.currentMenu) {
       case MenuTypes.Assets:
         assetStore.setSearchValue(searchValue);
+        assetStore.getAllItems();
         break;
       case MenuTypes.Agents:
         agentStore.setSearchValue(searchValue);
+        agentStore.getAllItems();
         break;
       case MenuTypes.Operations:
         operationStore.setSearchValue(searchValue);
+        operationStore.getAllItems();
         break;
     }
   }, [searchValue]);

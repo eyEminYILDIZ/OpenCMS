@@ -45,8 +45,12 @@ export namespace OperationApi {
             createdAt: string;
             updatedAt: string | null;
         }
-        export const call = async (): Promise<ApiResponse<Response[]>> => {
-            const response = await ApiClient.get(path);
+        export const call = async (searchValue?: string): Promise<ApiResponse<Response[]>> => {
+            const response = await ApiClient.get(path, {
+                params: {
+                    search: searchValue
+                }
+            });
             return response.data;
         }
     }
