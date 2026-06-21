@@ -16,7 +16,7 @@ var logger = loggerFactory.CreateLogger("AirRadar");
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
 var radar = new Radar();
 var agentState = new AgentState(agentId, assetId, "Air Radar Agent", AssetTypes.Vehicle, ThreatTypes.Own);
-agentState.UpdateState(37.7749, 41.4194, 100, 205, 0);
+agentState.UpdateState(41.4194, 37.7749, 100, 205, 0);
 
 var cts = new CancellationTokenSource();
 

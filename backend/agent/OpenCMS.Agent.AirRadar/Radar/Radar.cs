@@ -13,7 +13,7 @@ public class Radar
             {
                 Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"),
                 Callsign = "ISO9986",
-                Longitude = 48.4194,
+                Longitude = 41.4194,
                 Latitude = 37.7749,
                 Altitude = 11000,
                 Speed = 450,
@@ -30,8 +30,8 @@ public class Radar
             var changeLocation = random.Next() % 2 == 0;
             if (changeLocation)
             {
-                aircraft.Longitude += (random.NextDouble() - 0.5) * 0.1;
-                aircraft.Latitude += (random.NextDouble() - 0.5) * 0.1;
+                aircraft.Longitude += (random.NextDouble() - 0.5) * 0.01;
+                aircraft.Latitude += (random.NextDouble() - 0.5) * 0.01;
             }
             var changeAltitude = random.Next() % 2 == 0;
             if (changeAltitude)
