@@ -12,6 +12,12 @@ Accept: application/json
 
 ###
 
+### List All Assets with query
+GET {{AgentApi}}/assets?search=head
+Accept: application/json
+
+###
+
 ### Create Asset
 POST {{AgentApi}}/assets
 Content-Type: application/json
