@@ -4,6 +4,12 @@ import { OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 
+export enum OperationTabs {
+    Details = 'details',
+    Assets = 'assets',
+    Orders = 'orders',
+}
+
 export class OperationStore {
     statusBarStore: StatusBarStore;
 
@@ -17,6 +23,11 @@ export class OperationStore {
     selectedItem: OperationApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
+    selectedTab: OperationTabs = OperationTabs.Details;
+
+    setSelectedTab = (tab: OperationTabs) => {
+        this.selectedTab = tab;
+    }
 
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
         this.selectedItem = item;

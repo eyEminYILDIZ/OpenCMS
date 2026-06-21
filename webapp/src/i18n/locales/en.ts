@@ -134,6 +134,11 @@ const en = {
       createFailed: 'Failed to create operation.',
       createSucceeded: 'Operation created successfully.',
     },
+    tabs: {
+      details: 'Details',
+      assets: 'Assets',
+      orders: 'Orders',
+    },
     noItemSelected: 'No item selected',
     create: {
       title: 'Create Operation',
