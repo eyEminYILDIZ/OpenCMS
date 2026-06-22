@@ -21,7 +21,7 @@ export class OperationStore {
 
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
     allItems: OperationApi.ListAll.Response[] = [];
-    selectedItem: OperationApi.ListAll.Response | undefined = undefined;
+    selectedItem: OperationApi.GetById.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
     selectedTab: OperationTabs = OperationTabs.Details;
@@ -31,7 +31,7 @@ export class OperationStore {
     }
 
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
-        this.selectedItem = item;
+        this.getById(item?.id || '');
     }
 
     setPanelMode = (mode: PanelModes) => {
@@ -69,6 +69,18 @@ export class OperationStore {
         }
     }
 
+    getById = async (id: string) => {
+        try {
+            const request: OperationApi.GetById.Request = { id };
+            const response = await OperationApi.GetById.call(request);
+            runInAction(() => {
+                this.selectedItem = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.loadItemFailed'));
+        }
+    }
+
     onCreateItem() {
         this.setPanelMode(PanelModes.Create);
         this.setSelectedItem(undefined);
@@ -79,7 +91,7 @@ export class OperationStore {
             const response = await OperationApi.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((o) => o.id === response.data.id);
+                this.getById(response.data.id);
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
@@ -101,7 +113,7 @@ export class OperationStore {
             await OperationApi.Update.call(request);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((o) => o.id === id);
+                this.getById(id);
             });
             this.statusBarStore.showSuccess(i18next.t('operation.errors.updateSucceeded'));
         } catch (error) {

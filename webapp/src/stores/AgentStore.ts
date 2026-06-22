@@ -75,7 +75,7 @@ export class AgentStore {
             const response = await AgentApi.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((a) => a.id === response.data.id);
+                this.getById(response.data.id);
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
@@ -97,7 +97,7 @@ export class AgentStore {
             await AgentApi.Update.call(request);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((a) => a.id === id);
+                this.getById(id);
             });
             this.statusBarStore.showSuccess(i18next.t('agent.errors.updateSucceeded'));
         } catch (error) {

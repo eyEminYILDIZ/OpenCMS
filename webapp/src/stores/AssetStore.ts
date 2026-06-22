@@ -77,7 +77,7 @@ export class AssetStore {
             const response = await AssetApi.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((a) => a.id === response.data.id);
+                this.getById(response.data.id);
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
@@ -99,7 +99,7 @@ export class AssetStore {
             await AssetApi.Update.call(request);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find((a) => a.id === id);
+                this.getById(id);
             });
             this.statusBarStore.showSuccess(i18next.t('asset.errors.updateSucceeded'));
         } catch (error) {
