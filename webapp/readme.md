@@ -15,7 +15,7 @@ Web part of OpenCMS
 - Axios 
 - MobX
 - Lucide Icons
-- 
+- MapLibre/OpenStreetMap
 
 
 ## Projects
@@ -35,4 +35,5 @@ OpenCMS managed via web application.
 ## References
 
 [Lucide Icons](https://lucide.dev/icons/)
+[OpenStreetMap](https://www.openstreetmap.org/about/)
 [MapLibre](https://maplibre.org/)
