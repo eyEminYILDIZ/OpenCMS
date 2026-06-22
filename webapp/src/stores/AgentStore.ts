@@ -14,12 +14,12 @@ export class AgentStore {
 
     agentItemCounts: AgentApi.GetItemCounts.Response | null = null;
     allItems: AgentApi.ListAll.Response[] = [];
-    selectedItem: AgentApi.ListAll.Response | undefined = undefined;
+    selectedItem: AgentApi.GetById.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
 
     setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
-        this.selectedItem = item;
+        this.getById(item?.id || '');
     }
 
     setPanelMode = (mode: PanelModes) => {
@@ -50,6 +50,18 @@ export class AgentStore {
             });
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));
+        }
+    }
+
+    getById = async (id: string) => {
+        try {
+            const request: AgentApi.GetById.Request = { id };
+            const response = await AgentApi.GetById.call(request);
+            runInAction(() => {
+                this.selectedItem = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.loadItemFailed'));
         }
     }
 
