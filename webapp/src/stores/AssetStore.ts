@@ -16,12 +16,12 @@ export class AssetStore {
 
     assetItemCounts: AssetApi.GetItemCounts.Response | null = null;
     allItems: AssetApi.ListAll.Response[] = [];
-    selectedItem: AssetApi.ListAll.Response | undefined = undefined;
+    selectedItem: AssetApi.GetById.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
 
     setSelectedItem = (item: AssetApi.ListAll.Response | undefined) => {
-        this.selectedItem = item;
+        this.getById(item?.id || '');
     }
 
     setPanelMode = (mode: PanelModes) => {
@@ -49,6 +49,18 @@ export class AssetStore {
             const response = await AssetApi.ListAll.call(this.listSearchValue);
             runInAction(() => {
                 this.allItems = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
+        }
+    }
+
+    getById = async (id: string) => {
+        try {
+            const request: AssetApi.GetById.Request = { id };
+            const response = await AssetApi.GetById.call(request);
+            runInAction(() => {
+                this.selectedItem = response.data;
             });
         } catch (error) {
             this.statusBarStore.showError(i18next.t('asset.errors.loadItemsFailed'));
