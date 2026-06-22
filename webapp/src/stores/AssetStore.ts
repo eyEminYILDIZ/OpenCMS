@@ -20,6 +20,10 @@ export class AssetStore {
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
 
+    clearSelectedItems = () => {
+        this.selectedItem = undefined;
+    }
+
     setSelectedItem = (item: AssetApi.ListAll.Response | undefined) => {
         this.getById(item?.id || '');
     }
@@ -69,7 +73,7 @@ export class AssetStore {
 
     onCreateItem() {
         this.setPanelMode(PanelModes.Create);
-        this.setSelectedItem(undefined);
+        this.clearSelectedItems();
     }
 
     createItem = async (values: AssetApi.Create.Request) => {
@@ -118,7 +122,7 @@ export class AssetStore {
             await AssetApi.Delete.call(request);
 
             // after success
-            this.setSelectedItem(undefined);
+            this.clearSelectedItems();
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();

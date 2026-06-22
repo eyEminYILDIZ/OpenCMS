@@ -32,6 +32,12 @@ export class OperationStore {
         this.selectedTab = tab;
     }
 
+    clearSelectedItems = () => {
+        this.selectedItem = undefined;
+        this.selectedOrder = undefined;
+        this.selectedAsset = undefined;
+    }
+
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
         this.getById(item?.id || '');
     }
@@ -54,7 +60,7 @@ export class OperationStore {
     }
 
     onBackToList() {
-        this.setSelectedItem(undefined);
+        this.clearSelectedItems();
     }
 
     loadItemCounts = async () => {
@@ -93,7 +99,7 @@ export class OperationStore {
 
     onCreateItem() {
         this.setPanelMode(PanelModes.Create);
-        this.setSelectedItem(undefined);
+        this.clearSelectedItems();
     }
 
     createItem = async (values: OperationApi.Create.Request) => {
@@ -141,7 +147,7 @@ export class OperationStore {
             const request = { id: this.selectedItem.id };
             await OperationApi.Delete.call(request);
 
-            this.setSelectedItem(undefined);
+            this.clearSelectedItems();
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();

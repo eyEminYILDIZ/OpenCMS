@@ -18,6 +18,10 @@ export class AgentStore {
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
 
+    clearSelectedItems = () => {
+        this.selectedItem = undefined;
+    }
+
     setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
         this.getById(item?.id || '');
     }
@@ -67,7 +71,7 @@ export class AgentStore {
 
     onCreateItem() {
         this.setPanelMode(PanelModes.Create);
-        this.setSelectedItem(undefined);
+        this.clearSelectedItems();
     }
 
     createItem = async (values: AgentApi.Create.Request) => {
@@ -115,7 +119,7 @@ export class AgentStore {
             const request = { id: this.selectedItem.id };
             await AgentApi.Delete.call(request);
 
-            this.setSelectedItem(undefined);
+            this.clearSelectedItems();
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
             await this.loadItemCounts();

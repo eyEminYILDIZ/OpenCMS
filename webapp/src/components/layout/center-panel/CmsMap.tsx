@@ -38,6 +38,7 @@ export const CmsMap: React.FC = observer(() => {
 
             mapRef.current?.flyTo({ center: [assetStore.selectedItem.longitude, assetStore.selectedItem.latitude], zoom: 14, duration: 2000 });
         } else {
+            assetStore.clearSelectedItems();
             setSelectedMarker(undefined)
         }
     }, [assetStore.selectedItem])
@@ -137,7 +138,7 @@ export const CmsMap: React.FC = observer(() => {
                         latitude={Number(selectedMarker.latitude)}
                         onClose={() => {
                             setSelectedMarker(undefined);
-                            assetStore.setSelectedItem(undefined);
+                            assetStore.clearSelectedItems();
                         }}
                     >
                         <div>
