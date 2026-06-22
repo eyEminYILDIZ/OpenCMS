@@ -159,6 +159,11 @@ const en = {
       createdAt: 'Created At',
       updatedAt: 'Updated At',
     },
+    order: {
+      description: 'Description',
+      orderStatus: 'Status',
+      orderType: 'Type',
+    },
     operationStatuses: {
       notStarted: 'Not Started',
       inProgress: 'In Progress',
