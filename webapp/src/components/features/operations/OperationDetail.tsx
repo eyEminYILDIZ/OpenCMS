@@ -20,8 +20,6 @@ export const OperationDetail: React.FC = observer(() => {
         { label: t('operation.fields.endDate'), value: item.endDate ?? "—" },
         { label: t('operation.fields.operationStatus'), value: operationStatusLabels[item.operationStatus] },
         { label: t('operation.fields.operationType'), value: operationTypeLabels[item.operationType] },
-        { label: t('operation.fields.createdAt'), value: item.createdAt },
-        { label: t('operation.fields.updatedAt'), value: item.updatedAt ?? "—" },
     ];
 
     return (

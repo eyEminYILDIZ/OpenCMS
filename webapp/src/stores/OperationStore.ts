@@ -22,6 +22,8 @@ export class OperationStore {
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
     allItems: OperationApi.ListAll.Response[] = [];
     selectedItem: OperationApi.GetById.Response | undefined = undefined;
+    selectedOrder: OperationApi.GetById.OrderResponse | undefined = undefined;
+    selectedAsset: OperationApi.GetById.OperationAssetResponse | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
     selectedTab: OperationTabs = OperationTabs.Details;
@@ -32,6 +34,14 @@ export class OperationStore {
 
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
         this.getById(item?.id || '');
+    }
+
+    setSelectedOrder = (order: OperationApi.GetById.OrderResponse | undefined) => {
+        this.selectedOrder = order;
+    }
+
+    setSelectedAsset = (asset: OperationApi.GetById.OperationAssetResponse | undefined) => {
+        this.selectedAsset = asset;
     }
 
     setPanelMode = (mode: PanelModes) => {

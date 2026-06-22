@@ -15,23 +15,24 @@ export const OperationAssetTab: React.FC = observer(() => {
         operationStore.getAllItems();
     }, [applicationStore.currentMenu]);
 
-    const columns: DataListColumn<OperationApi.ListAll.Response>[] = [
+    const columns: DataListColumn<OperationApi.GetById.OperationAssetResponse>[] = [
         {
-            key: "name",
+            key: "asset",
             header: t("operation.fields.name"),
             type: "string",
+            render: (value, item) => (item.asset.name),
         },
         {
-            key: "operationStatus",
-            header: t("operation.fields.operationStatus"),
-            render: (value, item) => (value == OperationApi.Enums.OperationStatus.InProgress || value == OperationApi.Enums.OperationStatus.NotStarted) ? <p style={{ color: "green" }}>{operationStatusLabels[item.operationStatus]}</p> : <p style={{ color: "red" }}>{operationStatusLabels[item.operationStatus]}</p>
+            key: "asset",
+            header: t("common.isActive"),
+            render: (value, item) => (item.asset.isActive ? t('common.active.yes') : t('common.active.no'))
         },
         {
             key: "edit",
             type: "button",
             icon: <Pencil size={16} />,
             onButtonClick: (item) => {
-                operationStore.setSelectedItem(item);
+                operationStore.setSelectedAsset(item);
                 operationStore.setPanelMode(PanelModes.Update);
             }
         },
@@ -40,18 +41,18 @@ export const OperationAssetTab: React.FC = observer(() => {
             type: "button",
             icon: <Trash2 size={16} />,
             onButtonClick: (item) => {
-                operationStore.setSelectedItem(item);
+                operationStore.setSelectedAsset(item);
                 operationStore.setPanelMode(PanelModes.Delete);
             }
         }
     ];
 
     return (
-        <DataList<OperationApi.ListAll.Response>
+        <DataList<OperationApi.GetById.OperationAssetResponse>
             columns={columns}
-            items={operationStore.allItems}
+            items={operationStore.selectedItem?.assets || []}
             onRowClicked={(item) => {
-                operationStore.setSelectedItem(item);
+                operationStore.setSelectedAsset(item);
                 operationStore.setPanelMode(PanelModes.Detail);
             }}
         />
