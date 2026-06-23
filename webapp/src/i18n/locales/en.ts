@@ -162,6 +162,9 @@ const en = {
     createOrder: {
       title: 'Create Operation Order',
     },
+    detailOrder: {
+      title: 'Operation Order Details',
+    },
     updateOrder: {
       title: 'Update Operation Order',
     },
