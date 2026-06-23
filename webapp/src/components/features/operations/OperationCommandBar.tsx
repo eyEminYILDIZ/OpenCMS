@@ -61,7 +61,7 @@ export const OperationCommandBar = observer(() => {
       variant={"command"}
       size="sm"
       onClick={() => {
-        // operationStore.onCreateOrder();
+        operationStore.onCreateOrder();
       }}
       aria-label="Add new item"
     >

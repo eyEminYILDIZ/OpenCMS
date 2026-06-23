@@ -140,6 +140,10 @@ const en = {
       deleteAssetFailed: 'Failed to delete operation asset.',
       updateAssetSucceeded: 'Operation asset updated successfully.',
       updateAssetFailed: 'Failed to update operation asset.',
+      createOrderSucceeded: 'Operation order created successfully.',
+      createOrderFailed: 'Failed to create operation order.',
+      deleteOrderSucceeded: 'Operation order deleted successfully.',
+      deleteOrderFailed: 'Failed to delete operation order.',
     },
     tabs: {
       details: 'Details',
@@ -152,6 +156,9 @@ const en = {
     },
     createAsset: {
       title: 'Create Operation Asset',
+    },
+    createOrder: {
+      title: 'Create Operation Order',
     },
     update: {
       title: 'Update Operation',
@@ -172,6 +179,21 @@ const en = {
       id: 'ID',
       operationId: 'Operation',
       assetId: 'Asset',
+    },
+    orderFields: {
+      description: 'Description',
+      issuedDate: 'Issued Date',
+      completedDate: 'Completed Date',
+      orderStatus: 'Status',
+      orderType: 'Type',
+      targetDatePeriodStart: 'Target Period Start',
+      targetDatePeriodEnd: 'Target Period End',
+      targetPointLatitude: 'Target Latitude',
+      targetPointLongitude: 'Target Longitude',
+      targetPointAltitude: 'Target Altitude',
+      targetPointHeading: 'Target Heading',
+      targetPointSpeed: 'Target Speed',
+      responsibleAssetId: 'Responsible Asset',
     },
     order: {
       description: 'Description',

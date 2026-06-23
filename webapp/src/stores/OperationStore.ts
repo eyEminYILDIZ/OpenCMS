@@ -177,7 +177,7 @@ export class OperationStore {
 
     createAsset = async (values: OperationApi.OperationAssets.Create.Request) => {
         try {
-            const response = await OperationApi.OperationAssets.Create.call(values);
+            await OperationApi.OperationAssets.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
                 this.getById(this.selectedItem?.id || '');
@@ -207,6 +207,48 @@ export class OperationStore {
             this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteAssetSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteAssetFailed'));
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////// Operation Orders //////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    onCreateOrder() {
+        this.setPanelMode(PanelModes.Create);
+        this.clearSelectedOrder();
+    }
+
+    createOrder = async (values: OperationApi.Orders.Create.Request) => {
+        try {
+            await OperationApi.Orders.Create.call(values);
+            runInAction(() => {
+                this.getById(this.selectedItem?.id || '');
+                this.panelMode = PanelModes.Detail;
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.createOrderSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.createOrderFailed'));
+        }
+    }
+
+    deleteOrder = async () => {
+        if (!this.selectedOrder) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedOrder.id };
+            await OperationApi.Orders.Delete.call(request);
+
+            this.clearSelectedOrder();
+            this.setPanelMode(PanelModes.Detail);
+            await this.getById(this.selectedItem?.id || '');
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteOrderSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.deleteOrderFailed'));
         }
     }
 }

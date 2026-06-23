@@ -4,7 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { stores } from "../../../../stores";
 import { OperationApi } from "../../../../api";
-import { PanelModes } from "../../../../types";
+import { AssetApi } from "../../../../api";
+import { orderStatusOptions, orderTypeOptions, PanelModes } from "../../../../types";
 import Input from "../../../ui/Input";
 import DatePicker from "../../../ui/DatePicker";
 import Form, { FormMode } from "../../../ui/Form";
@@ -12,10 +13,10 @@ import FormItem from "../../../ui/FormItem";
 import Button from "../../../ui/Button";
 import ButtonStack from "../../../ui/ButtonStack";
 import { CircleX, Save } from "lucide-react";
+import Dropdown from "../../../ui/Dropdown";
 import DropdownRemote from "../../../ui/DropdownRemote";
-import { AssetApi } from "../../../../api";
 
-type FormValues = Omit<OperationApi.OperationAssets.Create.Request, never>;
+type FormValues = Omit<OperationApi.Orders.Create.Request, never>;
 
 export const OperationOrderCreate: React.FC = observer(() => {
     const { operationStore } = stores;
@@ -23,27 +24,148 @@ export const OperationOrderCreate: React.FC = observer(() => {
 
     const validationSchema = Yup.object({
         operationId: Yup.string().required(t('common.validation.required')),
-        assetId: Yup.string().required(t('common.validation.required')),
+        description: Yup.string().required(t('common.validation.required')),
+        issuedDate: Yup.string().required(t('common.validation.required')),
+        completedDate: Yup.string().required(t('common.validation.required')),
+        orderStatus: Yup.number().required(t('common.validation.required')),
+        orderType: Yup.number().required(t('common.validation.required')),
+        targetDatePeriodStart: Yup.string().required(t('common.validation.required')),
+        targetDatePeriodEnd: Yup.string().required(t('common.validation.required')),
+        targetPointLatitude: Yup.number().required(t('common.validation.required')),
+        targetPointLongitude: Yup.number().required(t('common.validation.required')),
+        targetPointAltitude: Yup.number().required(t('common.validation.required')),
+        targetPointHeading: Yup.number().required(t('common.validation.required')),
+        targetPointSpeed: Yup.number().required(t('common.validation.required')),
+        responsibleAssetId: Yup.string().required(t('common.validation.required')),
     });
 
     const formik = useFormik<FormValues>({
         initialValues: {
             operationId: operationStore.selectedItem?.id ?? '',
-            assetId: '',
+            description: '',
+            issuedDate: '',
+            completedDate: '',
+            orderStatus: OperationApi.Enums.OrderStatus.Passive,
+            orderType: OperationApi.Enums.OrderTypes.Move,
+            targetDatePeriodStart: '',
+            targetDatePeriodEnd: '',
+            targetPointLatitude: 0,
+            targetPointLongitude: 0,
+            targetPointAltitude: 0,
+            targetPointHeading: 0,
+            targetPointSpeed: 0,
+            responsibleAssetId: '',
+            nextOrderId: null,
+            previousOrderId: null,
         },
         validationSchema,
         onSubmit: async (values) => {
-            await operationStore.createAsset(values);
+            await operationStore.createOrder(values);
         },
     });
 
     return (
         <Form formik={formik} mode={FormMode.Create}>
-            <h4>{t('operation.createAsset.title')}</h4>
+            <h4>{t('operation.createOrder.title')}</h4>
 
-            <FormItem label={t('operation.assetFields.assetId')}>
+            <FormItem<FormValues> name="description" label={t('operation.orderFields.description')}>
+                <Input<FormValues>
+                    id="description"
+                    name="description"
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="issuedDate" label={t('operation.orderFields.issuedDate')}>
+                <DatePicker<FormValues> name="issuedDate" mode="datetime" />
+            </FormItem>
+
+            <FormItem<FormValues> name="completedDate" label={t('operation.orderFields.completedDate')}>
+                <DatePicker<FormValues> name="completedDate" mode="datetime" />
+            </FormItem>
+
+            <FormItem label={t('operation.orderFields.orderStatus')}>
+                <Dropdown<FormValues>
+                    name="orderStatus"
+                    options={orderStatusOptions}
+                />
+            </FormItem>
+
+            <FormItem label={t('operation.orderFields.orderType')}>
+                <Dropdown<FormValues>
+                    name="orderType"
+                    options={orderTypeOptions}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetDatePeriodStart" label={t('operation.orderFields.targetDatePeriodStart')}>
+                <DatePicker<FormValues> name="targetDatePeriodStart" mode="datetime" />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetDatePeriodEnd" label={t('operation.orderFields.targetDatePeriodEnd')}>
+                <DatePicker<FormValues> name="targetDatePeriodEnd" mode="datetime" />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetPointLatitude" label={t('operation.orderFields.targetPointLatitude')}>
+                <Input<FormValues>
+                    id="targetPointLatitude"
+                    name="targetPointLatitude"
+                    type="number"
+                    value={formik.values.targetPointLatitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetPointLongitude" label={t('operation.orderFields.targetPointLongitude')}>
+                <Input<FormValues>
+                    id="targetPointLongitude"
+                    name="targetPointLongitude"
+                    type="number"
+                    value={formik.values.targetPointLongitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetPointAltitude" label={t('operation.orderFields.targetPointAltitude')}>
+                <Input<FormValues>
+                    id="targetPointAltitude"
+                    name="targetPointAltitude"
+                    type="number"
+                    value={formik.values.targetPointAltitude}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetPointHeading" label={t('operation.orderFields.targetPointHeading')}>
+                <Input<FormValues>
+                    id="targetPointHeading"
+                    name="targetPointHeading"
+                    type="number"
+                    value={formik.values.targetPointHeading}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem<FormValues> name="targetPointSpeed" label={t('operation.orderFields.targetPointSpeed')}>
+                <Input<FormValues>
+                    id="targetPointSpeed"
+                    name="targetPointSpeed"
+                    type="number"
+                    value={formik.values.targetPointSpeed}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </FormItem>
+
+            <FormItem label={t('operation.orderFields.responsibleAssetId')}>
                 <DropdownRemote<FormValues>
-                    name="assetId"
+                    name="responsibleAssetId"
                     endpoint={AssetApi.Pick.path}
                 />
             </FormItem>
