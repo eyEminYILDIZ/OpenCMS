@@ -76,22 +76,22 @@ POST {{AgentApi}}/operations/orders
 Content-Type: application/json
 
 {
-  "operationId": "3924dddd-e325-45b2-bfef-dc77f1831259",
-  "description": "Move to grid reference 42N 38E and hold position.",
-  "issuedDate": "2026-05-07T06:00:00Z",
-  "completedDate": "2026-05-07T12:00:00Z",
-  "orderStatus": 0,
-  "orderType": 0,
-  "targetDatePeriodStart": "2026-05-07T08:00:00Z",
-  "targetDatePeriodEnd": "2026-05-07T10:00:00Z",
-  "targetPointLatitude": 42.0,
-  "targetPointLongitude": 38.0,
-  "targetPointAltitude": 500.0,
-  "targetPointHeading": 90.0,
-  "targetPointSpeed": 120.0,
-  "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
-  "nextOrderId": null,
-  "previousOrderId": null
+    "operationId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
+    "description": "Intercept hostile aircraft approaching northern airspace",
+    "issuedDate": "2026-06-10T00:00:00",
+    "completedDate": "2026-06-18T00:00:00",
+    "orderStatus": 1,
+    "orderType": 1,
+    "targetDatePeriodStart": "2026-06-10T00:00:00",
+    "targetDatePeriodEnd": "2026-06-18T00:00:00",
+    "targetPointLatitude": 40,
+    "targetPointLongitude": 28,
+    "targetPointAltitude": 200,
+    "targetPointHeading": 230,
+    "targetPointSpeed": 194,
+    "responsibleAssetId": "c394835f-ce35-4e6b-8cd7-7e553def2e24",
+    "nextOrderId": null,
+    "previousOrderId": null
 }
 
 ###

@@ -15,7 +15,7 @@ public class Command : IRequest<Result<CommandResponse>>
     public double TargetPointAltitude { get; set; }
     public double TargetPointHeading { get; set; }
     public double TargetPointSpeed { get; set; }
-    public Guid ResponsibleAssetId { get; set; }
+    public Guid ResponsibleOperationAssetId { get; set; }
     public Guid? NextOrderId { get; set; }
     public Guid? PreviousOrderId { get; set; }
 }
@@ -36,7 +36,7 @@ public class CommandResponse
     public double TargetPointAltitude { get; set; }
     public double TargetPointHeading { get; set; }
     public double TargetPointSpeed { get; set; }
-    public Guid ResponsibleAssetId { get; set; }
+    public Guid ResponsibleOperationAssetId { get; set; }
     public Guid? NextOrderId { get; set; }
     public Guid? PreviousOrderId { get; set; }
     public DateTime CreatedAt { get; set; }

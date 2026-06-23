@@ -11,6 +11,12 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 
     public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
     {
+        var responsibleOperationAsset = await _dbContext.OperationAssets
+            .FirstOrDefaultAsync(oa => oa.OperationId == request.OperationId && oa.AssetId == request.ResponsibleOperationAssetId, cancellationToken);
+
+        if (responsibleOperationAsset is null)
+            return Result<CommandResponse>.Failure(Error.NotFound);
+
         var order = new Order
         {
             OperationId = request.OperationId,
@@ -26,7 +32,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             TargetPointAltitude = request.TargetPointAltitude,
             TargetPointHeading = request.TargetPointHeading,
             TargetPointSpeed = request.TargetPointSpeed,
-            ResponsibleOperationAssetId = request.ResponsibleAssetId,
+            ResponsibleOperationAssetId = responsibleOperationAsset.Id,
             NextOrderId = request.NextOrderId,
             PreviousOrderId = request.PreviousOrderId,
         };
@@ -50,7 +56,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             TargetPointAltitude = order.TargetPointAltitude,
             TargetPointHeading = order.TargetPointHeading,
             TargetPointSpeed = order.TargetPointSpeed,
-            ResponsibleAssetId = order.ResponsibleOperationAssetId,
+            ResponsibleOperationAssetId = order.ResponsibleOperationAssetId,
             NextOrderId = order.NextOrderId,
             PreviousOrderId = order.PreviousOrderId,
             CreatedAt = order.CreatedAt,
