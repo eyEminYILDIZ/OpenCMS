@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
+import { RightPanelWrapper } from "../../layout/right-panel/RightPanelWrapper";
 import { stores } from "../../../stores";
 import { agentTypeLabels } from "../../../types";
 
@@ -23,7 +24,7 @@ export const AgentDetail: React.FC = observer(() => {
     ];
 
     return (
-        <>
+        <RightPanelWrapper>
             <h4>Agent Detail</h4>
             <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
                 <tbody>
@@ -35,6 +36,6 @@ export const AgentDetail: React.FC = observer(() => {
                     ))}
                 </tbody>
             </table>
-        </>
+        </RightPanelWrapper>
     );
 })

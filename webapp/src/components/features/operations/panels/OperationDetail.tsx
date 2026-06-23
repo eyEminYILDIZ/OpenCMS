@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
+import { RightPanelWrapper } from "../../../layout/right-panel/RightPanelWrapper";
 import { stores } from "../../../../stores";
 import { operationStatusLabels, operationTypeLabels } from "../../../../types";
 
@@ -23,7 +24,7 @@ export const OperationDetail: React.FC = observer(() => {
     ];
 
     return (
-        <>
+        <RightPanelWrapper>
             <h4>Operation Detail</h4>
             <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
                 <tbody>
@@ -35,6 +36,6 @@ export const OperationDetail: React.FC = observer(() => {
                     ))}
                 </tbody>
             </table>
-        </>
+        </RightPanelWrapper>
     );
 });

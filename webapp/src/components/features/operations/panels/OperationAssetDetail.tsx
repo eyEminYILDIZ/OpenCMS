@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
+import { RightPanelWrapper } from "../../../layout/right-panel/RightPanelWrapper";
 import { stores } from "../../../../stores";
 
 export const OperationAssetDetail: React.FC = observer(() => {
@@ -17,7 +18,7 @@ export const OperationAssetDetail: React.FC = observer(() => {
     ];
 
     return (
-        <>
+        <RightPanelWrapper>
             <h4>{t('operation.assetFields.asset')}</h4>
             <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
                 <tbody>
@@ -29,6 +30,6 @@ export const OperationAssetDetail: React.FC = observer(() => {
                     ))}
                 </tbody>
             </table>
-        </>
+        </RightPanelWrapper>
     );
 });
