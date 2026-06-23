@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { stores } from "../../../stores";
-import { operationStatusLabels, operationTypeLabels } from "../../../types";
+import { stores } from "../../../../stores";
+import { operationStatusLabels, operationTypeLabels } from "../../../../types";
 
 export const OperationDetail: React.FC = observer(() => {
     const { operationStore } = stores;

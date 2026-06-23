@@ -134,6 +134,12 @@ const en = {
       updateSucceeded: 'Operation updated successfully.',
       createFailed: 'Failed to create operation.',
       createSucceeded: 'Operation created successfully.',
+      createAssetSucceeded: 'Operation asset created successfully.',
+      createAssetFailed: 'Failed to create operation asset.',
+      deleteAssetSucceeded: 'Operation asset deleted successfully.',
+      deleteAssetFailed: 'Failed to delete operation asset.',
+      updateAssetSucceeded: 'Operation asset updated successfully.',
+      updateAssetFailed: 'Failed to update operation asset.',
     },
     tabs: {
       details: 'Details',
@@ -143,6 +149,9 @@ const en = {
     noItemSelected: 'No item selected',
     create: {
       title: 'Create Operation',
+    },
+    createAsset: {
+      title: 'Create Operation Asset',
     },
     update: {
       title: 'Update Operation',
@@ -158,6 +167,11 @@ const en = {
       operationType: 'Type',
       createdAt: 'Created At',
       updatedAt: 'Updated At',
+    },
+    assetFields: {
+      id: 'ID',
+      operationId: 'Operation',
+      assetId: 'Asset',
     },
     order: {
       description: 'Description',

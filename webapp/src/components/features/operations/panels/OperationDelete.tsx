@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { stores } from "../../../stores";
-import { PanelModes } from "../../../types";
-import Button from "../../ui/Button";
-import ButtonStack from "../../ui/ButtonStack";
+import { stores } from "../../../../stores";
+import { PanelModes } from "../../../../types";
+import Button from "../../../ui/Button";
+import ButtonStack from "../../../ui/ButtonStack";
 import { CircleX, Trash2 } from "lucide-react";
 
 export const OperationDelete: React.FC = observer(() => {

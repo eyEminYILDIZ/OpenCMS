@@ -156,4 +156,49 @@ export class OperationStore {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteFailed'));
         }
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////// Operation Assets //////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    onCreateAsset() {
+        this.setPanelMode(PanelModes.Create);
+        this.clearSelectedItems();
+    }
+
+    createAsset = async (values: OperationApi.OperationAssets.Create.Request) => {
+        try {
+            const response = await OperationApi.OperationAssets.Create.call(values);
+            await this.getAllItems();
+            runInAction(() => {
+                this.getById(response.data.id);
+                this.panelMode = PanelModes.Detail;
+            });
+            await this.loadItemCounts();
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.createAssetSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.createAssetFailed'));
+        }
+    }
+
+    deleteAsset = async () => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedItem.id };
+            await OperationApi.OperationAssets.Delete.call(request);
+
+            this.clearSelectedItems();
+            this.setPanelMode(PanelModes.Detail);
+            await this.getAllItems();
+            await this.loadItemCounts();
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteAssetSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.deleteAssetFailed'));
+        }
+    }
 }

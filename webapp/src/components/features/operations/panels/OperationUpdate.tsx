@@ -2,17 +2,17 @@ import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { stores } from "../../../stores";
-import { OperationApi } from "../../../api";
-import { operationStatusOptions, operationTypeOptions, PanelModes } from "../../../types";
-import Input from "../../ui/Input";
-import DatePicker from "../../ui/DatePicker";
-import Form, { FormMode } from "../../ui/Form";
-import FormItem from "../../ui/FormItem";
-import Button from "../../ui/Button";
-import ButtonStack from "../../ui/ButtonStack";
+import { stores } from "../../../../stores";
+import { OperationApi } from "../../../../api";
+import { operationStatusOptions, operationTypeOptions, PanelModes } from "../../../../types";
+import Input from "../../../ui/Input";
+import DatePicker from "../../../ui/DatePicker";
+import Form, { FormMode } from "../../../ui/Form";
+import FormItem from "../../../ui/FormItem";
+import Button from "../../../ui/Button";
+import ButtonStack from "../../../ui/ButtonStack";
 import { CircleX, Save } from "lucide-react";
-import Dropdown from "../../ui/Dropdown";
+import Dropdown from "../../../ui/Dropdown";
 
 type FormValues = Omit<OperationApi.Update.Request, 'id'>;
 
