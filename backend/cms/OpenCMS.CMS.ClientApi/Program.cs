@@ -1,3 +1,7 @@
+using OpenCMS.CMS.Application.Configurations.Interfaces;
+using OpenCMS.CMS.ClientApi.Hubs;
+using OpenCMS.CMS.ClientApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -9,10 +13,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IClientSocketService, ClientSocketService>();
+
+// SignalR requires AllowCredentials, so we cannot use AllowAnyOrigin
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+        policy.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 });
 
 var app = builder.Build();
@@ -38,5 +46,7 @@ app.UseCors();
 
 // register agent endpoint
 RegisterRoutes.MapRoutes(app, Assembly.GetAssembly(typeof(OpenCMS.CMS.Application.Configurations.Interfaces.IAgentEndpoint)));
+
+app.MapHub<ClientHub>("/hubs/clients");
 
 app.Run();

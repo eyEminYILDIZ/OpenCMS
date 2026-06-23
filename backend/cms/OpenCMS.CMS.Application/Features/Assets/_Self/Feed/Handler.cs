@@ -4,11 +4,13 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly ILogger<Handler> _logger;
+    private readonly IClientSocketService _notificationService;
 
-    public Handler(IApplicationDbContext dbContext, ILogger<Handler> logger)
+    public Handler(IApplicationDbContext dbContext, ILogger<Handler> logger, IClientSocketService notificationService)
     {
         _dbContext = dbContext;
         _logger = logger;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
@@ -56,7 +58,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         _logger.LogInformation("Asset with ID {AssetId} has been processed. Name: {AssetName}, Latitude: {Latitude}, Longitude: {Longitude}, Altitude: {Altitude}, Heading: {Heading}, Speed: {Speed}, AssetType: {AssetType}, ThreatType: {ThreatType}, IsActive: {IsActive}, RelatedAgentId: {RelatedAgentId}",
             asset.Id, asset.Name, asset.Latitude, asset.Longitude, asset.Altitude, asset.Heading, asset.Speed, asset.AssetType, asset.ThreatType, asset.IsActive, asset.RelatedAgentId);
 
-        return new CommandResponse
+        var response = new CommandResponse
         {
             Id = asset.Id,
             Name = asset.Name,
@@ -74,5 +76,9 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             CreatedAt = asset.CreatedAt,
             UpdatedAt = asset.UpdatedAt
         };
+
+        await _notificationService.AssetUpdated(response, cancellationToken);
+
+        return response;
     }
 }
