@@ -73,9 +73,9 @@ export const CmsMap: React.FC = observer(() => {
     }
 
     const renderMarkers = () => {
-        assetStore.allItems.forEach((item) => {
-            console.log(item.latitude, item.longitude);
-        })
+        // assetStore.allItems.forEach((item) => {
+        //     console.log(item.latitude, item.longitude);
+        // })
 
         switch (applicationStore.currentMenu) {
             case MenuTypes.Assets:
