@@ -16,6 +16,9 @@ interface FormContextValue {
     errors: Record<string, unknown>;
     values: Record<string, unknown>;
     setFieldValue: (field: string, value: unknown) => void;
+    setFieldTouched: (field: string, touched?: boolean) => void;
+    handleChange: React.ChangeEventHandler<HTMLInputElement>;
+    handleBlur: React.FocusEventHandler<HTMLInputElement>;
 }
 
 const FormContext = createContext<FormContextValue | null>(null);
@@ -24,6 +27,10 @@ export function useFormContext(): FormContextValue {
     const ctx = useContext(FormContext);
     if (!ctx) throw new Error('useFormContext must be used inside <Form>');
     return ctx;
+}
+
+export function useFormContextOptional(): FormContextValue | null {
+    return useContext(FormContext);
 }
 
 interface FormProps<T> {
@@ -38,6 +45,9 @@ function Form<T>({ formik, mode, children }: FormProps<T>) {
         errors: formik.errors as Record<string, unknown>,
         values: formik.values as Record<string, unknown>,
         setFieldValue: formik.setFieldValue,
+        setFieldTouched: formik.setFieldTouched,
+        handleChange: formik.handleChange as React.ChangeEventHandler<HTMLInputElement>,
+        handleBlur: formik.handleBlur as React.FocusEventHandler<HTMLInputElement>,
     };
 
     return (

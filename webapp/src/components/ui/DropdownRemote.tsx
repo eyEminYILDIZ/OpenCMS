@@ -17,27 +17,31 @@ interface PickItem {
 interface DropdownRemoteProps<T extends Record<string, unknown> = Record<string, unknown>> {
     name: keyof T & string;
     endpoint: string;
+    searchValue?: string;
+    relationId?: string;
 }
 
 function DropdownRemote<T extends Record<string, unknown> = Record<string, unknown>>({
     name,
     endpoint,
+    searchValue,
+    relationId,
 }: DropdownRemoteProps<T>) {
-    const { values, setFieldValue } = useFormContext();
+    const { values, setFieldValue, setFieldTouched } = useFormContext();
     const [options, setOptions] = useState<PickItem[]>([]);
 
     useEffect(() => {
-        ApiClient.get<{ data: PickItem[] }>(endpoint)
+        ApiClient.post<{ data: PickItem[] }>(endpoint, { search: searchValue ?? '', relationId: relationId ?? '' })
             .then((res) => setOptions(res.data.data ?? []))
             .catch(() => setOptions([]));
-    }, [endpoint]);
+    }, [endpoint, searchValue, relationId]);
 
     return (
         <Select
             value={String(values[name] ?? '')}
             onValueChange={(val) => setFieldValue(name, val)}
         >
-            <SelectTrigger>
+            <SelectTrigger onBlur={() => setFieldTouched(name, true)}>
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>

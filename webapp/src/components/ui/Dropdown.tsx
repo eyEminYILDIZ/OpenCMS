@@ -21,7 +21,7 @@ function Dropdown<T extends Record<string, unknown> = Record<string, unknown>>({
     name,
     options,
 }: DropdownProps<T>) {
-    const { values, setFieldValue } = useFormContext();
+    const { values, setFieldValue, setFieldTouched } = useFormContext();
 
     return (
         <Select
@@ -31,7 +31,7 @@ function Dropdown<T extends Record<string, unknown> = Record<string, unknown>>({
                 setFieldValue(name, matched ? matched.value : val);
             }}
         >
-            <SelectTrigger>
+            <SelectTrigger onBlur={() => setFieldTouched(name, true)}>
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>
