@@ -17,7 +17,7 @@ import { AssetApi } from "../../../../api";
 
 type FormValues = Omit<OperationApi.OperationAssets.Create.Request, never>;
 
-export const OperationAssetCreate: React.FC = observer(() => {
+export const OperationOrderCreate: React.FC = observer(() => {
     const { operationStore } = stores;
     const { t } = useTranslation();
 

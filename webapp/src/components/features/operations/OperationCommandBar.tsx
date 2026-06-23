@@ -50,7 +50,9 @@ export const OperationCommandBar = observer(() => {
     {operationStore.selectedTab === OperationTabs.Assets && (<Button
       variant={"command"}
       size="sm"
-      onClick={() => { statusBarStore.showError("add asset not implemented") }}
+      onClick={() => {
+        operationStore.onCreateAsset();
+      }}
       aria-label="Add new item"
     >
       <Plus /> Add Asset
@@ -58,7 +60,9 @@ export const OperationCommandBar = observer(() => {
     {operationStore.selectedTab === OperationTabs.Orders && (<Button
       variant={"command"}
       size="sm"
-      onClick={() => { statusBarStore.showError("add order not implemented") }}
+      onClick={() => {
+        // operationStore.onCreateOrder();
+      }}
       aria-label="Add new item"
     >
       <Plus /> Add Order

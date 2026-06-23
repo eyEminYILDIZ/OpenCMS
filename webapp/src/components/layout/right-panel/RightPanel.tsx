@@ -3,8 +3,10 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate } from '../../features';
+import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate } from '../../features';
 import { PanelModes } from '../../../types';
+import { OperationTabs } from '../../../stores/OperationStore';
+import { OperationAssetCreate } from '../../features/operations/panels/OperationAssetCreate';
 
 const RightPanel = observer(() => {
   const { rightPanelOpen, toggleRightPanel } = useLayout();
@@ -35,15 +37,27 @@ const RightPanel = observer(() => {
             return <AgentUpdate />;
         }
       case MenuTypes.Operations:
-        switch (operationStore.panelMode) {
-          case PanelModes.Detail:
-            return <OperationDetail />;
-          case PanelModes.Delete:
-            return <OperationDelete />;
-          case PanelModes.Create:
-            return <OperationCreate />;
-          case PanelModes.Update:
-            return <OperationUpdate />;
+        if (operationStore.selectedTab === OperationTabs.Details) {
+          switch (operationStore.panelMode) {
+            case PanelModes.Detail:
+              return <OperationDetail />;
+            case PanelModes.Delete:
+              return <OperationDelete />;
+            case PanelModes.Create:
+              return <OperationCreate />;
+            case PanelModes.Update:
+              return <OperationUpdate />;
+          }
+        } else if (operationStore.selectedTab === OperationTabs.Assets) {
+          switch (operationStore.panelMode) {
+            case PanelModes.Create:
+              return <OperationAssetCreate />;
+          }
+        } else if (operationStore.selectedTab === OperationTabs.Orders) {
+          switch (operationStore.panelMode) {
+            case PanelModes.Create:
+              return <OperationOrderCreate />;
+          }
         }
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;

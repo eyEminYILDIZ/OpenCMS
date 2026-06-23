@@ -38,6 +38,14 @@ export class OperationStore {
         this.selectedAsset = undefined;
     }
 
+    clearSelectedAsset = () => {
+        this.selectedAsset = undefined;
+    }
+
+    clearSelectedOrder = () => {
+        this.selectedOrder = undefined;
+    }
+
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
         this.getById(item?.id || '');
     }
@@ -164,7 +172,7 @@ export class OperationStore {
 
     onCreateAsset() {
         this.setPanelMode(PanelModes.Create);
-        this.clearSelectedItems();
+        this.clearSelectedAsset();
     }
 
     createAsset = async (values: OperationApi.OperationAssets.Create.Request) => {
@@ -172,7 +180,7 @@ export class OperationStore {
             const response = await OperationApi.OperationAssets.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
-                this.getById(response.data.id);
+                this.getById(this.selectedItem?.id || '');
                 this.panelMode = PanelModes.Detail;
             });
             await this.loadItemCounts();
