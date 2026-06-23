@@ -21,7 +21,7 @@ export const OperationAssetCreate: React.FC = observer(() => {
     const { operationStore } = stores;
     const { t } = useTranslation();
 
-    const validationSchema = Yup.object({
+    const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
         operationId: Yup.string().required(t('common.validation.required')),
         assetId: Yup.string().required(t('common.validation.required')),
     });
@@ -41,7 +41,7 @@ export const OperationAssetCreate: React.FC = observer(() => {
         <Form formik={formik} mode={FormMode.Create}>
             <h4>{t('operation.createAsset.title')}</h4>
 
-            <FormItem label={t('operation.assetFields.assetId')}>
+            <FormItem<FormValues> name="assetId" label={t('operation.assetFields.assetId')}>
                 <DropdownRemote<FormValues>
                     name="assetId"
                     endpoint={AssetApi.Pick.path}

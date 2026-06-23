@@ -20,7 +20,7 @@ export const AgentUpdate: React.FC = observer(() => {
     const { t } = useTranslation();
     const item = agentStore.selectedItem;
 
-    const validationSchema = Yup.object({
+    const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
         name: Yup.string().required(t('common.validation.required')),
         description: Yup.string().required(t('common.validation.required')),
         agentType: Yup.number().required(t('common.validation.required')),
@@ -47,23 +47,11 @@ export const AgentUpdate: React.FC = observer(() => {
             <h4>{t('agent.update.title')}</h4>
 
             <FormItem<FormValues> name="name" label={t('agent.fields.name')}>
-                <Input<FormValues>
-                    id="name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="name" name="name" />
             </FormItem>
 
             <FormItem<FormValues> name="description" label={t('agent.fields.description')}>
-                <Input<FormValues>
-                    id="description"
-                    name="description"
-                    value={formik.values.description}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="description" name="description" />
             </FormItem>
 
             <FormItem label={t('agent.fields.agentType')}>

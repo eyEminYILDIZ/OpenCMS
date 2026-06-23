@@ -178,9 +178,12 @@ const en = {
     assetFields: {
       id: 'ID',
       operationId: 'Operation',
-      assetId: 'Asset',
+      asset: 'Asset',
+      assetId: 'Asset Id',
+      name: "Asset Name",
     },
     orderFields: {
+      id: 'ID',
       description: 'Description',
       issuedDate: 'Issued Date',
       completedDate: 'Completed Date',
@@ -193,7 +196,7 @@ const en = {
       targetPointAltitude: 'Target Altitude',
       targetPointHeading: 'Target Heading',
       targetPointSpeed: 'Target Speed',
-      responsibleAssetId: 'Responsible Asset',
+      responsibleOperationAssetId: 'Responsible Operation Asset',
     },
     order: {
       description: 'Description',

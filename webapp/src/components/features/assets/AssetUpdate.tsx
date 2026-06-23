@@ -21,7 +21,7 @@ export const AssetUpdate: React.FC = observer(() => {
     const { t } = useTranslation();
     const item = assetStore.selectedItem;
 
-    const validationSchema = Yup.object({
+    const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
         name: Yup.string().required(t('common.validation.required')),
         latitude: Yup.number().required(t('common.validation.required')),
         longitude: Yup.number().required(t('common.validation.required')),
@@ -62,68 +62,27 @@ export const AssetUpdate: React.FC = observer(() => {
             <h4>{t('asset.update.title')}</h4>
 
             <FormItem<FormValues> name="name" label={t('asset.fields.name')}>
-                <Input<FormValues>
-                    id="name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="name" name="name" />
             </FormItem>
 
             <FormItem<FormValues> name="latitude" label={t('asset.fields.latitude')}>
-                <Input<FormValues>
-                    id="latitude"
-                    name="latitude"
-                    type="number"
-                    value={formik.values.latitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="latitude" name="latitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="longitude" label={t('asset.fields.longitude')}>
-                <Input<FormValues>
-                    id="longitude"
-                    name="longitude"
-                    type="number"
-                    value={formik.values.longitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="longitude" name="longitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="altitude" label={t('asset.fields.altitude')}>
-                <Input<FormValues>
-                    id="altitude"
-                    name="altitude"
-                    type="number"
-                    value={formik.values.altitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="altitude" name="altitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="heading" label={t('asset.fields.heading')}>
-                <Input<FormValues>
-                    id="heading"
-                    name="heading"
-                    type="number"
-                    value={formik.values.heading}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="heading" name="heading" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="speed" label={t('asset.fields.speed')}>
-                <Input<FormValues>
-                    id="speed"
-                    name="speed"
-                    type="number"
-                    value={formik.values.speed}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="speed" name="speed" type="number" />
             </FormItem>
 
             <FormItem label={t('asset.fields.assetType')}>
@@ -155,7 +114,6 @@ export const AssetUpdate: React.FC = observer(() => {
                     onChange={(e) =>
                         formik.setFieldValue('relatedAgentId', e.target.value || null)
                     }
-                    onBlur={formik.handleBlur}
                 />
             </FormItem>
 

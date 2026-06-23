@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate } from '../../features';
+import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate, OperationAssetDelete, OperationOrderDelete } from '../../features';
 import { PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
 import { OperationAssetCreate } from '../../features/operations/panels/OperationAssetCreate';
@@ -52,11 +52,15 @@ const RightPanel = observer(() => {
           switch (operationStore.panelMode) {
             case PanelModes.Create:
               return <OperationAssetCreate />;
+            case PanelModes.Delete:
+              return <OperationAssetDelete />;
           }
         } else if (operationStore.selectedTab === OperationTabs.Orders) {
           switch (operationStore.panelMode) {
             case PanelModes.Create:
               return <OperationOrderCreate />;
+            case PanelModes.Delete:
+              return <OperationOrderDelete />;
           }
         }
       default:

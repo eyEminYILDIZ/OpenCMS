@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -22,7 +23,7 @@ export const OperationOrderCreate: React.FC = observer(() => {
     const { operationStore } = stores;
     const { t } = useTranslation();
 
-    const validationSchema = Yup.object({
+    const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
         operationId: Yup.string().required(t('common.validation.required')),
         description: Yup.string().required(t('common.validation.required')),
         issuedDate: Yup.string().required(t('common.validation.required')),
@@ -36,7 +37,9 @@ export const OperationOrderCreate: React.FC = observer(() => {
         targetPointAltitude: Yup.number().required(t('common.validation.required')),
         targetPointHeading: Yup.number().required(t('common.validation.required')),
         targetPointSpeed: Yup.number().required(t('common.validation.required')),
-        responsibleAssetId: Yup.string().required(t('common.validation.required')),
+        responsibleOperationAssetId: Yup.string().required(t('common.validation.required')),
+        nextOrderId: Yup.string().nullable().default(null),
+        previousOrderId: Yup.string().nullable().default(null),
     });
 
     const formik = useFormik<FormValues>({
@@ -54,28 +57,30 @@ export const OperationOrderCreate: React.FC = observer(() => {
             targetPointAltitude: 0,
             targetPointHeading: 0,
             targetPointSpeed: 0,
-            responsibleAssetId: '',
+            responsibleOperationAssetId: '',
             nextOrderId: null,
             previousOrderId: null,
         },
         validationSchema,
         onSubmit: async (values) => {
+            console.log('Submitting form with values:', values);
             await operationStore.createOrder(values);
         },
     });
+
+    useEffect(() => {
+        if (Object.keys(formik.errors).length > 0) {
+            console.log('Validation errors:', formik.errors);
+            console.log("values", formik.values);
+        }
+    }, [formik.errors]);
 
     return (
         <Form formik={formik} mode={FormMode.Create}>
             <h4>{t('operation.createOrder.title')}</h4>
 
             <FormItem<FormValues> name="description" label={t('operation.orderFields.description')}>
-                <Input<FormValues>
-                    id="description"
-                    name="description"
-                    value={formik.values.description}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="description" name="description" />
             </FormItem>
 
             <FormItem<FormValues> name="issuedDate" label={t('operation.orderFields.issuedDate')}>
@@ -86,14 +91,14 @@ export const OperationOrderCreate: React.FC = observer(() => {
                 <DatePicker<FormValues> name="completedDate" mode="datetime" />
             </FormItem>
 
-            <FormItem label={t('operation.orderFields.orderStatus')}>
+            <FormItem<FormValues> name="orderStatus" label={t('operation.orderFields.orderStatus')}>
                 <Dropdown<FormValues>
                     name="orderStatus"
                     options={orderStatusOptions}
                 />
             </FormItem>
 
-            <FormItem label={t('operation.orderFields.orderType')}>
+            <FormItem<FormValues> name="orderType" label={t('operation.orderFields.orderType')}>
                 <Dropdown<FormValues>
                     name="orderType"
                     options={orderTypeOptions}
@@ -109,64 +114,30 @@ export const OperationOrderCreate: React.FC = observer(() => {
             </FormItem>
 
             <FormItem<FormValues> name="targetPointLatitude" label={t('operation.orderFields.targetPointLatitude')}>
-                <Input<FormValues>
-                    id="targetPointLatitude"
-                    name="targetPointLatitude"
-                    type="number"
-                    value={formik.values.targetPointLatitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="targetPointLatitude" name="targetPointLatitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="targetPointLongitude" label={t('operation.orderFields.targetPointLongitude')}>
-                <Input<FormValues>
-                    id="targetPointLongitude"
-                    name="targetPointLongitude"
-                    type="number"
-                    value={formik.values.targetPointLongitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="targetPointLongitude" name="targetPointLongitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="targetPointAltitude" label={t('operation.orderFields.targetPointAltitude')}>
-                <Input<FormValues>
-                    id="targetPointAltitude"
-                    name="targetPointAltitude"
-                    type="number"
-                    value={formik.values.targetPointAltitude}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="targetPointAltitude" name="targetPointAltitude" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="targetPointHeading" label={t('operation.orderFields.targetPointHeading')}>
-                <Input<FormValues>
-                    id="targetPointHeading"
-                    name="targetPointHeading"
-                    type="number"
-                    value={formik.values.targetPointHeading}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="targetPointHeading" name="targetPointHeading" type="number" />
             </FormItem>
 
             <FormItem<FormValues> name="targetPointSpeed" label={t('operation.orderFields.targetPointSpeed')}>
-                <Input<FormValues>
-                    id="targetPointSpeed"
-                    name="targetPointSpeed"
-                    type="number"
-                    value={formik.values.targetPointSpeed}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <Input<FormValues> id="targetPointSpeed" name="targetPointSpeed" type="number" />
             </FormItem>
 
-            <FormItem label={t('operation.orderFields.responsibleAssetId')}>
+            <FormItem<FormValues> name="responsibleOperationAssetId" label={t('operation.orderFields.responsibleOperationAssetId')}>
                 <DropdownRemote<FormValues>
-                    name="responsibleAssetId"
-                    endpoint={AssetApi.Pick.path}
+                    name="responsibleOperationAssetId"
+                    endpoint={OperationApi.OperationAssets.Pick.path}
+                    relationId={formik.values.operationId}
                 />
             </FormItem>
 

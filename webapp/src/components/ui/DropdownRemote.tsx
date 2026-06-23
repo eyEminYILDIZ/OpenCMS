@@ -39,7 +39,10 @@ function DropdownRemote<T extends Record<string, unknown> = Record<string, unkno
     return (
         <Select
             value={String(values[name] ?? '')}
-            onValueChange={(val) => setFieldValue(name, val)}
+            onValueChange={(val) => {
+                setFieldValue(name, val);
+                console.log(name, val);
+            }}
         >
             <SelectTrigger onBlur={() => setFieldTouched(name, true)}>
                 <SelectValue />
