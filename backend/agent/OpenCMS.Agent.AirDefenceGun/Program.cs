@@ -19,6 +19,11 @@ var defenceGun = new DefenceGun(agentState, loggerFactory.CreateLogger<DefenceGu
 agentState.UpdateState(37.7749, 41.4199, 100, 205, 0);
 
 var cts = new CancellationTokenSource();
+Console.CancelKeyPress += (_, e) =>
+{
+    e.Cancel = true;
+    cts.Cancel();
+};
 
 logger.LogInformation("Air Defence Gun agent started");
 while (!cts.Token.IsCancellationRequested)
@@ -73,12 +78,16 @@ while (!cts.Token.IsCancellationRequested)
             }
         }
     }
+    catch (OperationCanceledException)
+    {
+        break;
+    }
     catch (Exception ex)
     {
         logger.LogError(ex, "Error in agent loop");
     }
 
-    await Task.Delay(5000, cts.Token);
+    await Task.Delay(5000, cts.Token).ConfigureAwait(false);
 }
 
 logger.LogInformation("Air Defence Gun agent shutting down");
