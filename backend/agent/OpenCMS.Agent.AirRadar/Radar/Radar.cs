@@ -30,8 +30,8 @@ public class Radar
             var changeLocation = random.Next() % 2 == 0;
             if (changeLocation)
             {
-                aircraft.Longitude += (random.NextDouble() - 0.5) * 0.01;
-                aircraft.Latitude += (random.NextDouble() - 0.5) * 0.01;
+                aircraft.Longitude += (random.NextDouble() - 0.5) * 0.001;
+                aircraft.Latitude += (random.NextDouble() - 0.5) * 0.001;
             }
             var changeAltitude = random.Next() % 2 == 0;
             if (changeAltitude)
