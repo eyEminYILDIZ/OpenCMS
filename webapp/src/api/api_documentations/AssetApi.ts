@@ -55,16 +55,16 @@ export namespace AssetApi {
 
     export namespace Pick {
         export const path = "/assets/pick";
+        export interface Request {
+            search: string;
+            relationId: string;
+        }
         export interface Response {
             id: string;
             name: string;
         }
-        export const call = async (searchValue?: string): Promise<ApiResponse<Response[]>> => {
-            const response = await ApiClient.get(path, {
-                params: {
-                    search: searchValue
-                }
-            });
+        export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
+            const response = await ApiClient.post(path, request);
             return response.data;
         }
     }

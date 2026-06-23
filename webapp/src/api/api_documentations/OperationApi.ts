@@ -257,6 +257,21 @@ export namespace OperationApi {
         }
     }
     export namespace OperationAssets {
+        export namespace Pick {
+            export const path = "/operations/assets/pick";
+            export interface Request {
+                search: string;
+                relationId: string;
+            }
+            export interface Response {
+                id: string;
+                name: string;
+            }
+            export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
+                const response = await ApiClient.post(path, request);
+                return response.data;
+            }
+        }
         export namespace Create {
             export const path = "/operations/assets";
             export interface Request {
@@ -306,7 +321,7 @@ export namespace OperationApi {
                 targetPointAltitude: number;
                 targetPointHeading: number;
                 targetPointSpeed: number;
-                responsibleAssetId: string;
+                responsibleOperationAssetId: string;
                 nextOrderId: string | null;
                 previousOrderId: string | null;
             }
@@ -325,7 +340,7 @@ export namespace OperationApi {
                 targetPointAltitude: number;
                 targetPointHeading: number;
                 targetPointSpeed: number;
-                responsibleAssetId: string;
+                responsibleOperationAssetId: string;
                 nextOrderId: string | null;
                 previousOrderId: string | null;
                 createdAt: string;
