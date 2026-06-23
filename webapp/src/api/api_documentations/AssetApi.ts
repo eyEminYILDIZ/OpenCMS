@@ -52,6 +52,22 @@ export namespace AssetApi {
             return response.data;
         }
     }
+
+    export namespace Pick {
+        export const path = "/assets/pick";
+        export interface Response {
+            id: string;
+            name: string;
+        }
+        export const call = async (searchValue?: string): Promise<ApiResponse<Response[]>> => {
+            const response = await ApiClient.get(path, {
+                params: {
+                    search: searchValue
+                }
+            });
+            return response.data;
+        }
+    }
     export namespace GetItemCounts {
         export const path = "/Assets/counts";
         export interface Response {
