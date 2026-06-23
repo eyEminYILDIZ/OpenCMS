@@ -31,7 +31,7 @@ function DropdownRemote<T extends Record<string, unknown> = Record<string, unkno
     const [options, setOptions] = useState<PickItem[]>([]);
 
     useEffect(() => {
-        ApiClient.post<{ data: PickItem[] }>(endpoint, { search: searchValue ?? '', relationId: relationId ?? '' })
+        ApiClient.post<{ data: PickItem[] }>(endpoint, { search: searchValue ?? '', relationId: relationId == '' || relationId == undefined ? '00000000-0000-0000-0000-000000000000' : relationId })
             .then((res) => setOptions(res.data.data ?? []))
             .catch(() => setOptions([]));
     }, [endpoint, searchValue, relationId]);

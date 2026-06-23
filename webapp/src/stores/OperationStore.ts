@@ -135,7 +135,6 @@ export class OperationStore {
             const id = this.selectedItem.id;
             const request: OperationApi.Update.Request = { id, ...values };
             await OperationApi.Update.call(request);
-            await this.getAllItems();
             runInAction(() => {
                 this.getById(id);
             });
@@ -178,12 +177,10 @@ export class OperationStore {
     createAsset = async (values: OperationApi.OperationAssets.Create.Request) => {
         try {
             await OperationApi.OperationAssets.Create.call(values);
-            await this.getAllItems();
             runInAction(() => {
                 this.getById(this.selectedItem?.id || '');
                 this.panelMode = PanelModes.Detail;
             });
-            await this.loadItemCounts();
             this.statusBarStore.showSuccess(i18next.t('operation.errors.createAssetSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.createAssetFailed'));
@@ -197,13 +194,14 @@ export class OperationStore {
         }
 
         try {
-            const request = { id: this.selectedItem.id };
+            const request = { id: this.selectedAsset?.id || '' };
             await OperationApi.OperationAssets.Delete.call(request);
 
-            this.clearSelectedItems();
+            this.clearSelectedAsset();
             this.setPanelMode(PanelModes.Detail);
-            await this.getAllItems();
-            await this.loadItemCounts();
+            runInAction(() => {
+                this.getById(this.selectedItem?.id || '');
+            });
             this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteAssetSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteAssetFailed'));
@@ -233,6 +231,24 @@ export class OperationStore {
         }
     }
 
+    updateOrder = async (values: Omit<OperationApi.Orders.Update.Request, 'id'>) => {
+        if (!this.selectedOrder) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            await OperationApi.Orders.Update.call({ id: this.selectedOrder.id, ...values });
+            runInAction(() => {
+                this.getById(this.selectedItem?.id || '');
+                this.panelMode = PanelModes.Detail;
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.updateOrderSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.updateOrderFailed'));
+        }
+    }
+
     deleteOrder = async () => {
         if (!this.selectedOrder) {
             this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
@@ -245,7 +261,9 @@ export class OperationStore {
 
             this.clearSelectedOrder();
             this.setPanelMode(PanelModes.Detail);
-            await this.getById(this.selectedItem?.id || '');
+            runInAction(async () => {
+                await this.getById(this.selectedItem?.id || '');
+            });
             this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteOrderSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteOrderFailed'));

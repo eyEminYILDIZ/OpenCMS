@@ -142,6 +142,8 @@ const en = {
       updateAssetFailed: 'Failed to update operation asset.',
       createOrderSucceeded: 'Operation order created successfully.',
       createOrderFailed: 'Failed to create operation order.',
+      updateOrderSucceeded: 'Operation order updated successfully.',
+      updateOrderFailed: 'Failed to update operation order.',
       deleteOrderSucceeded: 'Operation order deleted successfully.',
       deleteOrderFailed: 'Failed to delete operation order.',
     },
@@ -159,6 +161,9 @@ const en = {
     },
     createOrder: {
       title: 'Create Operation Order',
+    },
+    updateOrder: {
+      title: 'Update Operation Order',
     },
     update: {
       title: 'Update Operation',

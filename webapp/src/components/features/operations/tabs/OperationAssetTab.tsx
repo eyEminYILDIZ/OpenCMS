@@ -28,15 +28,6 @@ export const OperationAssetTab: React.FC = observer(() => {
             render: (value, item) => (item.asset.isActive ? t('common.active.yes') : t('common.active.no'))
         },
         {
-            key: "edit",
-            type: "button",
-            icon: <Pencil size={16} />,
-            onButtonClick: (item) => {
-                operationStore.setSelectedAsset(item);
-                operationStore.setPanelMode(PanelModes.Update);
-            }
-        },
-        {
             key: "delete",
             type: "button",
             icon: <Trash2 size={16} />,
