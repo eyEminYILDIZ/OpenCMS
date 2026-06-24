@@ -4,13 +4,13 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly ILogger<Handler> _logger;
-    private readonly IClientSocketService _notificationService;
+    private readonly IAgentSocketService _agentSocketService;
 
-    public Handler(IApplicationDbContext dbContext, ILogger<Handler> logger, IClientSocketService notificationService)
+    public Handler(IApplicationDbContext dbContext, ILogger<Handler> logger, IAgentSocketService agentSocketService)
     {
         _dbContext = dbContext;
         _logger = logger;
-        _notificationService = notificationService;
+        _agentSocketService = agentSocketService;
     }
 
     public async Task<Result<CommandResponse>> Handle(Command request, CancellationToken cancellationToken)
@@ -77,7 +77,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             UpdatedAt = asset.UpdatedAt
         };
 
-        await _notificationService.AssetUpdated(response, cancellationToken);
+        await _agentSocketService.AssetUpdated(response, cancellationToken);
 
         return response;
     }

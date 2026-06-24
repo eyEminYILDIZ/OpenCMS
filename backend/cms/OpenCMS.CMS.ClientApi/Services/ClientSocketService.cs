@@ -5,6 +5,7 @@ using OpenCMS.CMS.ClientApi.Hubs;
 
 namespace OpenCMS.CMS.ClientApi.Services;
 
+// use this file when ClientApi needs to access the web clients directly.
 public class ClientSocketService : IClientSocketService
 {
     private readonly IHubContext<ClientHub> _hubContext;

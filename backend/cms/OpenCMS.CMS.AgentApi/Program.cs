@@ -1,3 +1,5 @@
+using OpenCMS.CMS.AgentApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -8,6 +10,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
+
+builder.Services.AddSingleton<IAgentSocketService, AgentSocketService>();
 
 builder.Services.AddCors(options =>
 {
