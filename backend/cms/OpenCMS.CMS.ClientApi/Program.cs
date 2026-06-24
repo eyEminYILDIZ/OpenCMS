@@ -21,6 +21,8 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
         policy.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+    //         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
 });
 
 var app = builder.Build();
@@ -43,6 +45,8 @@ app.UseApplicationExceptionHandling();
 app.UseHttpsRedirection();
 app.UseCors();
 
+// register agent endpoint
+RegisterRoutes.MapRoutes(app, Assembly.GetAssembly(typeof(OpenCMS.CMS.Application.Configurations.Interfaces.IClientEndpoint)));
 
 app.MapHub<ClientHub>("/hubs/clients");
 app.MapHub<AgentHub>("/hubs/agents");
