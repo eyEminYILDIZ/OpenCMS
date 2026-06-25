@@ -17,6 +17,8 @@ import { MenuTypes } from '../../../types/MenuTypes';
 import { MapControls } from './MapControls';
 import { AircraftMarker, AirGunMarker, BuildingMarker, PersonGroupMarker, PersonMarker, RadarMarker, ShipMarker, SubmarineMarker, UnknownMarker, VehicleMarker } from './markers';
 import Pin from './markers/PinMarker';
+import { PanelModes } from '../../../types';
+import { OperationTabs } from '../../../stores/OperationStore';
 
 interface Point {
     name: string;
@@ -86,7 +88,7 @@ export const CmsMap: React.FC = observer(() => {
             default:
                 break;
         }
-    }, [assetStore.selectedItem, operationStore.selectedAsset]);
+    }, [assetStore.selectedItem, operationStore.selectedAsset, operationStore.selectedAsset?.asset]);
 
 
     const renderPin = (assetType: AssetApi.Enums.AssetTypes) => {
@@ -200,6 +202,8 @@ export const CmsMap: React.FC = observer(() => {
                                 onClick={e => {
                                     e.originalEvent.stopPropagation();
                                     operationStore.setSelectedAsset(item);
+                                    operationStore.setSelectedTab(OperationTabs.Assets);
+                                    operationStore.setPanelMode(PanelModes.Detail);
                                 }}
                             >
                                 {renderPin(item.asset.assetType)}
