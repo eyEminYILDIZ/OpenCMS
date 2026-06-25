@@ -4,32 +4,36 @@ namespace OpenCMS.Agent.AirRadar;
 
 public class Radar
 {
-    private const double CircleRadiusKm = 20.0;
-    private const double AngleStepDegrees = 2.0;
+    private const double CircleRadiusKm = 10.0;
+    private const double AngleStepDegrees = 5.0;
 
     private List<Aircraft> _detectedAircrafts;
     private readonly Dictionary<Guid, (double CenterLat, double CenterLon, double AngleDegrees)> _circleState;
 
     public Radar()
     {
+        const double centerLat = 41.0211240853284;
+        const double centerLon = 29.0041058259891;
+        var aircraftId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25");
+
+        _circleState = new()
+        {
+            [aircraftId] = (centerLat, centerLon, 0.0),
+        };
+
         _detectedAircrafts = new List<Aircraft>
         {
             new Aircraft
             {
-                Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"),
+                Id = aircraftId,
                 Callsign = "ISO9986",
-                Longitude = 41.4194,
-                Latitude = 37.7749,
+                Latitude = centerLat + CircleRadiusKm / 111.32, // start at northernmost point of circle
+                Longitude = centerLon,
                 Altitude = 11000,
                 Speed = 450,
-                Heading = 90
+                Heading = 90.0, // heading East at angle=0 (clockwise tangent)
             },
         };
-
-        _circleState = _detectedAircrafts.ToDictionary(
-            a => a.Id,
-            a => (CenterLat: a.Latitude, CenterLon: a.Longitude, AngleDegrees: 0.0)
-        );
     }
 
     private void DrawCircle()
@@ -41,25 +45,20 @@ public class Radar
             var angleRad = angleDegrees * Math.PI / 180.0;
             var centerLatRad = centerLat * Math.PI / 180.0;
 
-            // 1 degree latitude ≈ 111.32 km
-            var latOffsetDeg = CircleRadiusKm / 111.32 * Math.Cos(angleRad);
-            var lonOffsetDeg = CircleRadiusKm / (111.32 * Math.Cos(centerLatRad)) * Math.Sin(angleRad);
+            aircraft.Latitude = centerLat + CircleRadiusKm / 111.32 * Math.Cos(angleRad);
+            aircraft.Longitude = centerLon + CircleRadiusKm / (111.32 * Math.Cos(centerLatRad)) * Math.Sin(angleRad);
 
-            aircraft.Latitude = centerLat + latOffsetDeg;
-            aircraft.Longitude = centerLon + lonOffsetDeg;
-
-            // Heading is tangent to the circle (90° ahead of the radial angle)
+            // Tangent direction for clockwise motion: 90° ahead of radial angle
             aircraft.Heading = (angleDegrees + 90.0) % 360.0;
 
-            var newAngle = (angleDegrees + AngleStepDegrees) % 360.0;
-            _circleState[aircraft.Id] = (centerLat, centerLon, newAngle);
+            _circleState[aircraft.Id] = (centerLat, centerLon, (angleDegrees + AngleStepDegrees) % 360.0);
         }
     }
 
     internal async Task<List<Aircraft>> Scan()
     {
         // Simulate scanning for aircraft
-        await Task.Delay(1000);
+        await Task.Delay(100);
 
         DrawCircle();
 
