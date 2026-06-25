@@ -135,11 +135,11 @@ export const CmsMap: React.FC = observer(() => {
                     return assetStore.allItems.map((item, index) => (
                         <Marker
                             key={`marker-${index}`}
-                            // latitude={item.latitude}
-                            // longitude={item.longitude}
                             latitude={item.latitude}
                             longitude={item.longitude}
                             anchor="bottom"
+                            rotation={item.heading}
+                            rotationAlignment="map"
                             onClick={e => {
                                 e.originalEvent.stopPropagation();
                                 assetStore.setSelectedItem(item);
@@ -155,11 +155,11 @@ export const CmsMap: React.FC = observer(() => {
                         return operationStore.selectedItem.assets.map((item, index) => (
                             <Marker
                                 key={`marker-${index}`}
-                                // latitude={item.latitude}
-                                // longitude={item.longitude}
                                 latitude={item.asset.latitude}
                                 longitude={item.asset.longitude}
                                 anchor="bottom"
+                                rotation={item.asset.heading}
+                                rotationAlignment="map"
                                 onClick={e => {
                                     e.originalEvent.stopPropagation();
                                     operationStore.setSelectedAsset(item);
