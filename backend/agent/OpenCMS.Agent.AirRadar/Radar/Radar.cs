@@ -5,7 +5,7 @@ namespace OpenCMS.Agent.AirRadar;
 public class Radar
 {
     private const double CircleRadiusKm = 10.0;
-    private const double AngleStepDegrees = 5.0;
+    private const double AngleStepDegrees = 1.0;
 
     private List<Aircraft> _detectedAircrafts;
     private readonly Dictionary<Guid, (double CenterLat, double CenterLon, double AngleDegrees)> _circleState;
@@ -26,7 +26,7 @@ public class Radar
             new Aircraft
             {
                 Id = aircraftId,
-                Callsign = "ISO9986",
+                Callsign = "Hostile Aircraft - 11354",
                 Latitude = centerLat + CircleRadiusKm / 111.32, // start at northernmost point of circle
                 Longitude = centerLon,
                 Altitude = 11000,
@@ -58,7 +58,7 @@ public class Radar
     internal async Task<List<Aircraft>> Scan()
     {
         // Simulate scanning for aircraft
-        await Task.Delay(100);
+        await Task.Delay(10);
 
         DrawCircle();
 
