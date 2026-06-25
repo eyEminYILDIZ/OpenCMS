@@ -15,8 +15,8 @@ var logger = loggerFactory.CreateLogger("AirRadar");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
 var radar = new Radar();
-var agentState = new AgentState(agentId, assetId, "Air Radar Agent", AssetTypes.Vehicle, ThreatTypes.Own);
-agentState.UpdateState(41.4194, 37.7749, 100, 205, 0);
+var agentState = new AgentState(agentId, assetId, "Air Radar Agent", AssetTypes.Radar, ThreatTypes.Own);
+agentState.UpdateState(41.0311240853284, 29.0071058259891, 100, 205, 0);
 
 var cts = new CancellationTokenSource();
 Console.CancelKeyPress += (_, e) =>
@@ -65,7 +65,7 @@ while (!cts.Token.IsCancellationRequested)
         logger.LogError(ex, "Error in agent loop");
     }
 
-    await Task.Delay(100, cts.Token).ConfigureAwait(false);
+    await Task.Delay(5000, cts.Token).ConfigureAwait(false);
 }
 
 logger.LogInformation("Air Radar agent shutting down");

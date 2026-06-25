@@ -14,9 +14,9 @@ var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirDefenceGun");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
-var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypes.Vehicle, ThreatTypes.Own);
+var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypes.AirGun, ThreatTypes.Own);
 var defenceGun = new DefenceGun(agentState, loggerFactory.CreateLogger<DefenceGun>());
-agentState.UpdateState(37.7749, 41.4199, 100, 205, 0);
+agentState.UpdateState(41.0411240853284, 29.0081058259891, 100, 205, 0);
 
 var cts = new CancellationTokenSource();
 Console.CancelKeyPress += (_, e) =>

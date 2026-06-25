@@ -58,7 +58,7 @@ public class Radar
     internal async Task<List<Aircraft>> Scan()
     {
         // Simulate scanning for aircraft
-        await Task.Delay(10);
+        await Task.Delay(500);
 
         DrawCircle();
 
