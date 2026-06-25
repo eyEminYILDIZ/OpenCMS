@@ -3,7 +3,6 @@ import i18next from "i18next";
 import { AssetApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
-import { clientSocketService } from "../services/ClientSocketService";
 
 export class AssetStore {
 
@@ -13,15 +12,9 @@ export class AssetStore {
     constructor(statusBarStore: StatusBarStore) {
         this.statusBarStore = statusBarStore;
         makeAutoObservable(this);
-        this.connectSocket();
     }
 
-    private connectSocket = async () => {
-        clientSocketService.onAssetUpdated(this.onAssetUpdated);
-        await clientSocketService.start();
-    }
-
-    private onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
+    onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
         runInAction(() => {
             const index = this.allItems.findIndex(a => a.id === asset.id);
             if (index !== -1) {

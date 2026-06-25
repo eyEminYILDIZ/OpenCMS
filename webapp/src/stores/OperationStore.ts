@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
-import { OperationApi } from "../api";
+import { AssetApi, OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 
@@ -17,6 +17,29 @@ export class OperationStore {
     constructor(statusBarStore: StatusBarStore) {
         this.statusBarStore = statusBarStore;
         makeAutoObservable(this);
+    }
+
+    onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
+        runInAction(() => {
+            if (!this.selectedItem) return;
+            const index = this.selectedItem.assets.findIndex(a => a.assetId === asset.id);
+            if (index !== -1) {
+                this.selectedItem.assets[index].asset = {
+                    id: asset.id,
+                    name: asset.name,
+                    latitude: asset.latitude,
+                    longitude: asset.longitude,
+                    altitude: asset.altitude,
+                    heading: asset.heading,
+                    speed: asset.speed,
+                    assetType: asset.assetType,
+                    threatType: asset.threatType,
+                    firstUpdated: asset.firstUpdated,
+                    lastUpdated: asset.lastUpdated,
+                    isActive: asset.isActive,
+                };
+            }
+        });
     }
 
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;

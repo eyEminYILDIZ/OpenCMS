@@ -4,6 +4,7 @@ import { AssetStore } from "./AssetStore";
 import { OperationStore } from "./OperationStore";
 import { StatusBarStore } from "./StatusBarStore";
 import { MenuTypes } from "../types/MenuTypes";
+import { clientSocketService } from "../services/ClientSocketService";
 
 export class ApplicationStore {
     constructor(
@@ -19,6 +20,13 @@ export class ApplicationStore {
         this.currentMenu = MenuTypes.Assets;
         // use this bottom of constructor, otherwise MobX cant detect observables.
         makeAutoObservable(this);
+        this.connectSocket();
+    }
+
+    private connectSocket = async () => {
+        clientSocketService.onAssetUpdated(this.assetStore.onAssetUpdated);
+        clientSocketService.onAssetUpdated(this.operationStore.onAssetUpdated);
+        await clientSocketService.start();
     }
     statusBarStore: StatusBarStore;
     agentStore: AgentStore;
