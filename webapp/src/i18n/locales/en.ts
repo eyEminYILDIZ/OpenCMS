@@ -239,6 +239,11 @@ const en = {
       give: 'Give',
     },
   },
+  mapControls: {
+    title: 'Map Settings',
+    automaticTracking: 'Automatic Tracking',
+    automaticFocusing: 'Automatic Focusing',
+  },
   itemList: {
     searchPlaceholder: 'Search...',
   },
