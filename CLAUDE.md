@@ -1,6 +1,6 @@
 # OpenCMS — Claude Code Guidelines
 
-This file contains shared conventions that apply across all sub-projects (backend, mobile, webapp).
+This file contains shared conventions that apply across all sub-projects (backend, mobileapp, webapp).
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
