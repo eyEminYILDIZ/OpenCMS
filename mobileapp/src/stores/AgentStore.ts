@@ -1,0 +1,131 @@
+import { makeAutoObservable, runInAction } from "mobx";
+import i18next from "i18next";
+import { AgentApi } from "../api";
+import { PanelModes } from "../types";
+import { StatusBarStore } from "./StatusBarStore";
+
+export class AgentStore {
+    statusBarStore: StatusBarStore;
+
+    constructor(statusBarStore: StatusBarStore) {
+        this.statusBarStore = statusBarStore;
+        makeAutoObservable(this);
+    }
+
+    agentItemCounts: AgentApi.GetItemCounts.Response | null = null;
+    allItems: AgentApi.ListAll.Response[] = [];
+    selectedItem: AgentApi.GetById.Response | undefined = undefined;
+    panelMode: PanelModes = PanelModes.Detail;
+    listSearchValue: string = '';
+
+    clearSelectedItems = () => {
+        this.selectedItem = undefined;
+    }
+
+    setSelectedItem = (item: AgentApi.ListAll.Response | undefined) => {
+        this.getById(item?.id || '');
+    }
+
+    setPanelMode = (mode: PanelModes) => {
+        this.panelMode = mode;
+    }
+
+    setSearchValue(searchValue: string) {
+        this.listSearchValue = searchValue;
+        this.getAllItems();
+    }
+
+    loadItemCounts = async () => {
+        try {
+            const response = await AgentApi.GetItemCounts.call();
+            runInAction(() => {
+                this.agentItemCounts = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.loadCountFailed'));
+        }
+    }
+
+    getAllItems = async () => {
+        try {
+            const response = await AgentApi.ListAll.call(this.listSearchValue);
+            runInAction(() => {
+                this.allItems = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.loadItemsFailed'));
+        }
+    }
+
+    getById = async (id: string) => {
+        try {
+            const request: AgentApi.GetById.Request = { id };
+            const response = await AgentApi.GetById.call(request);
+            runInAction(() => {
+                this.selectedItem = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.loadItemFailed'));
+        }
+    }
+
+    onCreateItem() {
+        this.setPanelMode(PanelModes.Create);
+        this.clearSelectedItems();
+    }
+
+    createItem = async (values: AgentApi.Create.Request) => {
+        try {
+            const response = await AgentApi.Create.call(values);
+            await this.getAllItems();
+            runInAction(() => {
+                this.getById(response.data.id);
+                this.panelMode = PanelModes.Detail;
+            });
+            await this.loadItemCounts();
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.createSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.createFailed'));
+        }
+    }
+
+    updateItem = async (values: Omit<AgentApi.Update.Request, 'id'>) => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('agent.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const id = this.selectedItem.id;
+            const request: AgentApi.Update.Request = { id, ...values };
+            await AgentApi.Update.call(request);
+            await this.getAllItems();
+            runInAction(() => {
+                this.getById(id);
+            });
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.updateSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.updateFailed'));
+        }
+    }
+
+    deleteItem = async () => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('agent.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedItem.id };
+            await AgentApi.Delete.call(request);
+
+            this.clearSelectedItems();
+            this.setPanelMode(PanelModes.Detail);
+            await this.getAllItems();
+            await this.loadItemCounts();
+            this.statusBarStore.showSuccess(i18next.t('agent.errors.deleteSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.deleteFailed'));
+        }
+    }
+}
