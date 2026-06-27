@@ -54,10 +54,9 @@ export const AssetsScreen = observer(() => {
     <View style={styles.container}>
       <TextInput
         style={styles.searchInput}
-        value={assetStore.searchValue}
+        value={assetStore.listSearchValue}
         onChangeText={(v) => {
           assetStore.setSearchValue(v);
-          assetStore.getAllItems(v);
         }}
         placeholder={t('common.search')}
         placeholderTextColor={colors.mutedForeground}

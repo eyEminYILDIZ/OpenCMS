@@ -33,7 +33,7 @@ export class AssetStore {
     allItems: AssetApi.ListAll.Response[] = [];
     selectedItem: AssetApi.GetById.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
-    searchValue: string = '';
+    listSearchValue: string = '';
 
     clearSelectedItems = () => {
         this.selectedItem = undefined;
@@ -48,7 +48,8 @@ export class AssetStore {
     }
 
     setSearchValue(searchValue: string) {
-        this.searchValue = searchValue;
+        this.listSearchValue = searchValue;
+        this.getAllItems();
     }
 
     loadItemCounts = async () => {
@@ -62,9 +63,9 @@ export class AssetStore {
         }
     }
 
-    getAllItems = async (search?: string) => {
+    getAllItems = async () => {
         try {
-            const response = await AssetApi.ListAll.call(search ?? this.searchValue);
+            const response = await AssetApi.ListAll.call(this.listSearchValue);
             runInAction(() => {
                 this.allItems = response.data;
                 console.log(response.data);
