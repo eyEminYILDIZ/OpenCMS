@@ -4,7 +4,6 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -34,47 +33,20 @@ export type DataListColumn<T> = DataColumn<T> | ButtonColumn<T>;
 
 interface DataListProps<T extends object> {
   items: T[];
-  endpoint: (search: string) => void | Promise<void>;
   columns: DataListColumn<T>[];
-  search?: boolean;
   emptyText?: string;
   onRowPress?: (item: T) => void;
 }
 
 function DataList<T extends object>({
   items,
-  endpoint,
   columns,
-  search = false,
   emptyText = 'No data',
   onRowPress,
 }: DataListProps<T>) {
-  const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const fetch = useCallback(
-    async (query: string) => {
-      setLoading(true);
-      try {
-        await endpoint(query);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [endpoint],
-  );
-
-  useEffect(() => {
-    fetch('');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onSearchChange = (text: string) => {
-    setSearchText(text);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => fetch(text), 300);
-  };
+  const isFirstRender = useRef(true);
 
   const dataColumns = columns.filter(c => c.type !== 'button') as DataColumn<T>[];
   const buttonColumns = columns.filter(c => c.type === 'button') as ButtonColumn<T>[];
@@ -125,16 +97,6 @@ function DataList<T extends object>({
 
   return (
     <View style={styles.container}>
-      {search && (
-        <TextInput
-          style={styles.searchInput}
-          value={searchText}
-          onChangeText={onSearchChange}
-          placeholder="Search..."
-          placeholderTextColor={colors.mutedForeground}
-          clearButtonMode="while-editing"
-        />
-      )}
       {loading && items.length === 0 ? (
         <ActivityIndicator style={styles.loader} color={colors.primary} />
       ) : (
@@ -158,18 +120,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.muted,
-  },
-  searchInput: {
-    margin: 12,
-    marginBottom: 4,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 6,
-    fontSize: 14,
-    color: colors.foreground,
-    backgroundColor: colors.background,
   },
   loader: {
     marginTop: 40,

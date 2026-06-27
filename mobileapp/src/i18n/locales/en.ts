@@ -3,6 +3,7 @@ const en = {
     no: "No",
     yes: "Yes",
     isActive: "Is Active",
+    search: "Search",
     datePicker: {
       placeholder: 'Pick a date',
       time: 'Time',
