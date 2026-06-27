@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function UpdatesScreen() {
+export const UpdatesScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Updates</Text>

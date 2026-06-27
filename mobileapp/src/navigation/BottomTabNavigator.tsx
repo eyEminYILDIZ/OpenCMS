@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../theme/colors';
-import AssetsScreen from '../screens/AssetsScreen';
-import InfoScreen from '../screens/InfoScreen';
-import MapScreen from '../screens/MapScreen';
-import OrdersScreen from '../screens/OrdersScreen';
-import UpdatesScreen from '../screens/UpdatesScreen';
+import { AssetsScreen } from '../screens/AssetsScreen';
+import { InfoScreen } from '../screens/InfoScreen';
+import { MapScreen } from '../screens/MapScreen';
+import { OrdersScreen } from '../screens/OrdersScreen';
+import { UpdatesScreen } from '../screens/UpdatesScreen';
 
 export type RootTabParamList = {
   Info: undefined;
