@@ -1,11 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import { stores } from './src/stores';
 
 export default function App() {
   const isDarkMode = useColorScheme() === 'dark';
+  const { applicationStore, agentStore, assetStore, operationStore } = stores;
+
+  useEffect(() => {
+    assetStore.getAllItems();
+  }, []);
 
   return (
     <SafeAreaProvider>
