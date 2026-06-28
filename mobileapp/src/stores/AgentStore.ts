@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
 import { AgentApi } from "../api";
-import { PanelModes } from "../types";
+import { ConnectionStatus, PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 import { agentId, assetId } from "../../app.json"
 
@@ -18,6 +18,8 @@ export class AgentStore {
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
     timer: any = undefined;
+    pingErrorCount: number = 0;
+    apiConnectionStatus: ConnectionStatus = ConnectionStatus.Unknown;
 
     // clearSelectedItems = () => {
     //     this.selectedItem = undefined;
@@ -36,8 +38,12 @@ export class AgentStore {
             const response = await AgentApi.GetById.call(agentId);
             runInAction(() => {
                 this.selectedItem = response.data;
+                this.apiConnectionStatus = ConnectionStatus.Connected;
             });
         } catch (error) {
+            runInAction(() => {
+                this.apiConnectionStatus = ConnectionStatus.Disconnected;
+            });
             this.statusBarStore.showError(i18next.t('agent.errors.loadItemFailed'));
         }
     }
@@ -61,9 +67,17 @@ export class AgentStore {
             const response = await AgentApi.Ping.call(request);
             runInAction(() => {
                 this.selectedItem = response.data;
+                this.pingErrorCount = 0;
+                this.apiConnectionStatus = ConnectionStatus.Connected;
             });
             // this.statusBarStore.showSuccess(i18next.t('agent.errors.pingSucceeded'));
         } catch (error) {
+            runInAction(() => {
+                this.pingErrorCount += 1;
+                if (this.pingErrorCount >= 3) {
+                    this.apiConnectionStatus = ConnectionStatus.Disconnected;
+                }
+            });
             this.statusBarStore.showError(i18next.t('agent.errors.pingFailed'));
         }
     }

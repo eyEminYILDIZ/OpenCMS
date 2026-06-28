@@ -5,6 +5,7 @@ import { OperationStore } from "./OperationStore";
 import { StatusBarStore } from "./StatusBarStore";
 import { MenuTypes } from "../types/MenuTypes";
 import { clientSocketService } from "../services/ClientSocketService";
+import { ConnectionStatus } from "../types";
 
 export class ApplicationStore {
     constructor(
@@ -27,12 +28,15 @@ export class ApplicationStore {
         clientSocketService.onAssetUpdated(this.assetStore.onAssetUpdated);
         clientSocketService.onAssetUpdated(this.operationStore.onAssetUpdated);
         await clientSocketService.start();
+        this.socketConnectionStatus = clientSocketService.getConnectionState();
     }
+
     statusBarStore: StatusBarStore;
     agentStore: AgentStore;
     assetStore: AssetStore;
     operationStore: OperationStore;
     currentMenu: MenuTypes;
+    socketConnectionStatus: ConnectionStatus = ConnectionStatus.Disconnected;
 
     changeMenu = (menu: MenuTypes) => {
         this.currentMenu = menu;

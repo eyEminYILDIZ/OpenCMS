@@ -253,6 +253,11 @@ const en = {
       loadFailed: 'Failed to load items.',
     },
   },
+  connectionStatus: {
+    unknown: 'Unknown',
+    connected: 'Connected',
+    disconnected: 'Disconnected',
+  },
 } as const;
 
 export default en;
