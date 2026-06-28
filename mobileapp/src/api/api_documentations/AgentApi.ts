@@ -34,6 +34,24 @@ export namespace AgentApi {
         }
     }
 
+    export namespace GetById {
+        export const path = "/agents";
+        export interface Response {
+            id: string;
+            name: string;
+            description: string;
+            agentType: Enums.AgentTypes;
+            lastSeen: string;
+            isActive: boolean;
+            createdAt: string;
+            updatedAt: string | null;
+        }
+        export const call = async (id: string): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.get(`${path}/${id}`);
+            return response.data;
+        }
+    }
+
     export namespace Ping {
         export const path = "/agents";
         export interface Request {

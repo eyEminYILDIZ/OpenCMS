@@ -11,7 +11,7 @@ export default function App() {
   const { applicationStore, agentStore, assetStore, operationStore } = stores;
 
   useEffect(() => {
-    assetStore.getAllItems();
+    applicationStore.initialize();
   }, []);
 
   return (

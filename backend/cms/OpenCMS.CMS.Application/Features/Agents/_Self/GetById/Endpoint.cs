@@ -1,6 +1,6 @@
 namespace OpenCMS.CMS.Application.Agents.Self.GetById;
 
-public class Endpoint : IClientEndpoint
+public class Endpoint : IClientEndpoint, IAgentEndpoint
 {
     public RouteHandlerBuilder MapEndpoint(WebApplication app)
     {

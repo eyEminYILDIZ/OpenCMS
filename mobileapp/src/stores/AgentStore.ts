@@ -14,7 +14,7 @@ export class AgentStore {
     }
 
     allItems: AgentApi.ListAll.Response[] = [];
-    // selectedItem: AgentApi.GetById.Response | undefined = undefined;
+    selectedItem: AgentApi.GetById.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
     timer: any = undefined;
@@ -31,23 +31,24 @@ export class AgentStore {
         this.panelMode = mode;
     }
 
-    // getById = async (id: string) => {
-    //     try {
-    //         const request: AgentApi.GetById.Request = { id };
-    //         const response = await AgentApi.GetById.call(request);
-    //         runInAction(() => {
-    //             this.selectedItem = response.data;
-    //         });
-    //     } catch (error) {
-    //         this.statusBarStore.showError(i18next.t('agent.errors.loadItemFailed'));
-    //     }
-    // }
+    getMyDetails = async () => {
+        try {
+            const response = await AgentApi.GetById.call(agentId);
+            runInAction(() => {
+                this.selectedItem = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('agent.errors.loadItemFailed'));
+        }
+    }
 
     initialize = async () => {
+        await this.getMyDetails();
+
+        // setup ping flow
         if (this.timer !== undefined) {
             clearInterval(this.timer);
         }
-
         this.timer = setInterval(this.pingAgent, 5000);
     }
 
@@ -58,6 +59,9 @@ export class AgentStore {
                 sentAt: new Date().toISOString()
             };
             const response = await AgentApi.Ping.call(request);
+            runInAction(() => {
+                this.selectedItem = response.data;
+            });
             this.statusBarStore.showSuccess(i18next.t('agent.errors.pingSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.pingFailed'));
