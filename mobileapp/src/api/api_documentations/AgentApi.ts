@@ -11,6 +11,7 @@ export namespace AgentApi {
             OutputOnly = 4,
         }
     }
+
     export namespace ListAll {
         export const path = "/agents";
         export interface Response {
@@ -32,63 +33,12 @@ export namespace AgentApi {
             return response.data;
         }
     }
-    export namespace GetItemCounts {
-        export const path = "/Agents/counts";
-        export interface Response {
-            activeCount: number;
-            inactiveCount: number;
-        }
-        export const call = async (): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.get(path);
-            return response.data;
-        }
-    }
-    export namespace Delete {
-        export const path = "/Agents";
-        export interface Request {
-            id: string;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-            description: string;
-            agentType: Enums.AgentTypes;
-            lastSeen: string;
-            isActive: boolean;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.delete(`${path}/${request.id}`);
-            return response.data;
-        }
-    }
-    export namespace Create {
-        export const path = "/agents";
-        export interface Request {
-            name: string;
-            agentType: Enums.AgentTypes;
-            description: string;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-            description: string;
-            agentType: Enums.AgentTypes;
-            lastSeen: string;
-            isActive: boolean;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.post(path, request);
-            return response.data;
-        }
-    }
-    export namespace GetById {
+
+    export namespace Ping {
         export const path = "/agents";
         export interface Request {
             id: string;
+            sentAt: string;
         }
         export interface Response {
             id: string;
@@ -101,30 +51,7 @@ export namespace AgentApi {
             updatedAt: string | null;
         }
         export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.get(`${path}/${request.id}`);
-            return response.data;
-        }
-    }
-    export namespace Update {
-        export const path = "/agents";
-        export interface Request {
-            id: string;
-            name: string;
-            agentType: Enums.AgentTypes;
-            description: string;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-            description: string;
-            agentType: Enums.AgentTypes;
-            lastSeen: string;
-            isActive: boolean;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.put(`${path}/${request.id}`, request);
+            const response = await ApiClient.put(`${path}/${request.id}/ping`, { sentAt: request.sentAt });
             return response.data;
         }
     }

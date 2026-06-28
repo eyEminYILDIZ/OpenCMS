@@ -24,6 +24,7 @@ export namespace AssetApi {
             Hostile = 4,
         }
     }
+
     export namespace ListAll {
         export const path = "/assets";
         export interface Response {
@@ -53,94 +54,6 @@ export namespace AssetApi {
         }
     }
 
-    export namespace Pick {
-        export const path = "/assets/pick";
-        export interface Request {
-            search: string;
-            relationId: string;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
-            const response = await ApiClient.post(path, request);
-            return response.data;
-        }
-    }
-    export namespace GetItemCounts {
-        export const path = "/Assets/counts";
-        export interface Response {
-            activeCount: number;
-            inactiveCount: number;
-        }
-        export const call = async (): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.get(path);
-            return response.data;
-        }
-    }
-    export namespace Delete {
-        export const path = "/Assets";
-        export interface Request {
-            id: string;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-            latitude: number;
-            longitude: number;
-            altitude: number;
-            heading: number;
-            speed: number;
-            assetType: Enums.AssetTypes;
-            threatType: Enums.ThreatTypes;
-            isActive: boolean;
-            firstUpdated: string;
-            lastUpdated: string;
-            relatedAgentId: string | null;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.delete(`${path}/${request.id}`);
-            return response.data;
-        }
-    }
-    export namespace Create {
-        export const path = "/assets";
-        export interface Request {
-            name: string;
-            latitude: number;
-            longitude: number;
-            altitude: number;
-            heading: number;
-            speed: number;
-            assetType: Enums.AssetTypes;
-            threatType: Enums.ThreatTypes;
-            isActive: boolean;
-        }
-        export interface Response {
-            id: string;
-            name: string;
-            latitude: number;
-            longitude: number;
-            altitude: number;
-            heading: number;
-            speed: number;
-            assetType: Enums.AssetTypes;
-            threatType: Enums.ThreatTypes;
-            isActive: boolean;
-            firstUpdated: string;
-            lastUpdated: string;
-            relatedAgentId: string | null;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.post(path, request);
-            return response.data;
-        }
-    }
     export namespace GetById {
         export const path = "/assets";
         export interface Request {
@@ -168,7 +81,8 @@ export namespace AssetApi {
             return response.data;
         }
     }
-    export namespace Update {
+
+    export namespace Feed {
         export const path = "/assets";
         export interface Request {
             id: string;
@@ -201,7 +115,8 @@ export namespace AssetApi {
             updatedAt: string | null;
         }
         export const call = async (request: Request): Promise<ApiResponse<Response>> => {
-            const response = await ApiClient.put(`${path}/${request.id}`, request);
+            const { id, ...body } = request;
+            const response = await ApiClient.put(`${path}/${id}/feed`, body);
             return response.data;
         }
     }
