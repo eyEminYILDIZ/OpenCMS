@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { AssetApi } from '../api';
 
 const HUB_HOST = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+const PORT = 5010; // Replace with your actual port number
 
 type AssetUpdatedHandler = (asset: AssetApi.ListAll.Response) => void;
 
@@ -11,7 +12,7 @@ class ClientSocketService {
 
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(`http://${HUB_HOST}:5020/hubs/clients`)
+            .withUrl(`http://${HUB_HOST}:${PORT}/hubs/clients`)
             .withAutomaticReconnect()
             .build();
     }
