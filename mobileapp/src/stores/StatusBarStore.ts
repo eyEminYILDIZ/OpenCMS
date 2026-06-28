@@ -1,65 +1,30 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
+import Toast from "react-native-toast-message";
 
 export type StatusLevel = "info" | "success" | "warning" | "error";
 
 export class StatusBarStore {
-    message: string = "Ready";
-    level: StatusLevel | null = null;
-    fading: boolean = false;
-
-    private clearTimer: ReturnType<typeof setTimeout> | null = null;
-    private fadeTimer: ReturnType<typeof setTimeout> | null = null;
-
     constructor() {
         makeAutoObservable(this);
     }
 
     showSuccess = (message: string) => {
-        this.message = message;
-        this.level = "success";
-        this.fading = false;
-        this.scheduleAutoClear();
+        Toast.show({ type: "success", text1: message, visibilityTime: 3000 });
     };
 
     showInfo = (message: string) => {
-        this.message = message;
-        this.level = "info";
-        this.fading = false;
-        this.scheduleAutoClear();
+        Toast.show({ type: "info", text1: message, visibilityTime: 3000 });
     };
 
     showWarning = (message: string) => {
-        this.message = message;
-        this.level = "warning";
-        this.fading = false;
-        this.scheduleAutoClear();
+        Toast.show({ type: "error", text1: message, visibilityTime: 4000 });
     };
 
     showError = (message: string) => {
-        this.message = message;
-        this.level = "error";
-        this.fading = false;
-        this.scheduleAutoClear();
+        Toast.show({ type: "error", text1: message, visibilityTime: 5000 });
     };
 
     clear = () => {
-        this.fading = true;
-        if (this.fadeTimer) clearTimeout(this.fadeTimer);
-        this.fadeTimer = setTimeout(() => {
-            runInAction(() => {
-                this.message = "Ready";
-                this.level = null;
-                this.fading = false;
-                this.fadeTimer = null;
-            });
-        }, 300);
-    };
-
-    private scheduleAutoClear = () => {
-        if (this.clearTimer) clearTimeout(this.clearTimer);
-        this.clearTimer = setTimeout(() => {
-            this.clear();
-            this.clearTimer = null;
-        }, 5000);
+        Toast.hide();
     };
 }
