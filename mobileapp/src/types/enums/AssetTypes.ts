@@ -1,6 +1,6 @@
 import { AssetApi } from "../../api";
 import i18n from "../../i18n";
-import type { DropdownOption } from "../../components/ui/Dropdown";
+// import type { DropdownOption } from "../../components/ui/Dropdown";
 
 const { t } = i18n;
 
@@ -18,6 +18,6 @@ export const assetTypeLabels: Record<AssetApi.Enums.AssetTypes, string> = {
     [AssetApi.Enums.AssetTypes.Other]: t('asset.assetTypes.other'),
 };
 
-export const assetTypeOptions: DropdownOption[] = Object.values(AssetApi.Enums.AssetTypes)
-    .filter((v): v is AssetApi.Enums.AssetTypes => typeof v === 'number')
-    .map((type) => ({ value: type, label: assetTypeLabels[type] }));
+// export const assetTypeOptions: DropdownOption[] = Object.values(AssetApi.Enums.AssetTypes)
+//     .filter((v): v is AssetApi.Enums.AssetTypes => typeof v === 'number')
+//     .map((type) => ({ value: type, label: assetTypeLabels[type] }));

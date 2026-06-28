@@ -62,7 +62,7 @@ export class AgentStore {
             runInAction(() => {
                 this.selectedItem = response.data;
             });
-            this.statusBarStore.showSuccess(i18next.t('agent.errors.pingSucceeded'));
+            // this.statusBarStore.showSuccess(i18next.t('agent.errors.pingSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('agent.errors.pingFailed'));
         }

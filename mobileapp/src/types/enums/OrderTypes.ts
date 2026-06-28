@@ -1,6 +1,6 @@
 import { OperationApi } from "../../api";
 import i18n from "../../i18n";
-import type { DropdownOption } from "../../components/ui/Dropdown";
+// import type { DropdownOption } from "../../components/ui/Dropdown";
 
 const { t } = i18n;
 
@@ -19,10 +19,10 @@ export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Give]: t('operation.orderTypes.give'),
 };
 
-export const orderStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderStatus)
-    .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
-    .map((status) => ({ value: status, label: orderStatusLabels[status] }));
+// export const orderStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderStatus)
+//     .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
+//     .map((status) => ({ value: status, label: orderStatusLabels[status] }));
 
-export const orderTypeOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderTypes)
-    .filter((v): v is OperationApi.Enums.OrderTypes => typeof v === 'number')
-    .map((type) => ({ value: type, label: orderTypeLabels[type] }));
+// export const orderTypeOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderTypes)
+//     .filter((v): v is OperationApi.Enums.OrderTypes => typeof v === 'number')
+//     .map((type) => ({ value: type, label: orderTypeLabels[type] }));
