@@ -70,4 +70,22 @@ public class OpenCmsClient
         }
         return JsonSerializer.Deserialize<List<OpenCMS.CMS.Application.Operations.Self.GetActivesByAgent.QueryResponse>>(responseBody.Data.ToString(), _jsonOptions);
     }
+
+    public async Task<OpenCMS.CMS.Application.Operations.Self.GetById.ResponseModel> GetOperation(Guid operationId)
+    {
+        var response = await _httpClient.GetAsync($"{_baseUrl}/operations/{operationId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Failed to get operation {OperationId}: {StatusCode}", operationId, response.StatusCode);
+            throw new Exception($"Failed to get operation {operationId}: {response.StatusCode}");
+        }
+        var content = await response.Content.ReadAsStringAsync();
+        var responseBody = JsonSerializer.Deserialize<ApiResponse>(content, _jsonOptions);
+        if (responseBody == null || responseBody.Data == null || responseBody.Error != null)
+        {
+            _logger.LogError("Invalid response body for operation {OperationId}: {Content}", operationId, string.Join(',', responseBody?.Error) ?? "invalid response body");
+            throw new Exception("Error: " + responseBody?.Error ?? "invalid response body");
+        }
+        return JsonSerializer.Deserialize<OpenCMS.CMS.Application.Operations.Self.GetById.ResponseModel>(responseBody.Data.ToString(), _jsonOptions);
+    }
 }

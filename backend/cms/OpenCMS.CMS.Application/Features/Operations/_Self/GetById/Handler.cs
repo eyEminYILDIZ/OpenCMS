@@ -44,11 +44,12 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                 TargetPointAltitude = o.TargetPointAltitude,
                 TargetPointHeading = o.TargetPointHeading,
                 TargetPointSpeed = o.TargetPointSpeed,
-                ResponsibleAssetId = o.ResponsibleOperationAssetId,
+                ResponsibleOperationAssetId = o.ResponsibleOperationAssetId,
                 NextOrderId = o.NextOrderId,
-                PreviousOrderId = o.PreviousOrderId
+                PreviousOrderId = o.PreviousOrderId,
+                TargetOperationAssetId = o.TargetOperationAssetId
             }).ToList() ?? new(),
-            Assets = operation.OperationAssets?.Select(a => new OperationAssetResponse
+            OperationAssets = operation.OperationAssets?.Select(a => new OperationAssetResponse
             {
                 Id = a.Id,
                 AssetId = a.AssetId,
@@ -65,7 +66,8 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                     ThreatType = a.Asset.ThreatType,
                     FirstUpdated = a.Asset.FirstUpdated,
                     LastUpdated = a.Asset.LastUpdated,
-                    IsActive = a.Asset.IsActive
+                    IsActive = a.Asset.IsActive,
+                    RelatedAgentId = a.Asset.RelatedAgentId
                 }
             }).ToList() ?? new()
         };

@@ -40,12 +40,14 @@ while (!cts.Token.IsCancellationRequested)
         var activeOperations = await openCmsClient.GetActiveOperations();
         logger.LogInformation("Received {Count} active operation(s)", activeOperations.Count);
 
-        foreach (var operation in activeOperations)
+        foreach (var activeOperation in activeOperations)
         {
+            var operation = await openCmsClient.GetOperation(activeOperation.Id);
+
             logger.LogInformation("Active operation {OperationId} — Name: {Name}, Type: {Type}, Status: {Status}",
                 operation.Id, operation.Name, operation.OperationType, operation.OperationStatus);
 
-            var operationAsset = operation.OperationAssets.FirstOrDefault(a => a.RelatedAgentId == agentId);
+            var operationAsset = operation.OperationAssets.FirstOrDefault(a => a.Asset.RelatedAgentId == agentId);
             if (operationAsset == null)
             {
                 logger.LogDebug("No asset assigned to this agent in operation {OperationId}", operation.Id);

@@ -13,8 +13,6 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
     {
         var operations = await _dbContext.Operations
                                           .Include(x => x.OperationAssets).ThenInclude(x => x.Asset)
-                                          .Include(x => x.Orders).ThenInclude(x => x.TargetOperationAsset).ThenInclude(x => x.Asset)
-                                          .Include(x => x.Orders).ThenInclude(x => x.ResponsibleOperationAsset).ThenInclude(x => x.Asset)
                                           .Where(x => x.OperationAssets.Any(a => a.Asset.RelatedAgentId == request.AgentId)
                                                 && (x.OperationStatus == OperationStatus.NotStarted
                                                     || x.OperationStatus == OperationStatus.InProgress
@@ -33,41 +31,6 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
             EndDate = o.EndDate,
             OperationStatus = o.OperationStatus,
             OperationType = o.OperationType,
-            OperationAssets = o.OperationAssets.Select(a => new AssetResponse
-            {
-                Id = a.Id,
-                AssetId = a.Asset.Id,
-                Name = a.Asset.Name,
-                Latitude = a.Asset.Latitude,
-                Longitude = a.Asset.Longitude,
-                Altitude = a.Asset.Altitude,
-                Heading = a.Asset.Heading,
-                Speed = a.Asset.Speed,
-                AssetType = a.Asset.AssetType,
-                ThreatType = a.Asset.ThreatType,
-                RelatedAgentId = a.Asset.RelatedAgentId,
-            }).ToList(),
-            Orders = o.Orders.Select(or => new OrderResponse
-            {
-                Id = or.Id,
-                Description = or.Description,
-                IssuedDate = or.IssuedDate,
-                CompletedDate = or.CompletedDate,
-                OrderStatus = or.OrderStatus,
-                OrderType = or.OrderType,
-                OperationId = or.OperationId,
-                ResponsibleOperationAssetId = or.ResponsibleOperationAssetId,
-                TargetOperationAssetId = or.TargetOperationAssetId,
-                NextOrderId = or.NextOrderId,
-                PreviousOrderId = or.PreviousOrderId,
-                TargetDatePeriodStart = or.TargetDatePeriodStart,
-                TargetDatePeriodEnd = or.TargetDatePeriodEnd,
-                TargetPointLatitude = or.TargetOperationAsset?.Asset.Latitude ?? or.TargetPointLatitude,
-                TargetPointLongitude = or.TargetOperationAsset?.Asset.Longitude ?? or.TargetPointLongitude,
-                TargetPointAltitude = or.TargetOperationAsset?.Asset.Altitude ?? or.TargetPointAltitude,
-                TargetPointHeading = or.TargetOperationAsset?.Asset.Heading ?? or.TargetPointHeading,
-                TargetPointSpeed = or.TargetOperationAsset?.Asset.Speed ?? or.TargetPointSpeed,
-            }).ToList(),
         }).ToList();
     }
 }
