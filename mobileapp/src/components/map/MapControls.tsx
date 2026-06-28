@@ -8,9 +8,10 @@ import { stores } from '../../stores';
 interface MapControlsProps {
   onZoomIn: () => void;
   onZoomOut: () => void;
+  onMyLocation: () => void;
 }
 
-export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZoomOut }) => {
+export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZoomOut, onMyLocation }) => {
   const { t } = useTranslation();
   const { mapSettingsStore } = stores;
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -52,6 +53,9 @@ export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZ
           onPress={() => setSettingsOpen(v => !v)}
         >
           <MaterialCommunityIcons name="cog" size={18} color={settingsOpen ? '#3b82f6' : '#374151'} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={onMyLocation}>
+          <MaterialCommunityIcons name="crosshairs-gps" size={18} color="#374151" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleZoomIn}>
           <Text style={styles.zoomText}>+</Text>

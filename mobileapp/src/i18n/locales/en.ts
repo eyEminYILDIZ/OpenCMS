@@ -248,6 +248,7 @@ const en = {
     title: 'Map Settings',
     automaticTracking: 'Automatic Tracking',
     automaticFocusing: 'Automatic Focusing',
+    locationUnavailable: 'GPS location is not available.',
   },
   itemList: {
     searchPlaceholder: 'Search...',

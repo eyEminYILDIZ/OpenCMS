@@ -1,10 +1,13 @@
-import { Camera, Callout, CameraRef, Map, ViewAnnotation } from '@maplibre/maplibre-react-native';
+import { Camera, Callout, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { MapControls } from '../components/map/MapControls';
 import { AssetApi } from '../api';
 import { stores } from '../stores';
+import { useLocation } from '../hooks/useLocation';
 import {
   AircraftMarker,
   AirGunMarker,
@@ -26,11 +29,27 @@ const DEFAULT_ZOOM = 5;
 
 export const MapScreen = observer(() => {
   const { assetStore, operationStore, mapSettingsStore } = stores;
+  const { t } = useTranslation();
   const cameraRef = useRef<CameraRef>(null);
+  const { permissionState, requestPermission } = useLocation();
+  const currentPosition = useCurrentPosition();
 
   const prevAssetIdRef = useRef<string | undefined>(undefined);
   const prevOperationAssetIdRef = useRef<string | undefined>(undefined);
   const currentZoomRef = useRef(DEFAULT_ZOOM);
+
+  useEffect(() => {
+    requestPermission();
+  }, [requestPermission]);
+
+  const handleMyLocation = useCallback(() => {
+    if (!currentPosition?.coords) {
+      Toast.show({ type: 'error', text1: t('mapControls.locationUnavailable') });
+      return;
+    }
+    const { latitude, longitude } = currentPosition.coords;
+    cameraRef.current?.flyTo({ center: [longitude, latitude], zoom: 14, duration: 1500 });
+  }, [currentPosition, t]);
 
   const assetMarker = (assetType: AssetApi.Enums.AssetTypes): React.ReactElement => {
     switch (assetType) {
@@ -131,6 +150,7 @@ export const MapScreen = observer(() => {
           ref={cameraRef}
           initialViewState={{ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM }}
         />
+        {permissionState === 'granted' && <UserLocation animated heading />}
         {assetStore.allItems.map((item) => (
           <ViewAnnotation
             key={`asset-${item.id}`}
@@ -146,7 +166,11 @@ export const MapScreen = observer(() => {
           </ViewAnnotation>
         ))}
       </Map>
-      <MapControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
+      <MapControls
+        onZoomIn={handleZoomIn}
+        onZoomOut={handleZoomOut}
+        onMyLocation={handleMyLocation}
+      />
     </View>
   );
 });
