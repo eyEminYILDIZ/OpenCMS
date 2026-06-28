@@ -38,14 +38,7 @@ export class ApplicationStore {
         this.currentMenu = menu;
     }
 
-    loadItemCounts = async () => {
-        // assets
-        await this.assetStore.loadItemCounts();
-
-        // agents
-        await this.agentStore.loadItemCounts();
-
-        // operaitons
-        await this.operationStore.loadItemCounts();
+    initialize = async () => {
+        await this.agentStore.initialize();
     }
 }
