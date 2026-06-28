@@ -49,6 +49,10 @@ export class AssetStore {
         this.getAllItems();
     }
 
+    initialize = async () => {
+        await this.getAllItems();
+    }
+
     getAllItems = async () => {
         try {
             const response = await AssetApi.ListAll.call(this.listSearchValue);

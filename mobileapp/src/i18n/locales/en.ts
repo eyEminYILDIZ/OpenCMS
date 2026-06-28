@@ -154,6 +154,10 @@ const en = {
       orders: 'Orders',
     },
     noItemSelected: 'No item selected',
+    selectOperation: 'Select Operation',
+    noOperationsFound: 'No operations found',
+    noOperationSelected: 'No operation selected',
+    noOrdersFound: 'No orders found',
     create: {
       title: 'Create Operation',
     },

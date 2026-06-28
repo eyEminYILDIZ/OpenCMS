@@ -95,6 +95,10 @@ export class OperationStore {
         this.clearSelectedItems();
     }
 
+    initialize = async () => {
+        await this.getActiveItems();
+    }
+
     getActiveItems = async () => {
         try {
             const request: OperationApi.GetActivesByAgent.Request = {
@@ -120,7 +124,6 @@ export class OperationStore {
             this.statusBarStore.showError(i18next.t('operation.errors.loadItemFailed'));
         }
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////// Operation Orders //////////////////////////////////////////////

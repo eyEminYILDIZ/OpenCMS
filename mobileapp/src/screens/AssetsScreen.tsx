@@ -1,13 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DataList, { DataListColumn } from '../components/DataList';
+import { TextBox } from '../components/TextBox';
 import { stores } from '../stores';
 import { AssetApi } from '../api';
 import { assetTypeLabels } from '../types/enums/AssetTypes';
 import { threatTypeLabels } from '../types/enums/ThreatTypes';
-import { colors } from '../theme/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const AssetsScreen = observer(() => {
   const { assetStore } = stores;
@@ -51,40 +52,25 @@ export const AssetsScreen = observer(() => {
   ];
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
+    <SafeAreaView style={styles.container}>
+      <TextBox
         value={assetStore.listSearchValue}
-        onChangeText={(v) => {
+        onChangeText={(v: string) => {
           assetStore.setSearchValue(v);
         }}
         placeholder={t('common.search')}
-        placeholderTextColor={colors.mutedForeground}
-        clearButtonMode="while-editing"
       />
       <DataList
         items={assetStore.allItems}
         columns={columns}
         emptyText={t('asset.noAssetsFound')}
       />
-    </View>
+    </SafeAreaView>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  searchInput: {
-    margin: 12,
-    marginBottom: 4,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 6,
-    fontSize: 18,
-    color: colors.foreground,
-    backgroundColor: colors.background,
   },
 });

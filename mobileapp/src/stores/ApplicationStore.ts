@@ -44,6 +44,7 @@ export class ApplicationStore {
 
     initialize = async () => {
         await this.agentStore.initialize();
-        await this.assetStore.getAllItems();
+        await this.assetStore.initialize();
+        await this.operationStore.initialize();
     }
 }
