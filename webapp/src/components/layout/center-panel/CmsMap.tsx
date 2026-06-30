@@ -27,6 +27,26 @@ interface Point {
 }
 
 
+const MAP_STYLE_VOYAGER = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+
+const MAP_STYLE_SATELLITE = {
+    version: 8 as const,
+    sources: {
+        satellite: {
+            type: 'raster' as const,
+            tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+            tileSize: 256,
+        },
+    },
+    layers: [
+        {
+            id: 'satellite',
+            type: 'raster' as const,
+            source: 'satellite',
+        },
+    ],
+};
+
 const defaultViewState = {
     latitude: 39.245472,
     longitude: 35.487361,
@@ -235,7 +255,7 @@ export const CmsMap: React.FC = observer(() => {
                 ref={mapRef}
                 initialViewState={initialViewState}
                 style={{ width: '100%', height: '100vh' }}
-                mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+                mapStyle={mapSettingsStore.satelliteView ? MAP_STYLE_SATELLITE : MAP_STYLE_VOYAGER}
             >
                 <GeolocateControl position="top-left" />
                 <FullscreenControl position="top-left" />

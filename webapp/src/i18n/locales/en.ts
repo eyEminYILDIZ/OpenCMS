@@ -243,6 +243,7 @@ const en = {
     title: 'Map Settings',
     automaticTracking: 'Automatic Tracking',
     automaticFocusing: 'Automatic Focusing',
+    satelliteView: 'Satellite Map Style',
   },
   itemList: {
     searchPlaceholder: 'Search...',

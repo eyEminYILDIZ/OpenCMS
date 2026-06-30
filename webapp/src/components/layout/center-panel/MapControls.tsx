@@ -44,6 +44,16 @@ export const MapControls: React.FC = observer(() => {
                 />
                 {t('mapControls.automaticFocusing')}
             </label>
+
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13, color: '#222', userSelect: 'none' }}>
+                <input
+                    type="checkbox"
+                    checked={mapSettingsStore.satelliteView}
+                    onChange={e => mapSettingsStore.setSatelliteView(e.target.checked)}
+                    style={{ accentColor: '#3b82f6', width: 15, height: 15, cursor: 'pointer' }}
+                />
+                {t('mapControls.satelliteView')}
+            </label>
         </div>
     );
 });
