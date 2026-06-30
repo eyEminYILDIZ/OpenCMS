@@ -27,7 +27,9 @@ export class ApplicationStore {
         clientSocketService.onAssetUpdated(this.assetStore.onAssetUpdated);
         clientSocketService.onAssetUpdated(this.operationStore.onAssetUpdated);
         await clientSocketService.start();
-        this.socketConnectionStatus = clientSocketService.getConnectionState();
+        runInAction(() => {
+            this.socketConnectionStatus = clientSocketService.getConnectionState();
+        });
     }
 
     statusBarStore: StatusBarStore;
