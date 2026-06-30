@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { SettingsSection } from '../components/info/SettingsSection';
 import { stores } from '../stores';
 import { agentTypeLabels, connectionStatusLabels } from '../types';
 import { ConnectionStatus } from '../types/enums';
@@ -46,6 +47,8 @@ export const InfoScreen = observer(() => {
           </>
         )}
       </View>
+
+      <SettingsSection />
     </SafeAreaView>
   );
 });

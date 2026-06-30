@@ -1,10 +1,8 @@
 import * as signalR from '@microsoft/signalr';
-import { Platform } from 'react-native';
+import { reaction } from 'mobx';
 import { AssetApi } from '../api';
+import { settingsStore } from '../stores/SettingsStore';
 import { ConnectionStatus } from '../types';
-
-const HUB_HOST = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-const PORT = 5010; // Replace with your actual port number
 
 type AssetUpdatedHandler = (asset: AssetApi.ListAll.Response) => void;
 
@@ -25,12 +23,34 @@ class ClientSocketService {
     }
 
     private connection: signalR.HubConnection;
+    private assetUpdatedHandlers: AssetUpdatedHandler[] = [];
 
     constructor() {
-        this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(`http://${HUB_HOST}:${PORT}/hubs/clients`)
+        this.connection = this.buildConnection(settingsStore.serverAddress);
+
+        reaction(
+            () => settingsStore.serverAddress,
+            this.handleServerAddressChanged,
+        );
+    }
+
+    private buildConnection(serverAddress: string): signalR.HubConnection {
+        return new signalR.HubConnectionBuilder()
+            .withUrl(`http://${serverAddress}/hubs/clients`)
             .withAutomaticReconnect()
             .build();
+    }
+
+    private handleServerAddressChanged = async (serverAddress: string): Promise<void> => {
+        const wasConnected = this.connection.state !== signalR.HubConnectionState.Disconnected;
+        await this.stop();
+
+        this.connection = this.buildConnection(serverAddress);
+        this.assetUpdatedHandlers.forEach((handler) => this.connection.on('UpdateAsset', handler));
+
+        if (wasConnected) {
+            await this.start();
+        }
     }
 
     async start(): Promise<void> {
@@ -44,10 +64,12 @@ class ClientSocketService {
     }
 
     onAssetUpdated(handler: AssetUpdatedHandler): void {
+        this.assetUpdatedHandlers.push(handler);
         this.connection.on('UpdateAsset', handler);
     }
 
     offAssetUpdated(handler: AssetUpdatedHandler): void {
+        this.assetUpdatedHandlers = this.assetUpdatedHandlers.filter((h) => h !== handler);
         this.connection.off('UpdateAsset', handler);
     }
 }

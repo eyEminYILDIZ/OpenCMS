@@ -3,6 +3,7 @@ import { ApplicationStore } from "./ApplicationStore";
 import { AssetStore } from "./AssetStore";
 import { MapSettingsStore } from "./MapSettingsStore";
 import { OperationStore } from "./OperationStore";
+import { settingsStore } from "./SettingsStore";
 import { StatusBarStore } from "./StatusBarStore";
 
 const statusBarStore = new StatusBarStore();
@@ -19,4 +20,5 @@ export const stores = {
     operationStore,
     applicationStore,
     mapSettingsStore,
+    settingsStore,
 }
