@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DataList, { DataListColumn } from '../components/DataList';
-import { Dropdown } from '../components/Dropdown';
 import { stores } from '../stores';
 import { OperationApi } from '../api';
 import { orderStatusLabels, orderTypeLabels } from '../types/enums/OrderTypes';
@@ -43,15 +42,6 @@ export const OrdersScreen = observer(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Dropdown
-        items={operationStore.allItems.map((op) => ({ id: op.id, label: op.name }))}
-        selectedId={operationStore.selectedItem?.id}
-        placeholder={t('operation.selectOperation')}
-        emptyText={t('operation.noOperationsFound')}
-        onSelect={(id) => operationStore.getById(id)}
-        onDeselect={() => operationStore.clearSelectedItems()}
-      />
-
       <DataList
         items={operationStore.selectedItem?.orders ?? []}
         columns={columns}

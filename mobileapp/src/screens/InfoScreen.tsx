@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { OperationsSection } from '../components/info/OperationsSection';
 import { SettingsSection } from '../components/info/SettingsSection';
 import { stores } from '../stores';
 import { agentTypeLabels, connectionStatusLabels } from '../types';
@@ -24,6 +25,8 @@ export const InfoScreen = observer(() => {
           <Row label="Socket Status" value={connectionStatusLabels[applicationStore.socketConnectionStatus]} status={applicationStore.socketConnectionStatus} />
         </View>
       </View>
+
+      <OperationsSection />
 
       <View style={styles.section}>
         <Text style={styles.title}>Agent Info</Text>
