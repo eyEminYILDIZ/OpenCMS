@@ -44,6 +44,15 @@ export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZ
               thumbColor="#ffffff"
             />
           </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>{t('mapControls.satelliteView')}</Text>
+            <Switch
+              value={mapSettingsStore.satelliteView}
+              onValueChange={v => mapSettingsStore.setSatelliteView(v)}
+              trackColor={{ false: '#d1d5db', true: '#3b82f6' }}
+              thumbColor="#ffffff"
+            />
+          </View>
         </View>
       )}
 
