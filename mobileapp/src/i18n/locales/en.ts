@@ -30,6 +30,7 @@ const en = {
     errors: {
       loadCountFailed: 'Failed to load agent counts.',
       loadItemsFailed: 'Failed to load agents.',
+      loadItemFailed: 'Failed to load agent.',
       noItemSelected: 'No agent selected.',
       deleteFailed: 'Failed to delete agent.',
       deleteSucceeded: 'Agent deleted successfully.',
@@ -37,6 +38,8 @@ const en = {
       updateSucceeded: 'Agent updated successfully.',
       createFailed: 'Failed to create agent.',
       createSucceeded: 'Agent created successfully.',
+      pingFailed: 'Failed to ping agent.',
+      pingSucceeded: 'Agent pinged successfully.',
     },
     create: {
       title: 'Create Agent',
@@ -76,6 +79,7 @@ const en = {
       noItemSelected: 'No asset selected.',
     },
     noItemSelected: 'No item selected',
+    noAssetsFound: 'No assets found',
     create: {
       title: 'Create Asset',
     },
@@ -128,6 +132,7 @@ const en = {
     errors: {
       loadCountFailed: 'Failed to load operation counts.',
       loadItemsFailed: 'Failed to load operations.',
+      loadItemFailed: 'Failed to load operation.',
       noItemSelected: 'No operation selected.',
       deleteFailed: 'Failed to delete operation.',
       deleteSucceeded: 'Operation deleted successfully.',
@@ -147,6 +152,8 @@ const en = {
       updateOrderFailed: 'Failed to update operation order.',
       deleteOrderSucceeded: 'Operation order deleted successfully.',
       deleteOrderFailed: 'Failed to delete operation order.',
+      completeOrderSucceeded: 'Operation order completed successfully.',
+      completeOrderFailed: 'Failed to complete operation order.',
     },
     tabs: {
       details: 'Details',
