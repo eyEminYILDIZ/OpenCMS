@@ -1,13 +1,14 @@
-import { Camera, Callout, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
+import { Camera, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { MapControls } from '../components/map/MapControls';
 import { AssetApi } from '../api';
 import { stores } from '../stores';
 import { useLocation } from '../hooks/useLocation';
+import { colors } from '../theme/colors';
 import {
   AircraftMarker,
   AirGunMarker,
@@ -38,6 +39,7 @@ export const MapScreen = observer(() => {
   const prevOperationAssetIdRef = useRef<string | undefined>(undefined);
   const currentZoomRef = useRef(DEFAULT_ZOOM);
   const annotationRefs = useRef<Record<string, ViewAnnotationRef>>({});
+  const prevHeadingsRef = useRef<Record<string, number>>({});
 
   useEffect(() => {
     requestPermission();
@@ -142,7 +144,10 @@ export const MapScreen = observer(() => {
 
   useEffect(() => {
     assetStore.allItems.forEach((item) => {
-      annotationRefs.current[`asset-${item.id}`]?.refresh();
+      if (prevHeadingsRef.current[item.id] !== item.heading) {
+        prevHeadingsRef.current[item.id] = item.heading;
+        annotationRefs.current[`asset-${item.id}`]?.refresh();
+      }
     });
   }, [headingsKey]);
 
@@ -151,6 +156,7 @@ export const MapScreen = observer(() => {
       <Map
         style={styles.map}
         mapStyle={MAP_STYLE}
+        onPress={() => assetStore.clearSelectedItems()}
         onRegionDidChange={(event) => {
           currentZoomRef.current = event.nativeEvent.zoom ?? currentZoomRef.current;
         }}
@@ -178,9 +184,21 @@ export const MapScreen = observer(() => {
             <View style={{ transform: [{ rotate: `${item.heading}deg` }] }}>
               {assetMarker(item.assetType)}
             </View>
-            <Callout title={item.name} />
           </ViewAnnotation>
         ))}
+        {assetStore.selectedItem != null && (
+          <ViewAnnotation
+            key={`asset-popup-${assetStore.selectedItem.id}`}
+            id={`asset-popup-${assetStore.selectedItem.id}`}
+            lngLat={[assetStore.selectedItem.longitude, assetStore.selectedItem.latitude]}
+            anchor="bottom"
+            offset={[0, -20]}
+          >
+            <View style={styles.popupBubble}>
+              <Text style={styles.popupText}>{assetStore.selectedItem.name}</Text>
+            </View>
+          </ViewAnnotation>
+        )}
       </Map>
       <MapControls
         onZoomIn={handleZoomIn}
@@ -194,4 +212,17 @@ export const MapScreen = observer(() => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   map: { flex: 1 },
+  popupBubble: {
+    backgroundColor: colors.card,
+    borderColor: colors.border,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  popupText: {
+    color: colors.cardForeground,
+    fontSize: 13,
+    fontWeight: '600',
+  },
 });
