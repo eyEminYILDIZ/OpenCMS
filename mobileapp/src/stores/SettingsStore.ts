@@ -8,8 +8,7 @@ interface PersistedSettings {
     serverAddress: string;
 }
 
-// Android emulator routes 10.0.2.2 to the host machine's localhost
-const defaultServerAddress = `${Platform.OS === "android" ? "10.0.2.2" : "localhost"}:5010`;
+const defaultServerAddress = `localhost:5010`;
 
 export class SettingsStore {
     serverAddress: string = defaultServerAddress;
@@ -37,7 +36,7 @@ export class SettingsStore {
         const settings: PersistedSettings = {
             serverAddress: this.serverAddress,
         };
-        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(settings)).catch(() => {});
+        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(settings)).catch(() => { });
     };
 
     setServerAddress = (value: string) => {

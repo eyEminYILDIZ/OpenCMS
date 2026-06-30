@@ -35,8 +35,13 @@ class ClientSocketService {
     }
 
     private buildConnection(serverAddress: string): signalR.HubConnection {
+        console.log("Socket Server Address:", `http://${serverAddress}/hubs/agents`);
+
         return new signalR.HubConnectionBuilder()
-            .withUrl(`http://${serverAddress}/hubs/clients`)
+            .withUrl(`http://${serverAddress}/hubs/agents`, {
+                skipNegotiation: true,
+                transport: signalR.HttpTransportType.WebSockets,
+            })
             .withAutomaticReconnect()
             .build();
     }
@@ -54,8 +59,11 @@ class ClientSocketService {
     }
 
     async start(): Promise<void> {
+        console.log("Trying to connect websocket server");
+
         if (this.connection.state === signalR.HubConnectionState.Disconnected) {
             await this.connection.start();
+            console.log("connected to server socket");
         }
     }
 

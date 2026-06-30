@@ -1,3 +1,4 @@
+using OpenCMS.CMS.AgentApi.Hubs;
 using OpenCMS.CMS.AgentApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
-builder.Services.AddSingleton<IAgentSocketService, AgentSocketService>();
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IAgentSocketService, AgentSocketService>();
 
 builder.Services.AddCors(options =>
 {
@@ -42,5 +44,7 @@ app.UseCors();
 
 // register agent endpoint
 RegisterRoutes.MapRoutes(app, Assembly.GetAssembly(typeof(OpenCMS.CMS.Application.Configurations.Interfaces.IAgentEndpoint)));
+
+app.MapHub<AgentHub>("/hubs/agents");
 
 app.Run();

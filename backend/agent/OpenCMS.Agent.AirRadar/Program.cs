@@ -65,7 +65,7 @@ while (!cts.Token.IsCancellationRequested)
         logger.LogError(ex, "Error in agent loop");
     }
 
-    await Task.Delay(5000, cts.Token).ConfigureAwait(false);
+    await Task.Delay(500, cts.Token).ConfigureAwait(false);
 }
 
 logger.LogInformation("Air Radar agent shutting down");

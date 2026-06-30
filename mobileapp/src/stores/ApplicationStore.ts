@@ -21,7 +21,6 @@ export class ApplicationStore {
         this.currentMenu = MenuTypes.Assets;
         // use this bottom of constructor, otherwise MobX cant detect observables.
         makeAutoObservable(this);
-        this.connectSocket();
     }
 
     private connectSocket = async () => {
@@ -43,6 +42,9 @@ export class ApplicationStore {
     }
 
     initialize = async () => {
+
+        this.connectSocket();
+
         await this.agentStore.initialize();
         await this.assetStore.initialize();
         await this.operationStore.initialize();

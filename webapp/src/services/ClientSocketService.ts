@@ -8,7 +8,10 @@ class ClientSocketService {
 
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
-            .withUrl('http://localhost:5020/hubs/clients')
+            .withUrl('http://localhost:5020/hubs/clients', {
+                skipNegotiation: true,
+                transport: signalR.HttpTransportType.WebSockets,
+            })
             .withAutomaticReconnect()
             .build();
     }

@@ -1,14 +1,24 @@
+using Microsoft.AspNetCore.SignalR;
 using OpenCMS.CMS.Application.Assets.Self.Feed;
 using OpenCMS.CMS.Application.Configurations.Interfaces;
 
 namespace OpenCMS.CMS.ClientApi.Services;
 
-// use this file when ClientApi needs to access the agents directly.
+//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// ATTENTION /////////////////////////////////////////////////
+// FAKE CLASS, CREAED FOR SURPASSING THE INTERFACE IMPLEMENTATION ERROR. DO NOT USE THIS CLASS. //
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 public class AgentSocketService : IAgentSocketService
 {
-    // ClientApi does not use this, it created for surpassing the interface implement errror.
-    public Task AssetUpdated(CommandResponse asset, CancellationToken cancellationToken = default)
+
+    public AgentSocketService()
     {
-        return Task.CompletedTask;
+    }
+
+    public async Task AssetUpdated(CommandResponse asset, CancellationToken cancellationToken = default)
+    {
+        await Task.CompletedTask;
     }
 }

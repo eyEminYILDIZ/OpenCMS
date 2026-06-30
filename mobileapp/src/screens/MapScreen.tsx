@@ -1,4 +1,4 @@
-import { Camera, Callout, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation } from '@maplibre/maplibre-react-native';
+import { Camera, Callout, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,7 @@ export const MapScreen = observer(() => {
   const prevAssetIdRef = useRef<string | undefined>(undefined);
   const prevOperationAssetIdRef = useRef<string | undefined>(undefined);
   const currentZoomRef = useRef(DEFAULT_ZOOM);
+  const annotationRefs = useRef<Record<string, ViewAnnotationRef>>({});
 
   useEffect(() => {
     requestPermission();
@@ -137,6 +138,14 @@ export const MapScreen = observer(() => {
     }
   }, [operationStore.selectedItem, assetStore.allItems]);
 
+  const headingsKey = assetStore.allItems.map((item) => `${item.id}:${item.heading}`).join(',');
+
+  useEffect(() => {
+    assetStore.allItems.forEach((item) => {
+      annotationRefs.current[`asset-${item.id}`]?.refresh();
+    });
+  }, [headingsKey]);
+
   return (
     <View style={styles.container}>
       <Map
@@ -155,6 +164,13 @@ export const MapScreen = observer(() => {
           <ViewAnnotation
             key={`asset-${item.id}`}
             id={`asset-${item.id}`}
+            ref={(annotationRef) => {
+              if (annotationRef) {
+                annotationRefs.current[`asset-${item.id}`] = annotationRef;
+              } else {
+                delete annotationRefs.current[`asset-${item.id}`];
+              }
+            }}
             lngLat={[item.longitude, item.latitude]}
             title={item.name}
             onPress={() => assetStore.setSelectedItem(item)}
