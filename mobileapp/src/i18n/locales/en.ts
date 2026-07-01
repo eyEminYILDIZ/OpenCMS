@@ -127,6 +127,10 @@ const en = {
       yes: 'Yes',
       no: 'No',
     },
+    detail: {
+      title: 'Asset Details',
+      showOnMap: 'Show On Map',
+    },
   },
   operation: {
     errors: {

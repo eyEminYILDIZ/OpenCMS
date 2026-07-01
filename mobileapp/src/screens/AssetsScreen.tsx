@@ -1,18 +1,24 @@
+import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DataList, { DataListColumn } from '../components/DataList';
 import { TextBox } from '../components/TextBox';
+import { AssetDetailSheet } from '../components/assets/AssetDetailSheet';
 import { stores } from '../stores';
 import { AssetApi } from '../api';
 import { assetTypeLabels } from '../types/enums/AssetTypes';
 import { threatTypeLabels } from '../types/enums/ThreatTypes';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { RootTabParamList } from '../navigation/BottomTabNavigator';
 
 export const AssetsScreen = observer(() => {
   const { assetStore } = stores;
   const { t } = useTranslation();
+  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const [selectedAsset, setSelectedAsset] = useState<AssetApi.ListAll.Response | undefined>(undefined);
   const columns: DataListColumn<AssetApi.ListAll.Response>[] = [
     {
       key: 'name',
@@ -64,6 +70,16 @@ export const AssetsScreen = observer(() => {
         items={assetStore.allItems}
         columns={columns}
         emptyText={t('asset.noAssetsFound')}
+        onRowPress={setSelectedAsset}
+      />
+      <AssetDetailSheet
+        asset={selectedAsset}
+        onClose={() => setSelectedAsset(undefined)}
+        onShowOnMap={(asset) => {
+          setSelectedAsset(undefined);
+          assetStore.setSelectedItem(asset);
+          navigation.navigate('Map');
+        }}
       />
     </SafeAreaView>
   );
