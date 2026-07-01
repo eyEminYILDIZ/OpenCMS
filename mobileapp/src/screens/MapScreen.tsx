@@ -9,18 +9,8 @@ import { AssetApi } from '../api';
 import { stores } from '../stores';
 import { useLocation } from '../hooks/useLocation';
 import { colors } from '../theme/colors';
-import {
-  AircraftMarker,
-  AirGunMarker,
-  BuildingMarker,
-  PersonGroupMarker,
-  PersonMarker,
-  RadarMarker,
-  ShipMarker,
-  SubmarineMarker,
-  UnknownMarker,
-  VehicleMarker,
-} from '../components/map/markers';
+import { threatTypeColors } from '../types/enums/ThreatTypes';
+import { getAssetMarker } from '../components/map/markers/getAssetMarker';
 
 const MAP_STYLE_VOYAGER = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
@@ -72,20 +62,8 @@ export const MapScreen = observer(() => {
     cameraRef.current?.flyTo({ center: [longitude, latitude], zoom: 14, duration: 1500 });
   }, [currentPosition, t]);
 
-  const assetMarker = (assetType: AssetApi.Enums.AssetTypes): React.ReactElement => {
-    switch (assetType) {
-      case AssetApi.Enums.AssetTypes.Aircraft: return <AircraftMarker />;
-      case AssetApi.Enums.AssetTypes.Ship: return <ShipMarker />;
-      case AssetApi.Enums.AssetTypes.Submarine: return <SubmarineMarker />;
-      case AssetApi.Enums.AssetTypes.Vehicle: return <VehicleMarker />;
-      case AssetApi.Enums.AssetTypes.Building: return <BuildingMarker />;
-      case AssetApi.Enums.AssetTypes.Person: return <PersonMarker />;
-      case AssetApi.Enums.AssetTypes.GroupOfPeople: return <PersonGroupMarker />;
-      case AssetApi.Enums.AssetTypes.Radar: return <RadarMarker />;
-      case AssetApi.Enums.AssetTypes.AirGun: return <AirGunMarker />;
-      default: return <UnknownMarker />;
-    }
-  }
+  const assetMarker = (assetType: AssetApi.Enums.AssetTypes, threatType: AssetApi.Enums.ThreatTypes): React.ReactElement =>
+    getAssetMarker(assetType, { color: threatTypeColors[threatType] });
 
   const handleZoomIn = () => {
     const newZoom = Math.min(currentZoomRef.current + 1, 22);
@@ -200,7 +178,7 @@ export const MapScreen = observer(() => {
             onPress={() => assetStore.setSelectedItem(item)}
           >
             <View style={{ transform: [{ rotate: `${item.heading}deg` }] }}>
-              {assetMarker(item.assetType)}
+              {assetMarker(item.assetType, item.threatType)}
             </View>
           </ViewAnnotation>
         ))}

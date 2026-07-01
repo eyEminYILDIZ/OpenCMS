@@ -33,7 +33,8 @@ export type DataListColumn<T> = DataColumn<T> | ButtonColumn<T>;
 
 interface DataListProps<T extends object> {
   items: T[];
-  columns: DataListColumn<T>[];
+  columns?: DataListColumn<T>[];
+  renderRow?: (item: T) => React.ReactNode;
   emptyText?: string;
   onRowPress?: (item: T) => void;
 }
@@ -41,6 +42,7 @@ interface DataListProps<T extends object> {
 function DataList<T extends object>({
   items,
   columns,
+  renderRow,
   emptyText = 'No data',
   onRowPress,
 }: DataListProps<T>) {
@@ -48,8 +50,8 @@ function DataList<T extends object>({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isFirstRender = useRef(true);
 
-  const dataColumns = columns.filter(c => c.type !== 'button') as DataColumn<T>[];
-  const buttonColumns = columns.filter(c => c.type === 'button') as ButtonColumn<T>[];
+  const dataColumns = (columns ?? []).filter(c => c.type !== 'button') as DataColumn<T>[];
+  const buttonColumns = (columns ?? []).filter(c => c.type === 'button') as ButtonColumn<T>[];
 
   const renderCard = ({ item }: { item: T }) => (
     <TouchableOpacity
@@ -57,40 +59,46 @@ function DataList<T extends object>({
       onPress={() => onRowPress?.(item)}
       activeOpacity={onRowPress ? 0.7 : 1}
     >
-      <View style={styles.cardFields}>
-        {dataColumns.map((col, i) => {
-          const value = col.key in item ? item[col.key as keyof T] : undefined;
-          const display = col.render
-            ? col.render(value as T[keyof T], item)
-            : col.type === 'number'
-              ? Number(value).toLocaleString()
-              : String(value ?? '');
+      {renderRow ? (
+        renderRow(item)
+      ) : (
+        <>
+          <View style={styles.cardFields}>
+            {dataColumns.map((col, i) => {
+              const value = col.key in item ? item[col.key as keyof T] : undefined;
+              const display = col.render
+                ? col.render(value as T[keyof T], item)
+                : col.type === 'number'
+                  ? Number(value).toLocaleString()
+                  : String(value ?? '');
 
-          return (
-            <View key={`${String(col.key)}-${i}`} style={styles.field}>
-              {col.header ? <Text style={styles.fieldLabel}>{col.header}</Text> : null}
-              {typeof display === 'string' || typeof display === 'number' ? (
-                <Text style={styles.fieldValue}>{display}</Text>
-              ) : (
-                display
-              )}
+              return (
+                <View key={`${String(col.key)}-${i}`} style={styles.field}>
+                  {col.header ? <Text style={styles.fieldLabel}>{col.header}</Text> : null}
+                  {typeof display === 'string' || typeof display === 'number' ? (
+                    <Text style={styles.fieldValue}>{display}</Text>
+                  ) : (
+                    display
+                  )}
+                </View>
+              );
+            })}
+          </View>
+
+          {buttonColumns.length > 0 && (
+            <View style={styles.cardActions}>
+              {buttonColumns.map((col, i) => (
+                <TouchableOpacity
+                  key={`btn-${i}`}
+                  style={styles.actionButton}
+                  onPress={() => col.onButtonClick(item)}
+                >
+                  {col.icon}
+                </TouchableOpacity>
+              ))}
             </View>
-          );
-        })}
-      </View>
-
-      {buttonColumns.length > 0 && (
-        <View style={styles.cardActions}>
-          {buttonColumns.map((col, i) => (
-            <TouchableOpacity
-              key={`btn-${i}`}
-              style={styles.actionButton}
-              onPress={() => col.onButtonClick(item)}
-            >
-              {col.icon}
-            </TouchableOpacity>
-          ))}
-        </View>
+          )}
+        </>
       )}
     </TouchableOpacity>
   );
