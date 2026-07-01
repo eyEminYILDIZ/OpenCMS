@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-const radarStyle = {
-    cursor: 'pointer',
-    fill: 'none',
-    stroke: '#d00',
-    strokeWidth: 1.5,
-    strokeLinecap: 'round' as const,
-    strokeLinejoin: 'round' as const
-};
-
-function RadarMarker({ size = 40 }) {
+function RadarMarker({ size = 40, color = '#d00' }: { size?: number; color?: string }) {
+    const radarStyle = {
+        cursor: 'pointer',
+        fill: 'none',
+        stroke: color,
+        strokeWidth: 1.5,
+        strokeLinecap: 'round' as const,
+        strokeLinejoin: 'round' as const
+    };
     return (
         <svg height={size} viewBox="0 0 24 24" style={radarStyle}>
             {/* dish assembly: rotate 30° CW from vertical → 60° elevation pointing upper-right */}

@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-const personGroupStyle = {
-    cursor: 'pointer',
-    fill: '#d00',
-    stroke: 'none'
-};
-
-function PersonGroupMarker({ size = 40 }) {
+function PersonGroupMarker({ size = 40, color = '#d00' }: { size?: number; color?: string }) {
+    const personGroupStyle = {
+        cursor: 'pointer',
+        fill: color,
+        stroke: 'none'
+    };
     return (
         <svg height={size} viewBox="0 0 24 24" style={personGroupStyle}>
             {/* left person */}

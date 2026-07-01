@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-const unknownStyle = {
-    cursor: 'pointer',
-    fill: '#d00',
-    stroke: 'none'
-};
-
-function UnknownMarker({ size = 40 }) {
+function UnknownMarker({ size = 40, color = '#d00' }: { size?: number; color?: string }) {
+    const unknownStyle = {
+        cursor: 'pointer',
+        fill: color,
+        stroke: 'none'
+    };
     return (
         <svg height={size} viewBox="0 0 24 24" style={unknownStyle}>
             {/* circle background */}

@@ -15,10 +15,10 @@ import { AssetApi } from '../../../api';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
 import { MapControls } from './MapControls';
-import { AircraftMarker, AirGunMarker, BuildingMarker, PersonGroupMarker, PersonMarker, RadarMarker, ShipMarker, SubmarineMarker, UnknownMarker, VehicleMarker } from './markers';
-import Pin from './markers/PinMarker';
+import { getAssetMarker } from './markers/getAssetMarker';
 import { PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
+import { threatTypeColors } from '../../../types/enums/ThreatTypes';
 
 interface Point {
     name: string;
@@ -111,33 +111,8 @@ export const CmsMap: React.FC = observer(() => {
     }, [assetStore.selectedItem, operationStore.selectedAsset, operationStore.selectedAsset?.asset]);
 
 
-    const renderPin = (assetType: AssetApi.Enums.AssetTypes) => {
-        switch (assetType) {
-            case AssetApi.Enums.AssetTypes.Aircraft:
-                return <AircraftMarker />;
-            case AssetApi.Enums.AssetTypes.Ship:
-                return <ShipMarker />;
-            case AssetApi.Enums.AssetTypes.Submarine:
-                return <SubmarineMarker />;
-            case AssetApi.Enums.AssetTypes.Vehicle:
-                return <VehicleMarker />;
-            case AssetApi.Enums.AssetTypes.Building:
-                return <BuildingMarker />;
-            case AssetApi.Enums.AssetTypes.Person:
-                return <PersonMarker />;
-            case AssetApi.Enums.AssetTypes.GroupOfPeople:
-                return <PersonGroupMarker />;
-            case AssetApi.Enums.AssetTypes.Radar:
-                return <RadarMarker />;
-            case AssetApi.Enums.AssetTypes.AirGun:
-                return <AirGunMarker />;
-            case AssetApi.Enums.AssetTypes.Other:
-                return <UnknownMarker />;
-            case AssetApi.Enums.AssetTypes.Unknown:
-            default:
-                return <UnknownMarker />;
-        }
-    }
+    const renderPin = (assetType: AssetApi.Enums.AssetTypes, threatType: AssetApi.Enums.ThreatTypes) =>
+        getAssetMarker(assetType, { color: threatTypeColors[threatType] });
 
     useEffect(() => {
         switch (applicationStore.currentMenu) {
@@ -204,7 +179,7 @@ export const CmsMap: React.FC = observer(() => {
                                 assetStore.setSelectedItem(item);
                             }}
                         >
-                            {renderPin(item.assetType)}
+                            {renderPin(item.assetType, item.threatType)}
                         </Marker>
                     ))
                 }
@@ -226,7 +201,7 @@ export const CmsMap: React.FC = observer(() => {
                                     operationStore.setPanelMode(PanelModes.Detail);
                                 }}
                             >
-                                {renderPin(item.asset.assetType)}
+                                {renderPin(item.asset.assetType, item.asset.threatType)}
                             </Marker>
                         ))
                 }

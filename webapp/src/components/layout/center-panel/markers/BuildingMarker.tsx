@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-const buildingStyle = {
-    cursor: 'pointer',
-    fill: '#d00',
-    stroke: 'none'
-};
-
-function BuildingMarker({ size = 40 }) {
+function BuildingMarker({ size = 40, color = '#d00' }: { size?: number; color?: string }) {
+    const buildingStyle = {
+        cursor: 'pointer',
+        fill: color,
+        stroke: 'none'
+    };
     return (
         <svg height={size} viewBox="0 0 24 24" style={buildingStyle}>
             {/* building outline */}

@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-const airGunStyle = {
-    cursor: 'pointer',
-    fill: '#d00',
-    stroke: 'none'
-};
-
-function AirGunMarker({ size = 40 }) {
+function AirGunMarker({ size = 40, color = '#d00' }: { size?: number; color?: string }) {
+    const airGunStyle = {
+        cursor: 'pointer',
+        fill: color,
+        stroke: 'none'
+    };
     return (
         <svg height={size} viewBox="0 0 24 24" style={airGunStyle}>
             {/* barrel + muzzle brake rotated 60° right from vertical */}
