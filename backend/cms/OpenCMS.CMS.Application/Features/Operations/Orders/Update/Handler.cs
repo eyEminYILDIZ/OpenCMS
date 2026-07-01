@@ -28,7 +28,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         order.TargetPointAltitude = request.TargetPointAltitude;
         order.TargetPointHeading = request.TargetPointHeading;
         order.TargetPointSpeed = request.TargetPointSpeed;
-        order.ResponsibleOperationAssetId = request.ResponsibleAssetId;
+        order.ResponsibleOperationAssetId = request.ResponsibleOperationAssetId;
         order.NextOrderId = request.NextOrderId;
         order.PreviousOrderId = request.PreviousOrderId;
 
