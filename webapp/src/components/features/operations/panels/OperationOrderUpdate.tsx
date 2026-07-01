@@ -35,7 +35,7 @@ export const OperationOrderUpdate: React.FC = observer(() => {
         targetPointAltitude: Yup.number().required(t('common.validation.required')),
         targetPointHeading: Yup.number().required(t('common.validation.required')),
         targetPointSpeed: Yup.number().required(t('common.validation.required')),
-        responsibleAssetId: Yup.string().required(t('common.validation.required')),
+        responsibleOperationAssetId: Yup.string().required(t('common.validation.required')),
         nextOrderId: Yup.string().nullable().default(null),
         previousOrderId: Yup.string().nullable().default(null),
     });
@@ -55,7 +55,7 @@ export const OperationOrderUpdate: React.FC = observer(() => {
             targetPointAltitude: order?.targetPointAltitude ?? 0,
             targetPointHeading: order?.targetPointHeading ?? 0,
             targetPointSpeed: order?.targetPointSpeed ?? 0,
-            responsibleAssetId: order?.responsibleAssetId ?? '',
+            responsibleOperationAssetId: order?.responsibleOperationAssetId ?? '',
             nextOrderId: order?.nextOrderId ?? null,
             previousOrderId: order?.previousOrderId ?? null,
         },
@@ -126,9 +126,9 @@ export const OperationOrderUpdate: React.FC = observer(() => {
                 <Input<FormValues> id="targetPointSpeed" name="targetPointSpeed" type="number" />
             </FormItem>
 
-            <FormItem<FormValues> name="responsibleAssetId" label={t('operation.orderFields.responsibleOperationAssetId')}>
+            <FormItem<FormValues> name="responsibleOperationAssetId" label={t('operation.orderFields.responsibleOperationAssetId')}>
                 <DropdownRemote<FormValues>
-                    name="responsibleAssetId"
+                    name="responsibleOperationAssetId"
                     endpoint={OperationApi.OperationAssets.Pick.path}
                     relationId={operationStore.selectedItem?.id}
                 />

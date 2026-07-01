@@ -128,7 +128,7 @@ export const CmsMap: React.FC = observer(() => {
                     let top = -90;
                     let bottom = 90;
                     if (operationStore.selectedItem != undefined) {
-                        operationStore.selectedItem.assets.forEach((item) => {
+                        operationStore.selectedItem.operationAssets.forEach((item) => {
                             if (item.asset.latitude > top) top = item.asset.latitude;
                             if (item.asset.latitude < bottom) bottom = item.asset.latitude;
                             if (item.asset.longitude > right) right = item.asset.longitude;
@@ -186,7 +186,7 @@ export const CmsMap: React.FC = observer(() => {
             case MenuTypes.Operations:
                 {
                     if (operationStore.selectedItem != undefined)
-                        return operationStore.selectedItem.assets.map((item, index) => (
+                        return operationStore.selectedItem.operationAssets.map((item, index) => (
                             <Marker
                                 key={`marker-${index}`}
                                 latitude={item.asset.latitude}

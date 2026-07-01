@@ -41,7 +41,7 @@ export const OperationAssetTab: React.FC = observer(() => {
     return (
         <DataList<OperationApi.GetById.OperationAssetResponse>
             columns={columns}
-            items={operationStore.selectedItem?.assets || []}
+            items={operationStore.selectedItem?.operationAssets || []}
             onRowClicked={(item) => {
                 operationStore.setSelectedAsset(item);
                 operationStore.setPanelMode(PanelModes.Detail);

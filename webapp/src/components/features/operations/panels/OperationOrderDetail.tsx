@@ -26,7 +26,7 @@ export const OperationOrderDetail: React.FC = observer(() => {
         { label: t('operation.orderFields.targetPointAltitude'), value: String(item.targetPointAltitude) },
         { label: t('operation.orderFields.targetPointHeading'), value: String(item.targetPointHeading) },
         { label: t('operation.orderFields.targetPointSpeed'), value: String(item.targetPointSpeed) },
-        { label: t('operation.orderFields.responsibleOperationAssetId'), value: item.responsibleAssetId },
+        { label: t('operation.orderFields.responsibleOperationAssetId'), value: item.responsibleOperationAssetId },
     ];
 
     return (

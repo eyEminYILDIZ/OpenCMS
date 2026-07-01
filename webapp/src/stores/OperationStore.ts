@@ -22,9 +22,9 @@ export class OperationStore {
     onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
         runInAction(() => {
             if (!this.selectedItem) return;
-            const index = this.selectedItem.assets.findIndex(a => a.assetId === asset.id);
+            const index = this.selectedItem.operationAssets.findIndex(a => a.assetId === asset.id);
             if (index !== -1) {
-                this.selectedItem.assets[index].asset = {
+                this.selectedItem.operationAssets[index].asset = {
                     id: asset.id,
                     name: asset.name,
                     latitude: asset.latitude,
@@ -37,6 +37,7 @@ export class OperationStore {
                     firstUpdated: asset.firstUpdated,
                     lastUpdated: asset.lastUpdated,
                     isActive: asset.isActive,
+                    relatedAgentId: asset.relatedAgentId,
                 };
             }
         });

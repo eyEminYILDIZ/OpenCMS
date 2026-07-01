@@ -161,7 +161,8 @@ export namespace OperationApi {
             targetPointAltitude: number;
             targetPointHeading: number;
             targetPointSpeed: number;
-            responsibleAssetId: string;
+            responsibleOperationAssetId: string;
+            targetOperationAssetId: string | null;
             nextOrderId: string | null;
             previousOrderId: string | null;
         }
@@ -178,6 +179,7 @@ export namespace OperationApi {
             firstUpdated: string;
             lastUpdated: string;
             isActive: boolean;
+            relatedAgentId: string | null;
         }
         export interface OperationAssetResponse {
             id: string;
@@ -194,7 +196,7 @@ export namespace OperationApi {
             operationStatus: Enums.OperationStatus;
             operationType: Enums.OperationType;
             orders: OrderResponse[];
-            assets: OperationAssetResponse[];
+            operationAssets: OperationAssetResponse[];
         }
         export const call = async (request: Request): Promise<ApiResponse<Response>> => {
             const response = await ApiClient.get(`${path}/${request.id}`);
@@ -367,7 +369,7 @@ export namespace OperationApi {
                 targetPointAltitude: number;
                 targetPointHeading: number;
                 targetPointSpeed: number;
-                responsibleAssetId: string;
+                responsibleOperationAssetId: string;
                 nextOrderId: string | null;
                 previousOrderId: string | null;
             }
@@ -386,7 +388,7 @@ export namespace OperationApi {
                 targetPointAltitude: number;
                 targetPointHeading: number;
                 targetPointSpeed: number;
-                responsibleAssetId: string;
+                responsibleOperationAssetId: string;
                 nextOrderId: string | null;
                 previousOrderId: string | null;
                 createdAt: string;
@@ -417,7 +419,7 @@ export namespace OperationApi {
                 targetPointAltitude: number;
                 targetPointHeading: number;
                 targetPointSpeed: number;
-                responsibleAssetId: string;
+                responsibleOperationAssetId: string;
                 nextOrderId: string | null;
                 previousOrderId: string | null;
                 createdAt: string;
