@@ -12,6 +12,7 @@ const en = {
     cancel: "Cancel",
     save: "Save",
     saving: "Saving...",
+    notImplementedYet: "Not Implemented Yet",
     active: {
       yes: 'Yes',
       no: 'No',
@@ -169,6 +170,9 @@ const en = {
     noOperationsFound: 'No operations found',
     noOperationSelected: 'No operation selected',
     noOrdersFound: 'No orders found',
+    orderListHeader: {
+      operationPrefix: 'Operation',
+    },
     create: {
       title: 'Create Operation',
     },
@@ -180,6 +184,7 @@ const en = {
     },
     detailOrder: {
       title: 'Operation Order Details',
+      showOnMap: 'Show On Map',
     },
     updateOrder: {
       title: 'Update Operation Order',

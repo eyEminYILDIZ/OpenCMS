@@ -1,53 +1,58 @@
+import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import DataList, { DataListColumn } from '../components/DataList';
+import DataList from '../components/DataList';
+import { OrderDetailSheet } from '../components/orders/OrderDetailSheet';
+import { OrderRow } from '../components/orders/OrderRow';
 import { stores } from '../stores';
 import { OperationApi } from '../api';
-import { orderStatusLabels, orderTypeLabels } from '../types/enums/OrderTypes';
+import { RootTabParamList } from '../navigation/BottomTabNavigator';
+import { colors } from '../theme/colors';
 
 export const OrdersScreen = observer(() => {
-  const { operationStore } = stores;
+  const { operationStore, statusBarStore } = stores;
   const { t } = useTranslation();
+  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const [selectedOrder, setSelectedOrder] = useState<OperationApi.GetById.OrderResponse | undefined>(undefined);
 
-  const columns: DataListColumn<OperationApi.GetById.OrderResponse>[] = [
-    {
-      key: 'description',
-      header: t('operation.orderFields.description'),
-      type: 'string',
-    },
-    {
-      key: 'orderType',
-      header: t('operation.orderFields.orderType'),
-      render: (value) => orderTypeLabels[value as OperationApi.Enums.OrderTypes],
-    },
-    {
-      key: 'orderStatus',
-      header: t('operation.orderFields.orderStatus'),
-      render: (value) => orderStatusLabels[value as OperationApi.Enums.OrderStatus],
-    },
-    {
-      key: 'issuedDate',
-      header: t('operation.orderFields.issuedDate'),
-      type: 'string',
-    },
-    {
-      key: 'completedDate',
-      header: t('operation.orderFields.completedDate'),
-      type: 'string',
-    },
-  ];
+  const operation = operationStore.selectedItem;
+  const totalOrdersCount = operation?.orders.length ?? 0;
+  const completedOrdersCount = operation?.orders.filter(
+    (order) => order.orderStatus === OperationApi.Enums.OrderStatus.Passive,
+  ).length ?? 0;
 
   return (
     <SafeAreaView style={styles.container}>
+      {operation && (
+        <View style={styles.header}>
+          <Text style={styles.operationName} numberOfLines={1} ellipsizeMode="tail">
+            {t('operation.orderListHeader.operationPrefix')} {operation.name}
+          </Text>
+          <Text style={styles.completionRate}>
+            {completedOrdersCount}/{totalOrdersCount}
+          </Text>
+        </View>
+      )}
       <DataList
-        items={operationStore.selectedItem?.orders ?? []}
-        columns={columns}
-        emptyText={operationStore.selectedItem == undefined
+        items={operation?.orders ?? []}
+        renderRow={(item) => <OrderRow order={item} />}
+        emptyText={operation == undefined
           ? t('operation.noOperationSelected')
           : t('operation.noOrdersFound')}
+        onRowPress={setSelectedOrder}
+      />
+      <OrderDetailSheet
+        order={selectedOrder}
+        onClose={() => setSelectedOrder(undefined)}
+        onShowOnMap={() => {
+          setSelectedOrder(undefined);
+          navigation.navigate('Map');
+          statusBarStore.showError(t('common.notImplementedYet'));
+        }}
       />
     </SafeAreaView>
   );
@@ -56,5 +61,27 @@ export const OrdersScreen = observer(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
+  },
+  operationName: {
+    flex: 1,
+    marginRight: 12,
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.foreground,
+  },
+  completionRate: {
+    marginRight: 4,
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.mutedForeground,
   },
 });

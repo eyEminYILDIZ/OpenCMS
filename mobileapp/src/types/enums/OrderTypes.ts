@@ -19,6 +19,26 @@ export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Give]: t('operation.orderTypes.give'),
 };
 
+export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
+    [OperationApi.Enums.OrderTypes.Move]: '#0ea5e9',
+    [OperationApi.Enums.OrderTypes.Attack]: '#dc2626',
+    [OperationApi.Enums.OrderTypes.Defend]: '#16a34a',
+    [OperationApi.Enums.OrderTypes.GatherIntelligence]: '#7c3aed',
+    [OperationApi.Enums.OrderTypes.Exchange]: '#ea580c',
+    [OperationApi.Enums.OrderTypes.Take]: '#ca8a04',
+    [OperationApi.Enums.OrderTypes.Give]: '#0d9488',
+};
+
+export const orderTypeIcons: Record<OperationApi.Enums.OrderTypes, string> = {
+    [OperationApi.Enums.OrderTypes.Move]: 'arrow-right-bold',
+    [OperationApi.Enums.OrderTypes.Attack]: 'sword-cross',
+    [OperationApi.Enums.OrderTypes.Defend]: 'shield-outline',
+    [OperationApi.Enums.OrderTypes.GatherIntelligence]: 'radar',
+    [OperationApi.Enums.OrderTypes.Exchange]: 'swap-horizontal-bold',
+    [OperationApi.Enums.OrderTypes.Take]: 'tray-arrow-down',
+    [OperationApi.Enums.OrderTypes.Give]: 'tray-arrow-up',
+};
+
 // export const orderStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderStatus)
 //     .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
 //     .map((status) => ({ value: status, label: orderStatusLabels[status] }));
