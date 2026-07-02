@@ -16,3 +16,15 @@ Mobile part of OpenCMS
 - Vector Icons
 - i18n
 - MapLibre/OpenStreetMap
+
+## Projects
+
+### MobileApp
+
+OPenCMS operator mobile application.
+
+## Features
+
+- Status Management
+- Asset Access
+- Operation Access
