@@ -28,3 +28,9 @@ OPenCMS operator mobile application.
 - Status Management
 - Asset Access
 - Operation Access
+
+## References
+
+[Vector Icons](https://oblador.github.io/react-native-vector-icons/)
+[OpenStreetMap](https://www.openstreetmap.org/about/)
+[MapLibre](https://maplibre.org/)
