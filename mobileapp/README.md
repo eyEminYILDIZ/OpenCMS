@@ -8,3 +8,11 @@ Mobile part of OpenCMS
 - Cli based app (not expo)
 - React/Typescript
 - Metro
+
+# Libraries
+
+- Axios
+- MobX
+- Vector Icons
+- i18n
+- MapLibre/OpenStreetMap
