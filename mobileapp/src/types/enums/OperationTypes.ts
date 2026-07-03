@@ -20,6 +20,14 @@ export const operationTypeLabels: Record<OperationApi.Enums.OperationType, strin
     [OperationApi.Enums.OperationType.Exchange]: t('operation.operationTypes.exchange'),
 };
 
+export const operationTypeColors: Record<OperationApi.Enums.OperationType, string> = {
+    [OperationApi.Enums.OperationType.Intercept]: '#3975f8',
+    [OperationApi.Enums.OperationType.Rescue]: '#16a34a',
+    [OperationApi.Enums.OperationType.Capture]: '#9333ea',
+    [OperationApi.Enums.OperationType.Exterminate]: '#f62c2c',
+    [OperationApi.Enums.OperationType.Exchange]: '#d97706',
+};
+
 // export const operationStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OperationStatus)
 //     .filter((v): v is OperationApi.Enums.OperationStatus => typeof v === 'number')
 //     .map((status) => ({ value: status, label: operationStatusLabels[status] }));

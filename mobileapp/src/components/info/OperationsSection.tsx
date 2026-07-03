@@ -5,7 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTranslation } from 'react-i18next';
 import { stores } from '../../stores';
 import { OperationApi } from '../../api';
-import { operationTypeLabels } from '../../types/enums/OperationTypes';
+import { operationTypeColors, operationTypeLabels } from '../../types/enums/OperationTypes';
+import { getOperationIcon } from '../operation/icons/getOperationIcon';
 import { OperationDetailSheet } from './OperationDetailSheet';
 
 export const OperationsSection = observer(() => {
@@ -72,6 +73,9 @@ const OperationRow = ({
   onPress: () => void;
 }) => (
   <TouchableOpacity style={styles.row} onPress={onPress}>
+    <View style={styles.rowIcon}>
+      {getOperationIcon(item.operationType, { size: 28, color: operationTypeColors[item.operationType] })}
+    </View>
     <View style={styles.rowLeft}>
       <Text style={[styles.rowName, isSelected && styles.rowNameSelected]}>{item.name}</Text>
       <Text style={styles.rowType}>{operationTypeLabels[item.operationType]}</Text>
@@ -118,10 +122,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 12,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#E5E7EB',
+  },
+  rowIcon: {
+    width: 32,
+    alignItems: 'center',
   },
   rowLeft: {
     flex: 1,
