@@ -8,7 +8,7 @@ import { OperationApi } from '../../api';
 import { operationTypeLabels } from '../../types/enums/OperationTypes';
 
 export const OperationsSection = observer(() => {
-  const { operationStore } = stores;
+  const { operationStore, assetStore, agentStore } = stores;
   const { t } = useTranslation();
   const [selectVisible, setSelectVisible] = useState(false);
   const [pendingId, setPendingId] = useState<string | undefined>(undefined);
@@ -25,6 +25,7 @@ export const OperationsSection = observer(() => {
       operationStore.clearSelectedItems();
     }
     setSelectVisible(false);
+    assetStore.clearSelectedItems();
   };
 
   const handleCancel = () => {

@@ -1,48 +1,110 @@
 import { useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DataList from '../components/DataList';
 import { TextBox } from '../components/TextBox';
 import { AssetDetailSheet } from '../components/assets/AssetDetailSheet';
 import { AssetRow } from '../components/assets/AssetRow';
 import { stores } from '../stores';
-import { AssetApi } from '../api';
+import { AssetApi, OperationApi } from '../api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RootTabParamList } from '../navigation/BottomTabNavigator';
+import { colors } from '../theme/colors';
 
 export const AssetsScreen = observer(() => {
-  const { assetStore } = stores;
+  const { assetStore, operationStore } = stores;
   const { t } = useTranslation();
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
-  const [selectedAsset, setSelectedAsset] = useState<AssetApi.ListAll.Response | undefined>(undefined);
+  const operationAssets: OperationApi.GetById.OperationAssetResponse[] = useMemo(() => {
+    if (operationStore.selectedItem != undefined) {
+      return operationStore.selectedItem.operationAssets.filter((asset) => asset.asset.name.includes(assetStore.listSearchValue));
+    }
+    return [];
+  }, [operationStore.selectedItem, assetStore.listSearchValue]);
 
   return (
     <SafeAreaView style={styles.container}>
+      {operationStore.selectedItem && (
+        <View style={styles.header}>
+          <Text style={styles.operationName} numberOfLines={1} ellipsizeMode="tail">
+            {t('operation.orderListHeader.operationPrefix')} {operationStore.selectedItem.name}
+          </Text>
+        </View>
+      )}
       <TextBox
         value={assetStore.listSearchValue}
         onChangeText={(v: string) => {
-          assetStore.setSearchValue(v);
+          if (operationStore.selectedItem != undefined) {
+            assetStore.setSearchValue(v);
+          } else {
+            assetStore.setSearchValue(v);
+          }
         }}
         placeholder={t('common.search')}
       />
-      <DataList
-        items={assetStore.allItems}
-        renderRow={(item) => <AssetRow asset={item} />}
-        emptyText={t('asset.noAssetsFound')}
-        onRowPress={setSelectedAsset}
-      />
-      <AssetDetailSheet
-        asset={selectedAsset}
-        onClose={() => setSelectedAsset(undefined)}
-        onShowOnMap={(asset) => {
-          setSelectedAsset(undefined);
-          assetStore.setSelectedItem(asset);
-          navigation.navigate('Map');
-        }}
-      />
+      {operationStore.selectedItem == undefined && (
+        <>
+          <DataList
+            items={assetStore.allItems}
+            renderRow={(item) => <AssetRow threatType={item.threatType} assetType={item.assetType} assetName={item.name} />}
+            emptyText={t('asset.noAssetsFound')}
+            onRowPress={(item) => assetStore.setSelectedItem(item)}
+          />
+          {assetStore.selectedItem && (
+            <AssetDetailSheet
+              id={assetStore.selectedItem.id}
+              name={assetStore.selectedItem.name}
+              assetType={assetStore.selectedItem.assetType}
+              threatType={assetStore.selectedItem.threatType}
+              latitude={assetStore.selectedItem.latitude}
+              longitude={assetStore.selectedItem.longitude}
+              speed={assetStore.selectedItem.speed}
+              isActive={assetStore.selectedItem.isActive}
+              altitude={assetStore.selectedItem.altitude}
+              heading={assetStore.selectedItem.heading}
+              firstUpdated={assetStore.selectedItem.firstUpdated}
+              lastUpdated={assetStore.selectedItem.lastUpdated}
+              onClose={() => assetStore.setSelectedItem(undefined)}
+              onShowOnMap={(id) => {
+                navigation.navigate('Map');
+              }}
+            />
+          )}
+        </>
+      )}
+      {operationStore.selectedItem != undefined && (
+        <>
+          <DataList
+            items={operationAssets}
+            renderRow={(item) => <AssetRow threatType={item.asset.threatType} assetType={item.asset.assetType} assetName={item.asset.name} />}
+            emptyText={t('asset.noAssetsFound')}
+            onRowPress={(item) => operationStore.setSelectedAsset(item)}
+          />
+          {operationStore.selectedAsset && (
+            <AssetDetailSheet
+              id={operationStore.selectedAsset.asset.id}
+              name={operationStore.selectedAsset.asset.name}
+              assetType={operationStore.selectedAsset.asset.assetType}
+              threatType={operationStore.selectedAsset.asset.threatType}
+              latitude={operationStore.selectedAsset.asset.latitude}
+              longitude={operationStore.selectedAsset.asset.longitude}
+              speed={operationStore.selectedAsset.asset.speed}
+              isActive={operationStore.selectedAsset.asset.isActive}
+              altitude={operationStore.selectedAsset.asset.altitude}
+              heading={operationStore.selectedAsset.asset.heading}
+              firstUpdated={operationStore.selectedAsset.asset.firstUpdated}
+              lastUpdated={operationStore.selectedAsset.asset.lastUpdated}
+              onClose={() => operationStore.setSelectedAsset(undefined)}
+              onShowOnMap={(id) => {
+                navigation.navigate('Map');
+              }}
+            />
+          )}
+        </>
+      )}
     </SafeAreaView>
   );
 });
@@ -50,5 +112,21 @@ export const AssetsScreen = observer(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border,
+  },
+  operationName: {
+    flex: 1,
+    marginRight: 12,
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.foreground,
   },
 });

@@ -6,18 +6,20 @@ import { threatTypeColors } from '../../types/enums/ThreatTypes';
 import { getAssetMarker } from '../map/markers/getAssetMarker';
 
 interface AssetRowProps {
-  asset: AssetApi.ListAll.Response;
+  threatType: AssetApi.Enums.ThreatTypes;
+  assetType: AssetApi.Enums.AssetTypes;
+  assetName: string;
 }
 
-export function AssetRow({ asset }: AssetRowProps) {
-  const color = threatTypeColors[asset.threatType];
+export function AssetRow({ threatType, assetType, assetName }: AssetRowProps) {
+  const color = threatTypeColors[threatType];
 
   return (
     <View style={styles.row}>
       <View style={styles.iconColumn}>
-        {getAssetMarker(asset.assetType, { size: 28, color })}
+        {getAssetMarker(assetType, { size: 28, color })}
       </View>
-      <Text style={styles.name}>{asset.name}</Text>
+      <Text style={styles.name}>{assetName}</Text>
     </View>
   );
 }

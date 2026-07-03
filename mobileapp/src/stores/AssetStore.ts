@@ -40,6 +40,10 @@ export class AssetStore {
         this.getById(item?.id || '');
     }
 
+    setSelectedItemById = (id: string) => {
+        this.getById(id);
+    }
+
     setPanelMode = (mode: PanelModes) => {
         this.panelMode = mode;
     }

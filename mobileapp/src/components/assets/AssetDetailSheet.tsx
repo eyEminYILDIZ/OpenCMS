@@ -8,16 +8,27 @@ import { threatTypeLabels } from '../../types/enums/ThreatTypes';
 import { colors } from '../../theme/colors';
 
 interface AssetDetailSheetProps {
-  asset: AssetApi.ListAll.Response | undefined;
+  id: string;
+  name: string;
+  assetType: AssetApi.Enums.AssetTypes;
+  threatType: AssetApi.Enums.ThreatTypes;
+  latitude: number;
+  longitude: number;
+  speed: number;
+  isActive: boolean;
+  altitude: number;
+  heading: number;
+  firstUpdated: string;
+  lastUpdated: string;
   onClose: () => void;
-  onShowOnMap: (asset: AssetApi.ListAll.Response) => void;
+  onShowOnMap: (id: string) => void;
 }
 
-export const AssetDetailSheet = ({ asset, onClose, onShowOnMap }: AssetDetailSheetProps) => {
+export const AssetDetailSheet = ({ id, name, assetType, threatType, latitude, longitude, speed, isActive, altitude, heading, firstUpdated, lastUpdated, onClose, onShowOnMap }: AssetDetailSheetProps) => {
   const { t } = useTranslation();
 
   return (
-    <Modal visible={asset != null} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={name != null} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.overlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
         <View style={styles.sheet}>
@@ -28,20 +39,20 @@ export const AssetDetailSheet = ({ asset, onClose, onShowOnMap }: AssetDetailShe
             </TouchableOpacity>
           </View>
 
-          {asset && (
+          {id && (
             <View style={styles.card}>
-              <Row label={t('asset.fields.name')} value={asset.name} />
-              <Row label={t('asset.fields.assetType')} value={assetTypeLabels[asset.assetType]} />
-              <Row label={t('asset.fields.threatType')} value={threatTypeLabels[asset.threatType]} />
-              <Row label={t('asset.fields.latitude')} value={asset.latitude.toLocaleString()} />
-              <Row label={t('asset.fields.longitude')} value={asset.longitude.toLocaleString()} />
-              <Row label={t('asset.fields.speed')} value={asset.speed.toLocaleString()} />
-              <Row label={t('asset.fields.isActive')} value={asset.isActive ? t('common.yes') : t('common.no')} last />
+              <Row label={t('asset.fields.name')} value={name} />
+              <Row label={t('asset.fields.assetType')} value={assetTypeLabels[assetType]} />
+              <Row label={t('asset.fields.threatType')} value={threatTypeLabels[threatType]} />
+              <Row label={t('asset.fields.latitude')} value={latitude.toLocaleString()} />
+              <Row label={t('asset.fields.longitude')} value={longitude.toLocaleString()} />
+              <Row label={t('asset.fields.speed')} value={speed.toLocaleString()} />
+              <Row label={t('asset.fields.isActive')} value={isActive ? t('common.yes') : t('common.no')} last />
             </View>
           )}
 
-          {asset && (
-            <TouchableOpacity style={styles.showOnMapButton} onPress={() => onShowOnMap(asset)}>
+          {id && (
+            <TouchableOpacity style={styles.showOnMapButton} onPress={() => onShowOnMap(id)}>
               <MaterialCommunityIcons name="map-marker-outline" size={18} color={colors.primaryForeground} />
               <Text style={styles.showOnMapButtonText}>{t('asset.detail.showOnMap')}</Text>
             </TouchableOpacity>
