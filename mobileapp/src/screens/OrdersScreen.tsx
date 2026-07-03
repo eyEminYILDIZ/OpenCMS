@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DataList from '../components/DataList';
 import { OrderDetailSheet } from '../components/orders/OrderDetailSheet';
 import { OrderRow } from '../components/orders/OrderRow';
+import { OperationHeader } from '../components/operation/OperationHeader';
 import { stores } from '../stores';
 import { OperationApi } from '../api';
 import { RootTabParamList } from '../navigation/BottomTabNavigator';
@@ -27,13 +28,12 @@ export const OrdersScreen = observer(() => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <OperationHeader />
       {operation && (
-        <View style={styles.header}>
-          <Text style={styles.operationName} numberOfLines={1} ellipsizeMode="tail">
-            {t('operation.orderListHeader.operationPrefix')} {operation.name}
-          </Text>
+        <View style={styles.completionRateRow}>
+          <Text style={styles.title}>Orders</Text>
           <Text style={styles.completionRate}>
-            {completedOrdersCount}/{totalOrdersCount}
+            Completion: {completedOrdersCount}/{totalOrdersCount}
           </Text>
         </View>
       )}
@@ -62,25 +62,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
+  completionRateRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
+    paddingVertical: 8,
   },
-  operationName: {
-    flex: 1,
-    marginRight: 12,
+  title: {
     fontSize: 18,
     fontWeight: '600',
     color: colors.foreground,
   },
   completionRate: {
-    marginRight: 4,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: colors.mutedForeground,
   },

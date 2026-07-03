@@ -2,17 +2,17 @@ import { useNavigation } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DataList from '../components/DataList';
 import { TextBox } from '../components/TextBox';
 import { AssetDetailSheet } from '../components/assets/AssetDetailSheet';
 import { AssetRow } from '../components/assets/AssetRow';
+import { OperationHeader } from '../components/operation/OperationHeader';
 import { stores } from '../stores';
 import { AssetApi, OperationApi } from '../api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RootTabParamList } from '../navigation/BottomTabNavigator';
-import { colors } from '../theme/colors';
 
 export const AssetsScreen = observer(() => {
   const { assetStore, operationStore } = stores;
@@ -27,13 +27,7 @@ export const AssetsScreen = observer(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {operationStore.selectedItem && (
-        <View style={styles.header}>
-          <Text style={styles.operationName} numberOfLines={1} ellipsizeMode="tail">
-            {t('operation.orderListHeader.operationPrefix')} {operationStore.selectedItem.name}
-          </Text>
-        </View>
-      )}
+      <OperationHeader />
       <TextBox
         value={assetStore.listSearchValue}
         onChangeText={(v: string) => {
@@ -112,21 +106,5 @@ export const AssetsScreen = observer(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border,
-  },
-  operationName: {
-    flex: 1,
-    marginRight: 12,
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.foreground,
   },
 });

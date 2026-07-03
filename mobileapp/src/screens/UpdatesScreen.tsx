@@ -1,24 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { OperationHeader } from '../components/operation/OperationHeader';
+import { colors } from '../theme/colors';
+
 
 export const UpdatesScreen = () => {
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <OperationHeader />
       <Text style={styles.title}>Updates</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F9FAFB',
   },
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.foreground,
   },
+
 });

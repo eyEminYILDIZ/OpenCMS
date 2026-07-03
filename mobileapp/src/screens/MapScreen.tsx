@@ -3,8 +3,10 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { MapControls } from '../components/map/MapControls';
+import { OperationHeader } from '../components/operation/OperationHeader';
 import { AssetApi } from '../api';
 import { stores } from '../stores';
 import { useLocation } from '../hooks/useLocation';
@@ -148,7 +150,8 @@ export const MapScreen = observer(() => {
   }, [headingsKey]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <OperationHeader />
       <Map
         style={styles.map}
         mapStyle={mapSettingsStore.satelliteView ? MAP_STYLE_SATELLITE : MAP_STYLE_VOYAGER}
@@ -201,13 +204,17 @@ export const MapScreen = observer(() => {
         onZoomOut={handleZoomOut}
         onMyLocation={handleMyLocation}
       />
-    </View>
+    </SafeAreaView>
   );
 });
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  map: { flex: 1 },
+  container: {
+    flex: 1
+  },
+  map: {
+    flex: 1
+  },
   popupBubble: {
     backgroundColor: colors.card,
     borderColor: colors.border,
@@ -221,4 +228,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
   },
+
 });
