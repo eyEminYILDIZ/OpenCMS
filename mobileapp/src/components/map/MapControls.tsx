@@ -13,9 +13,8 @@ interface MapControlsProps {
 
 export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZoomOut, onMyLocation }) => {
   const { t } = useTranslation();
-  const { mapSettingsStore, operationStore } = stores;
+  const { mapSettingsStore } = stores;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const selectedOperationName = operationStore.selectedItem?.name;
 
   return (
     <View style={styles.container}>
@@ -58,13 +57,6 @@ export const MapControls: React.FC<MapControlsProps> = observer(({ onZoomIn, onZ
       )}
 
       <View style={styles.buttons}>
-        {selectedOperationName && (
-          <View style={styles.operationNameButton} pointerEvents="none">
-            <Text style={styles.operationNameText} numberOfLines={1}>
-              {selectedOperationName}
-            </Text>
-          </View>
-        )}
         <TouchableOpacity
           style={[styles.button, settingsOpen && styles.buttonActive]}
           onPress={() => setSettingsOpen(v => !v)}
@@ -92,7 +84,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 32,
-    left: 12,
     right: 12,
     alignItems: 'flex-end',
     gap: 6,
@@ -134,28 +125,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'flex-end',
     gap: 6,
-  },
-  operationNameButton: {
-    flex: 1,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#ffffff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingHorizontal: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.18,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  operationNameText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#374151',
   },
   button: {
     width: 40,

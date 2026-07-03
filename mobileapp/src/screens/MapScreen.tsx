@@ -13,6 +13,7 @@ import { useLocation } from '../hooks/useLocation';
 import { colors } from '../theme/colors';
 import { threatTypeColors } from '../types/enums/ThreatTypes';
 import { getAssetMarker } from '../components/map/markers/getAssetMarker';
+import { MapWrapper } from '../components/map/MapWrapper';
 
 const MAP_STYLE_VOYAGER = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
@@ -149,8 +150,9 @@ export const MapScreen = observer(() => {
     });
   }, [headingsKey]);
 
+
   return (
-    <SafeAreaView style={styles.container}>
+    <MapWrapper>
       <OperationHeader />
       <Map
         style={styles.map}
@@ -204,7 +206,7 @@ export const MapScreen = observer(() => {
         onZoomOut={handleZoomOut}
         onMyLocation={handleMyLocation}
       />
-    </SafeAreaView>
+    </MapWrapper>
   );
 });
 
