@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTranslation } from 'react-i18next';
 import { stores } from '../../stores';
 import { OperationApi } from '../../api';
-import { operationTypeColors, operationTypeLabels } from '../../types/enums/OperationTypes';
+import { operationTypeColors } from '../../types/enums/OperationTypes';
 import { getOperationIcon } from '../operation/icons/getOperationIcon';
 import { OperationDetailSheet } from './OperationDetailSheet';
 
@@ -78,7 +78,6 @@ const OperationRow = ({
     </View>
     <View style={styles.rowLeft}>
       <Text style={[styles.rowName, isSelected && styles.rowNameSelected]}>{item.name}</Text>
-      <Text style={styles.rowType}>{operationTypeLabels[item.operationType]}</Text>
     </View>
     {isSelected && (
       <MaterialCommunityIcons name="check-circle" size={18} color="#10B981" />
@@ -134,7 +133,6 @@ const styles = StyleSheet.create({
   },
   rowLeft: {
     flex: 1,
-    gap: 2,
   },
   rowName: {
     fontSize: 14,
@@ -143,9 +141,5 @@ const styles = StyleSheet.create({
   },
   rowNameSelected: {
     color: '#10B981',
-  },
-  rowType: {
-    fontSize: 12,
-    color: '#6B7280',
   },
 });
