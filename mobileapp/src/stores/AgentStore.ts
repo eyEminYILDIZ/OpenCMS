@@ -55,7 +55,7 @@ export class AgentStore {
         if (this.timer !== undefined) {
             clearInterval(this.timer);
         }
-        this.timer = setInterval(this.pingAgent, 5000);
+        this.timer = setInterval(this.pingAgent, 10000);
     }
 
     pingAgent = async () => {
@@ -78,7 +78,9 @@ export class AgentStore {
                     this.apiConnectionStatus = ConnectionStatus.Disconnected;
                 }
             });
-            this.statusBarStore.showError(i18next.t('agent.errors.pingFailed'));
+            if (this.pingErrorCount >= 3) {
+                this.statusBarStore.showError(i18next.t('agent.errors.pingFailed'));
+            }
         }
     }
 }
