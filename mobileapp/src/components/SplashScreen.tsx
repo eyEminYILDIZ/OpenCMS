@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, View } from 'react-native';
-import { colors } from '../theme/colors';
+
+// Matches the background baked into logo-2.png so the splash screen and
+// the image blend together with no visible edge.
+const SPLASH_BACKGROUND_COLOR = '#f4f5ef';
 
 const SplashScreen = () => {
   const { t } = useTranslation();
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.background,
+    backgroundColor: SPLASH_BACKGROUND_COLOR,
   },
   logo: {
     width: '70%',
