@@ -46,6 +46,12 @@ mobileapp/
 - **Persistence:** Use `@react-native-async-storage/async-storage` for local persistence (see `src/stores/SettingsStore.ts` for the load/save pattern).
 - **npm only** — do not generate `yarn.lock` or `pnpm-lock.yaml`.
 - TypeScript `strict` mode is enabled (via `@react-native/typescript-config`). All new code must pass `npx tsc --noEmit`.
+- **Every directory must have an `index.ts` barrel file.** Export all items in the directory from it, e.g.:
+  ```ts
+  export * from "./icons"
+  export * from "./AssetHeader"
+  ```
+  Missing barrel files cause bad/inconsistent imports — always create or update `index.ts` when adding a file or subdirectory.
 
 ## Internationalisation (i18n)
 
