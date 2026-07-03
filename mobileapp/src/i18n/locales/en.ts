@@ -27,6 +27,9 @@ const en = {
     agents: 'Agents',
     operations: 'Operations',
   },
+  splash: {
+    logoAlt: 'OpenCMS',
+  },
   agent: {
     errors: {
       loadCountFailed: 'Failed to load agent counts.',
