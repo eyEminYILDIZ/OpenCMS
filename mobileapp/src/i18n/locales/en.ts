@@ -166,7 +166,6 @@ const en = {
       orders: 'Orders',
     },
     noItemSelected: 'No item selected',
-    selectOperation: 'Select Operation',
     noOperationsFound: 'No operations found',
     noOperationSelected: 'No operation selected',
     noOrdersFound: 'No orders found',
@@ -175,6 +174,11 @@ const en = {
     },
     create: {
       title: 'Create Operation',
+    },
+    detailOperation: {
+      title: 'Operation Details',
+      setSelectedOperation: 'Set Selected Operation',
+      deselectOperation: 'Deselect Operation',
     },
     createAsset: {
       title: 'Create Operation Asset',
