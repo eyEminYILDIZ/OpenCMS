@@ -32,6 +32,12 @@ webapp/
 - **MobX rules:** Wrap components that read observable store values with `observer`. Never memoize observable-derived values with an empty dependency array (`useMemo(() => ..., [])`) — MobX tracks reads at render time and memoizing with `[]` breaks reactivity.
 - **npm only** — do not generate `yarn.lock` or `pnpm-lock.yaml`.
 - TypeScript `strict` mode is enabled. All new code must pass `npm run type-check`.
+- **Every directory must have an `index.ts` barrel file.** Export all items in the directory from it, e.g.:
+  ```ts
+  export * from "./icons"
+  export * from "./AssetHeader"
+  ```
+  Missing barrel files cause bad/inconsistent imports — always create or update `index.ts` when adding a file or subdirectory.
 
 ## Internationalisation (i18n)
 
