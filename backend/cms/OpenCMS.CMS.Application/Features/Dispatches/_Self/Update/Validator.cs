@@ -25,5 +25,8 @@ public class Validator : AbstractValidator<Command>
         RuleFor(x => x.RelatedEntityId)
             .NotEmpty().WithMessage("RelatedEntityId is required.")
             .When(x => x.Category != DispatchCategories.General);
+
+        RuleFor(x => x.ProviderAgentId)
+            .NotEmpty().WithMessage("ProviderAgentId is required.");
     }
 }

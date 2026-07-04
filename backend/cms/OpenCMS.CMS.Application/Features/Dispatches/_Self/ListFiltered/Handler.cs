@@ -11,7 +11,9 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 
     public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
-        var dispatchQuery = _dbContext.Dispatches.Where(d => d.RelatedEntityId == request.RelatedEntityId);
+        var dispatchQuery = _dbContext.Dispatches
+                                       .Include(d => d.ProviderAgent)
+                                       .Where(d => d.RelatedEntityId == request.RelatedEntityId);
 
         if (!string.IsNullOrEmpty(request.SearchValue))
         {
@@ -29,6 +31,8 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
             OccuredAt = dispatch.OccuredAt,
             RelatedEntityId = dispatch.RelatedEntityId,
             RelatedChildEntityId = dispatch.RelatedChildEntityId,
+            ProviderAgentId = dispatch.ProviderAgentId,
+            ProviderAgentName = dispatch.ProviderAgent.Name,
             CreatedAt = dispatch.CreatedAt,
             UpdatedAt = dispatch.UpdatedAt
         }).ToList();

@@ -8,6 +8,7 @@ public class Command : IRequest<Result<CommandResponse>>
     public DateTime OccuredAt { get; set; }
     public Guid RelatedEntityId { get; set; }
     public Guid? RelatedChildEntityId { get; set; }
+    public Guid ProviderAgentId { get; set; }
 }
 
 public class CommandResponse
@@ -19,6 +20,7 @@ public class CommandResponse
     public DateTime OccuredAt { get; set; }
     public Guid RelatedEntityId { get; set; }
     public Guid? RelatedChildEntityId { get; set; }
+    public Guid ProviderAgentId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 }

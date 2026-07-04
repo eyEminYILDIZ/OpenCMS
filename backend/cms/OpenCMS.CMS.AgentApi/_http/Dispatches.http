@@ -16,7 +16,8 @@ Content-Type: application/json
   "category": 0,
   "occuredAt": "2026-06-10T08:00:00Z",
   "relatedEntityId": "00000000-0000-0000-0000-000000000000",
-  "relatedChildEntityId": null
+  "relatedChildEntityId": null,
+  "providerAgentId": "3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"
 }
 
 ###
@@ -31,7 +32,8 @@ Content-Type: application/json
   "category": 0,
   "occuredAt": "2026-06-10T08:30:00Z",
   "relatedEntityId": "00000000-0000-0000-0000-000000000000",
-  "relatedChildEntityId": null
+  "relatedChildEntityId": null,
+  "providerAgentId": "3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"
 }
 
 ###

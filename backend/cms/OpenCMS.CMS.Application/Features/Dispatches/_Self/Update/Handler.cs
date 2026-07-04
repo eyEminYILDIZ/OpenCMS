@@ -22,6 +22,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         dispatch.OccuredAt = request.OccuredAt;
         dispatch.RelatedEntityId = request.RelatedEntityId;
         dispatch.RelatedChildEntityId = request.RelatedChildEntityId;
+        dispatch.ProviderAgentId = request.ProviderAgentId;
 
         _dbContext.Dispatches.Update(dispatch);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -35,6 +36,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             OccuredAt = dispatch.OccuredAt,
             RelatedEntityId = dispatch.RelatedEntityId,
             RelatedChildEntityId = dispatch.RelatedChildEntityId,
+            ProviderAgentId = dispatch.ProviderAgentId,
             CreatedAt = dispatch.CreatedAt,
             UpdatedAt = dispatch.UpdatedAt
         };

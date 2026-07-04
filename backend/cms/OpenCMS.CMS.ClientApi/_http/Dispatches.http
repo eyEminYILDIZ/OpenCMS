@@ -34,7 +34,8 @@ Content-Type: application/json
   "category": 1,
   "occuredAt": "2026-06-10T08:00:00Z",
   "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
-  "relatedChildEntityId": null
+  "relatedChildEntityId": null,
+  "providerAgentId": "3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"
 }
 
 ###
@@ -49,7 +50,8 @@ Content-Type: application/json
   "category": 1,
   "occuredAt": "2026-06-10T08:30:00Z",
   "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
-  "relatedChildEntityId": null
+  "relatedChildEntityId": null,
+  "providerAgentId": "3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"
 }
 
 ###

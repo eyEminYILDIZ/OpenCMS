@@ -28,6 +28,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             OccuredAt = dispatch.OccuredAt,
             RelatedEntityId = dispatch.RelatedEntityId,
             RelatedChildEntityId = dispatch.RelatedChildEntityId,
+            ProviderAgentId = dispatch.ProviderAgentId,
             CreatedAt = dispatch.CreatedAt,
             UpdatedAt = dispatch.UpdatedAt
         };

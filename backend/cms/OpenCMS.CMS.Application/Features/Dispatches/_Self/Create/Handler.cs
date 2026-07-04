@@ -18,7 +18,8 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             Category = request.Category,
             OccuredAt = request.OccuredAt,
             RelatedEntityId = request.RelatedEntityId,
-            RelatedChildEntityId = request.RelatedChildEntityId
+            RelatedChildEntityId = request.RelatedChildEntityId,
+            ProviderAgentId = request.ProviderAgentId
         };
 
         _dbContext.Dispatches.Add(dispatch);
@@ -33,6 +34,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             OccuredAt = dispatch.OccuredAt,
             RelatedEntityId = dispatch.RelatedEntityId,
             RelatedChildEntityId = dispatch.RelatedChildEntityId,
+            ProviderAgentId = dispatch.ProviderAgentId,
             CreatedAt = dispatch.CreatedAt,
             UpdatedAt = dispatch.UpdatedAt
         };

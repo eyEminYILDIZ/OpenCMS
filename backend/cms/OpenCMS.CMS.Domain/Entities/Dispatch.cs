@@ -9,6 +9,9 @@ public class Dispatch : BaseEntity
 
     public Guid RelatedEntityId { get; set; }
     public Guid? RelatedChildEntityId { get; set; }
+
+    public Guid ProviderAgentId { get; set; }
+    public Agent ProviderAgent { get; set; }
 }
 
 public enum DispatchCategories
