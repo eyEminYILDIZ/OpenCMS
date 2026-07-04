@@ -287,6 +287,14 @@ const en = {
     connected: 'Connected',
     disconnected: 'Disconnected',
   },
+  dispatch: {
+    dispatchCategories: {
+      general: 'General',
+      asset: 'Asset',
+      agent: 'Agent',
+      operation: 'Operation',
+    },
+  },
 } as const;
 
 export default en;
