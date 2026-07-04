@@ -4,6 +4,7 @@ import { DispatchApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 import { OperationStore } from "./OperationStore";
+import { GuidService } from "../services";
 
 export class DispatchStore {
 
@@ -48,15 +49,11 @@ export class DispatchStore {
     }
 
     getAllItems = async () => {
-        if (this.operationStore.selectedItem == undefined) {
-            runInAction(() => {
-                this.allItems = [];
-            });
-            return;
-        }
+
 
         try {
-            const request: DispatchApi.ListFiltered.Request = { searchValue: this.listSearchValue, relatedEntityId: this.operationStore.selectedItem.id };
+            const relatedEntityId = this.operationStore.selectedItem?.id || GuidService.generateEmptyGuid();
+            const request: DispatchApi.ListFiltered.Request = { searchValue: this.listSearchValue, relatedEntityId };
             const response = await DispatchApi.ListFiltered.call(request);
             runInAction(() => {
                 this.allItems = response.data;

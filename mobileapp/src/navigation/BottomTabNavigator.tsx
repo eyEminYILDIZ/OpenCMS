@@ -129,7 +129,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Dispatches"
         component={DispatchesScreen}
-        options={{ tabBarIcon: 'timeline-outline' } as any}
+        options={{ tabBarIcon: 'timeline-text-outline' } as any}
       />
     </Tab.Navigator>
   );
