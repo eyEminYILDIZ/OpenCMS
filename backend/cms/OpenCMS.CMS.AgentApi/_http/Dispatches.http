@@ -1,0 +1,43 @@
+@AgentApi = http://localhost:5010
+
+### List Dispatches Filtered By Related Entity
+GET {{AgentApi}}/dispatches/filtered?relatedEntityId=c394835f-ce35-4e6b-8cd7-7e553def2e25
+Accept: application/json
+
+###
+
+### Create Dispatch
+POST {{AgentApi}}/dispatches
+Content-Type: application/json
+
+{
+  "title": "Unauthorized aircraft detected",
+  "description": "Unidentified aircraft entered restricted airspace in sector north east.",
+  "category": 1,
+  "occuredAt": "2026-06-10T08:00:00Z",
+  "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "relatedChildEntityId": null
+}
+
+###
+
+### Update Dispatch
+PUT {{AgentApi}}/dispatches/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "title": "Unauthorized aircraft detected — updated",
+  "description": "Unidentified aircraft intercepted and identified as friendly.",
+  "category": 1,
+  "occuredAt": "2026-06-10T08:30:00Z",
+  "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "relatedChildEntityId": null
+}
+
+###
+
+### Delete Dispatch
+DELETE {{AgentApi}}/dispatches/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+###
