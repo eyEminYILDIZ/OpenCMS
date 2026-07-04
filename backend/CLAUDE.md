@@ -17,6 +17,8 @@ dotnet run --project cms/OpenCMS.CMS.ClientApi
 
 No test projects exist yet.
 
+The database (`backend/cms_data/opencms.db`) is a git-tracked file. Don't delete it.
+
 ## Architecture
 
 .NET 10 backend using **Vertical Slice Architecture + CQRS via MediatR**. Two APIs share a common Application and Infrastructure layer:
