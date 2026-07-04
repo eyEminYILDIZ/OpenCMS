@@ -2,6 +2,7 @@ namespace OpenCMS.CMS.Application.Dispatches.Self.ListFiltered;
 
 public class Query : IRequest<Result<List<QueryResponse>>>
 {
+    public string SearchValue { get; set; }
     public Guid RelatedEntityId { get; set; }
 }
 
