@@ -11,9 +11,14 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 
     public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
-        var dispatches = await _dbContext.Dispatches
-            .Where(d => d.RelatedEntityId == request.RelatedEntityId)
-            .ToListAsync(cancellationToken);
+        var dispatchQuery = _dbContext.Dispatches.Where(d => d.RelatedEntityId == request.RelatedEntityId);
+
+        if (!string.IsNullOrEmpty(request.SearchValue))
+        {
+            dispatchQuery = dispatchQuery.Where(d => d.Title.ToLower().Contains(request.SearchValue.ToLower()));
+        }
+
+        var dispatches = await dispatchQuery.ToListAsync(cancellationToken);
 
         return dispatches.Select(dispatch => new QueryResponse
         {

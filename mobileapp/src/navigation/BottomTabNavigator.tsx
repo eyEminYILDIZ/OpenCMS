@@ -13,14 +13,14 @@ import { AssetsScreen } from '../screens/AssetsScreen';
 import { InfoScreen } from '../screens/InfoScreen';
 import { MapScreen } from '../screens/MapScreen';
 import { OrdersScreen } from '../screens/OrdersScreen';
-import { UpdatesScreen } from '../screens/UpdatesScreen';
+import { DispatchesScreen } from '../screens/DispatchesScreen';
 
 export type RootTabParamList = {
   Info: undefined;
   Assets: undefined;
   Map: undefined;
   Orders: undefined;
-  Updates: undefined;
+  Dispatches: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -127,8 +127,8 @@ export default function BottomTabNavigator() {
         options={{ tabBarIcon: 'clipboard-list-outline' } as any}
       />
       <Tab.Screen
-        name="Updates"
-        component={UpdatesScreen}
+        name="Dispatches"
+        component={DispatchesScreen}
         options={{ tabBarIcon: 'timeline-outline' } as any}
       />
     </Tab.Navigator>

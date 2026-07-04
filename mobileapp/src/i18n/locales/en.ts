@@ -288,6 +288,7 @@ const en = {
     disconnected: 'Disconnected',
   },
   dispatch: {
+    noDispatchesFound: 'No dispatches found',
     errors: {
       loadItemsFailed: 'Failed to load dispatches.',
       noItemSelected: 'No dispatch selected.',
@@ -303,6 +304,15 @@ const en = {
       asset: 'Asset',
       agent: 'Agent',
       operation: 'Operation',
+    },
+    detail: {
+      title: 'Dispatch Details',
+    },
+    fields: {
+      title: 'Title',
+      description: 'Description',
+      category: 'Category',
+      occuredAt: 'Occurred At',
     },
   },
 } as const;

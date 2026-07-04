@@ -37,6 +37,7 @@ export namespace DispatchApi {
     export namespace ListFiltered {
         export const path = "/dispatches/filtered";
         export interface Request {
+            searchValue: string;
             relatedEntityId: string;
         }
         export interface Response {
@@ -53,6 +54,7 @@ export namespace DispatchApi {
         export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
             const response = await ApiClient.get(path, {
                 params: {
+                    search: request.searchValue,
                     relatedEntityId: request.relatedEntityId
                 }
             });

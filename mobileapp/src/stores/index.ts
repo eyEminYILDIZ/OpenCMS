@@ -11,7 +11,7 @@ const statusBarStore = new StatusBarStore();
 const agentStore = new AgentStore(statusBarStore);
 const assetStore = new AssetStore(statusBarStore);
 const operationStore = new OperationStore(statusBarStore);
-const dispatchStore = new DispatchStore(statusBarStore);
+const dispatchStore = new DispatchStore(statusBarStore, operationStore);
 const applicationStore = new ApplicationStore(statusBarStore, agentStore, assetStore, operationStore, dispatchStore);
 const mapSettingsStore = new MapSettingsStore();
 

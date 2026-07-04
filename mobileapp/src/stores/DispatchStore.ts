@@ -3,16 +3,19 @@ import i18next from "i18next";
 import { DispatchApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
+import { OperationStore } from "./OperationStore";
 
 export class DispatchStore {
 
     statusBarStore: StatusBarStore;
 
-    constructor(statusBarStore: StatusBarStore) {
+    constructor(statusBarStore: StatusBarStore, operationStore: OperationStore) {
         this.statusBarStore = statusBarStore;
+        this.operationStore = operationStore;
         makeAutoObservable(this);
     }
 
+    operationStore: OperationStore;
     allItems: DispatchApi.ListAll.Response[] = [];
     filteredItems: DispatchApi.ListFiltered.Response[] = [];
     selectedItem: DispatchApi.ListAll.Response | undefined = undefined;
@@ -45,22 +48,18 @@ export class DispatchStore {
     }
 
     getAllItems = async () => {
-        try {
-            const response = await DispatchApi.ListAll.call(this.listSearchValue);
+        if (this.operationStore.selectedItem == undefined) {
             runInAction(() => {
-                this.allItems = response.data;
+                this.allItems = [];
             });
-        } catch (error) {
-            this.statusBarStore.showError(i18next.t('dispatch.errors.loadItemsFailed'));
+            return;
         }
-    }
 
-    getFilteredItems = async (relatedEntityId: string) => {
         try {
-            const request: DispatchApi.ListFiltered.Request = { relatedEntityId };
+            const request: DispatchApi.ListFiltered.Request = { searchValue: this.listSearchValue, relatedEntityId: this.operationStore.selectedItem.id };
             const response = await DispatchApi.ListFiltered.call(request);
             runInAction(() => {
-                this.filteredItems = response.data;
+                this.allItems = response.data;
             });
         } catch (error) {
             this.statusBarStore.showError(i18next.t('dispatch.errors.loadItemsFailed'));
