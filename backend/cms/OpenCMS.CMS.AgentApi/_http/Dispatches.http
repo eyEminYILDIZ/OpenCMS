@@ -1,7 +1,7 @@
 @AgentApi = http://localhost:5010
 
 ### List Dispatches Filtered By Related Entity
-GET {{AgentApi}}/dispatches/filtered?relatedEntityId=c394835f-ce35-4e6b-8cd7-7e553def2e25
+GET {{AgentApi}}/dispatches/filtered?relatedEntityId=a394835f-ce35-4e6b-8cd7-7e553def2e45
 Accept: application/json
 
 ###
@@ -15,7 +15,7 @@ Content-Type: application/json
   "description": "Unidentified aircraft entered restricted airspace in sector north east.",
   "category": 1,
   "occuredAt": "2026-06-10T08:00:00Z",
-  "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "relatedEntityId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
   "relatedChildEntityId": null
 }
 
@@ -30,7 +30,7 @@ Content-Type: application/json
   "description": "Unidentified aircraft intercepted and identified as friendly.",
   "category": 1,
   "occuredAt": "2026-06-10T08:30:00Z",
-  "relatedEntityId": "c394835f-ce35-4e6b-8cd7-7e553def2e25",
+  "relatedEntityId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
   "relatedChildEntityId": null
 }
 

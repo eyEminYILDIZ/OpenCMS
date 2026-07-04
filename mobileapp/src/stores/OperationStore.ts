@@ -119,6 +119,7 @@ export class OperationStore {
             const response = await OperationApi.GetById.call(request);
             runInAction(() => {
                 this.selectedItem = response.data;
+
             });
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.loadItemFailed'));

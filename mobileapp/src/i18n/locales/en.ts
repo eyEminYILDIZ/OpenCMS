@@ -288,6 +288,16 @@ const en = {
     disconnected: 'Disconnected',
   },
   dispatch: {
+    errors: {
+      loadItemsFailed: 'Failed to load dispatches.',
+      noItemSelected: 'No dispatch selected.',
+      deleteFailed: 'Failed to delete dispatch.',
+      deleteSucceeded: 'Dispatch deleted successfully.',
+      updateFailed: 'Failed to update dispatch.',
+      updateSucceeded: 'Dispatch updated successfully.',
+      createFailed: 'Failed to create dispatch.',
+      createSucceeded: 'Dispatch created successfully.',
+    },
     dispatchCategories: {
       general: 'General',
       asset: 'Asset',

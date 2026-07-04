@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { AgentStore } from "./AgentStore";
 import { AssetStore } from "./AssetStore";
+import { DispatchStore } from "./DispatchStore";
 import { OperationStore } from "./OperationStore";
 import { StatusBarStore } from "./StatusBarStore";
 import { MenuTypes } from "../types/MenuTypes";
@@ -13,11 +14,13 @@ export class ApplicationStore {
         _agentStore: AgentStore,
         _assetStore: AssetStore,
         _operationStore: OperationStore,
+        _dispatchStore: DispatchStore,
     ) {
         this.statusBarStore = _statusBarStore;
         this.agentStore = _agentStore;
         this.assetStore = _assetStore;
         this.operationStore = _operationStore;
+        this.dispatchStore = _dispatchStore;
         this.currentMenu = MenuTypes.Assets;
         // use this bottom of constructor, otherwise MobX cant detect observables.
         makeAutoObservable(this);
@@ -36,6 +39,7 @@ export class ApplicationStore {
     agentStore: AgentStore;
     assetStore: AssetStore;
     operationStore: OperationStore;
+    dispatchStore: DispatchStore;
     currentMenu: MenuTypes;
     socketConnectionStatus: ConnectionStatus = ConnectionStatus.Disconnected;
 
@@ -50,5 +54,6 @@ export class ApplicationStore {
         await this.agentStore.initialize();
         await this.assetStore.initialize();
         await this.operationStore.initialize();
+        await this.dispatchStore.initialize();
     }
 }
