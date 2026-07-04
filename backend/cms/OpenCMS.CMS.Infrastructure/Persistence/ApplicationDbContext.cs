@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Asset> Assets { get; set; }
+    public DbSet<Dispatch> Dispatches { get; set; }
     public DbSet<Operation> Operations { get; set; }
     public DbSet<OperationAsset> OperationAssets { get; set; }
     public DbSet<Order> Orders { get; set; }
