@@ -44,7 +44,8 @@ export const DispatchDetailSheet = ({ dispatch, onClose }: DispatchDetailSheetPr
                   </View>
                 }
               />
-              <Row label={t('dispatch.fields.occuredAt')} value={DateService.toLocalDate(dispatch.occuredAt)} last />
+              <Row label={t('dispatch.fields.occuredAt')} value={DateService.toLocalDate(dispatch.occuredAt)} />
+              <Row label={t('dispatch.fields.providerAgent')} value={dispatch.providerAgentName} last />
             </View>
           )}
         </View>

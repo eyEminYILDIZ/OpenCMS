@@ -313,6 +313,7 @@ const en = {
       description: 'Description',
       category: 'Category',
       occuredAt: 'Occurred At',
+      providerAgent: 'Provider Agent',
     },
   },
 } as const;

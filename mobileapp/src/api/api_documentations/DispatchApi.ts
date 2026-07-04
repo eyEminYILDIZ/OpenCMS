@@ -21,6 +21,8 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
+            providerAgentName: string;
             createdAt: string;
             updatedAt: string | null;
         }
@@ -48,6 +50,8 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
+            providerAgentName: string;
             createdAt: string;
             updatedAt: string | null;
         }
@@ -71,6 +75,7 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
         }
         export interface Response {
             id: string;
@@ -80,6 +85,7 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
             createdAt: string;
             updatedAt: string | null;
         }
@@ -99,6 +105,7 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
         }
         export interface Response {
             id: string;
@@ -108,6 +115,7 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
             createdAt: string;
             updatedAt: string | null;
         }
@@ -131,6 +139,7 @@ export namespace DispatchApi {
             occuredAt: string;
             relatedEntityId: string;
             relatedChildEntityId: string | null;
+            providerAgentId: string;
             createdAt: string;
             updatedAt: string | null;
         }
