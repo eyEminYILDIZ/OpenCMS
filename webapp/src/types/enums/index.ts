@@ -4,3 +4,4 @@ export * from "./AgentTypes";
 export * from "./OperationTypes";
 export * from "./IsActive";
 export * from "./OrderTypes";
+export * from "./DispatchCategories";

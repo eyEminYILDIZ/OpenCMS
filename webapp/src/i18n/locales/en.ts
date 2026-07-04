@@ -253,6 +253,14 @@ const en = {
       loadFailed: 'Failed to load items.',
     },
   },
+  dispatch: {
+    dispatchCategories: {
+      general: 'General',
+      asset: 'Asset',
+      agent: 'Agent',
+      operation: 'Operation',
+    },
+  },
 } as const;
 
 export default en;
