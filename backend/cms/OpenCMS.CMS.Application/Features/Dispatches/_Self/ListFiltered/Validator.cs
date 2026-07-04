@@ -7,6 +7,6 @@ public class Validator : AbstractValidator<Query>
     public Validator()
     {
         RuleFor(x => x.RelatedEntityId)
-            .NotEmpty().WithMessage("RelatedEntityId is required.");
+            .NotNull().WithMessage("RelatedEntityId is required.");
     }
 }

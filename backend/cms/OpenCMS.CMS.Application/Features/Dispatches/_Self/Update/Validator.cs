@@ -23,6 +23,7 @@ public class Validator : AbstractValidator<Command>
             .NotEmpty().WithMessage("OccuredAt is required.");
 
         RuleFor(x => x.RelatedEntityId)
-            .NotEmpty().WithMessage("RelatedEntityId is required.");
+            .NotEmpty().WithMessage("RelatedEntityId is required.")
+            .When(x => x.Category != DispatchCategories.General);
     }
 }

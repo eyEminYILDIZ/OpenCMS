@@ -1,7 +1,7 @@
 @AgentApi = http://localhost:5010
 
 ### List Dispatches Filtered By Related Entity
-GET {{AgentApi}}/dispatches/filtered?relatedEntityId=a394835f-ce35-4e6b-8cd7-7e553def2e45
+GET {{AgentApi}}/dispatches/filtered?relatedEntityId=00000000-0000-0000-0000-000000000000
 Accept: application/json
 
 ###
@@ -11,11 +11,11 @@ POST {{AgentApi}}/dispatches
 Content-Type: application/json
 
 {
-  "title": "Unauthorized aircraft detected",
-  "description": "Unidentified aircraft entered restricted airspace in sector north east.",
-  "category": 1,
+  "title": "System maintenance required",
+  "description": "The system requires maintenance to ensure optimal performance at 29 July 2026 for 2 hours.",
+  "category": 0,
   "occuredAt": "2026-06-10T08:00:00Z",
-  "relatedEntityId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
+  "relatedEntityId": "00000000-0000-0000-0000-000000000000",
   "relatedChildEntityId": null
 }
 
@@ -26,11 +26,11 @@ PUT {{AgentApi}}/dispatches/00000000-0000-0000-0000-000000000000
 Content-Type: application/json
 
 {
-  "title": "Unauthorized aircraft detected — updated",
-  "description": "Unidentified aircraft intercepted and identified as friendly.",
-  "category": 1,
+  "title": "System maintenance required — updated",
+  "description": "The system requires maintenance to ensure optimal performance at 29 July 2026 for 2 hours.",
+  "category": 0,
   "occuredAt": "2026-06-10T08:30:00Z",
-  "relatedEntityId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
+  "relatedEntityId": "00000000-0000-0000-0000-000000000000",
   "relatedChildEntityId": null
 }
 
