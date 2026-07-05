@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colors } from '../theme/colors';
+import { colors } from '../../theme/colors';
 
 type ColumnType = 'string' | 'number' | 'button';
 type ColumnKey<T> = keyof T | 'edit' | 'delete' | 'go';

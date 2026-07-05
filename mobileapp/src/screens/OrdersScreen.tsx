@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import DataList from '../components/DataList';
+import { DataList } from '../components/ui';
 import { OrderDetailSheet } from '../components/orders/OrderDetailSheet';
 import { OrderRow } from '../components/orders/OrderRow';
 import { OperationHeader } from '../components/operation/OperationHeader';

@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RNRestart from 'react-native-restart';
-import { TextBox } from '../TextBox';
+import { TextBox } from '../ui';
 import { stores } from '../../stores';
 
 interface SettingsEditModalProps {
