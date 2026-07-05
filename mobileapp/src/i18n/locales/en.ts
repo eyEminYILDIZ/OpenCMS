@@ -308,6 +308,9 @@ const en = {
     detail: {
       title: 'Dispatch Details',
     },
+    create: {
+      title: 'Create Dispatch',
+    },
     fields: {
       title: 'Title',
       description: 'Description',
