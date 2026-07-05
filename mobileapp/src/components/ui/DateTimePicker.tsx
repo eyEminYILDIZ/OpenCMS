@@ -5,12 +5,12 @@ import RNDateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../theme/colors';
+import { useFormContext } from './Form';
 
 export type DateTimePickerMode = 'date' | 'datetime';
 
-interface DateTimePickerProps {
-  value?: string;
-  onChange: (iso: string) => void;
+interface DateTimePickerProps<T extends Record<string, unknown> = Record<string, unknown>> {
+  name: keyof T & string;
   mode?: DateTimePickerMode;
   placeholder?: string;
   minimumDate?: Date;
@@ -31,14 +31,16 @@ function formatDisplay(date: Date, mode: DateTimePickerMode): string {
   return `${datePart} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
-export const DateTimePicker: React.FC<DateTimePickerProps> = ({
-  value,
-  onChange,
+export function DateTimePicker<T extends Record<string, unknown> = Record<string, unknown>>({
+  name,
   mode = 'date',
   placeholder,
   minimumDate,
   maximumDate,
-}) => {
+}: DateTimePickerProps<T>) {
+  const { values, setFieldValue } = useFormContext();
+  const value = values[name] as string | undefined;
+  const onChange = (iso: string) => setFieldValue(name, iso);
   const { t } = useTranslation();
   const [iosOpen, setIosOpen] = useState(false);
   const [androidStage, setAndroidStage] = useState<'none' | 'date' | 'time'>(
@@ -161,7 +163,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
       )}
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   field: {
