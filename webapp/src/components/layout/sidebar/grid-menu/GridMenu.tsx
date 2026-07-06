@@ -7,14 +7,14 @@ import { MenuTypes } from '../../../../types/MenuTypes';
 import GridMenuItem from './GridMenuItem';
 
 const GridMenu = observer(() => {
-  const { applicationStore, agentStore, assetStore, operationStore } = stores;
+  const { applicationStore, agentStore, assetStore, operationStore, dispatchStore } = stores;
   const { t } = useTranslation();
 
   const MENU_ITEMS: MenuConfig[] = [
     { type: MenuTypes.Assets, section: 'assets', label: t('menu.assets'), badgeCount: assetStore.assetItemCounts?.activeCount ?? 0, icon: Box },
     { type: MenuTypes.Agents, section: 'agents', label: t('menu.agents'), badgeCount: agentStore.agentItemCounts?.activeCount ?? 0, icon: Bot },
     { type: MenuTypes.Operations, section: 'operations', label: t('menu.operations'), badgeCount: operationStore.operationItemCounts?.activeCount ?? 0, icon: Activity },
-    { type: MenuTypes.Dispatches, section: 'dispatches', label: t('menu.dispatches'), badgeCount: 0, icon: ClipboardClock },
+    { type: MenuTypes.Dispatches, section: 'dispatches', label: t('menu.dispatches'), badgeCount: dispatchStore.dispatchItemCounts?.totalCount ?? 0, icon: ClipboardClock },
   ];
 
   return (

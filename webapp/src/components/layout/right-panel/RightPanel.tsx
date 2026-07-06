@@ -3,14 +3,14 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate, OperationOrderUpdate, OperationAssetDelete, OperationOrderDelete, OperationAssetDetail, OperationOrderDetail } from '../../features';
+import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate, OperationOrderUpdate, OperationAssetDelete, OperationOrderDelete, OperationAssetDetail, OperationOrderDetail, DispatchDetail, DispatchDelete, DispatchCreate, DispatchUpdate } from '../../features';
 import { PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
 import { OperationAssetCreate } from '../../features/operations/panels/OperationAssetCreate';
 
 const RightPanel = observer(() => {
   const { rightPanelOpen, toggleRightPanel } = useLayout();
-  const { applicationStore, assetStore, agentStore, operationStore } = stores;
+  const { applicationStore, assetStore, agentStore, operationStore, dispatchStore } = stores;
 
   const renderContent = () => {
     switch (applicationStore.currentMenu) {
@@ -68,6 +68,17 @@ const RightPanel = observer(() => {
             case PanelModes.Delete:
               return <OperationOrderDelete />;
           }
+        }
+      case MenuTypes.Dispatches:
+        switch (dispatchStore.panelMode) {
+          case PanelModes.Detail:
+            return <DispatchDetail />;
+          case PanelModes.Delete:
+            return <DispatchDelete />;
+          case PanelModes.Create:
+            return <DispatchCreate />;
+          case PanelModes.Update:
+            return <DispatchUpdate />;
         }
       default:
         return <p className="right-panel-empty">No panel for this section.</p>;

@@ -259,7 +259,9 @@ const en = {
   },
   dispatch: {
     noDispatchesFound: 'No dispatches found',
+    noItemSelected: 'No item selected',
     errors: {
+      loadCountFailed: 'Failed to load dispatch counts.',
       loadItemsFailed: 'Failed to load dispatches.',
       noItemSelected: 'No dispatch selected.',
       deleteFailed: 'Failed to delete dispatch.',
@@ -289,11 +291,17 @@ const en = {
       confirmMessage: "You will delete '{{title}}' titled dispatch. Are you sure to delete it?",
     },
     fields: {
+      id: 'ID',
       title: 'Title',
       description: 'Description',
       category: 'Category',
       occuredAt: 'Occurred At',
+      relatedEntityId: 'Related Entity ID',
+      relatedChildEntityId: 'Related Child Entity ID',
+      providerAgentId: 'Provider Agent ID',
       providerAgent: 'Provider Agent',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
     },
   },
 } as const;

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Search, X } from 'lucide-react';
 
 export const ItemListSearchBar = observer(() => {
-  const { applicationStore, agentStore, assetStore, operationStore } = stores;
+  const { applicationStore, agentStore, assetStore, operationStore, dispatchStore } = stores;
   const [searchValue, setSearchValue] = useState('');
   const { t } = useTranslation();
 
@@ -21,6 +21,9 @@ export const ItemListSearchBar = observer(() => {
       case MenuTypes.Operations:
         setSearchValue(operationStore.listSearchValue);
         break;
+      case MenuTypes.Dispatches:
+        setSearchValue(dispatchStore.listSearchValue);
+        break;
     }
   }, [applicationStore.currentMenu]);
 
@@ -34,6 +37,9 @@ export const ItemListSearchBar = observer(() => {
         break;
       case MenuTypes.Operations:
         operationStore.setSearchValue(searchValue);
+        break;
+      case MenuTypes.Dispatches:
+        dispatchStore.setSearchValue(searchValue);
         break;
     }
   }, [searchValue]);

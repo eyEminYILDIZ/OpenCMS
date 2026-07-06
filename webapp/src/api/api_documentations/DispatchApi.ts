@@ -34,6 +34,16 @@ export namespace DispatchApi {
             return response.data;
         }
     }
+    export namespace GetItemCounts {
+        export const path = "/dispatches/counts";
+        export interface Response {
+            totalCount: number;
+        }
+        export const call = async (): Promise<ApiResponse<Response>> => {
+            const response = await ApiClient.get(path);
+            return response.data;
+        }
+    }
     export namespace ListFiltered {
         export const path = "/dispatches/filtered";
         export interface Request {

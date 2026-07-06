@@ -3,30 +3,23 @@ import i18next from "i18next";
 import { DispatchApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
-import { OperationStore } from "./OperationStore";
 
 export class DispatchStore {
     statusBarStore: StatusBarStore;
-    operationStore: OperationStore;
 
-    constructor(statusBarStore: StatusBarStore, operationStore: OperationStore) {
+    constructor(statusBarStore: StatusBarStore) {
         this.statusBarStore = statusBarStore;
-        this.operationStore = operationStore;
         makeAutoObservable(this);
     }
 
+    dispatchItemCounts: DispatchApi.GetItemCounts.Response | null = null;
     allItems: DispatchApi.ListAll.Response[] = [];
-    filteredItems: DispatchApi.ListFiltered.Response[] = [];
     selectedItem: DispatchApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
 
     clearSelectedItems = () => {
         this.selectedItem = undefined;
-    }
-
-    clearFilteredItems = () => {
-        this.filteredItems = [];
     }
 
     setSelectedItem = (item: DispatchApi.ListAll.Response | undefined) => {
@@ -42,11 +35,20 @@ export class DispatchStore {
         this.getAllItems();
     }
 
+    loadItemCounts = async () => {
+        try {
+            const response = await DispatchApi.GetItemCounts.call();
+            runInAction(() => {
+                this.dispatchItemCounts = response.data;
+            });
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('dispatch.errors.loadCountFailed'));
+        }
+    }
+
     getAllItems = async () => {
         try {
-            const relatedEntityId = this.operationStore.selectedItem?.id || '00000000-0000-0000-0000-000000000000';
-            const request: DispatchApi.ListFiltered.Request = { searchValue: this.listSearchValue, relatedEntityId };
-            const response = await DispatchApi.ListFiltered.call(request);
+            const response = await DispatchApi.ListAll.call(this.listSearchValue);
             runInAction(() => {
                 this.allItems = response.data;
             });
@@ -68,6 +70,7 @@ export class DispatchStore {
                 this.clearSelectedItems();
                 this.panelMode = PanelModes.Detail;
             });
+            await this.loadItemCounts();
             this.statusBarStore.showSuccess(i18next.t('dispatch.errors.createSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('dispatch.errors.createFailed'));
@@ -108,6 +111,7 @@ export class DispatchStore {
             this.clearSelectedItems();
             this.setPanelMode(PanelModes.Detail);
             await this.getAllItems();
+            await this.loadItemCounts();
             this.statusBarStore.showSuccess(i18next.t('dispatch.errors.deleteSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('dispatch.errors.deleteFailed'));
