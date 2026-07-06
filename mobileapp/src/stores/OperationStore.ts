@@ -1,9 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AssetApi, OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 import { agentId, assetId } from "../../app.json"
+
+const SELECTED_OPERATION_STORAGE_KEY = "cms_selected_operation_id";
 
 export enum OperationTabs {
     Details = 'details',
@@ -60,6 +63,7 @@ export class OperationStore {
         this.selectedItem = undefined;
         this.selectedOrder = undefined;
         this.selectedAsset = undefined;
+        this.persistSelectedOperationId(undefined);
     }
 
     clearSelectedAsset = () => {
@@ -97,6 +101,32 @@ export class OperationStore {
 
     initialize = async () => {
         await this.getActiveItems();
+        await this.restoreSelectedOperation();
+    }
+
+    persistSelectedOperationId = (id: string | undefined) => {
+        if (id) {
+            AsyncStorage.setItem(SELECTED_OPERATION_STORAGE_KEY, id).catch(() => { });
+        } else {
+            AsyncStorage.removeItem(SELECTED_OPERATION_STORAGE_KEY).catch(() => { });
+        }
+    }
+
+    restoreSelectedOperation = async () => {
+        try {
+            const persistedId = await AsyncStorage.getItem(SELECTED_OPERATION_STORAGE_KEY);
+            if (!persistedId) return;
+
+            const stillAvailable = this.allItems.some(item => item.id === persistedId);
+            if (stillAvailable) {
+                await this.getById(persistedId);
+            } else {
+                this.persistSelectedOperationId(undefined);
+                this.statusBarStore.showWarning(i18next.t('operation.errors.previousSelectionUnavailable'));
+            }
+        } catch {
+            // ignore corrupt storage
+        }
     }
 
     getActiveItems = async () => {
@@ -119,8 +149,8 @@ export class OperationStore {
             const response = await OperationApi.GetById.call(request);
             runInAction(() => {
                 this.selectedItem = response.data;
-
             });
+            this.persistSelectedOperationId(response.data.id);
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.loadItemFailed'));
         }
