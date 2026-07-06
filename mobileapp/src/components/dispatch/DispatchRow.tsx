@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DispatchApi } from '../../api';
 import { colors } from '../../theme/colors';
+import { DateService } from '../../services/DateService';
 import { dispatchCategoryColors, dispatchCategoryIcons } from '../../types/enums/DispatchCategories';
 
 interface DispatchRowProps {
@@ -19,7 +20,10 @@ export function DispatchRow({ dispatch }: DispatchRowProps) {
       </View>
       <View style={styles.textColumn}>
         <Text style={styles.title} numberOfLines={1}>{dispatch.title}</Text>
-        <Text style={styles.description} numberOfLines={2}>{dispatch.description}</Text>
+        <View style={styles.subtitleRow}>
+          <Text style={styles.subtitle} numberOfLines={1}>{DateService.toLocalDate(dispatch.occuredAt)}</Text>
+          <Text style={styles.subtitle} numberOfLines={1}>{dispatch.providerAgentName}</Text>
+        </View>
       </View>
     </View>
   );
@@ -45,7 +49,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.foreground,
   },
-  description: {
+  subtitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  subtitle: {
     fontSize: 13,
     fontWeight: '400',
     color: colors.mutedForeground,
