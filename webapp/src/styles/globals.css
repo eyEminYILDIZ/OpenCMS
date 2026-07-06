@@ -543,7 +543,7 @@ body {
 }
 
 .app-layout-sidebar {
-  width: 380px;
+  width: 460px;
   flex-shrink: 0;
   border-right: 1px solid var(--border);
   display: flex;
@@ -766,7 +766,7 @@ body {
 
 .grid-menu {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   padding: 16px;
   background-color: var(--muted);
@@ -1014,7 +1014,7 @@ body {
 }
 
 .right-panel--open {
-  width: 360px;
+  width: 440px;
 }
 
 .right-panel-toggle {

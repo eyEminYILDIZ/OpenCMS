@@ -6,6 +6,7 @@ const SECTION_LABELS: Record<MenuSection, string> = {
   assets:     'Assets',
   agents:     'Agents',
   operations: 'Operations',
+  dispatches: 'Dispatches',
 };
 
 const Breadcrumb = () => {

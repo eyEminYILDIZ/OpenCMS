@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 import { useLayout } from '../../../../context/LayoutContext';
 import { stores } from '../../../../stores';
 import { MenuTypes } from '../../../../types/MenuTypes';
@@ -9,6 +10,7 @@ import { ItemListSearchBar } from './ItemListSearchBar';
 const ItemList = observer(() => {
   const { activeSection, openRightPanel } = useLayout();
   const { applicationStore } = stores;
+  const { t } = useTranslation();
 
   const renderMenuList = () => {
     switch (applicationStore.currentMenu) {
@@ -18,6 +20,8 @@ const ItemList = observer(() => {
         return <AgentSidebar />
       case MenuTypes.Operations:
         return <OperationSidebar />
+      case MenuTypes.Dispatches:
+        return <p className="right-panel-empty">{t('menu.comingSoon')}</p>
       default:
         return <p>No matching menu list found</p>
     }

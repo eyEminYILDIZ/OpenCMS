@@ -24,6 +24,8 @@ const en = {
     assets: 'Assets',
     agents: 'Agents',
     operations: 'Operations',
+    dispatches: 'Dispatches',
+    comingSoon: 'Coming soon',
   },
   agent: {
     errors: {
@@ -244,6 +246,8 @@ const en = {
     automaticTracking: 'Automatic Tracking',
     automaticFocusing: 'Automatic Focusing',
     satelliteView: 'Satellite Map Style',
+    openSettings: 'Open map settings',
+    closeSettings: 'Close map settings',
   },
   itemList: {
     searchPlaceholder: 'Search...',
