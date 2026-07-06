@@ -12,6 +12,7 @@ const en = {
     cancel: "Cancel",
     save: "Save",
     saving: "Saving...",
+    deleting: "Deleting...",
     update: "Update",
     notImplementedYet: "Not Implemented Yet",
     active: {
@@ -143,6 +144,7 @@ const en = {
       loadItemsFailed: 'Failed to load operations.',
       loadItemFailed: 'Failed to load operation.',
       noItemSelected: 'No operation selected.',
+      previousSelectionUnavailable: 'Previously selected operation is not available now.',
       deleteFailed: 'Failed to delete operation.',
       deleteSucceeded: 'Operation deleted successfully.',
       updateFailed: 'Failed to update operation.',
@@ -314,6 +316,10 @@ const en = {
     },
     update: {
       title: 'Update Dispatch',
+    },
+    delete: {
+      title: 'Delete Dispatch',
+      confirmMessage: "You will delete '{{title}}' titled dispatch. Are you sure to delete it?",
     },
     fields: {
       title: 'Title',

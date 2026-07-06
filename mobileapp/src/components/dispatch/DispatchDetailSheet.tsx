@@ -22,6 +22,7 @@ export const DispatchDetailSheet = observer(({ dispatch, onClose }: DispatchDeta
 
   const isOwnDispatch = dispatch?.providerAgentId === agentId;
   const handleUpdatePress = () => dispatchStore.setPanelMode(PanelModes.Update);
+  const handleDeletePress = () => dispatchStore.setPanelMode(PanelModes.Delete);
   const visible = dispatch != null && dispatchStore.panelMode === PanelModes.Detail;
 
   return (
@@ -59,10 +60,17 @@ export const DispatchDetailSheet = observer(({ dispatch, onClose }: DispatchDeta
           )}
 
           {dispatch && isOwnDispatch && (
-            <TouchableOpacity style={styles.updateButton} onPress={handleUpdatePress}>
-              <MaterialCommunityIcons name="pencil-outline" size={18} color={colors.primaryForeground} />
-              <Text style={styles.updateButtonText}>{t('common.update')}</Text>
-            </TouchableOpacity>
+            <View style={styles.actionsRow}>
+              <TouchableOpacity style={[styles.deleteButton, styles.actionButton]} onPress={handleDeletePress}>
+                <MaterialCommunityIcons name="trash-can-outline" size={18} color={colors.destructiveForeground} />
+                <Text style={styles.deleteButtonText}>{t('common.delete')}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.updateButton, styles.actionButton]} onPress={handleUpdatePress}>
+                <MaterialCommunityIcons name="pencil-outline" size={18} color={colors.primaryForeground} />
+                <Text style={styles.updateButtonText}>{t('common.update')}</Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
       </View>
@@ -134,6 +142,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
+  actionsRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 4,
+  },
+  actionButton: {
+    flex: 1,
+    marginTop: 0,
+  },
   updateButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,10 +159,23 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 8,
     paddingVertical: 14,
-    marginTop: 4,
   },
   updateButtonText: {
     color: colors.primaryForeground,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.destructive,
+    borderRadius: 8,
+    paddingVertical: 14,
+  },
+  deleteButtonText: {
+    color: colors.destructiveForeground,
     fontSize: 15,
     fontWeight: '600',
   },

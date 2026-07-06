@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { DataList, TextBox } from '../components/ui';
 import { DispatchCreateSheet } from '../components/dispatch/DispatchCreateSheet';
 import { DispatchUpdateSheet } from '../components/dispatch/DispatchUpdateSheet';
+import { DispatchDeleteSheet } from '../components/dispatch/DispatchDeleteSheet';
 import { DispatchDetailSheet } from '../components/dispatch/DispatchDetailSheet';
 import { DispatchRow } from '../components/dispatch/DispatchRow';
 import { OperationHeader } from '../components/operation/OperationHeader';
@@ -43,6 +44,7 @@ export const DispatchesScreen = observer(() => {
       />
       <DispatchCreateSheet />
       <DispatchUpdateSheet />
+      <DispatchDeleteSheet />
       <TouchableOpacity
         style={styles.fab}
         onPress={() => dispatchStore.onCreateItem()}
