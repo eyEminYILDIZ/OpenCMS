@@ -1,22 +1,31 @@
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DispatchApi } from '../../api';
 import { colors } from '../../theme/colors';
 import { DateService } from '../../services/DateService';
 import { dispatchCategoryColors, dispatchCategoryIcons, dispatchCategoryLabels } from '../../types/enums/DispatchCategories';
+import { stores } from '../../stores';
+import { PanelModes } from '../../types';
+import { agentId } from '../../../app.json';
 
 interface DispatchDetailSheetProps {
   dispatch: DispatchApi.ListAll.Response | undefined;
   onClose: () => void;
 }
 
-export const DispatchDetailSheet = ({ dispatch, onClose }: DispatchDetailSheetProps) => {
+export const DispatchDetailSheet = observer(({ dispatch, onClose }: DispatchDetailSheetProps) => {
   const { t } = useTranslation();
+  const { dispatchStore } = stores;
+
+  const isOwnDispatch = dispatch?.providerAgentId === agentId;
+  const handleUpdatePress = () => dispatchStore.setPanelMode(PanelModes.Update);
+  const visible = dispatch != null && dispatchStore.panelMode === PanelModes.Detail;
 
   return (
-    <Modal visible={dispatch != null} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.overlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
         <View style={styles.sheet}>
@@ -48,11 +57,18 @@ export const DispatchDetailSheet = ({ dispatch, onClose }: DispatchDetailSheetPr
               <Row label={t('dispatch.fields.providerAgent')} value={dispatch.providerAgentName} last />
             </View>
           )}
+
+          {dispatch && isOwnDispatch && (
+            <TouchableOpacity style={styles.updateButton} onPress={handleUpdatePress}>
+              <MaterialCommunityIcons name="pencil-outline" size={18} color={colors.primaryForeground} />
+              <Text style={styles.updateButtonText}>{t('common.update')}</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Modal>
   );
-};
+});
 
 const Row = ({ label, value, last }: { label: string; value: React.ReactNode; last?: boolean }) => (
   <View style={[styles.row, !last && styles.rowDivider]}>
@@ -117,5 +133,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+  },
+  updateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.primary,
+    borderRadius: 8,
+    paddingVertical: 14,
+    marginTop: 4,
+  },
+  updateButtonText: {
+    color: colors.primaryForeground,
+    fontSize: 15,
+    fontWeight: '600',
   },
 });

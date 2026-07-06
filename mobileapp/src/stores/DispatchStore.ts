@@ -94,7 +94,8 @@ export class DispatchStore {
             await DispatchApi.Update.call(request);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find(item => item.id === id);
+                this.clearSelectedItems();
+                this.panelMode = PanelModes.Detail;
             });
             this.statusBarStore.showSuccess(i18next.t('dispatch.errors.updateSucceeded'));
         } catch (error) {

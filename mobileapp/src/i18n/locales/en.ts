@@ -12,6 +12,7 @@ const en = {
     cancel: "Cancel",
     save: "Save",
     saving: "Saving...",
+    update: "Update",
     notImplementedYet: "Not Implemented Yet",
     active: {
       yes: 'Yes',
@@ -310,6 +311,9 @@ const en = {
     },
     create: {
       title: 'Create Dispatch',
+    },
+    update: {
+      title: 'Update Dispatch',
     },
     fields: {
       title: 'Title',

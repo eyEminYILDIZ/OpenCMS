@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DataList, TextBox } from '../components/ui';
 import { DispatchCreateSheet } from '../components/dispatch/DispatchCreateSheet';
+import { DispatchUpdateSheet } from '../components/dispatch/DispatchUpdateSheet';
 import { DispatchDetailSheet } from '../components/dispatch/DispatchDetailSheet';
 import { DispatchRow } from '../components/dispatch/DispatchRow';
 import { OperationHeader } from '../components/operation/OperationHeader';
@@ -41,6 +42,7 @@ export const DispatchesScreen = observer(() => {
         onClose={() => dispatchStore.clearSelectedItems()}
       />
       <DispatchCreateSheet />
+      <DispatchUpdateSheet />
       <TouchableOpacity
         style={styles.fab}
         onPress={() => dispatchStore.onCreateItem()}
