@@ -24,7 +24,7 @@ export const DispatchCreateSheet = observer(() => {
   const buildInitialValues = (): FormValues => ({
     title: '',
     description: '',
-    category: DispatchApi.Enums.DispatchCategories.General,
+    category: DispatchApi.Enums.DispatchCategories.Operation,
     occuredAt: '',
     relatedEntityId: operationStore.selectedItem?.id ?? GuidService.generateEmptyGuid(),
     relatedChildEntityId: null,
