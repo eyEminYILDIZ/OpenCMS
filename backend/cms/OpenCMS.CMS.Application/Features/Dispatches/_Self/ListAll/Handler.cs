@@ -18,7 +18,7 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
             dispatchQuery = dispatchQuery.Where(d => d.Title.ToLower().Contains(request.SearchValue.ToLower()));
         }
 
-        var dispatches = await dispatchQuery.ToListAsync(cancellationToken);
+        var dispatches = await dispatchQuery.OrderByDescending(d => d.OccuredAt).ToListAsync(cancellationToken);
 
         return dispatches.Select(dispatch => new QueryResponse
         {
