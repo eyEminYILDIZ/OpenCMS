@@ -19,6 +19,12 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
         if (operation == null)
             return Error.NotFound;
 
+        var dispatches = await _dbContext.Dispatches
+                                          .Include(d => d.ProviderAgent)
+                                          .Where(d => d.Category == DispatchCategories.Operation && d.RelatedEntityId == operation.Id)
+                                          .OrderByDescending(d => d.OccuredAt)
+                                          .ToListAsync(cancellationToken);
+
         return new ResponseModel
         {
             Id = operation.Id,
@@ -69,7 +75,21 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                     IsActive = a.Asset.IsActive,
                     RelatedAgentId = a.Asset.RelatedAgentId
                 }
-            }).ToList() ?? new()
+            }).ToList() ?? new(),
+            Dispatches = dispatches.Select(d => new DispatchResponse
+            {
+                Id = d.Id,
+                Title = d.Title,
+                Description = d.Description,
+                Category = d.Category,
+                OccuredAt = d.OccuredAt,
+                RelatedEntityId = d.RelatedEntityId,
+                RelatedChildEntityId = d.RelatedChildEntityId,
+                ProviderAgentId = d.ProviderAgentId,
+                ProviderAgentName = d.ProviderAgent.Name,
+                CreatedAt = d.CreatedAt,
+                UpdatedAt = d.UpdatedAt
+            }).ToList()
         };
     }
 }

@@ -14,6 +14,7 @@ public class ResponseModel
     public OperationType OperationType { get; set; }
     public List<OrderResponse> Orders { get; set; } = [];
     public List<OperationAssetResponse> OperationAssets { get; set; } = [];
+    public List<DispatchResponse> Dispatches { get; set; } = [];
 }
 
 public class OrderResponse
@@ -42,6 +43,21 @@ public class OperationAssetResponse
     public Guid Id { get; set; }
     public Guid AssetId { get; set; }
     public AssetResponse Asset { get; set; }
+}
+
+public class DispatchResponse
+{
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DispatchCategories Category { get; set; }
+    public DateTime OccuredAt { get; set; }
+    public Guid RelatedEntityId { get; set; }
+    public Guid? RelatedChildEntityId { get; set; }
+    public Guid ProviderAgentId { get; set; }
+    public string ProviderAgentName { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }
 
 public class AssetResponse
