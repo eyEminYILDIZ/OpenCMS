@@ -61,3 +61,9 @@ DELETE {{AgentApi}}/dispatches/00000000-0000-0000-0000-000000000000
 Accept: application/json
 
 ###
+
+### Get Dispatch Item Counts
+GET {{AgentApi}}/dispatches/counts
+Accept: application/json
+
+###
