@@ -1,7 +1,8 @@
 # OpenCMS
 
 - [Backend Readme](./backend/readme.md)
-- [WebApp Readme](./webapp/readme.md)
+- [Web App Readme](./webapp/readme.md)
+- [Mobile App Readme](./mobileapp/readme.md)
 
 
 ## Project Boards
