@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { RightPanelWrapper } from "../../../layout/right-panel/RightPanelWrapper";
 import { stores } from "../../../../stores";
 import { operationStatusLabels, operationTypeLabels } from "../../../../types";
+import DetailCard from "../../../ui/DetailCard";
+import DetailRow from "../../../ui/DetailRow";
 
 export const OperationDetail: React.FC = observer(() => {
     const { operationStore } = stores;
@@ -26,16 +28,11 @@ export const OperationDetail: React.FC = observer(() => {
     return (
         <RightPanelWrapper>
             <h4>Operation Detail</h4>
-            <table style={{ fontSize: '0.8rem', borderCollapse: 'collapse', width: '100%' }}>
-                <tbody>
-                    {rows.map(({ label, value }) => (
-                        <tr key={label}>
-                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}><strong>{label}</strong></td>
-                            <td style={{ border: '1px solid #ccc', padding: '4px 8px' }}>{value}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <DetailCard>
+                {rows.map(({ label, value }) => (
+                    <DetailRow key={label} label={label} value={value} />
+                ))}
+            </DetailCard>
         </RightPanelWrapper>
     );
 });

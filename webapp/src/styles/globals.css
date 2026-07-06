@@ -1134,32 +1134,45 @@ body {
 }
 
 /* ============================================================
-   RIGHT PANEL CONTENT STUBS
+   DETAIL CARD (RIGHT PANEL DETAIL DISPLAY)
    ============================================================ */
 
-.right-panel-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.detail-card {
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  overflow: hidden;
 }
 
-.right-panel-label {
-  font-size: 0.875rem;
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row:nth-child(even) {
+  background-color: var(--muted);
+}
+
+.detail-row-label {
+  flex: 0 0 40%;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--muted-foreground);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-.right-panel-value {
-  font-size: 0.875rem;
-  color: var(--foreground);
-}
-
-.right-panel-description {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  line-height: 1.5;
+.detail-row-value {
+  flex: 1 1 60%;
+  font-size: 0.8125rem;
+  color: var(--card-foreground);
+  text-align: right;
+  word-break: break-word;
 }
 
 /* Actions row */
