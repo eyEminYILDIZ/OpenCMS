@@ -258,11 +258,42 @@ const en = {
     },
   },
   dispatch: {
+    noDispatchesFound: 'No dispatches found',
+    errors: {
+      loadItemsFailed: 'Failed to load dispatches.',
+      noItemSelected: 'No dispatch selected.',
+      deleteFailed: 'Failed to delete dispatch.',
+      deleteSucceeded: 'Dispatch deleted successfully.',
+      updateFailed: 'Failed to update dispatch.',
+      updateSucceeded: 'Dispatch updated successfully.',
+      createFailed: 'Failed to create dispatch.',
+      createSucceeded: 'Dispatch created successfully.',
+    },
     dispatchCategories: {
       general: 'General',
       asset: 'Asset',
       agent: 'Agent',
       operation: 'Operation',
+    },
+    detail: {
+      title: 'Dispatch Details',
+    },
+    create: {
+      title: 'Create Dispatch',
+    },
+    update: {
+      title: 'Update Dispatch',
+    },
+    delete: {
+      title: 'Delete Dispatch',
+      confirmMessage: "You will delete '{{title}}' titled dispatch. Are you sure to delete it?",
+    },
+    fields: {
+      title: 'Title',
+      description: 'Description',
+      category: 'Category',
+      occuredAt: 'Occurred At',
+      providerAgent: 'Provider Agent',
     },
   },
 } as const;
