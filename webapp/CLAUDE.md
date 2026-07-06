@@ -68,6 +68,26 @@ webapp/
 
 No other config changes are needed.
 
+## Notifications (Status Bar)
+
+User-facing notifications (success/info/warning/error toasts) are shown through the global `statusBarStore` (`src/stores/StatusBarStore.ts`), rendered by `src/components/layout/StatusBar.tsx`. There is no separate toast/snackbar component — this is the only notification mechanism.
+
+- **Show a notification** from any store or component:
+  ```ts
+  import i18next from 'i18next';
+  import { stores } from '../../stores'; // or `this.statusBarStore` inside a store that received it via constructor
+
+  stores.statusBarStore.showSuccess(i18next.t('asset.errors.createSucceeded'));
+  stores.statusBarStore.showError(i18next.t('asset.errors.createFailed'));
+  stores.statusBarStore.showWarning(i18next.t('some.warning.key'));
+  stores.statusBarStore.showInfo(i18next.t('some.info.key'));
+  ```
+  - Message text must always come from i18next (see Internationalisation section) — never hardcode the string.
+  - Each `show*` method accepts an optional second `icon` param (a `lucide-react` icon) to override the default icon for that level.
+- **Auto-clear:** every `show*` call resets a 5s timer; after it elapses the bar fades out (300ms) and resets to the idle `"Ready"` state. Calling `clear()` manually triggers the same fade-out early.
+- **Wiring pattern:** domain stores (`AssetStore`, `AgentStore`, `OperationStore`, ...) receive the shared `statusBarStore` instance via their constructor (see `src/stores/index.ts`) and call `this.statusBarStore.showX(...)` after async operations (typically `showSuccess` on success, `showError` in the `catch`/failure branch). Follow this pattern for new stores instead of importing `stores` directly inside store classes.
+- Components (not stores) should import the singleton via `import { stores } from '.../stores'` and call `stores.statusBarStore.showX(...)` directly, as seen in `OperationCommandBar.tsx`.
+
 ## Adding a New Component
 
 1. Create `src/components/MyComponent.tsx` with a named, typed props interface.
