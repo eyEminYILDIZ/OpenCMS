@@ -70,10 +70,10 @@ export class DispatchStore {
 
     createItem = async (values: DispatchApi.Create.Request) => {
         try {
-            const response = await DispatchApi.Create.call(values);
+            await DispatchApi.Create.call(values);
             await this.getAllItems();
             runInAction(() => {
-                this.selectedItem = this.allItems.find(item => item.id === response.data.id);
+                this.clearSelectedItems();
                 this.panelMode = PanelModes.Detail;
             });
             this.statusBarStore.showSuccess(i18next.t('dispatch.errors.createSucceeded'));
