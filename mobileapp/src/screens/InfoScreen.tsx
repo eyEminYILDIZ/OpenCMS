@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OperationsSection } from '../components/info/OperationsSection';
@@ -16,42 +16,44 @@ export const InfoScreen = observer(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.title}>Connection Info</Text>
-        <View style={styles.card}>
-          <Row label="API Status" value={connectionStatusLabels[agentStore.apiConnectionStatus]} status={agentStore.apiConnectionStatus} />
+      <ScrollView>
+        <View style={styles.section}>
+          <Text style={styles.title}>Connection Info</Text>
+          <View style={styles.card}>
+            <Row label="API Status" value={connectionStatusLabels[agentStore.apiConnectionStatus]} status={agentStore.apiConnectionStatus} />
+          </View>
+          <View style={styles.card}>
+            <Row label="Socket Status" value={connectionStatusLabels[applicationStore.socketConnectionStatus]} status={applicationStore.socketConnectionStatus} />
+          </View>
         </View>
-        <View style={styles.card}>
-          <Row label="Socket Status" value={connectionStatusLabels[applicationStore.socketConnectionStatus]} status={applicationStore.socketConnectionStatus} />
+
+        <OperationsSection />
+
+        <View style={styles.section}>
+          <Text style={styles.title}>Agent Info</Text>
+          {agent && (
+            <>
+              <View style={styles.card}>
+                <Row label="Name" value={agent.name} />
+              </View>
+              <View style={styles.card}>
+                <Row label="Description" value={agent.description} />
+              </View>
+              <View style={styles.card}>
+                <Row label="Type" value={agentTypeLabels[agent.agentType]} />
+              </View>
+              <View style={styles.card}>
+                <Row label="Active" value={agent.isActive ? 'Yes' : 'No'} />
+              </View>
+              <View style={styles.card}>
+                <Row label="Last Seen" value={DateService.toLocalDate(agent.lastSeen)} />
+              </View>
+            </>
+          )}
         </View>
-      </View>
 
-      <OperationsSection />
-
-      <View style={styles.section}>
-        <Text style={styles.title}>Agent Info</Text>
-        {agent && (
-          <>
-            <View style={styles.card}>
-              <Row label="Name" value={agent.name} />
-            </View>
-            <View style={styles.card}>
-              <Row label="Description" value={agent.description} />
-            </View>
-            <View style={styles.card}>
-              <Row label="Type" value={agentTypeLabels[agent.agentType]} />
-            </View>
-            <View style={styles.card}>
-              <Row label="Active" value={agent.isActive ? 'Yes' : 'No'} />
-            </View>
-            <View style={styles.card}>
-              <Row label="Last Seen" value={DateService.toLocalDate(agent.lastSeen)} />
-            </View>
-          </>
-        )}
-      </View>
-
-      <SettingsSection />
+        <SettingsSection />
+      </ScrollView>
     </SafeAreaView>
   );
 });
