@@ -148,11 +148,18 @@ const en = {
       updateOrderFailed: 'Failed to update operation order.',
       deleteOrderSucceeded: 'Operation order deleted successfully.',
       deleteOrderFailed: 'Failed to delete operation order.',
+      createDispatchSucceeded: 'Operation dispatch created successfully.',
+      createDispatchFailed: 'Failed to create operation dispatch.',
+      updateDispatchSucceeded: 'Operation dispatch updated successfully.',
+      updateDispatchFailed: 'Failed to update operation dispatch.',
+      deleteDispatchSucceeded: 'Operation dispatch deleted successfully.',
+      deleteDispatchFailed: 'Failed to delete operation dispatch.',
     },
     tabs: {
       details: 'Details',
       assets: 'Assets',
       orders: 'Orders',
+      dispatches: 'Dispatches',
     },
     noItemSelected: 'No item selected',
     create: {
@@ -169,6 +176,19 @@ const en = {
     },
     updateOrder: {
       title: 'Update Operation Order',
+    },
+    createDispatch: {
+      title: 'Create Operation Dispatch',
+    },
+    detailDispatch: {
+      title: 'Operation Dispatch Details',
+    },
+    updateDispatch: {
+      title: 'Update Operation Dispatch',
+    },
+    deleteDispatch: {
+      title: 'Operation Dispatch Delete?',
+      confirmMessage: 'Are you sure to delete this operation dispatch?',
     },
     update: {
       title: 'Update Operation',
@@ -212,6 +232,15 @@ const en = {
       description: 'Description',
       orderStatus: 'Status',
       orderType: 'Type',
+    },
+    dispatchFields: {
+      id: 'ID',
+      title: 'Title',
+      description: 'Description',
+      occuredAt: 'Occurred At',
+      providerAgent: 'Provider Agent',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
     },
     operationStatuses: {
       notStarted: 'Not Started',

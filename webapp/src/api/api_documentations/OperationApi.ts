@@ -1,5 +1,6 @@
 import { ApiResponse } from "../ApiModels";
 import { ApiClient } from "../axios_setup";
+import { DispatchApi } from "./DispatchApi";
 
 export namespace OperationApi {
     export namespace Enums {
@@ -186,6 +187,19 @@ export namespace OperationApi {
             assetId: string;
             asset: AssetResponse;
         }
+        export interface DispatchResponse {
+            id: string;
+            title: string;
+            description: string;
+            category: DispatchApi.Enums.DispatchCategories;
+            occuredAt: string;
+            relatedEntityId: string;
+            relatedChildEntityId: string | null;
+            providerAgentId: string;
+            providerAgentName: string;
+            createdAt: string;
+            updatedAt: string | null;
+        }
         export interface Response {
             id: string;
             name: string;
@@ -197,6 +211,7 @@ export namespace OperationApi {
             operationType: Enums.OperationType;
             orders: OrderResponse[];
             operationAssets: OperationAssetResponse[];
+            dispatches: DispatchResponse[];
         }
         export const call = async (request: Request): Promise<ApiResponse<Response>> => {
             const response = await ApiClient.get(`${path}/${request.id}`);

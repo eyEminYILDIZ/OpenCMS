@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { stores } from "../../../stores";
 import { OperationTabs } from "../../../stores/OperationStore";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/Tabs";
-import { OperationAssetTab, OperationDetailTab, OperationOrderTab } from "./tabs";
+import { OperationAssetTab, OperationDetailTab, OperationOrderTab, OperationDispatchTab } from "./tabs";
 
 export const OperationTab: React.FC = observer(() => {
     const { operationStore } = stores;
@@ -25,6 +25,9 @@ export const OperationTab: React.FC = observer(() => {
                 <TabsTrigger value={OperationTabs.Orders}>
                     {t('operation.tabs.orders')}
                 </TabsTrigger>
+                <TabsTrigger value={OperationTabs.Dispatches}>
+                    {t('operation.tabs.dispatches')}
+                </TabsTrigger>
             </TabsList>
             <TabsContent value={OperationTabs.Details}>
                 <OperationDetailTab />
@@ -34,6 +37,9 @@ export const OperationTab: React.FC = observer(() => {
             </TabsContent>
             <TabsContent value={OperationTabs.Orders}>
                 <OperationOrderTab />
+            </TabsContent>
+            <TabsContent value={OperationTabs.Dispatches}>
+                <OperationDispatchTab />
             </TabsContent>
         </Tabs>
     );

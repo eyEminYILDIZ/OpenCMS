@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useLayout } from '../../../context/LayoutContext';
 import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
-import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate, OperationOrderUpdate, OperationAssetDelete, OperationOrderDelete, OperationAssetDetail, OperationOrderDetail, DispatchDetail, DispatchDelete, DispatchCreate, DispatchUpdate } from '../../features';
+import { AgentDetail, AgentDelete, AgentCreate, AgentUpdate, AssetDelete, AssetDetail, OperationDetail, OperationDelete, OperationCreate, OperationUpdate, AssetCreate, AssetUpdate, OperationOrderCreate, OperationOrderUpdate, OperationAssetDelete, OperationOrderDelete, OperationAssetDetail, OperationOrderDetail, DispatchDetail, DispatchDelete, DispatchCreate, DispatchUpdate, OperationDispatchDetail, OperationDispatchCreate, OperationDispatchUpdate, OperationDispatchDelete } from '../../features';
 import { PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
 import { OperationAssetCreate } from '../../features/operations/panels/OperationAssetCreate';
@@ -67,6 +67,17 @@ const RightPanel = observer(() => {
               return <OperationOrderUpdate />;
             case PanelModes.Delete:
               return <OperationOrderDelete />;
+          }
+        } else if (operationStore.selectedTab === OperationTabs.Dispatches) {
+          switch (operationStore.panelMode) {
+            case PanelModes.Detail:
+              return <OperationDispatchDetail />;
+            case PanelModes.Create:
+              return <OperationDispatchCreate />;
+            case PanelModes.Update:
+              return <OperationDispatchUpdate />;
+            case PanelModes.Delete:
+              return <OperationDispatchDelete />;
           }
         }
       case MenuTypes.Dispatches:

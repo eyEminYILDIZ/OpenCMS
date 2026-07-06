@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
-import { AssetApi, OperationApi } from "../api";
+import { AssetApi, DispatchApi, OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 
@@ -8,6 +8,7 @@ export enum OperationTabs {
     Details = 'details',
     Assets = 'assets',
     Orders = 'orders',
+    Dispatches = 'dispatches',
 }
 
 export class OperationStore {
@@ -48,6 +49,7 @@ export class OperationStore {
     selectedItem: OperationApi.GetById.Response | undefined = undefined;
     selectedOrder: OperationApi.GetById.OrderResponse | undefined = undefined;
     selectedAsset: OperationApi.GetById.OperationAssetResponse | undefined = undefined;
+    selectedDispatch: OperationApi.GetById.DispatchResponse | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
     selectedTab: OperationTabs = OperationTabs.Details;
@@ -60,6 +62,7 @@ export class OperationStore {
         this.selectedItem = undefined;
         this.selectedOrder = undefined;
         this.selectedAsset = undefined;
+        this.selectedDispatch = undefined;
     }
 
     clearSelectedAsset = () => {
@@ -68,6 +71,10 @@ export class OperationStore {
 
     clearSelectedOrder = () => {
         this.selectedOrder = undefined;
+    }
+
+    clearSelectedDispatch = () => {
+        this.selectedDispatch = undefined;
     }
 
     setSelectedItem = (item: OperationApi.ListAll.Response | undefined) => {
@@ -80,6 +87,10 @@ export class OperationStore {
 
     setSelectedAsset = (asset: OperationApi.GetById.OperationAssetResponse | undefined) => {
         this.selectedAsset = asset;
+    }
+
+    setSelectedDispatch = (dispatch: OperationApi.GetById.DispatchResponse | undefined) => {
+        this.selectedDispatch = dispatch;
     }
 
     setPanelMode = (mode: PanelModes) => {
@@ -291,6 +302,79 @@ export class OperationStore {
             this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteOrderSucceeded'));
         } catch (error) {
             this.statusBarStore.showError(i18next.t('operation.errors.deleteOrderFailed'));
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////// Operation Dispatches //////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    onCreateDispatch() {
+        this.setPanelMode(PanelModes.Create);
+        this.clearSelectedDispatch();
+    }
+
+    createDispatch = async (values: Omit<DispatchApi.Create.Request, 'category' | 'relatedEntityId'>) => {
+        try {
+            const request: DispatchApi.Create.Request = {
+                ...values,
+                category: DispatchApi.Enums.DispatchCategories.Operation,
+                relatedEntityId: this.selectedItem?.id || '',
+            };
+            await DispatchApi.Create.call(request);
+            runInAction(() => {
+                this.getById(this.selectedItem?.id || '');
+                this.panelMode = PanelModes.Detail;
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.createDispatchSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.createDispatchFailed'));
+        }
+    }
+
+    updateDispatch = async (values: Omit<DispatchApi.Update.Request, 'id' | 'category' | 'relatedEntityId'>) => {
+        if (!this.selectedDispatch) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request: DispatchApi.Update.Request = {
+                id: this.selectedDispatch.id,
+                ...values,
+                category: DispatchApi.Enums.DispatchCategories.Operation,
+                relatedEntityId: this.selectedItem?.id || '',
+            };
+            await DispatchApi.Update.call(request);
+            runInAction(() => {
+                this.getById(this.selectedItem?.id || '');
+                this.panelMode = PanelModes.Detail;
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.updateDispatchSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.updateDispatchFailed'));
+        }
+    }
+
+    deleteDispatch = async () => {
+        if (!this.selectedDispatch) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request = { id: this.selectedDispatch.id };
+            await DispatchApi.Delete.call(request);
+
+            this.clearSelectedDispatch();
+            this.setPanelMode(PanelModes.Detail);
+            runInAction(async () => {
+                await this.getById(this.selectedItem?.id || '');
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.deleteDispatchSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.deleteDispatchFailed'));
         }
     }
 }

@@ -67,5 +67,15 @@ export const OperationCommandBar = observer(() => {
     >
       <Plus /> Add Order
     </Button>)}
+    {operationStore.selectedTab === OperationTabs.Dispatches && (<Button
+      variant={"command"}
+      size="sm"
+      onClick={() => {
+        operationStore.onCreateDispatch();
+      }}
+      aria-label="Add new item"
+    >
+      <Plus /> Add Dispatch
+    </Button>)}
   </>)
 });
