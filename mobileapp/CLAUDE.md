@@ -82,6 +82,14 @@ mobileapp/
 
 No other config changes are needed.
 
+## Toast Messages
+
+Use `StatusBarStore` (`src/stores/StatusBarStore.ts`) for all toast/status feedback — do not call `react-native-toast-message` directly. It wraps `Toast.show` with four levels: `showSuccess`, `showInfo`, `showWarning`, `showError`, each with a preset `visibilityTime`. The `<Toast />` renderer is mounted once in `App.tsx`.
+
+- Inject `statusBarStore` into a store's constructor (see `DispatchStore`, `OperationStore`, `AssetStore`, `AgentStore`) or read it off `stores` in a component (see `OrdersScreen.tsx`).
+- Always pass a translated string via `i18next.t(...)` (in stores) or `t(...)` (in components) — never a hardcoded string. Add the key under the relevant namespace's `errors` object in `src/i18n/locales/en.ts`.
+- Use `showSuccess` for completed actions (create/update/delete succeeded), `showError` for failed API calls or invalid state, and `showWarning` for recoverable/non-fatal issues (e.g. a previous selection no longer being available). `showInfo` is available but not yet used in a store.
+
 ## Adding a New Screen
 
 1. Create `src/screens/MyScreen.tsx` with a named, typed props interface.
