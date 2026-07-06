@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -62,7 +72,10 @@ export const DispatchCreateSheet = observer(() => {
     <Modal visible={visible} transparent animationType="slide" onRequestClose={handleClose}>
       <View style={styles.overlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={handleClose} />
-        <View style={styles.sheet}>
+        <KeyboardAvoidingView
+          style={styles.sheet}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
           <View style={styles.header}>
             <Text style={styles.title}>{t('dispatch.create.title')}</Text>
             <TouchableOpacity onPress={handleClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
@@ -70,41 +83,48 @@ export const DispatchCreateSheet = observer(() => {
             </TouchableOpacity>
           </View>
 
-          <Form formik={formik} mode={FormMode.Create}>
-            <FormItem<FormValues> name="title" label={t('dispatch.fields.title')}>
-              <TextBox<FormValues> name="title" placeholder={t('dispatch.fields.title')} />
-            </FormItem>
-
-            <FormItem<FormValues> name="description" label={t('dispatch.fields.description')}>
-              <TextBox<FormValues>
-                name="description"
-                placeholder={t('dispatch.fields.description')}
-                multiline
-                numberOfLines={4}
-                style={styles.textArea}
-              />
-            </FormItem>
-
-            <FormItem<FormValues> name="occuredAt" label={t('dispatch.fields.occuredAt')}>
-              <DateTimePicker<FormValues> name="occuredAt" mode="datetime" />
-            </FormItem>
-          </Form>
-
-          <TouchableOpacity
-            style={[styles.saveButton, formik.isSubmitting && styles.saveButtonDisabled]}
-            onPress={() => formik.handleSubmit()}
-            disabled={formik.isSubmitting}
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
           >
-            {formik.isSubmitting ? (
-              <ActivityIndicator size="small" color={colors.primaryForeground} />
-            ) : (
-              <MaterialCommunityIcons name="content-save-outline" size={18} color={colors.primaryForeground} />
-            )}
-            <Text style={styles.saveButtonText}>
-              {formik.isSubmitting ? t('common.saving') : t('common.save')}
-            </Text>
-          </TouchableOpacity>
-        </View>
+            <Form formik={formik} mode={FormMode.Create}>
+              <FormItem<FormValues> name="title" label={t('dispatch.fields.title')}>
+                <TextBox<FormValues> name="title" placeholder={t('dispatch.fields.title')} />
+              </FormItem>
+
+              <FormItem<FormValues> name="description" label={t('dispatch.fields.description')}>
+                <TextBox<FormValues>
+                  name="description"
+                  placeholder={t('dispatch.fields.description')}
+                  multiline
+                  numberOfLines={4}
+                  style={styles.textArea}
+                />
+              </FormItem>
+
+              <FormItem<FormValues> name="occuredAt" label={t('dispatch.fields.occuredAt')}>
+                <DateTimePicker<FormValues> name="occuredAt" mode="datetime" />
+              </FormItem>
+            </Form>
+
+            <TouchableOpacity
+              style={[styles.saveButton, formik.isSubmitting && styles.saveButtonDisabled]}
+              onPress={() => formik.handleSubmit()}
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? (
+                <ActivityIndicator size="small" color={colors.primaryForeground} />
+              ) : (
+                <MaterialCommunityIcons name="content-save-outline" size={18} color={colors.primaryForeground} />
+              )}
+              <Text style={styles.saveButtonText}>
+                {formik.isSubmitting ? t('common.saving') : t('common.save')}
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );
@@ -119,7 +139,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    maxHeight: '90%',
+    overflow: 'hidden',
     padding: 20,
+  },
+  scroll: {
+    flexShrink: 1,
+  },
+  scrollContent: {
     paddingBottom: 32,
   },
   header: {
