@@ -1,0 +1,1 @@
+global using OpenCMS.CMS.Domain.Models;

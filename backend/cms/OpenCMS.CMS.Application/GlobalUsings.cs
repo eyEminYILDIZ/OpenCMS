@@ -1,5 +1,6 @@
 global using OpenCMS.CMS.Application.Configurations;
 global using OpenCMS.CMS.Domain.Entities;
+global using OpenCMS.CMS.Domain.Models;
 global using MediatR;
 global using System.Collections.Generic;
 global using System.Threading;
