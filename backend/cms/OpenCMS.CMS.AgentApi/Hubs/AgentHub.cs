@@ -11,8 +11,8 @@ public class AgentHub : Hub
 
     // agent client (ClientAPI project) will call these methods.
     // example; webapp sends a dispatch create/update/delete, and mobileapp will take this update.
-    private async Task SendDispatch(OpenCMS.CMS.Application.Dispatches.Self.ListAll.QueryResponse dispatch, CancellationToken cancellationToken = default)
+    public async Task SendDispatch(OpenCMS.CMS.Application.Dispatches.Self.ListAll.QueryResponse dispatch)
     {
-        await Clients.All.SendAsync("DispatchReceived", dispatch, cancellationToken);
+        await Clients.All.SendAsync("DispatchReceived", dispatch);
     }
 }
