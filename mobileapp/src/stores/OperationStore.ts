@@ -62,20 +62,26 @@ export class OperationStore {
         runInAction(() => {
             if (!this.selectedItem) return;
             const index = this.selectedItem.dispatches.findIndex(a => a.id === dispatch.id);
-            if (index !== -1) {
-                this.selectedItem.dispatches[index] = {
-                    id: dispatch.id,
-                    title: dispatch.title,
-                    description: dispatch.description,
-                    category: dispatch.category,
-                    occuredAt: dispatch.occuredAt,
-                    relatedEntityId: dispatch.relatedEntityId,
-                    relatedChildEntityId: dispatch.relatedChildEntityId,
-                    providerAgentId: dispatch.providerAgentId,
-                    providerAgentName: dispatch.providerAgentName,
-                    createdAt: dispatch.createdAt,
-                    updatedAt: dispatch.updatedAt,
-                };
+
+            switch (dispatch.lastActionType) {
+                case DispatchApi.Enums.ActionTypes.Create:
+                    if (index === -1 && dispatch.relatedEntityId === this.selectedItem.id) {
+                        this.selectedItem.dispatches = [...this.selectedItem.dispatches, dispatch];
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Update:
+                    if (index !== -1) {
+                        this.selectedItem.dispatches = this.selectedItem.dispatches.map((item, i) => (i === index ? dispatch : item));
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Delete:
+                    if (index !== -1) {
+                        this.selectedItem.dispatches = this.selectedItem.dispatches.filter((_, i) => i !== index);
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.ListAll:
+                case DispatchApi.Enums.ActionTypes.Detail:
+                    break;
             }
         });
     }
