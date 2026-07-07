@@ -22,6 +22,11 @@ export const DispatchesScreen = observer(() => {
     dispatchStore.getAllItems();
   }, [dispatchStore, operationStore.selectedItem]);
 
+  useEffect(() => {
+    console.log("UseEffect", dispatchStore.allItems);
+
+  }, [dispatchStore.allItems]);
+
   return (
     <SafeAreaView style={styles.container}>
       <OperationHeader />

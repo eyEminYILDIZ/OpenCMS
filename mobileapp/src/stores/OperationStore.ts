@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import i18next from "i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AssetApi, OperationApi } from "../api";
+import { AssetApi, DispatchApi, OperationApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
 import { agentId, assetId } from "../../app.json"
@@ -22,6 +22,17 @@ export class OperationStore {
         this.statusBarStore = statusBarStore;
         makeAutoObservable(this);
     }
+
+
+
+    allItems: OperationApi.GetActivesByAgent.Response[] = [];
+    selectedItem: OperationApi.GetById.Response | undefined = undefined;
+    selectedOrder: OperationApi.GetById.OrderResponse | undefined = undefined;
+    selectedAsset: OperationApi.GetById.OperationAssetResponse | undefined = undefined;
+    panelMode: PanelModes = PanelModes.Detail;
+    listSearchValue: string = '';
+    selectedTab: OperationTabs = OperationTabs.Details;
+
 
     onAssetReceived = (asset: AssetApi.ListAll.Response) => {
         runInAction(() => {
@@ -47,13 +58,28 @@ export class OperationStore {
         });
     }
 
-    allItems: OperationApi.GetActivesByAgent.Response[] = [];
-    selectedItem: OperationApi.GetById.Response | undefined = undefined;
-    selectedOrder: OperationApi.GetById.OrderResponse | undefined = undefined;
-    selectedAsset: OperationApi.GetById.OperationAssetResponse | undefined = undefined;
-    panelMode: PanelModes = PanelModes.Detail;
-    listSearchValue: string = '';
-    selectedTab: OperationTabs = OperationTabs.Details;
+    onDispatchReceived = (dispatch: DispatchApi.ListAll.Response) => {
+        runInAction(() => {
+            if (!this.selectedItem) return;
+            const index = this.selectedItem.dispatches.findIndex(a => a.id === dispatch.id);
+            if (index !== -1) {
+                this.selectedItem.dispatches[index] = {
+                    id: dispatch.id,
+                    title: dispatch.title,
+                    description: dispatch.description,
+                    category: dispatch.category,
+                    occuredAt: dispatch.occuredAt,
+                    relatedEntityId: dispatch.relatedEntityId,
+                    relatedChildEntityId: dispatch.relatedChildEntityId,
+                    providerAgentId: dispatch.providerAgentId,
+                    providerAgentName: dispatch.providerAgentName,
+                    createdAt: dispatch.createdAt,
+                    updatedAt: dispatch.updatedAt,
+                };
+            }
+        });
+    }
+
 
     setSelectedTab = (tab: OperationTabs) => {
         this.selectedTab = tab;

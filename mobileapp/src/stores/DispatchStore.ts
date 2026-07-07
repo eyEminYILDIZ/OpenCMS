@@ -18,7 +18,7 @@ export class DispatchStore {
 
     operationStore: OperationStore;
     allItems: DispatchApi.ListAll.Response[] = [];
-    filteredItems: DispatchApi.ListFiltered.Response[] = [];
+    filteredItems: DispatchApi.ListAll.Response[] = [];
     selectedItem: DispatchApi.ListAll.Response | undefined = undefined;
     panelMode: PanelModes = PanelModes.Detail;
     listSearchValue: string = '';
@@ -48,13 +48,55 @@ export class DispatchStore {
         await this.getAllItems();
     }
 
+    onDispatchReceived = (dispatch: DispatchApi.ListAll.Response) => {
+
+        console.log("\n\n\nRECEIVED: ", dispatch);
+
+        runInAction(() => {
+            const index = this.allItems.findIndex(a => a.id === dispatch.id);
+
+            switch (dispatch.lastActionType) {
+                case DispatchApi.Enums.ActionTypes.Create:
+                    console.log("Create");
+
+                    if (index === -1) {
+                        console.log("Create index: ", index);
+                        this.allItems = [...this.allItems, dispatch];
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Update:
+                    console.log("Update");
+
+                    if (index !== -1) {
+                        console.log("Update index: ", index);
+                        this.allItems = this.allItems.map((item, i) => (i === index ? dispatch : item));
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Delete:
+                    console.log("Delete");
+                    if (index !== -1) {
+                        console.log("Delete index: ", index);
+                        this.allItems = this.allItems.filter((_, i) => i !== index);
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.ListAll:
+                case DispatchApi.Enums.ActionTypes.Detail:
+                    break;
+            }
+        });
+    }
+
     getAllItems = async () => {
 
 
         try {
+            console.log("\n\nCALLED dispatch getAllItems\n\n");
+            console.log(this.operationStore.selectedItem?.id);
+
+
             const relatedEntityId = this.operationStore.selectedItem?.id || GuidService.generateEmptyGuid();
-            const request: DispatchApi.ListFiltered.Request = { searchValue: this.listSearchValue, relatedEntityId };
-            const response = await DispatchApi.ListFiltered.call(request);
+            const request: DispatchApi.ListAll.Request = { searchValue: this.listSearchValue, relatedEntityId };
+            const response = await DispatchApi.ListAll.call(request);
             runInAction(() => {
                 this.allItems = response.data;
             });

@@ -1,10 +1,11 @@
 import * as signalR from '@microsoft/signalr';
 import { reaction } from 'mobx';
-import { AssetApi } from '../api';
+import { AssetApi, DispatchApi } from '../api';
 import { settingsStore } from '../stores/SettingsStore';
 import { ConnectionStatus } from '../types';
 
 type AssetReceivedHandler = (asset: AssetApi.ListAll.Response) => void;
+type DispatchReceivedHandler = (dispatch: DispatchApi.ListAll.Response) => void;
 
 class ClientSocketService {
     getConnectionState = (): ConnectionStatus => {
@@ -24,6 +25,7 @@ class ClientSocketService {
 
     private connection: signalR.HubConnection;
     private assetReceivedHandlers: AssetReceivedHandler[] = [];
+    private dispatchReceivedHandlers: DispatchReceivedHandler[] = [];
 
     constructor() {
         this.connection = this.buildConnection(settingsStore.serverAddress);
@@ -52,6 +54,7 @@ class ClientSocketService {
 
         this.connection = this.buildConnection(serverAddress);
         this.assetReceivedHandlers.forEach((handler) => this.connection.on('AssetReceived', handler));
+        this.dispatchReceivedHandlers.forEach((handler) => this.connection.on('DispatchReceived', handler));
 
         if (wasConnected) {
             await this.start();
@@ -79,6 +82,16 @@ class ClientSocketService {
     offAssetReceived(handler: AssetReceivedHandler): void {
         this.assetReceivedHandlers = this.assetReceivedHandlers.filter((h) => h !== handler);
         this.connection.off('AssetReceived', handler);
+    }
+
+    onDispatchReceived(handler: DispatchReceivedHandler): void {
+        this.dispatchReceivedHandlers.push(handler);
+        this.connection.on('DispatchReceived', handler);
+    }
+
+    offDispatchReceived(handler: DispatchReceivedHandler): void {
+        this.dispatchReceivedHandlers = this.dispatchReceivedHandlers.filter((h) => h !== handler);
+        this.connection.off('DispatchReceived', handler);
     }
 }
 

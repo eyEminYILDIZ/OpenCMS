@@ -30,6 +30,12 @@ export namespace OperationApi {
             Take = 5,
             Give = 6,
         }
+        export enum DispatchCategories {
+            General = 0,
+            Asset = 1,
+            Agent = 2,
+            Operation = 3,
+        }
     }
 
     export namespace GetActivesByAgent {
@@ -97,6 +103,19 @@ export namespace OperationApi {
             assetId: string;
             asset: AssetResponse;
         }
+        export interface DispatchResponse {
+            id: string;
+            title: string;
+            description: string;
+            category: Enums.DispatchCategories;
+            occuredAt: string;
+            relatedEntityId: string;
+            relatedChildEntityId: string | null;
+            providerAgentId: string;
+            providerAgentName: string;
+            createdAt: string;
+            updatedAt: string | null;
+        }
         export interface Response {
             id: string;
             name: string;
@@ -108,6 +127,7 @@ export namespace OperationApi {
             operationType: Enums.OperationType;
             orders: OrderResponse[];
             operationAssets: OperationAssetResponse[];
+            dispatches: DispatchResponse[];
         }
         export const call = async (request: Request): Promise<ApiResponse<Response>> => {
             const response = await ApiClient.get(`${path}/${request.id}`);

@@ -9,35 +9,17 @@ export namespace DispatchApi {
             Agent = 2,
             Operation = 3,
         }
+        export enum ActionTypes {
+            Create = 0,
+            Update = 1,
+            Delete = 2,
+            ListAll = 3,
+            Detail = 4,
+        }
     }
 
     export namespace ListAll {
         export const path = "/dispatches";
-        export interface Response {
-            id: string;
-            title: string;
-            description: string;
-            category: Enums.DispatchCategories;
-            occuredAt: string;
-            relatedEntityId: string;
-            relatedChildEntityId: string | null;
-            providerAgentId: string;
-            providerAgentName: string;
-            createdAt: string;
-            updatedAt: string | null;
-        }
-        export const call = async (searchValue?: string): Promise<ApiResponse<Response[]>> => {
-            const response = await ApiClient.get(path, {
-                params: {
-                    search: searchValue
-                }
-            });
-            return response.data;
-        }
-    }
-
-    export namespace ListFiltered {
-        export const path = "/dispatches/filtered";
         export interface Request {
             searchValue: string;
             relatedEntityId: string;
@@ -54,6 +36,7 @@ export namespace DispatchApi {
             providerAgentName: string;
             createdAt: string;
             updatedAt: string | null;
+            lastActionType: Enums.ActionTypes;
         }
         export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
             const response = await ApiClient.get(path, {
