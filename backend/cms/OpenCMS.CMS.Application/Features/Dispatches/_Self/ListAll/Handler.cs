@@ -13,7 +13,12 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
     {
         var dispatchQuery = _dbContext.Dispatches
                                        .Include(d => d.ProviderAgent)
-                                       .Where(d => d.RelatedEntityId == request.RelatedEntityId);
+                                       .AsQueryable();
+
+        if (request.RelatedEntityId != Guid.Empty)
+        {
+            dispatchQuery = dispatchQuery.Where(d => d.RelatedEntityId == request.RelatedEntityId);
+        }
 
         if (!string.IsNullOrEmpty(request.SearchValue))
         {

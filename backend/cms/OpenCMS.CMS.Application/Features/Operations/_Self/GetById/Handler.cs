@@ -21,7 +21,7 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
 
         var dispatches = await _dbContext.Dispatches
                                           .Include(d => d.ProviderAgent)
-                                          .Where(d => d.Category == DispatchCategories.Operation && d.RelatedEntityId == operation.Id)
+                                          .Where(d => d.RelatedEntityId == operation.Id)
                                           .OrderByDescending(d => d.OccuredAt)
                                           .ToListAsync(cancellationToken);
 
