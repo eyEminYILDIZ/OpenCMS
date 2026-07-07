@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace OpenCMS.CMS.Application.Dispatches.Self.ListFiltered;
+namespace OpenCMS.CMS.Application.Dispatches.Self.ListAll;
 
 public class Validator : AbstractValidator<Query>
 {

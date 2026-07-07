@@ -3,6 +3,7 @@ namespace OpenCMS.CMS.Application.Dispatches.Self.ListAll;
 public class Query : IRequest<Result<List<QueryResponse>>>
 {
     public string SearchValue { get; set; }
+    public Guid RelatedEntityId { get; set; }
 }
 
 public class QueryResponse

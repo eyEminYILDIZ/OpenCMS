@@ -11,7 +11,9 @@ public class Handler : IRequestHandler<Query, Result<List<QueryResponse>>>
 
     public async Task<Result<List<QueryResponse>>> Handle(Query request, CancellationToken cancellationToken)
     {
-        var dispatchQuery = _dbContext.Dispatches.Include(d => d.ProviderAgent).AsQueryable();
+        var dispatchQuery = _dbContext.Dispatches
+                                       .Include(d => d.ProviderAgent)
+                                       .Where(d => d.RelatedEntityId == request.RelatedEntityId);
 
         if (!string.IsNullOrEmpty(request.SearchValue))
         {
