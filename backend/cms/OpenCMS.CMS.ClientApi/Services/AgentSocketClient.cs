@@ -41,10 +41,10 @@ public class AgentSocketClient : BackgroundService
             return Task.CompletedTask;
         };
 
-        _connection.On<CommandResponse>("UpdateAsset", async (asset) =>
+        _connection.On<CommandResponse>("AssetReceived", async (asset) =>
         {
             // _logger.LogInformation("Received asset update for asset {AssetId}", asset.AssetId);
-            await _clientHubContext.Clients.All.SendAsync("UpdateAsset", asset);
+            await _clientHubContext.Clients.All.SendAsync("AssetReceived", asset);
         });
     }
 

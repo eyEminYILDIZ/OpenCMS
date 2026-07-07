@@ -77,7 +77,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
             UpdatedAt = asset.UpdatedAt
         };
 
-        await _agentSocketService.AssetUpdated(response, cancellationToken);
+        await _agentSocketService.FeedAsset(response, cancellationToken);
 
         return response;
     }

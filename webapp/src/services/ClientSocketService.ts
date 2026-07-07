@@ -1,7 +1,7 @@
 import * as signalR from '@microsoft/signalr';
 import { AssetApi } from '../api';
 
-type AssetUpdatedHandler = (asset: AssetApi.ListAll.Response) => void;
+type AssetReceivedHandler = (asset: AssetApi.ListAll.Response) => void;
 
 class ClientSocketService {
     private connection: signalR.HubConnection;
@@ -26,12 +26,12 @@ class ClientSocketService {
         await this.connection.stop();
     }
 
-    onAssetUpdated(handler: AssetUpdatedHandler): void {
-        this.connection.on('UpdateAsset', handler);
+    onAssetReceived(handler: AssetReceivedHandler): void {
+        this.connection.on('AssetReceived', handler);
     }
 
-    offAssetUpdated(handler: AssetUpdatedHandler): void {
-        this.connection.off('UpdateAsset', handler);
+    offAssetReceived(handler: AssetReceivedHandler): void {
+        this.connection.off('AssetReceived', handler);
     }
 }
 

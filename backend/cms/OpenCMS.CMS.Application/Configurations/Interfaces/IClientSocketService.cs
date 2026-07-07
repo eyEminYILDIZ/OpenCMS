@@ -4,5 +4,5 @@ namespace OpenCMS.CMS.Application.Configurations.Interfaces;
 
 public interface IClientSocketService
 {
-    Task AssetUpdated(CommandResponse asset, CancellationToken cancellationToken = default);
+    Task AssetReceived(CommandResponse asset, CancellationToken cancellationToken = default);
 }

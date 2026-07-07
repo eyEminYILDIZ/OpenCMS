@@ -15,8 +15,8 @@ public class ClientSocketService : IClientSocketService
         _hubContext = hubContext;
     }
 
-    public async Task AssetUpdated(CommandResponse asset, CancellationToken cancellationToken = default)
+    public async Task AssetReceived(CommandResponse asset, CancellationToken cancellationToken = default)
     {
-        await _hubContext.Clients.All.SendAsync("UpdateAsset", asset, cancellationToken);
+        await _hubContext.Clients.All.SendAsync("AssetReceived", asset, cancellationToken);
     }
 }

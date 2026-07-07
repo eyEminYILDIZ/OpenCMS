@@ -20,7 +20,7 @@ export class OperationStore {
         makeAutoObservable(this);
     }
 
-    onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
+    onAssetReceived = (asset: AssetApi.ListAll.Response) => {
         runInAction(() => {
             if (!this.selectedItem) return;
             const index = this.selectedItem.operationAssets.findIndex(a => a.assetId === asset.id);

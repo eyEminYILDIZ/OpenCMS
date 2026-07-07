@@ -4,7 +4,7 @@ import { AssetApi } from '../api';
 import { settingsStore } from '../stores/SettingsStore';
 import { ConnectionStatus } from '../types';
 
-type AssetUpdatedHandler = (asset: AssetApi.ListAll.Response) => void;
+type AssetReceivedHandler = (asset: AssetApi.ListAll.Response) => void;
 
 class ClientSocketService {
     getConnectionState = (): ConnectionStatus => {
@@ -23,7 +23,7 @@ class ClientSocketService {
     }
 
     private connection: signalR.HubConnection;
-    private assetUpdatedHandlers: AssetUpdatedHandler[] = [];
+    private assetReceivedHandlers: AssetReceivedHandler[] = [];
 
     constructor() {
         this.connection = this.buildConnection(settingsStore.serverAddress);
@@ -51,7 +51,7 @@ class ClientSocketService {
         await this.stop();
 
         this.connection = this.buildConnection(serverAddress);
-        this.assetUpdatedHandlers.forEach((handler) => this.connection.on('UpdateAsset', handler));
+        this.assetReceivedHandlers.forEach((handler) => this.connection.on('AssetReceived', handler));
 
         if (wasConnected) {
             await this.start();
@@ -71,14 +71,14 @@ class ClientSocketService {
         await this.connection.stop();
     }
 
-    onAssetUpdated(handler: AssetUpdatedHandler): void {
-        this.assetUpdatedHandlers.push(handler);
-        this.connection.on('UpdateAsset', handler);
+    onAssetReceived(handler: AssetReceivedHandler): void {
+        this.assetReceivedHandlers.push(handler);
+        this.connection.on('AssetReceived', handler);
     }
 
-    offAssetUpdated(handler: AssetUpdatedHandler): void {
-        this.assetUpdatedHandlers = this.assetUpdatedHandlers.filter((h) => h !== handler);
-        this.connection.off('UpdateAsset', handler);
+    offAssetReceived(handler: AssetReceivedHandler): void {
+        this.assetReceivedHandlers = this.assetReceivedHandlers.filter((h) => h !== handler);
+        this.connection.off('AssetReceived', handler);
     }
 }
 

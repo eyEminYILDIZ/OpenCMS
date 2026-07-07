@@ -14,7 +14,7 @@ export class AssetStore {
         makeAutoObservable(this);
     }
 
-    onAssetUpdated = (asset: AssetApi.ListAll.Response) => {
+    onAssetReceived = (asset: AssetApi.ListAll.Response) => {
         runInAction(() => {
             const index = this.allItems.findIndex(a => a.id === asset.id);
             if (index !== -1) {

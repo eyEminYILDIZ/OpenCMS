@@ -17,7 +17,24 @@ public class AgentSocketService : IAgentSocketService
     {
     }
 
-    public async Task AssetUpdated(CommandResponse asset, CancellationToken cancellationToken = default)
+    public async Task FeedAsset(CommandResponse asset, CancellationToken cancellationToken = default)
+    {
+        await Task.CompletedTask;
+    }
+
+
+
+    public async Task CreateDispatch(Application.Dispatches.Self.Create.CommandResponse dispatch, CancellationToken cancellationToken = default)
+    {
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteDispatch(Application.Dispatches.Self.Delete.CommandResponse dispatch, CancellationToken cancellationToken = default)
+    {
+        await Task.CompletedTask;
+    }
+
+    public async Task UpdateDispatch(Application.Dispatches.Self.Update.CommandResponse dispatch, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
