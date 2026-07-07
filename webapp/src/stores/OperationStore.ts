@@ -377,6 +377,7 @@ export class OperationStore {
             await DispatchApi.Update.call(request);
             runInAction(() => {
                 this.getById(this.selectedItem?.id || '');
+                this.clearSelectedDispatch();
                 this.panelMode = PanelModes.Detail;
             });
             this.statusBarStore.showSuccess(i18next.t('operation.errors.updateDispatchSucceeded'));
