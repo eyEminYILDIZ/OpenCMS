@@ -1,7 +1,8 @@
 import * as signalR from '@microsoft/signalr';
-import { AssetApi } from '../api';
+import { AssetApi, DispatchApi } from '../api';
 
 type AssetReceivedHandler = (asset: AssetApi.ListAll.Response) => void;
+type DispatchReceivedHandler = (dispatch: DispatchApi.ListAll.Response) => void;
 
 class ClientSocketService {
     private connection: signalR.HubConnection;
@@ -32,6 +33,14 @@ class ClientSocketService {
 
     offAssetReceived(handler: AssetReceivedHandler): void {
         this.connection.off('AssetReceived', handler);
+    }
+
+    onDispatchReceived(handler: DispatchReceivedHandler): void {
+        this.connection.on('DispatchReceived', handler);
+    }
+
+    offDispatchReceived(handler: DispatchReceivedHandler): void {
+        this.connection.off('DispatchReceived', handler);
     }
 }
 

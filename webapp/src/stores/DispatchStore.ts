@@ -3,6 +3,7 @@ import i18next from "i18next";
 import { DispatchApi } from "../api";
 import { PanelModes } from "../types";
 import { StatusBarStore } from "./StatusBarStore";
+import { GuidService } from "../services";
 
 export class DispatchStore {
     statusBarStore: StatusBarStore;
@@ -46,9 +47,45 @@ export class DispatchStore {
         }
     }
 
+    onDispatchReceived = (dispatch: DispatchApi.ListAll.Response) => {
+        console.log("\n\n\nRECEIVED: ", dispatch);
+
+
+        runInAction(() => {
+            const index = this.allItems.findIndex(a => a.id === dispatch.id);
+
+            switch (dispatch.lastActionType) {
+                case DispatchApi.Enums.ActionTypes.Create:
+                    if (index === -1) {
+                        this.allItems = [...this.allItems, dispatch];
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Update:
+                    if (index !== -1) {
+                        this.allItems = this.allItems.map((item, i) => (i === index ? dispatch : item));
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.Delete:
+                    if (index !== -1) {
+                        this.allItems = this.allItems.filter((_, i) => i !== index);
+                    }
+                    break;
+                case DispatchApi.Enums.ActionTypes.ListAll:
+                case DispatchApi.Enums.ActionTypes.Detail:
+                    break;
+            }
+        });
+    }
+
     getAllItems = async () => {
+        console.log("\n\nCALLED dispatch getAllItems\n\n");
+
         try {
-            const response = await DispatchApi.ListAll.call(this.listSearchValue);
+            const request: DispatchApi.ListAll.Request = {
+                searchValue: this.listSearchValue,
+                relatedEntityId: GuidService.generateEmptyGuid(),
+            };
+            const response = await DispatchApi.ListAll.call(request);
             runInAction(() => {
                 this.allItems = response.data;
             });

@@ -44,6 +44,28 @@ export class OperationStore {
         });
     }
 
+    onDispatchReceived = (dispatch: DispatchApi.ListAll.Response) => {
+        runInAction(() => {
+            if (!this.selectedItem) return;
+            const index = this.selectedItem.dispatches.findIndex(a => a.id === dispatch.id);
+            if (index !== -1) {
+                this.selectedItem.dispatches[index] = {
+                    id: dispatch.id,
+                    title: dispatch.title,
+                    description: dispatch.description,
+                    category: dispatch.category,
+                    occuredAt: dispatch.occuredAt,
+                    relatedEntityId: dispatch.relatedEntityId,
+                    relatedChildEntityId: dispatch.relatedChildEntityId,
+                    providerAgentId: dispatch.providerAgentId,
+                    providerAgentName: dispatch.providerAgentName,
+                    createdAt: dispatch.createdAt,
+                    updatedAt: dispatch.updatedAt,
+                };
+            }
+        });
+    }
+
     operationItemCounts: OperationApi.GetItemCounts.Response | null = null;
     allItems: OperationApi.ListAll.Response[] = [];
     selectedItem: OperationApi.GetById.Response | undefined = undefined;

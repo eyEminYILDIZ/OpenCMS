@@ -18,9 +18,9 @@ export class AssetStore {
         runInAction(() => {
             const index = this.allItems.findIndex(a => a.id === asset.id);
             if (index !== -1) {
-                this.allItems[index] = asset;
+                this.allItems = this.allItems.map((item, i) => (i === index ? asset : item));
             } else {
-                this.allItems.push(asset);
+                this.allItems = [...this.allItems, asset];
             }
 
             if (this.selectedItem?.id === asset.id) {

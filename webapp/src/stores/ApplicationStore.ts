@@ -29,6 +29,8 @@ export class ApplicationStore {
     private connectSocket = async () => {
         clientSocketService.onAssetReceived(this.assetStore.onAssetReceived);
         clientSocketService.onAssetReceived(this.operationStore.onAssetReceived);
+        clientSocketService.onDispatchReceived(this.dispatchStore.onDispatchReceived);
+        clientSocketService.onDispatchReceived(this.operationStore.onDispatchReceived);
         await clientSocketService.start();
     }
     statusBarStore: StatusBarStore;
