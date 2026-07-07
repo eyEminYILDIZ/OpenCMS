@@ -14,9 +14,12 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
 builder.Services.AddSignalR();
-builder.Services.AddHostedService<AgentSocketClient>();
 
-// FAKE CLASS, CREAED FOR SURPASSING THE INTERFACE IMPLEMENTATION ERROR. DO NOT USE THIS CLASS.
+// Registered as a singleton in its own right (not just via AddHostedService) so that
+// AgentSocketService can inject the same instance and reuse its live HubConnection to AgentHub.
+builder.Services.AddSingleton<AgentSocketClient>();
+builder.Services.AddHostedService(sp => sp.GetRequiredService<AgentSocketClient>());
+
 builder.Services.AddSingleton<IAgentSocketService, AgentSocketService>();
 
 // SignalR requires AllowCredentials, so we cannot use AllowAnyOrigin

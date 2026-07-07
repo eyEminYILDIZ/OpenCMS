@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.SignalR;
-using OpenCMS.CMS.Application.Assets.Self.Feed;
 
 namespace OpenCMS.CMS.AgentApi.Hubs;
 
@@ -10,10 +9,10 @@ public class AgentHub : Hub
     {
     }
 
-    // agent client (ClientAPI project) will call this method.
-    // example; webapp sends dispatch update, and mobileapp will take this update.
-    public async Task UpdateDispatch(OpenCMS.CMS.Application.Dispatches.Self.Create.CommandResponse dispatch)
+    // agent client (ClientAPI project) will call these methods.
+    // example; webapp sends a dispatch create/update/delete, and mobileapp will take this update.
+    private async Task SendDispatch(OpenCMS.CMS.Application.Dispatches.Self.ListAll.QueryResponse dispatch, CancellationToken cancellationToken = default)
     {
-        await Clients.AllExcept(Context.ConnectionId).SendAsync("UpdateDispatch", dispatch);
+        await Clients.All.SendAsync("DispatchReceived", dispatch, cancellationToken);
     }
 }

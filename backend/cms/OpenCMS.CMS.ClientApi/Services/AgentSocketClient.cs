@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using OpenCMS.CMS.Application.Assets.Self.Feed;
-using OpenCMS.CMS.Application.Configurations.Interfaces;
 using OpenCMS.CMS.ClientApi.Hubs;
 
 namespace OpenCMS.CMS.ClientApi.Services;
@@ -46,6 +45,17 @@ public class AgentSocketClient : BackgroundService
             // _logger.LogInformation("Received asset update for asset {AssetId}", asset.AssetId);
             await _clientHubContext.Clients.All.SendAsync("AssetReceived", asset);
         });
+    }
+
+    public async Task SendDispatch(OpenCMS.CMS.Application.Dispatches.Self.ListAll.QueryResponse dispatch, CancellationToken cancellationToken = default)
+    {
+        if (_connection.State != HubConnectionState.Connected)
+        {
+            _logger.LogWarning("Cannot invoke {Method} on AgentHub at {Url}; connection state is {State}", "DispatchReceived", _hubUrl, _connection.State);
+            return;
+        }
+
+        await _connection.InvokeAsync("DispatchReceived", dispatch, cancellationToken);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
