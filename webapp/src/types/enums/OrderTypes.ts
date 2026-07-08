@@ -19,6 +19,28 @@ export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Give]: t('operation.orderTypes.give'),
 };
 
+export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
+    [OperationApi.Enums.OrderTypes.Move]: '#3975f8',
+    [OperationApi.Enums.OrderTypes.Attack]: '#f62c2c',
+    [OperationApi.Enums.OrderTypes.Defend]: '#16a34a',
+    [OperationApi.Enums.OrderTypes.GatherIntelligence]: '#9333ea',
+    [OperationApi.Enums.OrderTypes.Exchange]: '#eab308',
+    [OperationApi.Enums.OrderTypes.Take]: '#ea580c',
+    [OperationApi.Enums.OrderTypes.Give]: '#0891b2',
+};
+
+// Single letter used as the first character of an order's 3-character map code (e.g. "M01").
+export const orderTypeCodeLetters: Record<OperationApi.Enums.OrderTypes, string> = {
+    [OperationApi.Enums.OrderTypes.Move]: 'M',
+    [OperationApi.Enums.OrderTypes.Attack]: 'A',
+    [OperationApi.Enums.OrderTypes.Defend]: 'D',
+    [OperationApi.Enums.OrderTypes.GatherIntelligence]: 'G',
+    [OperationApi.Enums.OrderTypes.Exchange]: 'E',
+    [OperationApi.Enums.OrderTypes.Take]: 'T',
+    [OperationApi.Enums.OrderTypes.Give]: 'V',
+};
+
+
 export const orderStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderStatus)
     .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
     .map((status) => ({ value: status, label: orderStatusLabels[status] }));

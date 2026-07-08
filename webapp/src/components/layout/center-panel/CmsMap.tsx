@@ -16,9 +16,10 @@ import { stores } from '../../../stores';
 import { MenuTypes } from '../../../types/MenuTypes';
 import { MapControls } from './MapControls';
 import { getAssetMarker } from './markers/getAssetMarker';
-import { PanelModes } from '../../../types';
+import { orderTypeCodeLetters, orderTypeColors, PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
 import { threatTypeColors } from '../../../types/enums/ThreatTypes';
+import { OrderCodeMarker } from './orders/getOperationIcon';
 
 interface Point {
     name: string;
@@ -110,10 +111,6 @@ export const CmsMap: React.FC = observer(() => {
         }
     }, [assetStore.selectedItem, operationStore.selectedAsset, operationStore.selectedAsset?.asset]);
 
-
-    const renderPin = (assetType: AssetApi.Enums.AssetTypes, threatType: AssetApi.Enums.ThreatTypes) =>
-        getAssetMarker(assetType, { color: threatTypeColors[threatType] });
-
     useEffect(() => {
         switch (applicationStore.currentMenu) {
             case MenuTypes.Assets:
@@ -179,7 +176,7 @@ export const CmsMap: React.FC = observer(() => {
                                 assetStore.setSelectedItem(item);
                             }}
                         >
-                            {renderPin(item.assetType, item.threatType)}
+                            {getAssetMarker(item.assetType, { color: threatTypeColors[item.threatType] })}
                         </Marker>
                     ))
                 }
@@ -201,9 +198,57 @@ export const CmsMap: React.FC = observer(() => {
                                     operationStore.setPanelMode(PanelModes.Detail);
                                 }}
                             >
-                                {renderPin(item.asset.assetType, item.asset.threatType)}
+                                {getAssetMarker(item.asset.assetType, { color: threatTypeColors[item.asset.threatType as keyof typeof threatTypeColors] })}
                             </Marker>
                         ))
+                }
+            default:
+                {
+                    // return (<Marker
+                    //     key={`marker-default`}
+                    //     longitude={28.9784}
+                    //     latitude={41.0082}
+                    //     anchor="bottom"
+                    //     onClick={e => {
+                    //         e.originalEvent.stopPropagation();
+                    //         // setPopupInfo(city as any);
+                    //     }}
+                    // >
+                    //     <Pin />
+                    // </Marker>)
+                }
+        }
+    }
+
+    const renderOrders = () => {
+        switch (applicationStore.currentMenu) {
+            case MenuTypes.Operations:
+                {
+                    if (operationStore.selectedItem == undefined)
+                        return (<></>);
+
+                    return operationStore.selectedItem.orders.map((item, index) => (
+                        <Marker
+                            key={`marker-${index}`}
+                            latitude={item.targetPointLatitude}
+                            longitude={item.targetPointLongitude}
+                            anchor="bottom"
+                            rotation={item.targetPointHeading}
+                            rotationAlignment="map"
+                            onClick={e => {
+                                e.originalEvent.stopPropagation();
+                                operationStore.setSelectedOrder(item);
+                                operationStore.setSelectedTab(OperationTabs.Orders);
+                                operationStore.setPanelMode(PanelModes.Detail);
+                            }}
+                        >
+                            <OrderCodeMarker
+                                code={`A${String(index + 1).padStart(2, '0')}`}
+                                orderType={item.orderType}
+                                color={"gray"}
+                            />
+                        </Marker>
+                    ))
                 }
             default:
                 {
@@ -238,6 +283,7 @@ export const CmsMap: React.FC = observer(() => {
                 <ScaleControl />
 
                 {renderMarkers()}
+                {renderOrders()}
 
                 {selectedMarker != undefined && (
                     <Popup
