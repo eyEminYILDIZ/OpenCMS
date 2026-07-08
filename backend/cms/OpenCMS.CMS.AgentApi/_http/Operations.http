@@ -8,3 +8,14 @@ Content-Type: application/json
 {
     "agentId": "b394835f-ce35-4e6b-8cd7-7e553def2e23"
 }
+
+###
+
+### Change Order Status
+PUT {{AgentApi}}/operations/orders/00000000-0000-0000-0000-000000000000/change-status
+Content-Type: application/json
+
+{
+  "operationId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
+  "orderStatus": 2
+}

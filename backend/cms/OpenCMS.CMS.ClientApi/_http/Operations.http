@@ -122,6 +122,17 @@ Content-Type: application/json
 
 ###
 
+### Change Order Status
+PUT {{AgentApi}}/operations/orders/00000000-0000-0000-0000-000000000000/change-status
+Content-Type: application/json
+
+{
+  "operationId": "a394835f-ce35-4e6b-8cd7-7e553def2e45",
+  "orderStatus": 2
+}
+
+###
+
 ### Get Operation Item Counts
 GET {{AgentApi}}/operations/counts
 Accept: application/json
