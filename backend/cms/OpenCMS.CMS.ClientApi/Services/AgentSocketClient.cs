@@ -6,10 +6,23 @@ namespace OpenCMS.CMS.ClientApi.Services;
 
 public class AgentSocketClient : BackgroundService
 {
+    private static readonly TimeSpan[] ReconnectDelays =
+    {
+        TimeSpan.FromSeconds(1),
+        TimeSpan.FromSeconds(2),
+        TimeSpan.FromSeconds(5),
+        TimeSpan.FromSeconds(10),
+        TimeSpan.FromSeconds(20),
+        TimeSpan.FromSeconds(30),
+    };
+
+    private static readonly TimeSpan MaxInitialConnectDelay = TimeSpan.FromSeconds(30);
+
     private readonly HubConnection _connection;
     private readonly ILogger<AgentSocketClient> _logger;
     private readonly IHubContext<ClientHub> _clientHubContext;
     private readonly string _hubUrl;
+    private volatile bool _stopping;
 
     public AgentSocketClient(IConfiguration configuration, ILogger<AgentSocketClient> logger, IHubContext<ClientHub> clientHubContext)
     {
@@ -18,7 +31,7 @@ public class AgentSocketClient : BackgroundService
         _hubUrl = configuration["AgentApi:AgentHubUrl"] ?? "http://localhost:5010/hubs/agents";
         _connection = new HubConnectionBuilder()
             .WithUrl(_hubUrl)
-            .WithAutomaticReconnect()
+            .WithAutomaticReconnect(new ExponentialBackoffRetryPolicy())
             .Build();
 
         _connection.Reconnecting += exception =>
@@ -33,10 +46,15 @@ public class AgentSocketClient : BackgroundService
             return Task.CompletedTask;
         };
 
-        _connection.Closed += exception =>
+        _connection.Closed += async exception =>
         {
-            _logger.LogError(exception, "Connection to AgentHub at {Url} closed", _hubUrl);
-            return Task.CompletedTask;
+            if (_stopping)
+            {
+                return;
+            }
+
+            _logger.LogError(exception, "Connection to AgentHub at {Url} closed; will retry with backoff", _hubUrl);
+            await ConnectWithBackoffAsync(CancellationToken.None);
         };
 
         _connection.On<OpenCMS.CMS.Application.Assets.Self.Feed.CommandResponse>("AssetReceived", async (asset) =>
@@ -64,25 +82,73 @@ public class AgentSocketClient : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Connecting to ClientApi AgentHub at {Url}", _hubUrl);
-        await _connection.StartAsync(stoppingToken);
-        _logger.LogInformation("Connected to ClientApi AgentHub at {Url}", _hubUrl);
+        // Never let a failed/dropped connection to the AgentHub take the host down;
+        // keep retrying in the background with exponential backoff instead.
+        await ConnectWithBackoffAsync(stoppingToken);
 
-        // Keep the service running until the host shuts down; WithAutomaticReconnect()
-        // handles drops in the underlying connection.
         await Task.Delay(Timeout.Infinite, stoppingToken);
+    }
+
+    private async Task ConnectWithBackoffAsync(CancellationToken stoppingToken)
+    {
+        var attempt = 0;
+        while (!stoppingToken.IsCancellationRequested && !_stopping)
+        {
+            try
+            {
+                _logger.LogInformation("Connecting to ClientApi AgentHub at {Url}", _hubUrl);
+                await _connection.StartAsync(stoppingToken);
+                _logger.LogInformation("Connected to ClientApi AgentHub at {Url}", _hubUrl);
+                return;
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+            catch (Exception ex)
+            {
+                var delay = ReconnectDelays[Math.Min(attempt, ReconnectDelays.Length - 1)];
+                if (delay > MaxInitialConnectDelay)
+                {
+                    delay = MaxInitialConnectDelay;
+                }
+
+                _logger.LogWarning(ex, "Failed to connect to AgentHub at {Url}; retrying in {Delay}", _hubUrl, delay);
+                attempt++;
+
+                try
+                {
+                    await Task.Delay(delay, stoppingToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+            }
+        }
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
+        _stopping = true;
         await _connection.StopAsync(cancellationToken);
         await base.StopAsync(cancellationToken);
     }
 
     public override void Dispose()
     {
+        _stopping = true;
         _connection.DisposeAsync().AsTask().GetAwaiter().GetResult();
         base.Dispose();
         GC.SuppressFinalize(this);
+    }
+
+    private sealed class ExponentialBackoffRetryPolicy : IRetryPolicy
+    {
+        public TimeSpan? NextRetryDelay(RetryContext retryContext)
+        {
+            var index = Math.Min(retryContext.PreviousRetryCount, ReconnectDelays.Length - 1);
+            return ReconnectDelays[index];
+        }
     }
 }
