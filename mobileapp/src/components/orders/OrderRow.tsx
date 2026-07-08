@@ -17,6 +17,9 @@ export function OrderRow({ order }: OrderRowProps) {
       <View style={styles.iconColumn}>
         <MaterialCommunityIcons name={orderTypeIcons[order.orderType]} size={28} color={color} />
       </View>
+      <View style={[styles.codeBadge, { borderColor: color }]}>
+        <Text style={[styles.codeText, { color }]}>{order.code}</Text>
+      </View>
       <Text style={styles.description} numberOfLines={2}>{order.description}</Text>
     </View>
   );
@@ -32,6 +35,16 @@ const styles = StyleSheet.create({
   iconColumn: {
     width: 32,
     alignItems: 'center',
+  },
+  codeBadge: {
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  codeText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   description: {
     flex: 1,

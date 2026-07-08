@@ -30,6 +30,7 @@ export const OrderDetailSheet = ({ order, onClose, onShowOnMap }: OrderDetailShe
 
           {order && (
             <View style={styles.card}>
+              <Row label={t('operation.orderFields.code')} value={order.code} />
               <Row label={t('operation.orderFields.description')} value={order.description} />
               <Row
                 label={t('operation.orderFields.orderType')}
@@ -46,7 +47,16 @@ export const OrderDetailSheet = ({ order, onClose, onShowOnMap }: OrderDetailShe
               />
               <Row label={t('operation.orderFields.orderStatus')} value={orderStatusLabels[order.orderStatus]} />
               <Row label={t('operation.orderFields.issuedDate')} value={DateService.toLocalDate(order.issuedDate)} />
-              <Row label={t('operation.orderFields.completedDate')} value={DateService.toLocalDate(order.completedDate)} last />
+              <Row label={t('operation.orderFields.completedDate')} value={DateService.toLocalDate(order.completedDate)} />
+              <Row
+                label={t('operation.orderFields.responsibleOperationAssetId')}
+                value={order.responsibleOperationAssetName}
+              />
+              <Row
+                label={t('operation.orderFields.previousOrderId')}
+                value={order.previousOrderDescription ?? ''}
+                last
+              />
             </View>
           )}
 
