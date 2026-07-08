@@ -471,5 +471,40 @@ export namespace OperationApi {
                 return response.data;
             }
         }
+        export namespace ChangeStatus {
+            export const path = "/operations/orders";
+            export interface Request {
+                operationId: string;
+                id: string;
+                orderStatus: Enums.OrderStatus;
+            }
+            export interface Response {
+                id: string;
+                operationId: string;
+                code: string;
+                description: string;
+                issuedDate: string;
+                completedDate: string;
+                orderStatus: Enums.OrderStatus;
+                orderType: Enums.OrderTypes;
+                targetDatePeriodStart: string;
+                targetDatePeriodEnd: string;
+                targetPointLatitude: number;
+                targetPointLongitude: number;
+                targetPointAltitude: number;
+                targetPointHeading: number;
+                targetPointSpeed: number;
+                responsibleOperationAssetId: string;
+                nextOrderId: string | null;
+                previousOrderId: string | null;
+                createdAt: string;
+                updatedAt: string | null;
+            }
+            export const call = async (request: Request): Promise<ApiResponse<Response>> => {
+                const { id, ...body } = request;
+                const response = await ApiClient.put(`${path}/${id}/change-status`, body);
+                return response.data;
+            }
+        }
     }
 }

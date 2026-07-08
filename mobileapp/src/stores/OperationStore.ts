@@ -209,4 +209,30 @@ export class OperationStore {
     //         this.statusBarStore.showError(i18next.t('operation.errors.completeOrderFailed'));
     //     }
     // }
+
+    changeOrderStatus = async (orderId: string, orderStatus: OperationApi.Enums.OrderStatus) => {
+        if (!this.selectedItem) {
+            this.statusBarStore.showError(i18next.t('operation.errors.noItemSelected'));
+            return;
+        }
+
+        try {
+            const request: OperationApi.Orders.ChangeStatus.Request = {
+                operationId: this.selectedItem.id,
+                id: orderId,
+                orderStatus,
+            };
+            await OperationApi.Orders.ChangeStatus.call(request);
+            runInAction(() => {
+                if (!this.selectedItem) return;
+                const index = this.selectedItem.orders.findIndex(o => o.id === orderId);
+                if (index !== -1) {
+                    this.selectedItem.orders[index] = { ...this.selectedItem.orders[index], orderStatus };
+                }
+            });
+            this.statusBarStore.showSuccess(i18next.t('operation.errors.changeOrderStatusSucceeded'));
+        } catch (error) {
+            this.statusBarStore.showError(i18next.t('operation.errors.changeOrderStatusFailed'));
+        }
+    }
 }

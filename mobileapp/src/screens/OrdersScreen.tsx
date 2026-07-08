@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DataList } from '../components/ui';
+import { OrderChangeStatusSheet } from '../components/orders/OrderChangeStatusSheet';
 import { OrderDetailSheet } from '../components/orders/OrderDetailSheet';
 import { OrderRow } from '../components/orders/OrderRow';
 import { OperationHeader } from '../components/operation/OperationHeader';
@@ -19,6 +20,7 @@ export const OrdersScreen = observer(() => {
   const { t } = useTranslation();
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
   const [selectedOrder, setSelectedOrder] = useState<OperationApi.GetById.OrderResponse | undefined>(undefined);
+  const [statusChangeOrder, setStatusChangeOrder] = useState<OperationApi.GetById.OrderResponse | undefined>(undefined);
 
   const operation = operationStore.selectedItem;
   const totalOrdersCount = operation?.orders.length ?? 0;
@@ -53,6 +55,14 @@ export const OrdersScreen = observer(() => {
           operationStore.setSelectedOrder(order);
           navigation.navigate('Map');
         }}
+        onChangeStatus={(order) => {
+          setSelectedOrder(undefined);
+          setStatusChangeOrder(order);
+        }}
+      />
+      <OrderChangeStatusSheet
+        order={statusChangeOrder}
+        onClose={() => setStatusChangeOrder(undefined)}
       />
     </SafeAreaView>
   );

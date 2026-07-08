@@ -165,6 +165,8 @@ const en = {
       deleteOrderFailed: 'Failed to delete operation order.',
       completeOrderSucceeded: 'Operation order completed successfully.',
       completeOrderFailed: 'Failed to complete operation order.',
+      changeOrderStatusSucceeded: 'Order status changed successfully.',
+      changeOrderStatusFailed: 'Failed to change order status.',
     },
     tabs: {
       details: 'Details',
@@ -195,9 +197,14 @@ const en = {
     detailOrder: {
       title: 'Operation Order Details',
       showOnMap: 'Show On Map',
+      changeStatus: 'Change Status',
     },
     updateOrder: {
       title: 'Update Operation Order',
+    },
+    changeOrderStatus: {
+      title: 'Change Order Status',
+      placeholder: 'Select status',
     },
     update: {
       title: 'Update Operation',

@@ -1,6 +1,6 @@
 import { OperationApi } from "../../api";
 import i18n from "../../i18n";
-// import type { DropdownOption } from "../../components/ui/Dropdown";
+import type { DropdownItem } from "../../components/ui/Dropdown";
 
 const { t } = i18n;
 
@@ -33,9 +33,9 @@ export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Give]: '#0d9488',
 };
 
-// export const orderStatusOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderStatus)
-//     .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
-//     .map((status) => ({ value: status, label: orderStatusLabels[status] }));
+export const orderStatusOptions: DropdownItem[] = Object.values(OperationApi.Enums.OrderStatus)
+    .filter((v): v is OperationApi.Enums.OrderStatus => typeof v === 'number')
+    .map((status) => ({ id: String(status), label: orderStatusLabels[status] }));
 
 // export const orderTypeOptions: DropdownOption[] = Object.values(OperationApi.Enums.OrderTypes)
 //     .filter((v): v is OperationApi.Enums.OrderTypes => typeof v === 'number')

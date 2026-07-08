@@ -12,9 +12,10 @@ interface OrderDetailSheetProps {
   order: OperationApi.GetById.OrderResponse | undefined;
   onClose: () => void;
   onShowOnMap: (order: OperationApi.GetById.OrderResponse) => void;
+  onChangeStatus: (order: OperationApi.GetById.OrderResponse) => void;
 }
 
-export const OrderDetailSheet = ({ order, onClose, onShowOnMap }: OrderDetailSheetProps) => {
+export const OrderDetailSheet = ({ order, onClose, onShowOnMap, onChangeStatus }: OrderDetailSheetProps) => {
   const { t } = useTranslation();
 
   return (
@@ -58,10 +59,23 @@ export const OrderDetailSheet = ({ order, onClose, onShowOnMap }: OrderDetailShe
           )}
 
           {order && (
-            <TouchableOpacity style={styles.showOnMapButton} onPress={() => onShowOnMap(order)}>
-              <MaterialCommunityIcons name="map-marker-outline" size={18} color={colors.primaryForeground} />
-              <Text style={styles.showOnMapButtonText}>{t('operation.detailOrder.showOnMap')}</Text>
-            </TouchableOpacity>
+            <View style={styles.actionsRow}>
+              <TouchableOpacity
+                style={[styles.showOnMapButton, styles.actionButton]}
+                onPress={() => onShowOnMap(order)}
+              >
+                <MaterialCommunityIcons name="map-marker-outline" size={18} color={colors.primaryForeground} />
+                <Text style={styles.showOnMapButtonText}>{t('operation.detailOrder.showOnMap')}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.changeStatusButton, styles.actionButton]}
+                onPress={() => onChangeStatus(order)}
+              >
+                <MaterialCommunityIcons name="progress-check" size={18} color={colors.accentForeground} />
+                <Text style={styles.changeStatusButtonText}>{t('operation.detailOrder.changeStatus')}</Text>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
       </View>
@@ -133,6 +147,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
+  actionsRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  actionButton: {
+    flex: 1,
+  },
   showOnMapButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -144,6 +165,20 @@ const styles = StyleSheet.create({
   },
   showOnMapButtonText: {
     color: colors.primaryForeground,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  changeStatusButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.accent,
+    borderRadius: 8,
+    paddingVertical: 14,
+  },
+  changeStatusButtonText: {
+    color: colors.accentForeground,
     fontSize: 15,
     fontWeight: '600',
   },
