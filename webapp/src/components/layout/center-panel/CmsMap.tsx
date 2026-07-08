@@ -19,7 +19,7 @@ import { getAssetMarker } from './markers/getAssetMarker';
 import { orderTypeCodeLetters, orderTypeColors, PanelModes } from '../../../types';
 import { OperationTabs } from '../../../stores/OperationStore';
 import { threatTypeColors } from '../../../types/enums/ThreatTypes';
-import { OrderCodeMarker } from './orders/getOperationIcon';
+import { OrderCodeMarker, OrderLinksLayer } from './orders';
 
 interface Point {
     name: string;
@@ -220,6 +220,20 @@ export const CmsMap: React.FC = observer(() => {
         }
     }
 
+    const renderOrderLinks = () => {
+        switch (applicationStore.currentMenu) {
+            case MenuTypes.Operations:
+                {
+                    if (operationStore.selectedItem == undefined)
+                        return (<></>);
+
+                    return <OrderLinksLayer orders={operationStore.selectedItem.orders} />;
+                }
+            default:
+                return (<></>);
+        }
+    }
+
     const renderOrders = () => {
         switch (applicationStore.currentMenu) {
             case MenuTypes.Operations:
@@ -282,6 +296,7 @@ export const CmsMap: React.FC = observer(() => {
                 <NavigationControl position="top-left" />
                 <ScaleControl />
 
+                {renderOrderLinks()}
                 {renderMarkers()}
                 {renderOrders()}
 

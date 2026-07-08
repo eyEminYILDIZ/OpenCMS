@@ -1,9 +1,13 @@
 import React from 'react';
-import CaptureOperationIcon from './CaptureOperationIcon';
-import ExchangeOperationIcon from './ExchangeOperationIcon';
-import ExterminateOperationIcon from './ExterminateOperationIcon';
-import InterceptOperationIcon from './InterceptOperationIcon';
-import RescueOperationIcon from './RescueOperationIcon';
+import {
+  AttackOrderIcon,
+  DefendOrderIcon,
+  ExchangeOrderIcon,
+  GatherIntelligenceOrderIcon,
+  GiveOrderIcon,
+  MoveOrderIcon,
+  TakeOrderIcon,
+} from './pins';
 import { OperationApi } from '../../../../api';
 import { orderTypeColors } from '../../../../types';
 
@@ -16,10 +20,14 @@ export function getOrderPin(
   options?: OperationIconOptions,
 ): React.ReactElement {
   switch (orderType) {
-    case OperationApi.Enums.OrderTypes.Defend: return <InterceptOperationIcon {...options} />;
-    case OperationApi.Enums.OrderTypes.Attack: return <ExterminateOperationIcon {...options} />;
-    case OperationApi.Enums.OrderTypes.Move: return <RescueOperationIcon {...options} />;
-    default: return <InterceptOperationIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Move: return <MoveOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Attack: return <AttackOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Defend: return <DefendOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.GatherIntelligence: return <GatherIntelligenceOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Exchange: return <ExchangeOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Take: return <TakeOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Give: return <GiveOrderIcon {...options} />;
+    default: return <MoveOrderIcon {...options} />;
   }
 }
 

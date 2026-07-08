@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ExchangeOperationIcon({ size = 32, color = '#d00' }: { size?: number; color?: string }) {
+function ExchangeOrderIcon({ size = 32, color = '#d00' }: { size?: number; color?: string }) {
   return (
     <svg height={size} width={size} viewBox="0 0 24 24">
       <path d="M4 9 Q4 4 10 4 L16 4" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
@@ -11,4 +11,4 @@ function ExchangeOperationIcon({ size = 32, color = '#d00' }: { size?: number; c
   );
 }
 
-export default React.memo(ExchangeOperationIcon);
+export default React.memo(ExchangeOrderIcon);
