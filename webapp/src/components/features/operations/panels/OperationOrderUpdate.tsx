@@ -48,7 +48,7 @@ export const OperationOrderUpdate: React.FC = observer(() => {
             description: order?.description ?? '',
             issuedDate: order?.issuedDate ?? '',
             completedDate: order?.completedDate ?? '',
-            orderStatus: order?.orderStatus ?? OperationApi.Enums.OrderStatus.Passive,
+            orderStatus: order?.orderStatus ?? OperationApi.Enums.OrderStatus.NotStarted,
             orderType: order?.orderType ?? OperationApi.Enums.OrderTypes.Move,
             targetDatePeriodStart: order?.targetDatePeriodStart ?? '',
             targetDatePeriodEnd: order?.targetDatePeriodEnd ?? '',

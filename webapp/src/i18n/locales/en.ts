@@ -260,8 +260,12 @@ const en = {
       exchange: 'Exchange',
     },
     orderStatuses: {
-      passive: 'Passive',
-      active: 'Active',
+      notStarted: 'Not Started',
+      started: 'Started',
+      completed: 'Completed',
+      cancelled: 'Cancelled',
+      failed: 'Failed',
+      unknown: 'Unknown',
     },
     orderTypes: {
       move: 'Move',

@@ -50,7 +50,7 @@ export const OperationOrderCreate: React.FC = observer(() => {
             description: '',
             issuedDate: '',
             completedDate: '',
-            orderStatus: OperationApi.Enums.OrderStatus.Passive,
+            orderStatus: OperationApi.Enums.OrderStatus.NotStarted,
             orderType: OperationApi.Enums.OrderTypes.Move,
             targetDatePeriodStart: '',
             targetDatePeriodEnd: '',
