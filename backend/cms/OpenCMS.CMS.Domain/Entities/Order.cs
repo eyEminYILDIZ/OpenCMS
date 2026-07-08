@@ -2,6 +2,7 @@ namespace OpenCMS.CMS.Domain.Entities;
 
 public class Order : BaseEntity
 {
+    public string Code { get; set; }
     public string Description { get; set; }
     public DateTime IssuedDate { get; set; }
     public DateTime CompletedDate { get; set; }

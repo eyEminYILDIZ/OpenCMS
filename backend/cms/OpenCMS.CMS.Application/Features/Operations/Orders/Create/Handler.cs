@@ -14,6 +14,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         var order = new Order
         {
             OperationId = request.OperationId,
+            Code = request.Code,
             Description = request.Description,
             IssuedDate = request.IssuedDate,
             CompletedDate = request.CompletedDate,
@@ -38,6 +39,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         {
             Id = order.Id,
             OperationId = order.OperationId,
+            Code = order.Code,
             Description = order.Description,
             IssuedDate = order.IssuedDate,
             CompletedDate = order.CompletedDate,

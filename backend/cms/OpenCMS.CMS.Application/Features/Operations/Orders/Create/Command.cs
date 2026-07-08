@@ -3,6 +3,7 @@ namespace OpenCMS.CMS.Application.Operations.Orders.Create;
 public class Command : IRequest<Result<CommandResponse>>
 {
     public Guid OperationId { get; set; }
+    public string Code { get; set; }
     public string Description { get; set; }
     public DateTime IssuedDate { get; set; }
     public DateTime CompletedDate { get; set; }
@@ -24,6 +25,7 @@ public class CommandResponse
 {
     public Guid Id { get; set; }
     public Guid OperationId { get; set; }
+    public string Code { get; set; }
     public string Description { get; set; }
     public DateTime IssuedDate { get; set; }
     public DateTime CompletedDate { get; set; }

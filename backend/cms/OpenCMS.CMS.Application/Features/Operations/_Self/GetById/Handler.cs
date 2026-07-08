@@ -12,7 +12,8 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
     public async Task<Result<ResponseModel>> Handle(Query request, CancellationToken cancellationToken)
     {
         var operation = await _dbContext.Operations
-                                            .Include(o => o.Orders)
+                                            .Include(o => o.Orders).ThenInclude(o => o.PreviousOrder)
+                                            .Include(o => o.Orders).ThenInclude(o => o.ResponsibleOperationAsset).ThenInclude(a => a.Asset)
                                             .Include(o => o.OperationAssets).ThenInclude(a => a.Asset)
                                             .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
@@ -38,6 +39,7 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
             Orders = operation.Orders?.Select(o => new OrderResponse
             {
                 Id = o.Id,
+                Code = o.Code,
                 Description = o.Description,
                 IssuedDate = o.IssuedDate,
                 CompletedDate = o.CompletedDate,
@@ -51,8 +53,10 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                 TargetPointHeading = o.TargetPointHeading,
                 TargetPointSpeed = o.TargetPointSpeed,
                 ResponsibleOperationAssetId = o.ResponsibleOperationAssetId,
+                ResponsibleOperationAssetName = o.ResponsibleOperationAsset?.Asset?.Name,
                 NextOrderId = o.NextOrderId,
                 PreviousOrderId = o.PreviousOrderId,
+                PreviousOrderDescription = o.PreviousOrder?.Description,
                 TargetOperationAssetId = o.TargetOperationAssetId
             }).ToList() ?? new(),
             OperationAssets = operation.OperationAssets?.Select(a => new OperationAssetResponse

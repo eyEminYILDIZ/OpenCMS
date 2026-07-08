@@ -20,6 +20,7 @@ public class ResponseModel
 public class OrderResponse
 {
     public Guid Id { get; set; }
+    public string Code { get; set; }
     public string Description { get; set; }
     public DateTime IssuedDate { get; set; }
     public DateTime CompletedDate { get; set; }
@@ -33,9 +34,11 @@ public class OrderResponse
     public double TargetPointHeading { get; set; }
     public double TargetPointSpeed { get; set; }
     public Guid ResponsibleOperationAssetId { get; set; }
+    public string ResponsibleOperationAssetName { get; set; }
     public Guid? TargetOperationAssetId { get; set; }
     public Guid? NextOrderId { get; set; }
     public Guid? PreviousOrderId { get; set; }
+    public string PreviousOrderDescription { get; set; }
 }
 
 public class OperationAssetResponse

@@ -16,6 +16,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         if (order == null)
             return Error.NotFound;
 
+        order.Code = request.Code;
         order.Description = request.Description;
         order.IssuedDate = request.IssuedDate;
         order.CompletedDate = request.CompletedDate;
@@ -39,6 +40,7 @@ public class Handler : IRequestHandler<Command, Result<CommandResponse>>
         {
             Id = order.Id,
             OperationId = order.OperationId,
+            Code = order.Code,
             Description = order.Description,
             IssuedDate = order.IssuedDate,
             CompletedDate = order.CompletedDate,
