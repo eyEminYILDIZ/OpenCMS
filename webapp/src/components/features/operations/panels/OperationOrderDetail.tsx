@@ -16,6 +16,7 @@ export const OperationOrderDetail: React.FC = observer(() => {
 
     const rows: { label: string; value: string }[] = [
         { label: t('operation.orderFields.id'), value: item.id },
+        { label: t('operation.orderFields.code'), value: item.code },
         { label: t('operation.orderFields.description'), value: item.description },
         { label: t('operation.orderFields.issuedDate'), value: item.issuedDate },
         { label: t('operation.orderFields.completedDate'), value: item.completedDate },
@@ -28,7 +29,8 @@ export const OperationOrderDetail: React.FC = observer(() => {
         { label: t('operation.orderFields.targetPointAltitude'), value: String(item.targetPointAltitude) },
         { label: t('operation.orderFields.targetPointHeading'), value: String(item.targetPointHeading) },
         { label: t('operation.orderFields.targetPointSpeed'), value: String(item.targetPointSpeed) },
-        { label: t('operation.orderFields.responsibleOperationAssetId'), value: item.responsibleOperationAssetId },
+        { label: t('operation.orderFields.responsibleOperationAssetId'), value: item.responsibleOperationAssetName },
+        { label: t('operation.orderFields.previousOrderId'), value: item.previousOrderDescription ?? '' },
     ];
 
     return (

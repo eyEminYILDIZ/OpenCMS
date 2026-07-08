@@ -243,7 +243,7 @@ export const CmsMap: React.FC = observer(() => {
                             }}
                         >
                             <OrderCodeMarker
-                                code={`A${String(index + 1).padStart(2, '0')}`}
+                                code={item.code}
                                 orderType={item.orderType}
                                 color={"gray"}
                             />

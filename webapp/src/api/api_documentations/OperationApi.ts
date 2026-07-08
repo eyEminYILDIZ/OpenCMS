@@ -150,6 +150,7 @@ export namespace OperationApi {
         }
         export interface OrderResponse {
             id: string;
+            code: string;
             description: string;
             issuedDate: string;
             completedDate: string;
@@ -163,9 +164,11 @@ export namespace OperationApi {
             targetPointHeading: number;
             targetPointSpeed: number;
             responsibleOperationAssetId: string;
+            responsibleOperationAssetName: string;
             targetOperationAssetId: string | null;
             nextOrderId: string | null;
             previousOrderId: string | null;
+            previousOrderDescription: string | null;
         }
         export interface AssetResponse {
             id: string;
@@ -341,6 +344,7 @@ export namespace OperationApi {
             export const path = "/operations/orders";
             export interface Request {
                 operationId: string;
+                code: string;
                 description: string;
                 issuedDate: string;
                 completedDate: string;
@@ -360,6 +364,7 @@ export namespace OperationApi {
             export interface Response {
                 id: string;
                 operationId: string;
+                code: string;
                 description: string;
                 issuedDate: string;
                 completedDate: string;
@@ -387,6 +392,7 @@ export namespace OperationApi {
             export const path = "/operations/orders";
             export interface Request {
                 id: string;
+                code: string;
                 description: string;
                 issuedDate: string;
                 completedDate: string;
@@ -406,6 +412,7 @@ export namespace OperationApi {
             export interface Response {
                 id: string;
                 operationId: string;
+                code: string;
                 description: string;
                 issuedDate: string;
                 completedDate: string;

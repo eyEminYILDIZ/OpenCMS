@@ -18,6 +18,7 @@ const en = {
     validation: {
       required: 'This field is required.',
       nonNegative: 'Value must be 0 or greater.',
+      maxLength: 'Must be at most {{count}} characters.',
     },
   },
   menu: {
@@ -214,6 +215,7 @@ const en = {
     },
     orderFields: {
       id: 'ID',
+      code: 'Code',
       description: 'Description',
       issuedDate: 'Issued Date',
       completedDate: 'Completed Date',

@@ -23,6 +23,7 @@ export const OperationOrderUpdate: React.FC = observer(() => {
     const order = operationStore.selectedOrder;
 
     const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
+        code: Yup.string().max(3, t('common.validation.maxLength', { count: 3 })).defined(),
         description: Yup.string().required(t('common.validation.required')),
         issuedDate: Yup.string().required(t('common.validation.required')),
         completedDate: Yup.string().required(t('common.validation.required')),
@@ -43,6 +44,7 @@ export const OperationOrderUpdate: React.FC = observer(() => {
     const formik = useFormik<FormValues>({
         enableReinitialize: true,
         initialValues: {
+            code: order?.code ?? '',
             description: order?.description ?? '',
             issuedDate: order?.issuedDate ?? '',
             completedDate: order?.completedDate ?? '',
@@ -71,6 +73,10 @@ export const OperationOrderUpdate: React.FC = observer(() => {
     return (
         <Form formik={formik} mode={FormMode.Update}>
             <h4>{t('operation.updateOrder.title')}</h4>
+
+            <FormItem<FormValues> name="code" label={t('operation.orderFields.code')}>
+                <Input<FormValues> id="code" name="code" maxLength={3} />
+            </FormItem>
 
             <FormItem<FormValues> name="description" label={t('operation.orderFields.description')}>
                 <Input<FormValues> id="description" name="description" />
