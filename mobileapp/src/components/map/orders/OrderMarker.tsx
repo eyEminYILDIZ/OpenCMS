@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OperationApi } from '../../../api';
-import { orderTypeColors, orderTypeIcons } from '../../../types/enums/OrderTypes';
+import { orderTypeColors } from '../../../types/enums/OrderTypes';
 import { colors } from '../../../theme/colors';
+import { getOrderPin } from '../../orders/pins/getOrderPin';
 
 interface OrderMarkerProps {
   /** 3 characters to display inside the circle, e.g. 1 letter + 2 digits ("A12"). */
@@ -41,11 +41,7 @@ export function OrderMarker({ code, orderType, size = 36 }: OrderMarkerProps): R
           },
         ]}
       >
-        <MaterialCommunityIcons
-          name={orderTypeIcons[orderType]}
-          size={Math.round(badgeSize * 0.6)}
-          color={badgeColor}
-        />
+        {getOrderPin(orderType, { size: Math.round(badgeSize * 0.6), color: badgeColor })}
       </View>
     </View>
   );

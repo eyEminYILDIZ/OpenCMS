@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OperationApi } from '../../api';
 import { colors } from '../../theme/colors';
-import { orderTypeColors, orderTypeIcons } from '../../types/enums/OrderTypes';
+import { orderTypeColors } from '../../types/enums/OrderTypes';
+import { getOrderPin } from './pins/getOrderPin';
 
 interface OrderRowProps {
   order: OperationApi.GetById.OrderResponse;
@@ -14,11 +14,11 @@ export function OrderRow({ order }: OrderRowProps) {
 
   return (
     <View style={styles.row}>
-      <View style={styles.iconColumn}>
-        <MaterialCommunityIcons name={orderTypeIcons[order.orderType]} size={28} color={color} />
-      </View>
       <View style={[styles.codeBadge, { borderColor: color }]}>
         <Text style={[styles.codeText, { color }]}>{order.code}</Text>
+      </View>
+      <View style={styles.iconColumn}>
+        {getOrderPin(order.orderType, { size: 28, color })}
       </View>
       <Text style={styles.description} numberOfLines={2}>{order.description}</Text>
     </View>

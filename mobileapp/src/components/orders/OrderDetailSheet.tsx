@@ -3,9 +3,10 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OperationApi } from '../../api';
-import { orderStatusLabels, orderTypeColors, orderTypeIcons, orderTypeLabels } from '../../types/enums/OrderTypes';
+import { orderStatusLabels, orderTypeColors, orderTypeLabels } from '../../types/enums/OrderTypes';
 import { colors } from '../../theme/colors';
 import { DateService } from '../../services/DateService';
+import { getOrderPin } from './pins/getOrderPin';
 
 interface OrderDetailSheetProps {
   order: OperationApi.GetById.OrderResponse | undefined;
@@ -36,11 +37,7 @@ export const OrderDetailSheet = ({ order, onClose, onShowOnMap }: OrderDetailShe
                 label={t('operation.orderFields.orderType')}
                 value={
                   <View style={styles.typeValue}>
-                    <MaterialCommunityIcons
-                      name={orderTypeIcons[order.orderType]}
-                      size={16}
-                      color={orderTypeColors[order.orderType]}
-                    />
+                    {getOrderPin(order.orderType, { size: 16, color: orderTypeColors[order.orderType] })}
                     <Text style={styles.value}>{orderTypeLabels[order.orderType]}</Text>
                   </View>
                 }
