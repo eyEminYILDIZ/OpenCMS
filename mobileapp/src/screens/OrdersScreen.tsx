@@ -15,7 +15,7 @@ import { RootTabParamList } from '../navigation/BottomTabNavigator';
 import { colors } from '../theme/colors';
 
 export const OrdersScreen = observer(() => {
-  const { operationStore, statusBarStore } = stores;
+  const { operationStore } = stores;
   const { t } = useTranslation();
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
   const [selectedOrder, setSelectedOrder] = useState<OperationApi.GetById.OrderResponse | undefined>(undefined);
@@ -48,10 +48,10 @@ export const OrdersScreen = observer(() => {
       <OrderDetailSheet
         order={selectedOrder}
         onClose={() => setSelectedOrder(undefined)}
-        onShowOnMap={() => {
+        onShowOnMap={(order) => {
           setSelectedOrder(undefined);
+          operationStore.setSelectedOrder(order);
           navigation.navigate('Map');
-          statusBarStore.showError(t('common.notImplementedYet'));
         }}
       />
     </SafeAreaView>

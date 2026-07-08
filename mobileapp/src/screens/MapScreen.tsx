@@ -1,4 +1,4 @@
-import { Camera, CameraRef, Map, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
+import { Camera, CameraRef, Map, Marker, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { colors } from '../theme/colors';
 import { threatTypeColors } from '../types/enums/ThreatTypes';
 import { getAssetMarker } from '../components/map/markers/getAssetMarker';
 import { MapWrapper } from '../components/map/MapWrapper';
+import { OrderLinksLayer, OrderMarker } from '../components/map/orders';
 
 const MAP_STYLE_VOYAGER = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
@@ -48,6 +49,7 @@ export const MapScreen = observer(() => {
 
   const prevAssetIdRef = useRef<string | undefined>(undefined);
   const prevOperationAssetIdRef = useRef<string | undefined>(undefined);
+  const prevOrderIdRef = useRef<string | undefined>(undefined);
   const currentZoomRef = useRef(DEFAULT_ZOOM);
   const annotationRefs = useRef<Record<string, ViewAnnotationRef>>({});
   const prevHeadingsRef = useRef<Record<string, number>>({});
@@ -110,6 +112,17 @@ export const MapScreen = observer(() => {
   }, [operationStore.selectedAsset, operationStore.selectedAsset?.asset]);
 
   useEffect(() => {
+    if (operationStore.selectedOrder != null) {
+      const { id, targetPointLatitude, targetPointLongitude } = operationStore.selectedOrder;
+      const isNew = id !== prevOrderIdRef.current;
+      prevOrderIdRef.current = id;
+      flyToAsset(targetPointLatitude, targetPointLongitude, isNew);
+    } else {
+      prevOrderIdRef.current = undefined;
+    }
+  }, [operationStore.selectedOrder]);
+
+  useEffect(() => {
     const { automaticTracking, automaticFocusing } = mapSettingsStore;
     if (!automaticTracking && !automaticFocusing) return;
 
@@ -157,7 +170,10 @@ export const MapScreen = observer(() => {
       <Map
         style={styles.map}
         mapStyle={mapSettingsStore.satelliteView ? MAP_STYLE_SATELLITE : MAP_STYLE_VOYAGER}
-        onPress={() => assetStore.clearSelectedItems()}
+        onPress={() => {
+          assetStore.clearSelectedItems();
+          operationStore.clearSelectedOrder();
+        }}
         onRegionDidChange={(event) => {
           currentZoomRef.current = event.nativeEvent.zoom ?? currentZoomRef.current;
         }}
@@ -167,6 +183,36 @@ export const MapScreen = observer(() => {
           initialViewState={{ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM }}
         />
         {permissionState === 'granted' && <UserLocation animated heading />}
+        {operationStore.selectedItem != null && (
+          <OrderLinksLayer orders={operationStore.selectedItem.orders} />
+        )}
+        {operationStore.selectedItem?.orders.map((item) => (
+          <Marker
+            key={`order-${item.id}`}
+            id={`order-${item.id}`}
+            lngLat={[item.targetPointLongitude, item.targetPointLatitude]}
+            onPress={() => operationStore.setSelectedOrder(item)}
+          >
+            <OrderMarker code={item.code} orderType={item.orderType} />
+          </Marker>
+        ))}
+        {operationStore.selectedOrder != null && (
+          <Marker
+            key={`order-popup-${operationStore.selectedOrder.id}`}
+            id={`order-popup-${operationStore.selectedOrder.id}`}
+            lngLat={[
+              operationStore.selectedOrder.targetPointLongitude,
+              operationStore.selectedOrder.targetPointLatitude,
+            ]}
+            anchor="bottom"
+            offset={[0, -20]}
+          >
+            <View style={styles.popupBubble}>
+              <Text style={styles.popupText}>{operationStore.selectedOrder.code}</Text>
+              <Text style={styles.popupSubtext}>{operationStore.selectedOrder.description}</Text>
+            </View>
+          </Marker>
+        )}
         {assetStore.allItems.map((item) => (
           <ViewAnnotation
             key={`asset-${item.id}`}
@@ -229,6 +275,11 @@ const styles = StyleSheet.create({
     color: colors.cardForeground,
     fontSize: 13,
     fontWeight: '600',
+  },
+  popupSubtext: {
+    color: colors.mutedForeground,
+    fontSize: 12,
+    marginTop: 2,
   },
 
 });
