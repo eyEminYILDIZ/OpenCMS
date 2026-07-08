@@ -23,7 +23,7 @@ export const OrdersScreen = observer(() => {
   const operation = operationStore.selectedItem;
   const totalOrdersCount = operation?.orders.length ?? 0;
   const completedOrdersCount = operation?.orders.filter(
-    (order) => order.orderStatus === OperationApi.Enums.OrderStatus.Passive,
+    (order) => order.orderStatus === OperationApi.Enums.OrderStatus.Completed,
   ).length ?? 0;
 
   return (

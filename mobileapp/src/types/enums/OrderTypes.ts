@@ -5,8 +5,12 @@ import i18n from "../../i18n";
 const { t } = i18n;
 
 export const orderStatusLabels: Record<OperationApi.Enums.OrderStatus, string> = {
-    [OperationApi.Enums.OrderStatus.Passive]: t('operation.orderStatuses.passive'),
-    [OperationApi.Enums.OrderStatus.Active]: t('operation.orderStatuses.active'),
+    [OperationApi.Enums.OrderStatus.NotStarted]: t('operation.orderStatuses.notStarted'),
+    [OperationApi.Enums.OrderStatus.Started]: t('operation.orderStatuses.started'),
+    [OperationApi.Enums.OrderStatus.Completed]: t('operation.orderStatuses.completed'),
+    [OperationApi.Enums.OrderStatus.Cancelled]: t('operation.orderStatuses.cancelled'),
+    [OperationApi.Enums.OrderStatus.Failed]: t('operation.orderStatuses.failed'),
+    [OperationApi.Enums.OrderStatus.Unknown]: t('operation.orderStatuses.unknown'),
 };
 
 export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
