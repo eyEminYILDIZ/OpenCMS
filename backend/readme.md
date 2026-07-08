@@ -34,6 +34,9 @@ Backend parts of OpenCMS
 - Aspire
 - Result Pattern
 
+## Docs
+
+- [Communication flow diagram](./_docs/communication-flows_v3.drawio)
 
 ## Projects
 
