@@ -134,6 +134,14 @@ export const OperationOrderUpdate: React.FC = observer(() => {
                 />
             </FormItem>
 
+            <FormItem<FormValues> name="previousOrderId" label={t('operation.orderFields.previousOrderId')}>
+                <DropdownRemote<FormValues>
+                    name="previousOrderId"
+                    endpoint={OperationApi.Orders.Pick.path}
+                    relationId={operationStore.selectedItem?.id}
+                />
+            </FormItem>
+
             <ButtonStack>
                 <Button type="submit" disabled={formik.isSubmitting}>
                     <Save size={16} />

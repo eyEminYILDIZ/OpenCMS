@@ -322,6 +322,21 @@ export namespace OperationApi {
         }
     }
     export namespace Orders {
+        export namespace Pick {
+            export const path = "/operations/orders/pick";
+            export interface Request {
+                search: string;
+                relationId: string;
+            }
+            export interface Response {
+                id: string;
+                name: string;
+            }
+            export const call = async (request: Request): Promise<ApiResponse<Response[]>> => {
+                const response = await ApiClient.post(path, request);
+                return response.data;
+            }
+        }
         export namespace Create {
             export const path = "/operations/orders";
             export interface Request {

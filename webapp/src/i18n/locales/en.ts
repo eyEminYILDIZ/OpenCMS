@@ -227,6 +227,7 @@ const en = {
       targetPointHeading: 'Target Heading',
       targetPointSpeed: 'Target Speed',
       responsibleOperationAssetId: 'Responsible Operation Asset',
+      previousOrderId: 'Previous Order',
     },
     order: {
       description: 'Description',
