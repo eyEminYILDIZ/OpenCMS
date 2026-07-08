@@ -56,7 +56,7 @@ while (!cts.Token.IsCancellationRequested)
 
             foreach (var order in operation.Orders)
             {
-                if (order.OrderStatus == OrderStatus.Passive || order.OrderType != OrderTypes.Attack || order.ResponsibleOperationAssetId != operationAsset.Id)
+                if (order.OrderStatus == OrderStatus.NotStarted || order.OrderType != OrderTypes.Attack || order.ResponsibleOperationAssetId != operationAsset.Id)
                 {
                     logger.LogDebug("Skipping order {OrderId} — Type: {Type}, Status: {Status}",
                         order.Id, order.OrderType, order.OrderStatus);

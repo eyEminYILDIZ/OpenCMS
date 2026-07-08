@@ -49,7 +49,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e55"),
                     Description = "AirDefenceGun - Shut down the Hostile Aircraft",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Attack,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"),
                     TargetOperationAssetId=Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
@@ -114,7 +114,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e55"),
                     Description = "Field Agent 1001 - Move to Location P1",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Move,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:00:00Z"),
@@ -129,7 +129,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e56"),
                     Description = "Field Agent 1001 - Take X11 Item from Location P1",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Take,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:05:00Z"),
@@ -144,7 +144,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e57"),
                     Description = "Field Agent 1001 - Move to Location P2",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Move,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:30:00Z"),
@@ -159,7 +159,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e58"),
                     Description = "Field Agent 1001 - Give X11 Item to Secret Yacht 3003 at Location P2",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Give,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:35:00Z"),
@@ -175,7 +175,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e59"),
                     Description = "Secret Yacht 3003 - Move to Location P2",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Move,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:30:00Z"),
@@ -190,7 +190,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e60"),
                     Description = "Secret Yacht 3003 - Take X11 Item to Secret Yacht 3003 at Location P2",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Take,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:35:00Z"),
@@ -205,7 +205,7 @@ public class Seeder
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e61"),
                     Description = "Secret Yacht 3003 - Move to Location P0-Headquarter",
-                    OrderStatus = Domain.Entities.OrderStatus.Active,
+                    OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Move,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:30:00Z"),

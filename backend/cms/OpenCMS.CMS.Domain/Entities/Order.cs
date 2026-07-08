@@ -47,6 +47,10 @@ public enum OrderTypes
 
 public enum OrderStatus
 {
-    Passive = 0,
-    Active = 1,
+    NotStarted = 0,
+    Started = 1,
+    Completed = 2,
+    Cancelled = 3,
+    Failed = 4,
+    Unknown = 5,
 }
