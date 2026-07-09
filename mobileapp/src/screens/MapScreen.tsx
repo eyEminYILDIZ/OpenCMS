@@ -1,15 +1,16 @@
-import { Camera, CameraRef, Map, Marker, useCurrentPosition, UserLocation, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
+import { Camera, CameraRef, Map, Marker, useCurrentPosition, ViewAnnotation, ViewAnnotationRef } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-import { MapControls } from '../components/map/MapControls';
+import { MapControls, UserHeadingMarker } from '../components/map';
 import { OperationHeader } from '../components/operation/OperationHeader';
 import { AssetApi } from '../api';
 import { stores } from '../stores';
 import { useLocation } from '../hooks/useLocation';
+import { useCompassHeading } from '../hooks/useCompassHeading';
 import { colors } from '../theme/colors';
 import { threatTypeColors } from '../types/enums/ThreatTypes';
 import { getAssetMarker } from '../components/map/markers/getAssetMarker';
@@ -46,6 +47,7 @@ export const MapScreen = observer(() => {
   const cameraRef = useRef<CameraRef>(null);
   const { permissionState, requestPermission } = useLocation();
   const currentPosition = useCurrentPosition();
+  const compassHeading = useCompassHeading();
 
   const prevAssetIdRef = useRef<string | undefined>(undefined);
   const prevOperationAssetIdRef = useRef<string | undefined>(undefined);
@@ -182,7 +184,16 @@ export const MapScreen = observer(() => {
           ref={cameraRef}
           initialViewState={{ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM }}
         />
-        {permissionState === 'granted' && <UserLocation animated heading />}
+        {permissionState === 'granted' && currentPosition?.coords && (
+          <Marker
+            id="user-location"
+            lngLat={[currentPosition.coords.longitude, currentPosition.coords.latitude]}
+          >
+            <View style={{ transform: [{ rotate: `${compassHeading}deg` }] }}>
+              <UserHeadingMarker />
+            </View>
+          </Marker>
+        )}
         {operationStore.selectedItem != null && (
           <OrderLinksLayer orders={operationStore.selectedItem.orders} />
         )}

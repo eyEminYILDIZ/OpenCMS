@@ -26,6 +26,7 @@
     "react": "19.2.3",
     "react-i18next": "^17.0.8",
     "react-native": "0.86.0",
+    "react-native-compass-heading": "^2.0.2",
     "react-native-restart": "^0.0.28",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.25.2",
