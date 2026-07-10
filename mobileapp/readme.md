@@ -4,7 +4,7 @@ Mobile part of OpenCMS
 
 ## Baseline
 
-- React-Native
+- React-Native (0.86)
 - Cli based app (not expo)
 - React/Typescript
 - Metro
