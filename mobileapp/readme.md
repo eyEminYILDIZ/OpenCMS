@@ -18,6 +18,7 @@ Mobile part of OpenCMS
 - MapLibre/OpenStreetMap
 - Formik
 - YUP
+- @microsoft/signalr
 - @react-navigation/native, 
 - @react-navigation/bottom-tabs
 - @react-native-async-storage/async-storage
@@ -25,6 +26,7 @@ Mobile part of OpenCMS
 - react-native-toast-message
 - react-native-safe-area-context
 - react-native-screens
+- react-native-compass-heading
 
 ## Projects
 
