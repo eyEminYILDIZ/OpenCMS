@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+See `readme.md` for project overview, setup, and the full list of libraries used.
+
 ## Commands
 
 ```bash
