@@ -2,20 +2,22 @@
 
 Mobile part of OpenCMS
 
-# Baseline
+## Baseline
 
 - React-Native
 - Cli based app (not expo)
 - React/Typescript
 - Metro
 
-# Libraries
+## Libraries
 
 - Axios
 - MobX
 - Vector Icons
 - i18n
 - MapLibre/OpenStreetMap
+- Formik
+- YUP
 
 ## Projects
 
