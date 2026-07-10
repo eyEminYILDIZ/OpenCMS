@@ -1,5 +1,7 @@
 # OpenCMS Webapp — Claude Code Guidelines
 
+See `readme.md` for project overview, setup, and the full list of libraries used.
+
 ## Commands
 
 ```bash
