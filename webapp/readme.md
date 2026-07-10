@@ -16,7 +16,8 @@ Web part of OpenCMS
 - MobX
 - Lucide Icons
 - MapLibre/OpenStreetMap
-
+- Formik
+- YUP
 
 ## Projects
 
