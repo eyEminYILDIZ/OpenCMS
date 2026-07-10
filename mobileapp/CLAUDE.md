@@ -103,6 +103,37 @@ Use `StatusBarStore` (`src/stores/StatusBarStore.ts`) for all toast/status feedb
 2. Export the component as default, unless it is small/shared like `TextBox`, in which case a named export is fine — match the existing pattern in the target folder.
 3. Import it where needed.
 
+## Forms & Validation
+
+Any form with more than one field or with real validation rules uses **Formik + Yup**, wired through the shared context components in `src/components/ui/`. See `src/components/dispatch/DispatchCreateSheet.tsx` and `DispatchUpdateSheet.tsx` for the canonical example.
+
+- **State:** `useFormik<FormValues>({ initialValues, validationSchema, onSubmit })`. Build initial values with a local `buildInitialValues()` function (pre-fill from the store's `selectedItem` for update forms). When the sheet/modal's `visible` prop flips true, call `formik.resetForm({ values: buildInitialValues() })` in a `useEffect` keyed on `visible` — this re-seeds the form each time it opens instead of leaking stale values between opens.
+- **Validation schema:** Define with `Yup.object({...}) satisfies`/typed as `Yup.ObjectSchema<FormValues>`. Every validation message must go through i18n — never a hardcoded string:
+  ```ts
+  const validationSchema: Yup.ObjectSchema<FormValues> = Yup.object({
+    title: Yup.string().required(t('common.validation.required')),
+    category: Yup.number().required(t('common.validation.required')),
+    relatedChildEntityId: Yup.string().nullable().default(null), // optional field: no .required()
+  });
+  ```
+  Shared messages live under `common.validation` in `src/i18n/locales/en.ts` (`required`, `nonNegative`). Add new shared rules there rather than inlining ad hoc strings per form.
+- **Required vs optional:** required fields get `.required(t('common.validation.required'))`; optional fields use `.nullable().default(null)` and omit `.required()`. Don't invent a separate "optional" convention.
+- **Wiring fields:** Wrap the whole set of fields in `<Form formik={formik} mode={FormMode.Create | FormMode.Update}>` (`src/components/ui/Form.tsx`), then wrap each field in `<FormItem<FormValues> name="fieldName" label={t(...)}>`. Inside it, use `<TextBox<FormValues> name="fieldName" .../>` or `<DateTimePicker<FormValues> name="fieldName" .../>` — these read/write the field automatically via the `Form` context by matching on `name`, no manual `value`/`onChangeText` wiring needed. `Dropdown` (`src/components/ui/Dropdown.tsx`) does **not** integrate with `Form` context — wire it manually with `selectedId`/`onSelect`, mapping into `formik.setFieldValue` yourself.
+- **Error display:** Handled entirely by `FormItem` — it shows the Yup error message under the field, but only once the field has been touched (`touched[name] && errors[name]`). Do not add per-field error text elsewhere; do not show errors before the field is touched. `TextBox`/`DateTimePicker`/`Dropdown` have no error styling of their own (no red border) — only `FormItem`'s text line communicates the error.
+- **Submit button:** Disable via `formik.isSubmitting` only (not `isValid`/`dirty` — Formik still blocks submission via the validation schema, the button disable is purely to prevent double-submit while the request is in flight). Swap the button's icon for an `ActivityIndicator` and its label to `t('common.saving')` while submitting:
+  ```tsx
+  <TouchableOpacity
+    style={[styles.saveButton, formik.isSubmitting && styles.saveButtonDisabled]}
+    onPress={() => formik.handleSubmit()}
+    disabled={formik.isSubmitting}
+  >
+    {formik.isSubmitting ? <ActivityIndicator size="small" color={colors.primaryForeground} /> : <Icon .../>}
+    <Text>{formik.isSubmitting ? t('common.saving') : t('common.save')}</Text>
+  </TouchableOpacity>
+  ```
+- **Simple single-field/single-action forms** (e.g. a lone dropdown confirm like `OrderChangeStatusSheet.tsx`, or a single settings field like `SettingsEditModal.tsx`) don't need the full Formik/Yup machinery — plain `useState` plus a guard clause before submit (`if (!order || status == null) return;`) is acceptable. In that case, still disable the submit button whenever the required value is missing or a save is in progress (`disabled={isSaving || status == null}`) — don't silently no-op on invalid input, and don't skip the loading-spinner swap on the button.
+- Do not introduce `react-hook-form`, `zod`, or another validation library — Formik + Yup is the only form stack in this app.
+
 ## Platform Notes
 
 - **Android emulator networking:** `10.0.2.2` routes to the host machine's `localhost`; iOS simulator uses `localhost` directly. See the default server address logic in `src/stores/SettingsStore.ts`.
