@@ -18,6 +18,13 @@ Mobile part of OpenCMS
 - MapLibre/OpenStreetMap
 - Formik
 - YUP
+- @react-navigation/native, 
+- @react-navigation/bottom-tabs
+- @react-native-async-storage/async-storage
+- react-native-svg
+- react-native-toast-message
+- react-native-safe-area-context
+- react-native-screens
 
 ## Projects
 
