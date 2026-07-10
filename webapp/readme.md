@@ -12,12 +12,14 @@ Web part of OpenCMS
 ## Libraries
 
 - Shadcn
+- radix-ui
 - Axios 
 - MobX
 - Lucide Icons
 - MapLibre/OpenStreetMap
 - Formik
 - YUP
+- i18next, react-i18next
 
 ## Projects
 
