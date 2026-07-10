@@ -20,6 +20,7 @@ Web part of OpenCMS
 - Formik
 - YUP
 - i18next, react-i18next
+- @microsoft/signalr
 
 ## Projects
 
