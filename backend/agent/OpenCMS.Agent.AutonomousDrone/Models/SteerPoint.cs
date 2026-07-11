@@ -1,6 +1,6 @@
-namespace OpenCMS.Agent.AutonomousDrone;
+namespace OpenCMS.Agent.AutonomousDrone.Models;
 
-public class Point
+public class SteerPoint
 {
     public double Latitude { get; set; }
     public double Longitude { get; set; }
@@ -8,7 +8,7 @@ public class Point
     public double Heading { get; set; }
     public double Speed { get; set; }
 
-    public Point(double latitude, double longitude, double altitude, double heading, double speed)
+    public SteerPoint(double latitude, double longitude, double altitude, double heading, double speed)
     {
         Latitude = latitude;
         Longitude = longitude;
