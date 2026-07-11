@@ -5,6 +5,8 @@ namespace OpenCMS.Agent.Library;
 public class AgentState
 {
     private readonly Asset _selfAsset;
+    private double _fuelPercentage;
+
     public AgentState(Guid agentId, Guid assetId, string name, AssetTypes assetType, ThreatTypes threatType)
     {
         _selfAsset = new Asset
@@ -20,6 +22,7 @@ public class AgentState
             AssetType = assetType,
             ThreatType = threatType
         };
+        _fuelPercentage = 100.0;
     }
 
     public void UpdateState(double latitude, double longitude, double altitude, double heading, double speed)
@@ -34,5 +37,30 @@ public class AgentState
     public Asset GetSelfAsset()
     {
         return _selfAsset;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////// Fuel Management //////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    public double GetFuelPercentage()
+    {
+        return _fuelPercentage;
+    }
+
+    public double ConsumeFuel(double amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentException("Fuel consumption amount cannot be negative.");
+        }
+
+        _fuelPercentage -= amount;
+        if (_fuelPercentage < 0)
+        {
+            _fuelPercentage = 0;
+        }
+        return _fuelPercentage;
     }
 }
