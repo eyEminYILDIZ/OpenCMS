@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using OpenCMS.Agent.AutonomousDrone.Models;
 
 namespace OpenCMS.Agent.AutonomousDrone
 {
@@ -7,12 +9,20 @@ namespace OpenCMS.Agent.AutonomousDrone
     {
         private readonly AgentState _selfAgent;
         private readonly ILogger<AutonomousDrone> _logger;
-        private List<Point> _waypoints = new List<Point>();
+        private List<SteerPoint> _steerPoints = new List<SteerPoint>();
+        private int _currentSteerPointIndex = 0;
+        private SteerPoint _homeSteerPoint;
 
         public AutonomousDrone(AgentState selfAgent, ILogger<AutonomousDrone> logger)
         {
             _selfAgent = selfAgent;
             _logger = logger;
+            _currentSteerPointIndex = 0;
+        }
+
+        public void SetSteerPoints(List<SteerPoint> steerPoints)
+        {
+            _steerPoints = steerPoints;
         }
 
         public async Task TakePosition(Asset targetAsset)
@@ -29,5 +39,20 @@ namespace OpenCMS.Agent.AutonomousDrone
             // await Task.Delay(100);
             // _logger.LogWarning("FIRED at target");
         }
+
+        public async Task Start()
+        {
+            _homeSteerPoint = new SteerPoint(0, 0, 0, 0, 0);
+        }
+
+        public async Task Work()
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////// Movement System /////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
     }
 }
