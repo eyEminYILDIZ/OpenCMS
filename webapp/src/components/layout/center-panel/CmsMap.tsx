@@ -246,7 +246,7 @@ export const CmsMap: React.FC = observer(() => {
                             key={`marker-${index}`}
                             latitude={item.targetPointLatitude}
                             longitude={item.targetPointLongitude}
-                            anchor="bottom"
+                            anchor="center"
                             rotation={item.targetPointHeading}
                             rotationAlignment="map"
                             onClick={e => {
@@ -259,7 +259,7 @@ export const CmsMap: React.FC = observer(() => {
                             <OrderCodeMarker
                                 code={item.code}
                                 orderType={item.orderType}
-                                color={"gray"}
+                                color={"blue"}
                             />
                         </Marker>
                     ))
