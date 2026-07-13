@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   circle: {
     backgroundColor: colors.card,
     borderWidth: 2,
-    borderColor: colors.mutedForeground,
+    borderColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
