@@ -53,3 +53,6 @@ temp
 # backend
 backend/cms_data/opencms.db-shm
 backend/cms_data/opencms.db-wal
+
+# claude worktree
+.claude/worktrees
