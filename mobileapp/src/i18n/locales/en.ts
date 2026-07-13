@@ -303,6 +303,14 @@ const en = {
     connected: 'Connected',
     disconnected: 'Disconnected',
   },
+  infoScreen: {
+    connectionInfo: {
+      title: 'Connection Info',
+      api: 'API',
+      websocket: 'WebSocket',
+      gps: 'GPS',
+    },
+  },
   dispatch: {
     noDispatchesFound: 'No dispatches found',
     errors: {
