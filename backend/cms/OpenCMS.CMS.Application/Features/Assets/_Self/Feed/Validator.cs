@@ -19,10 +19,8 @@ public class Validator : AbstractValidator<Command>
         RuleFor(x => x.Longitude)
             .InclusiveBetween(-180, 180).WithMessage("Longitude must be between -180 and 180.");
 
-        // TODO: for underground assets altitude can be negative, so we need to allow that. 
-        // We can add a new property to indicate if the asset is underground or not, and then validate altitude accordingly.
-        RuleFor(x => x.Altitude)
-            .GreaterThanOrEqualTo(0).WithMessage("Altitude must be non-negative.");
+        // RuleFor(x => x.Altitude)
+        //     .GreaterThanOrEqualTo(0).WithMessage("Altitude must be non-negative.");
 
         RuleFor(x => x.Heading)
             .InclusiveBetween(0, 360).WithMessage("Heading must be between 0 and 360 degrees.");

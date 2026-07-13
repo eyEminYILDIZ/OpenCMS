@@ -12,17 +12,19 @@ public class OpenCmsClient
     private readonly string _baseUrl;
     private readonly HttpClient _httpClient;
     private readonly ILogger<OpenCmsClient> _logger;
+    private readonly bool _loggingEnabled = false;
     private readonly JsonSerializerOptions _jsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
-    public OpenCmsClient(Guid agentId, string baseUrl, HttpClient httpClient, ILogger<OpenCmsClient> logger)
+    public OpenCmsClient(Guid agentId, string baseUrl, HttpClient httpClient, ILogger<OpenCmsClient> logger, bool loggingEnabled = false)
     {
         _agentId = agentId;
         _baseUrl = baseUrl;
         _httpClient = httpClient;
         _logger = logger;
+        _loggingEnabled = loggingEnabled;
     }
 
     public async Task<bool> Ping()
@@ -34,7 +36,11 @@ public class OpenCmsClient
 
     public async Task<bool> FeedAsset(Asset asset)
     {
-        _logger.LogDebug("Feeding asset {AssetId} ({AssetName})", asset.Id, asset.Name);
+        if (_loggingEnabled)
+        {
+            _logger.LogDebug("Feeding asset {AssetId} ({AssetName})", asset.Id, asset.Name);
+        }
+
         var command = new OpenCMS.CMS.Application.Assets.Self.Feed.Command()
         {
             Id = asset.Id,
@@ -49,6 +55,12 @@ public class OpenCmsClient
             RelatedAgentId = asset.RelatedAgentId
         };
         var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{asset.Id}/feed", command, _jsonOptions);
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Failed to feed asset {AssetId}: {StatusCode}", asset.Id, response.StatusCode);
+            _logger.LogError("Response: {Response}", await response.Content.ReadAsStringAsync());
+        }
+
         return response.IsSuccessStatusCode;
     }
 

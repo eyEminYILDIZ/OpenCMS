@@ -34,6 +34,16 @@ public class AgentState
         _selfAsset.Speed = speed;
     }
 
+    public Guid GetAssetId()
+    {
+        return _selfAsset.Id;
+    }
+
+    public Guid GetAgentId()
+    {
+        return _selfAsset.RelatedAgentId ?? Guid.Empty;
+    }
+
     public Asset GetSelfAsset()
     {
         return _selfAsset;

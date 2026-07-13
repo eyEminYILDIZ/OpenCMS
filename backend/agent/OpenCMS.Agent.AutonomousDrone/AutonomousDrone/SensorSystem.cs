@@ -5,10 +5,13 @@ public class SensorSystem
 
     private readonly ThreeDimensionWorld _world;
     private readonly Guid _assetId;
-    public SensorSystem(ThreeDimensionWorld world, Guid assetId)
+    private readonly bool _loggingEnabled;
+
+    public SensorSystem(ThreeDimensionWorld world, Guid assetId, bool loggingEnabled = false)
     {
         _world = world;
         _assetId = assetId;
+        _loggingEnabled = loggingEnabled;
     }
 
     public double GetHeading()
