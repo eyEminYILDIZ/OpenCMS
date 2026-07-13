@@ -1,5 +1,6 @@
+import { useCurrentPosition } from '@maplibre/maplibre-react-native';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,10 +10,21 @@ import { stores } from '../stores';
 import { agentTypeLabels, connectionStatusLabels } from '../types';
 import { ConnectionStatus } from '../types/enums';
 import { DateService } from '../services/DateService';
+import { useLocation } from '../hooks/useLocation';
+import { useCompassHeading } from '../hooks/useCompassHeading';
+
+const METERS_PER_SECOND_TO_KMH = 3.6;
 
 export const InfoScreen = observer(() => {
   const { applicationStore, agentStore } = stores;
   const agent = agentStore.selectedItem;
+  const { requestPermission } = useLocation();
+  const coords = useCurrentPosition()?.coords;
+  const heading = useCompassHeading();
+
+  useEffect(() => {
+    requestPermission();
+  }, [requestPermission]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,6 +36,23 @@ export const InfoScreen = observer(() => {
           </View>
           <View style={styles.card}>
             <Row label="Socket Status" value={connectionStatusLabels[applicationStore.socketConnectionStatus]} status={applicationStore.socketConnectionStatus} />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.title}>Device Status</Text>
+          <View style={styles.gridCard}>
+            <View style={styles.gridRow}>
+              <GridItem icon="latitude" value={coords ? coords.latitude.toFixed(5) : '--'} />
+              <GridItem icon="longitude" value={coords ? coords.longitude.toFixed(5) : '--'} />
+            </View>
+            <View style={styles.gridRow}>
+              <GridItem icon="speedometer" value={coords?.speed != null ? `${(coords.speed * METERS_PER_SECOND_TO_KMH).toFixed(1)} km/h` : '--'} />
+              <GridItem icon="altimeter" value={coords?.altitude != null ? `${coords.altitude.toFixed(0)} m` : '--'} />
+            </View>
+            <View style={styles.gridRow}>
+              <GridItem icon="compass-outline" value={`${heading.toFixed(0)}°`} />
+            </View>
           </View>
         </View>
 
@@ -77,6 +106,13 @@ const Row = ({ label, value, status }: { label: string; value: string; status?: 
   );
 };
 
+const GridItem = ({ icon, value }: { icon: string; value: string }) => (
+  <View style={styles.gridItem}>
+    <MaterialCommunityIcons name={icon} size={20} color="#6B7280" />
+    <Text style={styles.gridValue}>{value}</Text>
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -125,5 +161,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     flexShrink: 1,
+  },
+  gridCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    padding: 16,
+    gap: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  gridRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  gridItem: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  gridValue: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#111827',
   },
 });
