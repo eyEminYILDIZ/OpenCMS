@@ -1,6 +1,5 @@
 import type { Feature, FeatureCollection, LineString } from 'geojson';
 import { OperationApi } from '../../../api';
-import { orderTypeColors } from '../../../types/enums/OrderTypes';
 
 /**
  * Kinds of relationships between orders that can be drawn as a link on the map.
@@ -33,7 +32,7 @@ function previousOrderLink(
             kind: OrderLinkKind.PreviousOrder,
             orderId: order.id,
             linkedOrderId: previousOrder.id,
-            color: orderTypeColors[order.orderType],
+            color: 'blue',
         },
         geometry: {
             type: 'LineString',
