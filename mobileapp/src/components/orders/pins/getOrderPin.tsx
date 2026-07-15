@@ -6,6 +6,7 @@ import ExchangeOrderIcon from './ExchangeOrderIcon';
 import GatherIntelligenceOrderIcon from './GatherIntelligenceOrderIcon';
 import GiveOrderIcon from './GiveOrderIcon';
 import MoveOrderIcon from './MoveOrderIcon';
+import ObserveOrderIcon from './ObserveOrderIcon';
 import TakeOrderIcon from './TakeOrderIcon';
 
 interface OrderPinOptions {
@@ -25,6 +26,7 @@ export function getOrderPin(
     case OperationApi.Enums.OrderTypes.Exchange: return <ExchangeOrderIcon {...options} />;
     case OperationApi.Enums.OrderTypes.Take: return <TakeOrderIcon {...options} />;
     case OperationApi.Enums.OrderTypes.Give: return <GiveOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Observe: return <ObserveOrderIcon {...options} />;
     default: return <MoveOrderIcon {...options} />;
   }
 }

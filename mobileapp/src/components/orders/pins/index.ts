@@ -5,4 +5,5 @@ export { default as ExchangeOrderIcon } from './ExchangeOrderIcon';
 export { default as GatherIntelligenceOrderIcon } from './GatherIntelligenceOrderIcon';
 export { default as GiveOrderIcon } from './GiveOrderIcon';
 export { default as MoveOrderIcon } from './MoveOrderIcon';
+export { default as ObserveOrderIcon } from './ObserveOrderIcon';
 export { default as TakeOrderIcon } from './TakeOrderIcon';

@@ -21,6 +21,7 @@ export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Exchange]: t('operation.orderTypes.exchange'),
     [OperationApi.Enums.OrderTypes.Take]: t('operation.orderTypes.take'),
     [OperationApi.Enums.OrderTypes.Give]: t('operation.orderTypes.give'),
+    [OperationApi.Enums.OrderTypes.Observe]: t('operation.orderTypes.observe'),
 };
 
 export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
@@ -31,6 +32,7 @@ export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Exchange]: '#ea580c',
     [OperationApi.Enums.OrderTypes.Take]: '#ca8a04',
     [OperationApi.Enums.OrderTypes.Give]: '#0d9488',
+    [OperationApi.Enums.OrderTypes.Observe]: '#64748b',
 };
 
 export const orderStatusOptions: DropdownItem[] = Object.values(OperationApi.Enums.OrderStatus)

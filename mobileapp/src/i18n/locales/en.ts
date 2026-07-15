@@ -282,6 +282,7 @@ const en = {
       exchange: 'Exchange',
       take: 'Take',
       give: 'Give',
+      observe: 'Observe',
     },
   },
   mapControls: {
