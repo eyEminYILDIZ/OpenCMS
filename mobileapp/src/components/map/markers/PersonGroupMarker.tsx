@@ -1,9 +1,10 @@
 import React from 'react';
-import Svg, { Circle, Path } from 'react-native-svg';
+import Svg, { Circle, Path, Polygon } from 'react-native-svg';
 
 function PersonGroupMarker({ size = 32, color = '#d00' }: { size?: number; color?: string }) {
   return (
     <Svg height={size} width={size} viewBox="0 0 24 24">
+      <Polygon points="12,0 11,1.6 13,1.6" fill={color} />
       <Circle cx="7" cy="6" r="2.5" fill={color} />
       <Path d="M4 10 Q4 8.5 7 8.5 Q10 8.5 10 10 L10.5 16 L8.5 16 L8.5 20 L5.5 20 L5.5 16 L3.5 16 Z" fill={color} />
       <Circle cx="17" cy="6" r="2.5" fill={color} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, { Path, Circle, Rect } from 'react-native-svg';
+import Svg, { Path, Circle, Rect, Polygon } from 'react-native-svg';
 
 function DroneMarker({ size = 32, color = '#d00' }: { size?: number; color?: string }) {
   return (
@@ -17,6 +17,7 @@ function DroneMarker({ size = 32, color = '#d00' }: { size?: number; color?: str
       <Circle cx="6" cy="18" r="1" fill={color} />
       <Circle cx="18" cy="18" r="1" fill={color} />
       <Rect x="9" y="9" width="6" height="6" rx="1.6" fill={color} />
+      <Polygon points="12,0.4 9.2,7.2 14.8,7.2" fill={color} />
     </Svg>
   );
 }
