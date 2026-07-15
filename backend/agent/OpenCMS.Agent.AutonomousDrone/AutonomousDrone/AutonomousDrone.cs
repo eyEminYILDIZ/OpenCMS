@@ -12,9 +12,9 @@ namespace OpenCMS.Agent.AutonomousDrone
         private readonly ActuatorSystem _actuatorSystem;
         private readonly SensorSystem _sensorSystem;
         private readonly ILogger<AutonomousDrone> _logger;
-        private List<SteerPoint> _steerPoints = new List<SteerPoint>();
+        private List<WayPoint> _steerPoints = new List<WayPoint>();
         private int _currentSteerPointIndex = 0;
-        private SteerPoint _homeSteerPoint;
+        private WayPoint _homeSteerPoint;
         private bool _loggingEnabled = false;
 
         public AutonomousDrone(AgentState selfAgent, ThreeDimensionWorld world, ILogger<AutonomousDrone> logger, bool loggingEnabled = false)
@@ -27,7 +27,7 @@ namespace OpenCMS.Agent.AutonomousDrone
             _sensorSystem = new SensorSystem(world, selfAgent.GetAssetId(), loggingEnabled);
         }
 
-        public void SetSteerPoints(List<SteerPoint> steerPoints)
+        public void SetSteerPoints(List<WayPoint> steerPoints)
         {
             _steerPoints = steerPoints;
         }
@@ -73,7 +73,7 @@ namespace OpenCMS.Agent.AutonomousDrone
             _currentSteerPointIndex++;
         }
 
-        public SteerPoint GetCurrentSteerPoint()
+        public WayPoint GetCurrentSteerPoint()
         {
             if (_currentSteerPointIndex == -1)
             {
@@ -102,7 +102,7 @@ namespace OpenCMS.Agent.AutonomousDrone
             var altitude = _sensorSystem.GetAltitude();
             var heading = _sensorSystem.GetHeading();
             var speed = _sensorSystem.GetSpeed();
-            _homeSteerPoint = new SteerPoint("Home Waypoint", latitude, longitude, altitude, heading, speed);
+            _homeSteerPoint = new WayPoint("Home Waypoint", latitude, longitude, altitude, heading, speed, OrderTypes.Move);
         }
 
         public async Task<bool> Work()

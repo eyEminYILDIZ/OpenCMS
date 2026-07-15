@@ -1,6 +1,6 @@
 namespace OpenCMS.Agent.AutonomousDrone.Models;
 
-public class SteerPoint
+public class WayPoint
 {
     public string Name { get; set; }
     public double Latitude { get; set; }
@@ -8,8 +8,9 @@ public class SteerPoint
     public double Altitude { get; set; }
     public double Heading { get; set; }
     public double Speed { get; set; }
+    public OrderTypes OrderType { get; set; }
 
-    public SteerPoint(string name, double latitude, double longitude, double altitude, double heading, double speed)
+    public WayPoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypes orderType)
     {
         Name = name;
         Latitude = latitude;
@@ -17,5 +18,6 @@ public class SteerPoint
         Altitude = altitude;
         Heading = heading;
         Speed = speed;
+        OrderType = orderType;
     }
 }

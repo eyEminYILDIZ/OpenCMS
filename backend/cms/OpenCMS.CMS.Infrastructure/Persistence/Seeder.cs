@@ -91,7 +91,7 @@ public class Seeder
                 new Domain.Entities.Order
                 {
                     Id = Guid.Parse("d394835f-ce35-4e6b-8cd7-7e553def2e55"),
-                    Code="A01",
+                    Code="A1",
                     Description = "AirDefenceGun - Shut down the Hostile Aircraft",
                     OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Attack,
@@ -99,8 +99,8 @@ public class Seeder
                     TargetOperationAssetId=Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"),
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:00:00Z"),
                     TargetDatePeriodEnd=DateTime.Parse("2025-06-01T08:05:00Z"),
-                    TargetPointLatitude=41.045524,
-                    TargetPointLongitude=29.064697,
+                    TargetPointLatitude=0,
+                    TargetPointLongitude=0,
                     TargetPointAltitude=-1,
                     TargetPointHeading=-1,
                     TargetPointSpeed=-1,
@@ -138,7 +138,7 @@ public class Seeder
                 new Domain.Entities.Order
                 {
                     Id = Guid.Parse("4e734f1a-4e86-471b-b55f-bf64f5ab2e7d"),
-                    Code="D01",
+                    Code="D1",
                     Description = "Autonomous Drone - Move to Gozdagi waypoint",
                     OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Move,
@@ -155,10 +155,10 @@ public class Seeder
                 new Domain.Entities.Order
                 {
                     Id = Guid.Parse("9302c355-f545-4cef-883a-fa678ed11c6f"),
-                    Code="D02",
+                    Code="D2",
                     Description = "Autonomous Drone - Watch over the LTFJ airport",
                     OrderStatus = Domain.Entities.OrderStatus.Started,
-                    OrderType = Domain.Entities.OrderTypes.Move,
+                    OrderType = Domain.Entities.OrderTypes.Observe,
                     ResponsibleOperationAssetId= Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e47"),
                     TargetOperationAssetId=null,
                     TargetDatePeriodStart=DateTime.Parse("2025-06-01T08:05:00Z"),
@@ -173,7 +173,7 @@ public class Seeder
                     new Domain.Entities.Order
                 {
                     Id = Guid.Parse("5a1b2c3d-4e5f-6789-abcd-ef0123456789"),
-                    Code="D03",
+                    Code="D3",
                     Description = "Autonomous Drone - Destroy the shipyard",
                     OrderStatus = Domain.Entities.OrderStatus.Started,
                     OrderType = Domain.Entities.OrderTypes.Attack,

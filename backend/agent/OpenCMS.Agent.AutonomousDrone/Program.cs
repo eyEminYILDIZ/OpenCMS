@@ -72,7 +72,7 @@ while (!cts.Token.IsCancellationRequested)
         }
 
         // detect waypoints
-        var waypoints = new List<SteerPoint>();
+        var waypoints = new List<WayPoint>();
         foreach (var order in operation.Orders)
         {
             if (order.OrderStatus == OrderStatus.NotStarted || order.ResponsibleOperationAssetId != operationAsset.Id)
@@ -85,8 +85,8 @@ while (!cts.Token.IsCancellationRequested)
             logger.LogInformation("Executing order {OrderId} — Type: {Type}, Target: {Lat}/{Lon}",
                 order.Id, order.OrderType, order.TargetPointLatitude, order.TargetPointLongitude);
 
-            var steerpoint = new SteerPoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed);
-            waypoints.Add(steerpoint);
+            var waypoint = new WayPoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed, order.OrderType);
+            waypoints.Add(waypoint);
         }
 
         // set waypoints and start autonomous drone
