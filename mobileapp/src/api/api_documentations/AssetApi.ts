@@ -14,7 +14,8 @@ export namespace AssetApi {
             Building = 7,
             Radar = 8,
             AirGun = 9,
-            Other = 10,
+            Drone = 10,
+            Other = 11,
         }
         export enum ThreatTypes {
             Unknown = 0,

@@ -25,7 +25,7 @@ export function OrderMarker({ code, orderType, size = 36 }: OrderMarkerProps): R
         ]}
       >
         <Text style={styles.code} numberOfLines={1}>
-          {code.slice(0, 3).toUpperCase()}
+          {code?.slice(0, 3).toUpperCase()}
         </Text>
       </View>
       <View

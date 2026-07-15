@@ -1,6 +1,7 @@
 export { default as AircraftMarker } from './AircraftMarker';
 export { default as AirGunMarker } from './AirGunMarker';
 export { default as BuildingMarker } from './BuildingMarker';
+export { default as DroneMarker } from './DroneMarker';
 export { default as PersonGroupMarker } from './PersonGroupMarker';
 export { default as PersonMarker } from './PersonMarker';
 export { default as RadarMarker } from './RadarMarker';
