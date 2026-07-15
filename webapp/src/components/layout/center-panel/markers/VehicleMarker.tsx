@@ -8,18 +8,15 @@ function VehicleMarker({ size = 40, color = '#d00' }: { size?: number; color?: s
     };
     return (
         <svg height={size} viewBox="0 0 24 24" style={vehicleStyle}>
-            {/* car body */}
-            <rect x="2" y="13" width="20" height="6" rx="1" />
-            {/* cabin */}
-            <path d="M6 13 L8 8 L16 8 L18 13 Z" />
-            {/* windshield cutout */}
-            <path d="M9 8.5 L7.5 12.5 L16.5 12.5 L15 8.5 Z" fill="white" />
-            {/* front wheel */}
-            <circle cx="6" cy="19" r="2.5" fill={color} stroke="white" strokeWidth="1" />
-            <circle cx="6" cy="19" r="1" fill="white" />
-            {/* rear wheel */}
-            <circle cx="18" cy="19" r="2.5" fill={color} stroke="white" strokeWidth="1" />
-            <circle cx="18" cy="19" r="1" fill="white" />
+            {/* body, wedge nose forward (heading) */}
+            <path d="M12,1.5 L17.5,9 L17.5,19 Q17.5,20.5 16,20.5 L8,20.5 Q6.5,20.5 6.5,19 L6.5,9 Z" />
+            {/* cabin window cutout */}
+            <rect x="7.5" y="10.5" width="9" height="5" fill="white" rx="1" />
+            {/* wheels */}
+            <circle cx="5" cy="9" r="2.1" fill={color} stroke="white" strokeWidth="1" />
+            <circle cx="19" cy="9" r="2.1" fill={color} stroke="white" strokeWidth="1" />
+            <circle cx="5" cy="18.5" r="2.1" fill={color} stroke="white" strokeWidth="1" />
+            <circle cx="19" cy="18.5" r="2.1" fill={color} stroke="white" strokeWidth="1" />
         </svg>
     );
 }
