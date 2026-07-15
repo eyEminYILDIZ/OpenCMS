@@ -36,29 +36,7 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
             EndDate = operation.EndDate,
             OperationStatus = operation.OperationStatus,
             OperationType = operation.OperationType,
-            Orders = operation.Orders?.Select(o => new OrderResponse
-            {
-                Id = o.Id,
-                Code = o.Code,
-                Description = o.Description,
-                IssuedDate = o.IssuedDate,
-                CompletedDate = o.CompletedDate,
-                OrderStatus = o.OrderStatus,
-                OrderType = o.OrderType,
-                TargetDatePeriodStart = o.TargetDatePeriodStart,
-                TargetDatePeriodEnd = o.TargetDatePeriodEnd,
-                TargetPointLatitude = o.TargetPointLatitude,
-                TargetPointLongitude = o.TargetPointLongitude,
-                TargetPointAltitude = o.TargetPointAltitude,
-                TargetPointHeading = o.TargetPointHeading,
-                TargetPointSpeed = o.TargetPointSpeed,
-                ResponsibleOperationAssetId = o.ResponsibleOperationAssetId,
-                ResponsibleOperationAssetName = o.ResponsibleOperationAsset?.Asset?.Name,
-                NextOrderId = o.NextOrderId,
-                PreviousOrderId = o.PreviousOrderId,
-                PreviousOrderDescription = o.PreviousOrder?.Description,
-                TargetOperationAssetId = o.TargetOperationAssetId
-            }).ToList() ?? new(),
+            Orders = MapOrders(operation.Orders),
             OperationAssets = operation.OperationAssets?.Select(a => new OperationAssetResponse
             {
                 Id = a.Id,
@@ -95,5 +73,57 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                 UpdatedAt = d.UpdatedAt
             }).ToList()
         };
+    }
+
+    private List<OrderResponse> MapOrders(List<Order> orders)
+    {
+        var orderResponses = new List<OrderResponse>();
+
+        if (orders == null || !orders.Any())
+            return orderResponses;
+
+        foreach (var o in orders)
+        {
+            var orderResponse = new OrderResponse
+            {
+                Id = o.Id,
+                Code = o.Code,
+                Description = o.Description,
+                IssuedDate = o.IssuedDate,
+                CompletedDate = o.CompletedDate,
+                OrderStatus = o.OrderStatus,
+                OrderType = o.OrderType,
+                TargetDatePeriodStart = o.TargetDatePeriodStart,
+                TargetDatePeriodEnd = o.TargetDatePeriodEnd,
+                TargetPointLatitude = o.TargetPointLatitude,
+                TargetPointLongitude = o.TargetPointLongitude,
+                TargetPointAltitude = o.TargetPointAltitude,
+                TargetPointHeading = o.TargetPointHeading,
+                TargetPointSpeed = o.TargetPointSpeed,
+                ResponsibleOperationAssetId = o.ResponsibleOperationAssetId,
+                ResponsibleOperationAssetName = o.ResponsibleOperationAsset?.Asset?.Name,
+                NextOrderId = o.NextOrderId,
+                PreviousOrderId = o.PreviousOrderId,
+                PreviousOrderDescription = o.PreviousOrder?.Description,
+                TargetOperationAssetId = o.TargetOperationAssetId
+            };
+
+            orderResponses.Add(orderResponse);
+        }
+
+        // reordering orders based on the linked list structure
+        var orderedList = new List<OrderResponse>();
+        var currentOrder = orderResponses.FirstOrDefault(o => o.PreviousOrderId == null);
+        while (currentOrder != null)
+        {
+            orderedList.Add(currentOrder);
+            currentOrder = orderResponses.FirstOrDefault(o => o.PreviousOrderId == currentOrder.Id);
+        }
+
+        // find not added ones
+        var notAddedOrders = orderResponses.Except(orderedList).ToList();
+        orderedList.AddRange(notAddedOrders);
+
+        return orderedList;
     }
 }
