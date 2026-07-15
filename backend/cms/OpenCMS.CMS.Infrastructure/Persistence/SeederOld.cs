@@ -2,30 +2,16 @@ using OpenCMS.CMS.Infrastructure;
 
 namespace OpenCMS.CMS.Infrastructure.Persistence;
 
-public class Seeder
+public class SeederOld
 {
-    public static void Seed(ApplicationDbContext context)
+    public static void SeedOperationVersion1(ApplicationDbContext context)
     {
-        SeedBaseData(context);
-        SeedOperation1(context);
-    }
-
-    private static readonly Guid AirRadarAgentId = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6");
-    private static readonly Guid AirDefenceGunAgentId = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23");
-    private static readonly Guid AirRadarAssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23");
-    private static readonly Guid AirDefenceGunAssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24");
-    private static readonly Guid HostileAircraftAssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25");
-    private static readonly Guid HeadquarterAssetId = Guid.Parse("8e1a6d78-9746-4522-b437-8c14562fa2e1");
-
-    public static void SeedBaseData(ApplicationDbContext context)
-    {
-        if (context.Agents.Any())
-            return;
+        if (context.Agents.Any()) return;
 
         var agents = new[]
         {
-            new Domain.Entities.Agent { Id = AirRadarAgentId, Name = "AirRadar Agent" },
-            new Domain.Entities.Agent { Id = AirDefenceGunAgentId, Name = "AirDefenceGun Agent" },
+            new Domain.Entities.Agent { Id = Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6"), Name = "AirRadar Agent" },
+            new Domain.Entities.Agent { Id = Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirDefenceGun Agent" },
         };
 
         context.Agents.AddRange(agents);
@@ -33,38 +19,29 @@ public class Seeder
 
         var assets = new[]
         {
-            new Domain.Entities.Asset { Id = AirRadarAssetId, Name = "AirRadar Asset", AssetType = Domain.Entities.AssetTypes.Radar, RelatedAgentId=AirRadarAgentId },
-            new Domain.Entities.Asset { Id = AirDefenceGunAssetId, Name = "AirDefenceGun Asset", AssetType = Domain.Entities.AssetTypes.AirGun, RelatedAgentId=AirDefenceGunAgentId },
-            new Domain.Entities.Asset { Id = HostileAircraftAssetId, Name = "Hostile Aircraft", AssetType = Domain.Entities.AssetTypes.Aircraft },
-            new Domain.Entities.Asset { Id = HeadquarterAssetId, Name = "Headquarter", AssetType = Domain.Entities.AssetTypes.Building },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23"), Name = "AirRadar Asset", AssetType = Domain.Entities.AssetTypes.Radar, RelatedAgentId=Guid.Parse("3071ea39-56ef-42f8-a6fd-9f3d3b4ebdf6") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24"), Name = "AirDefenceGun Asset", AssetType = Domain.Entities.AssetTypes.AirGun, RelatedAgentId=Guid.Parse("b394835f-ce35-4e6b-8cd7-7e553def2e23") },
+            new Domain.Entities.Asset { Id = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25"), Name = "Hostile Aircraft", AssetType = Domain.Entities.AssetTypes.Aircraft },
+            new Domain.Entities.Asset { Id = Guid.Parse("8e1a6d78-9746-4522-b437-8c14562fa2e1"), Name = "Headquarter", AssetType = Domain.Entities.AssetTypes.Building },
         };
 
         context.Assets.AddRange(assets);
         context.SaveChanges();
-    }
 
-    public static void SeedOperation1(ApplicationDbContext context)
-    {
-        var operationId = Guid.Parse("a394835f-ce35-4e6b-8cd7-7e553def2e45");
-        var operation = context.Operations.FirstOrDefault(o => o.Id == operationId);
-
-        if (operation != null)
-            return;
-
-        operation = new Domain.Entities.Operation
+        var operation = new Domain.Entities.Operation
         {
-            Id = operationId,
-            Name = "Hostile Aircraft Interception",
+            Id = Guid.Parse("a394835f-ce35-4e6b-8cd7-7e553def2e45"),
+            Name = "Hostile Aircraft Interception - a394835f",
             OperationType = Domain.Entities.OperationType.Intercept,
             OperationStatus = Domain.Entities.OperationStatus.InProgress,
             OperationAssets = new List<Domain.Entities.OperationAsset>
             {
                 // air radar
-                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"), AssetId = AirRadarAssetId },
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e44"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e23") },
                 // air defence gun
-                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"), AssetId = AirDefenceGunAssetId },
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e45"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e24") },
                 // hostile aircraft
-                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"), AssetId = HostileAircraftAssetId }
+                new Domain.Entities.OperationAsset { Id = Guid.Parse("e394835f-ce35-4e6b-8cd7-7e553def2e46"), AssetId = Guid.Parse("c394835f-ce35-4e6b-8cd7-7e553def2e25") }
             },
             Orders = new List<Domain.Entities.Order>
             {

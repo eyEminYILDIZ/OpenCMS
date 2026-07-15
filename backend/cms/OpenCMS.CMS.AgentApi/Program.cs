@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
     context.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;");
-    Seeder.SeedOperationVersion1(context);
+    Seeder.Seed(context);
 }
 
 app.UseApplicationExceptionHandling();
