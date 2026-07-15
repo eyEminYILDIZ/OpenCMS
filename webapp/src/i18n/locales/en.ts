@@ -112,6 +112,7 @@ const en = {
       building: 'Building',
       radar: 'Radar',
       airGun: 'Air Gun',
+      drone: 'Drone',
       other: 'Other',
     },
     threatTypes: {

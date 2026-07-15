@@ -80,7 +80,7 @@ export function OrderCodeMarker({
             whiteSpace: 'nowrap',
           }}
         >
-          {code.slice(0, 3).toUpperCase()}
+          {code?.slice(0, 3).toUpperCase()}
         </span>
       </div>
       <div

@@ -4,6 +4,7 @@ import {
     AircraftMarker,
     AirGunMarker,
     BuildingMarker,
+    DroneMarker,
     PersonGroupMarker,
     PersonMarker,
     RadarMarker,
@@ -32,6 +33,7 @@ export function getAssetMarker(
         case AssetApi.Enums.AssetTypes.GroupOfPeople: return <PersonGroupMarker {...options} />;
         case AssetApi.Enums.AssetTypes.Radar: return <RadarMarker {...options} />;
         case AssetApi.Enums.AssetTypes.AirGun: return <AirGunMarker {...options} />;
+        case AssetApi.Enums.AssetTypes.Drone: return <DroneMarker {...options} />;
         default: return <UnknownMarker {...options} />;
     }
 }
