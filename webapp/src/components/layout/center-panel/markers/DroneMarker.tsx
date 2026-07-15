@@ -25,6 +25,8 @@ function DroneMarker({ size = 40, color = '#d00' }: { size?: number; color?: str
             <circle cx="18" cy="18" r="1" />
             {/* body */}
             <rect x="9" y="9" width="6" height="6" rx="1.6" />
+            {/* nose spike, pokes past the front rotors to show heading */}
+            <polygon points="12,0.4 9.2,7.2 14.8,7.2" />
         </svg>
     );
 }
