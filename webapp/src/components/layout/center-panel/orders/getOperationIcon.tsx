@@ -47,7 +47,7 @@ interface OrderCodeMarkerProps {
 export function OrderCodeMarker({
   code,
   orderType,
-  size = 40,
+  size = 31,
   color = '#d00',
   backgroundColor = '#fff',
   textColor = '#111',
