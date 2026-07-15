@@ -82,6 +82,13 @@ while (!cts.Token.IsCancellationRequested)
                     Heading = order.TargetPointHeading,
                     Speed = order.TargetPointSpeed,
                 });
+
+                var continousAssetFeedResult = await openCmsClient.FeedAsset(agentState.GetSelfAsset());
+                if (!continousAssetFeedResult)
+                {
+                    logger.LogWarning("Failed to feed self asset to CMS");
+                }
+
                 await defenceGun.Fire();
             }
         }
