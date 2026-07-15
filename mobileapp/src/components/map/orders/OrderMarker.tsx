@@ -12,7 +12,7 @@ interface OrderMarkerProps {
   size?: number;
 }
 
-export function OrderMarker({ code, orderType, size = 36 }: OrderMarkerProps): React.ReactElement {
+export function OrderMarker({ code, orderType, size = 29 }: OrderMarkerProps): React.ReactElement {
   const badgeSize = Math.round(size * 0.55);
   const badgeColor = orderTypeColors[orderType];
 
@@ -24,7 +24,7 @@ export function OrderMarker({ code, orderType, size = 36 }: OrderMarkerProps): R
           { width: size, height: size, borderRadius: size / 2 },
         ]}
       >
-        <Text style={styles.code} numberOfLines={1}>
+        <Text style={[styles.code, { fontSize: size * 0.32 }]} numberOfLines={1}>
           {code?.slice(0, 3).toUpperCase()}
         </Text>
       </View>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   code: {
-    fontSize: 11,
     fontWeight: '700',
     color: colors.cardForeground,
   },
