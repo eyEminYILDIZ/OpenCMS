@@ -14,6 +14,7 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
         var operation = await _dbContext.Operations
                                             .Include(o => o.Orders).ThenInclude(o => o.PreviousOrder)
                                             .Include(o => o.Orders).ThenInclude(o => o.ResponsibleOperationAsset).ThenInclude(a => a.Asset)
+                                            .Include(o => o.Orders).ThenInclude(o => o.TargetOperationAsset).ThenInclude(a => a.Asset)
                                             .Include(o => o.OperationAssets).ThenInclude(a => a.Asset)
                                             .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
@@ -84,6 +85,8 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
 
         foreach (var o in orders)
         {
+            var targetOperationAsset = o.TargetOperationAsset;
+
             var orderResponse = new OrderResponse
             {
                 Id = o.Id,
@@ -95,11 +98,11 @@ public class Handler : IRequestHandler<Query, Result<ResponseModel>>
                 OrderType = o.OrderType,
                 TargetDatePeriodStart = o.TargetDatePeriodStart,
                 TargetDatePeriodEnd = o.TargetDatePeriodEnd,
-                TargetPointLatitude = o.TargetPointLatitude,
-                TargetPointLongitude = o.TargetPointLongitude,
-                TargetPointAltitude = o.TargetPointAltitude,
-                TargetPointHeading = o.TargetPointHeading,
-                TargetPointSpeed = o.TargetPointSpeed,
+                TargetPointLatitude = targetOperationAsset?.Asset.Latitude ?? o.TargetPointLatitude,
+                TargetPointLongitude = targetOperationAsset?.Asset.Longitude ?? o.TargetPointLongitude,
+                TargetPointAltitude = targetOperationAsset?.Asset.Altitude ?? o.TargetPointAltitude,
+                TargetPointHeading = targetOperationAsset?.Asset.Heading ?? o.TargetPointHeading,
+                TargetPointSpeed = targetOperationAsset?.Asset.Speed ?? o.TargetPointSpeed,
                 ResponsibleOperationAssetId = o.ResponsibleOperationAssetId,
                 ResponsibleOperationAssetName = o.ResponsibleOperationAsset?.Asset?.Name,
                 NextOrderId = o.NextOrderId,

@@ -4,7 +4,7 @@ namespace OpenCMS.Agent.AirRadar;
 
 public class Radar
 {
-    private const double CircleRadiusKm = 10.0;
+    private const double CircleRadiusKm = 5.0;
     private const double AngleStepDegrees = 1.0;
 
     private List<Aircraft> _detectedAircrafts;
