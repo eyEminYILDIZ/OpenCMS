@@ -30,7 +30,8 @@ public enum AssetTypes
     Building = 7,
     Radar = 8,
     AirGun = 9,
-    Other = 10
+    Drone = 10,
+    Other = 11
 }
 
 public enum ThreatTypes
