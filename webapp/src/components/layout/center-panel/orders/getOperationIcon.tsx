@@ -6,6 +6,7 @@ import {
   GatherIntelligenceOrderIcon,
   GiveOrderIcon,
   MoveOrderIcon,
+  ObserveOrderIcon,
   TakeOrderIcon,
 } from './pins';
 import { OperationApi } from '../../../../api';
@@ -27,6 +28,7 @@ export function getOrderPin(
     case OperationApi.Enums.OrderTypes.Exchange: return <ExchangeOrderIcon {...options} />;
     case OperationApi.Enums.OrderTypes.Take: return <TakeOrderIcon {...options} />;
     case OperationApi.Enums.OrderTypes.Give: return <GiveOrderIcon {...options} />;
+    case OperationApi.Enums.OrderTypes.Observe: return <ObserveOrderIcon {...options} />;
     default: return <MoveOrderIcon {...options} />;
   }
 }

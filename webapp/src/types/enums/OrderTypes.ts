@@ -21,6 +21,7 @@ export const orderTypeLabels: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Exchange]: t('operation.orderTypes.exchange'),
     [OperationApi.Enums.OrderTypes.Take]: t('operation.orderTypes.take'),
     [OperationApi.Enums.OrderTypes.Give]: t('operation.orderTypes.give'),
+    [OperationApi.Enums.OrderTypes.Observe]: t('operation.orderTypes.observe'),
 };
 
 export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
@@ -31,6 +32,7 @@ export const orderTypeColors: Record<OperationApi.Enums.OrderTypes, string> = {
     [OperationApi.Enums.OrderTypes.Exchange]: '#eab308',
     [OperationApi.Enums.OrderTypes.Take]: '#ea580c',
     [OperationApi.Enums.OrderTypes.Give]: '#0891b2',
+    [OperationApi.Enums.OrderTypes.Observe]: '#64748b',
 };
 
 // Single letter used as the first character of an order's 3-character map code (e.g. "M01").
@@ -42,6 +44,7 @@ export const orderTypeCodeLetters: Record<OperationApi.Enums.OrderTypes, string>
     [OperationApi.Enums.OrderTypes.Exchange]: 'E',
     [OperationApi.Enums.OrderTypes.Take]: 'T',
     [OperationApi.Enums.OrderTypes.Give]: 'V',
+    [OperationApi.Enums.OrderTypes.Observe]: 'O',
 };
 
 

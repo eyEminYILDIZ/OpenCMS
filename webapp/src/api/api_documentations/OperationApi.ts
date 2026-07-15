@@ -34,6 +34,7 @@ export namespace OperationApi {
             Exchange = 4,
             Take = 5,
             Give = 6,
+            Observe = 7,
         }
     }
     export namespace ListAll {
