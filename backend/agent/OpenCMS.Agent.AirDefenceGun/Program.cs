@@ -2,9 +2,15 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
 
-var agentId = Guid.Parse(builder.Configuration["Agent:AgentId"]!);
-var assetId = Guid.Parse(builder.Configuration["Agent:AssetId"]!);
 var baseUrl = builder.Configuration["OpenCMS:BaseUrl"]!;
+var agentId = Guid.Parse(builder.Configuration["Agent:AgentId"]!);
+var agentName = builder.Configuration["Agent:Name"]!;
+var assetId = Guid.Parse(builder.Configuration["Agent:AssetId"]!);
+var latitude = double.Parse(builder.Configuration["Agent:Latitude"]!);
+var longitude = double.Parse(builder.Configuration["Agent:Longitude"]!);
+var altitude = double.Parse(builder.Configuration["Agent:Altitude"]!);
+var heading = double.Parse(builder.Configuration["Agent:Heading"]!);
+var speed = double.Parse(builder.Configuration["Agent:Speed"]!);
 
 var host = builder.Build();
 await host.StartAsync();
@@ -14,9 +20,9 @@ var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirDefenceGun");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
-var agentState = new AgentState(agentId, assetId, "Air Defence Gun Agent", AssetTypes.AirGun, ThreatTypes.Own);
+var agentState = new AgentState(agentId, assetId, agentName, AssetTypes.AirGun, ThreatTypes.Own);
 var defenceGun = new DefenceGun(agentState, loggerFactory.CreateLogger<DefenceGun>());
-agentState.UpdateState(41.0411240853284, 29.0081058259891, 100, 205, 0);
+agentState.UpdateState(latitude, longitude, altitude, heading, speed);
 
 var cts = new CancellationTokenSource();
 Console.CancelKeyPress += (_, e) =>
