@@ -105,7 +105,13 @@ namespace OpenCMS.Agent.AutonomousDrone
             _homeSteerPoint = new WayPoint("Home Waypoint", latitude, longitude, altitude, heading, speed, OrderTypes.Move);
         }
 
-        public async Task<bool> Work()
+
+        bool isCirclingCompleted = false;
+        bool isCircling = false;
+        bool isOrderTypeObserve = false;// currentSteerPoint.OrderType == OrderTypes.Observe;
+        int circleCount = 0;
+
+        public async Task<bool> Work(CancellationToken cancellationToken)
         {
             var currentSteerPoint = GetCurrentSteerPoint();
             if (currentSteerPoint == null)
@@ -121,13 +127,21 @@ namespace OpenCMS.Agent.AutonomousDrone
                 System.Console.WriteLine($"Current => Lat: {_sensorSystem.GetLatitude()} \tLon: {_sensorSystem.GetLongitude()} \tAlt: {_sensorSystem.GetAltitude()} \tHeading: {_sensorSystem.GetHeading()} \tSpeed: {_sensorSystem.GetSpeed()}");
             }
 
+            isOrderTypeObserve = currentSteerPoint.OrderType == OrderTypes.Observe;
             var headingChanged = false;
             var bearing = 0.0;
+
             // make turn if needed
+            bearing = CoordinateUtils.CalculateHeading(_sensorSystem.GetLatitude(), _sensorSystem.GetLongitude(), currentSteerPoint.Latitude, currentSteerPoint.Longitude);
+
+            if (isCircling)
+                bearing = (bearing - 90 + 360) % 360;
+
             do
             {
-                bearing = CoordinateUtils.CalculateHeading(_sensorSystem.GetLatitude(), _sensorSystem.GetLongitude(), currentSteerPoint.Latitude, currentSteerPoint.Longitude);
-                var headingDifference = bearing - _sensorSystem.GetHeading();
+                var headingDifference = 0.0;
+                headingDifference = bearing - _sensorSystem.GetHeading();
+
                 if (headingDifference > 0)
                 {
                     await _actuatorSystem.TurnRight();
@@ -138,32 +152,73 @@ namespace OpenCMS.Agent.AutonomousDrone
                     await _actuatorSystem.TurnLeft();
                     headingChanged = true;
                 }
-            } while (Math.Abs(bearing - _sensorSystem.GetHeading()) > 1);
+                if (_loggingEnabled)
+                {
+                    System.Console.WriteLine($"Calculations: IsCircling: {isCircling}  | Difference: {headingDifference} | Bearing: {bearing} | Heading: {_sensorSystem.GetHeading()} ");
+                }
+
+                // await Task.Delay(100, cancellationToken);
+            } while (Math.Abs(bearing - _sensorSystem.GetHeading()) > 1 && !cancellationToken.IsCancellationRequested);
+
 
             // make altitude adjustment if needed
             var altitudeChanged = false;
             do
             {
                 var altitudeDifference = currentSteerPoint.Altitude - _sensorSystem.GetAltitude();
-                if (altitudeDifference > 0)
+                if (altitudeDifference > 1)
                 {
                     await _actuatorSystem.MoveUp();
                     altitudeChanged = true;
                 }
-                else if (altitudeDifference < 0)
+                else if (altitudeDifference < -1)
                 {
                     await _actuatorSystem.MoveDown();
                     altitudeChanged = true;
                 }
-            } while (Math.Abs(currentSteerPoint.Altitude - _sensorSystem.GetAltitude()) > 1);
+            } while (Math.Abs(currentSteerPoint.Altitude - _sensorSystem.GetAltitude()) > 1 && !cancellationToken.IsCancellationRequested);
+
 
             // Move towards the current steer point if needed
-            var positionChanged = false;
+            // var positionChanged = false;
+            // var distance = CoordinateUtils.CalculateDistance(_sensorSystem.GetLatitude(), _sensorSystem.GetLongitude(), currentSteerPoint.Latitude, currentSteerPoint.Longitude);
+            // if (distance > 1)
+            // {
+            //     await _actuatorSystem.MoveForward();
+            //     positionChanged = true;
+            // }
+
+            // circling
             var distance = CoordinateUtils.CalculateDistance(_sensorSystem.GetLatitude(), _sensorSystem.GetLongitude(), currentSteerPoint.Latitude, currentSteerPoint.Longitude);
-            if (distance > 1)
+            if (distance < 500 && isOrderTypeObserve && !isCircling)
+            {
+                isCircling = true;
+                System.Console.WriteLine("\n\n\n CIRCLE TURNED ON \n\n\n");
+            }
+
+            if (distance > 1 && !isCircling)
             {
                 await _actuatorSystem.MoveForward();
-                positionChanged = true;
+            }
+
+            if (isCircling)
+            {
+                await _actuatorSystem.MoveForward();
+
+                circleCount++;
+                if (circleCount >= 360)
+                {
+                    isCirclingCompleted = true;
+                    isCircling = false;
+                    circleCount = 0;
+                    System.Console.WriteLine("\n\n\n CIRCLE COMPLETED \n\n\n");
+                    await ChangeSteerPoint();
+                }
+            }
+            else if (distance <= 10)
+            {
+                _logger.LogInformation("Reached steer point {SteerPointIndex}.", _currentSteerPointIndex);
+                await ChangeSteerPoint();
             }
 
             // Update the agent's state based on the sensor readings
@@ -174,11 +229,6 @@ namespace OpenCMS.Agent.AutonomousDrone
             var speed = _sensorSystem.GetSpeed();
             _selfAgent.UpdateState(latitude, longitude, altitude, heading, speed);
 
-            if (distance <= 10)
-            {
-                _logger.LogInformation("Reached steer point {SteerPointIndex}.", _currentSteerPointIndex);
-                await ChangeSteerPoint();
-            }
 
             return true;
         }
