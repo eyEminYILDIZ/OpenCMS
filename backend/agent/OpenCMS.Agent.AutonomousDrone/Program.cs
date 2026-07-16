@@ -98,7 +98,7 @@ while (!cts.Token.IsCancellationRequested)
         var isWorking = true;
         while (isWorking && !cts.Token.IsCancellationRequested)
         {
-            var workResult = await autonomousDrone.Work();
+            var workResult = await autonomousDrone.Work(cts.Token);
             if (!workResult)
             {
                 logger.LogWarning("Autonomous drone is not working anymore...");
