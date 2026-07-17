@@ -16,6 +16,7 @@
   </Folder>
   <Folder Name="/libraries/">
     <Project Path="libraries/OpenCMS.Libraries.ApiClient/OpenCMS.Libraries.ApiClient.csproj" />
+    <Project Path="libraries/OpenCMS.Libraries.Common/OpenCMS.Libraries.Common.csproj" />
     <Project Path="libraries/OpenCMS.Libraries.FlightComputer/OpenCMS.Libraries.FlightComputer.csproj" />
     <Project Path="libraries/OpenCMS.Libraries.FlightDisplay/OpenCMS.Libraries.FlightDisplay.csproj" />
   </Folder>
