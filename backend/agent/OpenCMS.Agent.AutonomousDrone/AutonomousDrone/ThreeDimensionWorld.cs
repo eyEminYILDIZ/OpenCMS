@@ -2,20 +2,20 @@ namespace OpenCMS.Agent.AutonomousDrone;
 
 public class ThreeDimensionWorld
 {
-    private readonly List<Asset> _assets;
+    private readonly List<AgentState> _agents;
 
     public ThreeDimensionWorld()
     {
-        _assets = new List<Asset>();
+        _agents = new List<AgentState>();
     }
 
-    public void AddAsset(Asset asset)
+    public void AddAsset(AgentState asset)
     {
-        _assets.Add(asset);
+        _agents.Add(asset);
     }
 
-    public Asset GetAssetById(Guid assetId)
+    public AgentState GetAssetById(Guid assetId)
     {
-        return _assets.FirstOrDefault(a => a.Id == assetId);
+        return _agents.FirstOrDefault(a => a.Id == assetId);
     }
 }

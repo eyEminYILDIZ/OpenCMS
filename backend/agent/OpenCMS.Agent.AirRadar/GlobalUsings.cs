@@ -1,4 +1,6 @@
 global using OpenCMS.Libraries.ApiClient;
+global using OpenCMS.Libraries.Common.Models;
+global using OpenCMS.Libraries.Common.Contracts;
 global using OpenCMS.Agent.AirRadar;
 global using OpenCMS.Agent.AirRadar.Extensions;
 global using OpenCMS.CMS.Domain.Entities;

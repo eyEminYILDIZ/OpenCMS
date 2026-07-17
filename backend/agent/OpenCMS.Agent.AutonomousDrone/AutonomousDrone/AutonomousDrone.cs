@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using OpenCMS.Agent.AutonomousDrone.Models;
 using OpenCMS.Libraries.ApiClient.Utilities;
 
 namespace OpenCMS.Agent.AutonomousDrone
@@ -102,7 +101,7 @@ namespace OpenCMS.Agent.AutonomousDrone
             var altitude = _sensorSystem.GetAltitude();
             var heading = _sensorSystem.GetHeading();
             var speed = _sensorSystem.GetSpeed();
-            _homeSteerPoint = new WayPoint("Home Waypoint", latitude, longitude, altitude, heading, speed, OrderTypes.Move);
+            _homeSteerPoint = new WayPoint("Home Waypoint", latitude, longitude, altitude, heading, speed, OrderTypesContract.Move);
         }
 
 
@@ -127,7 +126,7 @@ namespace OpenCMS.Agent.AutonomousDrone
                 System.Console.WriteLine($"Current => Lat: {_sensorSystem.GetLatitude()} \tLon: {_sensorSystem.GetLongitude()} \tAlt: {_sensorSystem.GetAltitude()} \tHeading: {_sensorSystem.GetHeading()} \tSpeed: {_sensorSystem.GetSpeed()}");
             }
 
-            isOrderTypeObserve = currentSteerPoint.OrderType == OrderTypes.Observe;
+            isOrderTypeObserve = currentSteerPoint.OrderType == OrderTypesContract.Observe;
             var headingChanged = false;
             var bearing = 0.0;
 

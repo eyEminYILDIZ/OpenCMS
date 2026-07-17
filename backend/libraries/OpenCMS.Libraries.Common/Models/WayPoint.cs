@@ -1,4 +1,6 @@
-namespace OpenCMS.Agent.AutonomousDrone.Models;
+using OpenCMS.Libraries.Common.Contracts;
+
+namespace OpenCMS.Libraries.Common.Models;
 
 public class WayPoint
 {
@@ -8,9 +10,9 @@ public class WayPoint
     public double Altitude { get; set; }
     public double Heading { get; set; }
     public double Speed { get; set; }
-    public OrderTypes OrderType { get; set; }
+    public OrderTypesContract OrderType { get; set; }
 
-    public WayPoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypes orderType)
+    public WayPoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypesContract orderType)
     {
         Name = name;
         Latitude = latitude;

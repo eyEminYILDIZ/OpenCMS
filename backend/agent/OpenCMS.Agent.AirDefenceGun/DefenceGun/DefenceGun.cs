@@ -16,11 +16,10 @@ namespace OpenCMS.Agent.AirDefenceGun
 
         public async Task TakePosition(Asset targetAsset)
         {
-            var selfAsset = _selfAgent.GetSelfAsset();
 
             // calculate heading
-            var heading = CoordinateUtils.CalculateHeading(selfAsset.Latitude, selfAsset.Longitude, targetAsset.Latitude, targetAsset.Longitude);
-            _selfAgent.UpdateState(selfAsset.Latitude, selfAsset.Longitude, selfAsset.Altitude, heading, selfAsset.Speed);
+            var heading = CoordinateUtils.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, targetAsset.Latitude, targetAsset.Longitude);
+            _selfAgent.UpdateState(_selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, heading, _selfAgent.Speed);
 
             _logger.LogInformation("Positioned Heading:{Heading} to target {AssetId} at {Latitude}/{Longitude}/{Altitude}",
                heading, targetAsset.Id, targetAsset.Latitude, targetAsset.Longitude, targetAsset.Altitude);

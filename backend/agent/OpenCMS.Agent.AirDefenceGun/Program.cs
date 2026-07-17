@@ -20,7 +20,7 @@ var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirDefenceGun");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
-var agentState = new AgentState(agentId, assetId, agentName, AssetTypes.AirGun, ThreatTypes.Own);
+var agentState = new AgentState(agentId, assetId, agentName, AssetTypesContract.AirGun, ThreatTypesContract.Own);
 var defenceGun = new DefenceGun(agentState, loggerFactory.CreateLogger<DefenceGun>());
 agentState.UpdateState(latitude, longitude, altitude, heading, speed);
 
@@ -39,8 +39,7 @@ while (!cts.Token.IsCancellationRequested)
         var pingResult = await openCmsClient.Ping();
         logger.LogInformation("Ping {Result}", pingResult ? "succeeded" : "failed");
 
-        var selfAsset = agentState.GetSelfAsset();
-        var selfFeedResult = await openCmsClient.FeedAsset(selfAsset);
+        var selfFeedResult = await openCmsClient.FeedAsset(agentState);
         logger.LogInformation("Self asset feed {Result}", selfFeedResult ? "succeeded" : "failed");
 
         var activeOperations = await openCmsClient.GetActiveOperations();
@@ -83,7 +82,7 @@ while (!cts.Token.IsCancellationRequested)
                     Speed = order.TargetPointSpeed,
                 });
 
-                var continousAssetFeedResult = await openCmsClient.FeedAsset(agentState.GetSelfAsset());
+                var continousAssetFeedResult = await openCmsClient.FeedAsset(agentState);
                 if (!continousAssetFeedResult)
                 {
                     logger.LogWarning("Failed to feed self asset to CMS");

@@ -20,7 +20,7 @@ var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AirRadar");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>());
-var agentState = new AgentState(agentId, assetId, agentName, AssetTypes.Radar, ThreatTypes.Own);
+var agentState = new AgentState(agentId, assetId, agentName, AssetTypesContract.Radar, ThreatTypesContract.Own);
 var radar = new Radar();
 agentState.UpdateState(latitude, longitude, altitude, heading, speed);
 
@@ -39,14 +39,13 @@ while (!cts.Token.IsCancellationRequested)
         var pingResult = await openCmsClient.Ping();
         logger.LogInformation("Ping {Result}", pingResult ? "succeeded" : "failed");
 
-        var selfAsset = agentState.GetSelfAsset();
-        var selfFeedResult = await openCmsClient.FeedAsset(selfAsset);
+        var selfFeedResult = await openCmsClient.FeedAsset(agentState);
         logger.LogInformation("Self asset feed {Result}", selfFeedResult ? "succeeded" : "failed");
 
         var aircrafts = await radar.Scan();
         foreach (var aircraft in aircrafts)
         {
-            var feedResult = await openCmsClient.FeedAsset(new Asset
+            var feedResult = await openCmsClient.FeedAsset(new AgentState()
             {
                 Id = aircraft.Id,
                 Name = aircraft.Callsign,
@@ -55,8 +54,8 @@ while (!cts.Token.IsCancellationRequested)
                 Altitude = aircraft.Altitude,
                 Heading = aircraft.Heading,
                 Speed = aircraft.Speed,
-                AssetType = AssetTypes.Aircraft,
-                ThreatType = ThreatTypes.Hostile
+                AssetType = AssetTypesContract.Aircraft,
+                ThreatType = ThreatTypesContract.Hostile
             });
             logger.LogInformation("Asset feed for {AssetId} ({Callsign}) {Result}",
                 aircraft.Id, aircraft.Callsign, feedResult ? "succeeded" : "failed");

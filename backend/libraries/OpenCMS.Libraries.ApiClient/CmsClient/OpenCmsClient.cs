@@ -34,7 +34,7 @@ public class OpenCmsClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> FeedAsset(Asset asset)
+    public async Task<bool> FeedAsset(AgentState asset)
     {
         if (_loggingEnabled)
         {
@@ -50,8 +50,8 @@ public class OpenCmsClient
             Altitude = asset.Altitude,
             Heading = asset.Heading,
             Speed = asset.Speed,
-            AssetType = asset.AssetType,
-            ThreatType = asset.ThreatType,
+            AssetType = (AssetTypes)asset.AssetType,
+            ThreatType = (ThreatTypes)asset.ThreatType,
             RelatedAgentId = asset.RelatedAgentId
         };
         var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/assets/{asset.Id}/feed", command, _jsonOptions);

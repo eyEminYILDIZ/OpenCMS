@@ -1,5 +1,3 @@
-using OpenCMS.Agent.AutonomousDrone.Models;
-
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
@@ -22,9 +20,9 @@ var httpClientFactory = host.Services.GetRequiredService<IHttpClientFactory>();
 var logger = loggerFactory.CreateLogger("AutonomousDrone");
 
 var openCmsClient = new OpenCmsClient(agentId, baseUrl, httpClientFactory.CreateClient(), loggerFactory.CreateLogger<OpenCmsClient>(), false);
-var agentState = new AgentState(agentId, assetId, agentName, AssetTypes.Drone, ThreatTypes.Own);
+var agentState = new AgentState(agentId, assetId, agentName, AssetTypesContract.Drone, ThreatTypesContract.Own);
 var world = new ThreeDimensionWorld();
-world.AddAsset(agentState.GetSelfAsset());
+world.AddAsset(agentState);
 var autonomousDrone = new AutonomousDrone(agentState, world, loggerFactory.CreateLogger<AutonomousDrone>(), true);
 agentState.UpdateState(latitude, longitude, altitude, heading, speed);
 
@@ -43,8 +41,7 @@ while (!cts.Token.IsCancellationRequested)
         var pingResult = await openCmsClient.Ping();
         logger.LogInformation("Ping {Result}", pingResult ? "succeeded" : "failed");
 
-        var selfAsset = agentState.GetSelfAsset();
-        var selfFeedResult = await openCmsClient.FeedAsset(selfAsset);
+        var selfFeedResult = await openCmsClient.FeedAsset(agentState);
         logger.LogInformation("Self asset feed {Result}", selfFeedResult ? "succeeded" : "failed");
 
         var activeOperations = await openCmsClient.GetActiveOperations();
@@ -85,7 +82,7 @@ while (!cts.Token.IsCancellationRequested)
             logger.LogInformation("Executing order {OrderId} — Type: {Type}, Target: {Lat}/{Lon}",
                 order.Id, order.OrderType, order.TargetPointLatitude, order.TargetPointLongitude);
 
-            var waypoint = new WayPoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed, order.OrderType);
+            var waypoint = new WayPoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed, (OrderTypesContract)order.OrderType);
             waypoints.Add(waypoint);
         }
 
@@ -112,7 +109,7 @@ while (!cts.Token.IsCancellationRequested)
                 var continousAssetFeedResult = false;
                 try
                 {
-                    continousAssetFeedResult = await openCmsClient.FeedAsset(agentState.GetSelfAsset());
+                    continousAssetFeedResult = await openCmsClient.FeedAsset(agentState);
                     if (!continousAssetFeedResult)
                     {
                         logger.LogWarning("Failed to feed self asset to CMS");
