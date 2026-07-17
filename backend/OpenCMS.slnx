@@ -3,7 +3,6 @@
     <Project Path="agent/OpenCMS.Agent.AirDefenceGun/OpenCMS.Agent.AirDefenceGun.csproj" />
     <Project Path="agent/OpenCMS.Agent.AutonomousDrone/OpenCMS.Agent.AutonomousDrone.csproj" />
     <Project Path="agent/OpenCMS.Agent.AirRadar/OpenCMS.Agent.AirRadar.csproj" />
-    <Project Path="agent/OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj" />
   </Folder>
   <Folder Name="/aspire/">
     <Project Path="aspire/OpenCMS.Aspire.AppHost/OpenCMS.Aspire.AppHost.csproj" />
@@ -14,5 +13,8 @@
     <Project Path="cms/OpenCMS.CMS.ClientApi/OpenCMS.CMS.ClientApi.csproj" />
     <Project Path="cms/OpenCMS.CMS.Domain/OpenCMS.CMS.Domain.csproj" />
     <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/libraries/">
+    <Project Path="libraries/OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj" />
   </Folder>
 </Solution>
