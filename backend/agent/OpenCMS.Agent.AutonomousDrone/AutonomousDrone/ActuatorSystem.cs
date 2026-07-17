@@ -63,7 +63,7 @@ public class ActuatorSystem
         await Task.CompletedTask;
 
         const double EarthRadiusMeters = 6371000;
-        const double distanceMeters = 20.0;
+        const double distanceMeters = 10.0;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset == null)
