@@ -60,7 +60,7 @@ Includes application flows as command and queries.
 
 Includes persistence and other external layers.
 
-### OpenCMS.Agent.Library
+### OpenCMS.Libraries.ApiClient
 
 Library project includes classes and other definitions for c# applications that integrates agents with CMS.
 

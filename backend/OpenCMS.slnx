@@ -15,6 +15,6 @@
     <Project Path="cms/OpenCMS.CMS.Infrastructure/OpenCMS.CMS.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/libraries/">
-    <Project Path="libraries/OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj" />
+    <Project Path="libraries/OpenCMS.Libraries.ApiClient/OpenCMS.Libraries.ApiClient.csproj" />
   </Folder>
 </Solution>

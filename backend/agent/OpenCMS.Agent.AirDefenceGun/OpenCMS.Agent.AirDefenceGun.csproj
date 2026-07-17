@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\OpenCMS.Agent.Library\OpenCMS.Agent.Library.csproj" />
+    <ProjectReference Include="..\..\libraries\OpenCMS.Libraries.ApiClient\OpenCMS.Libraries.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-global using OpenCMS.Agent.Library;
+global using OpenCMS.Libraries.ApiClient;
 global using OpenCMS.Agent.AirDefenceGun;
 global using OpenCMS.Agent.AirDefenceGun.Extensions;
 global using OpenCMS.CMS.Domain.Entities;

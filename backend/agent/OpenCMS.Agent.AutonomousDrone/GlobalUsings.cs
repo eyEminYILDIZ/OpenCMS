@@ -1,4 +1,4 @@
-global using OpenCMS.Agent.Library;
+global using OpenCMS.Libraries.ApiClient;
 global using OpenCMS.Agent.AutonomousDrone;
 global using OpenCMS.Agent.AutonomousDrone.Extensions;
 global using OpenCMS.CMS.Domain.Entities;

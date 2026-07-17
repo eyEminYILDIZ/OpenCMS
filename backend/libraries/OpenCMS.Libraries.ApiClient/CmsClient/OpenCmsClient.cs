@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using OpenCMS.CMS.Application.Configurations;
 using OpenCMS.CMS.Domain.Entities;
 
-namespace OpenCMS.Agent.Library;
+namespace OpenCMS.Libraries.ApiClient;
 
 public class OpenCmsClient
 {

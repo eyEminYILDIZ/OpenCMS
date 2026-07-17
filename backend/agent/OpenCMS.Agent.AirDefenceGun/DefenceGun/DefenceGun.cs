@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using OpenCMS.Agent.Library.Utilities;
+using OpenCMS.Libraries.ApiClient.Utilities;
 
 namespace OpenCMS.Agent.AirDefenceGun
 {

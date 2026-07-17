@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using OpenCMS.Agent.AutonomousDrone.Models;
-using OpenCMS.Agent.Library.Utilities;
+using OpenCMS.Libraries.ApiClient.Utilities;
 
 namespace OpenCMS.Agent.AutonomousDrone
 {

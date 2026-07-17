@@ -1,6 +1,6 @@
-#:project ../OpenCMS.Agent.Library/OpenCMS.Agent.Library.csproj
+#:project ../OpenCMS.Libraries.ApiClient/OpenCMS.Libraries.ApiClient.csproj
 
-using OpenCMS.Agent.Library.Utilities;
+using OpenCMS.Libraries.ApiClient.Utilities;
 
 double sourceLat = 41.045524;
 double sourceLon = 29.064697;

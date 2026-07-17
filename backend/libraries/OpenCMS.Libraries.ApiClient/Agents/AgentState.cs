@@ -1,6 +1,6 @@
 using OpenCMS.CMS.Domain.Entities;
 
-namespace OpenCMS.Agent.Library;
+namespace OpenCMS.Libraries.ApiClient;
 
 public class AgentState
 {

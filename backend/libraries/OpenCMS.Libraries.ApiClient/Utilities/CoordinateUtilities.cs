@@ -1,4 +1,4 @@
-namespace OpenCMS.Agent.Library.Utilities;
+namespace OpenCMS.Libraries.ApiClient.Utilities;
 
 public class CoordinateUtils
 {
