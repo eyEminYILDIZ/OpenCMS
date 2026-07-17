@@ -168,7 +168,7 @@ export const CmsMap: React.FC = observer(() => {
                             key={`marker-${index}`}
                             latitude={item.latitude}
                             longitude={item.longitude}
-                            anchor="bottom"
+                            anchor="center"
                             rotation={item.heading}
                             rotationAlignment="map"
                             onClick={e => {
@@ -188,7 +188,7 @@ export const CmsMap: React.FC = observer(() => {
                                 key={`marker-${index}`}
                                 latitude={item.asset.latitude}
                                 longitude={item.asset.longitude}
-                                anchor="bottom"
+                                anchor="center"
                                 rotation={item.asset.heading}
                                 rotationAlignment="map"
                                 onClick={e => {
