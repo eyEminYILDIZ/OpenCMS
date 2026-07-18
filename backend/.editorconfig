@@ -1,0 +1,11 @@
+root = false
+
+[*.cs]
+# File-scoped namespaces (no braces): namespace Foo.Bar;
+csharp_style_namespace_declarations = file_scoped:error
+
+# using directives must go before the namespace declaration, not inside it
+csharp_using_directive_placement = outside_namespace:error
+
+# flag redundant/unused using directives, including ones already covered by ImplicitUsings
+dotnet_diagnostic.IDE0005.severity = warning
