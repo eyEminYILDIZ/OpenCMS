@@ -90,7 +90,9 @@ public class ActuatorSystem : IDroneActuator
 
     public async Task MoveBackward(double distanceMeters = 1.0)
     {
-        throw new NotImplementedException("MoveBackward is not implemented yet.");
+        await Task.CompletedTask;
+
+        Console.WriteLine("MoveBackward is not implemented yet.");
     }
 
     public async Task MoveUp(double distanceMeters = 1.0)

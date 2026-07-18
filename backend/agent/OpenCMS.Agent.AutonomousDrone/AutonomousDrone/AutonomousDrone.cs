@@ -1,6 +1,8 @@
+using OpenCMS.Libraries.FlightComputer.Models;
+
 namespace OpenCMS.Agent.AutonomousDrone;
 
-public class AutonomousDrone
+public class AutonomousDrone : IDisposable
 {
     private readonly AgentState _selfAgent;
     private readonly ActuatorSystem _actuatorSystem;
@@ -10,8 +12,11 @@ public class AutonomousDrone
 
     private readonly OpenCmsFlightComputer _flightComputer;
     private readonly OpenCmsDroneAutoPilot _autoPilot;
+    private readonly CancellationToken _cancellationToken;
+    private Func<AgentState, Task> agentStateUpdateCallback;
 
-    public AutonomousDrone(AgentState selfAgent, ThreeDimensionWorld world, ILogger<AutonomousDrone> logger, bool loggingEnabled = false)
+
+    public AutonomousDrone(AgentState selfAgent, ThreeDimensionWorld world, ILogger<AutonomousDrone> logger, CancellationToken cancellationToken, bool loggingEnabled = false)
     {
         _selfAgent = selfAgent;
         _logger = logger;
@@ -20,6 +25,17 @@ public class AutonomousDrone
         _sensorSystem = new SensorSystem(world, selfAgent.GetAssetId(), loggingEnabled);
         _flightComputer = new OpenCmsFlightComputer(_selfAgent);
         _autoPilot = new OpenCmsDroneAutoPilot(_flightComputer, _actuatorSystem, loggingEnabled);
+        _cancellationToken = cancellationToken;
+    }
+
+    public void Dispose()
+    {
+        _autoPilot.Stop().Wait();
+    }
+
+    public void SetAgentStateUpdateCallback(Func<AgentState, Task> callback)
+    {
+        agentStateUpdateCallback = callback;
     }
 
     public void SetWayPoints(List<WayPoint> wayPoints)
@@ -38,20 +54,65 @@ public class AutonomousDrone
 
         _selfAgent.UpdateState(latitude, longitude, altitude, heading, speed);
         _flightComputer.SetHomeWayPoint();
+
+        _ = Task.Run(() => UpdateState(_cancellationToken), _cancellationToken);
     }
 
-    public async Task<bool> Work(CancellationToken cancellationToken)
+    // Update state for Autopilot can use updated state of agent
+    public async Task UpdateState(CancellationToken cancellationToken)
     {
-        // autopilot call
+        var count = 0;
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            // Update the agent's state based on the sensor readings
+            var latitude = _sensorSystem.GetLatitude();
+            var longitude = _sensorSystem.GetLongitude();
+            var altitude = _sensorSystem.GetAltitude();
+            var heading = _sensorSystem.GetHeading();
+            var speed = _sensorSystem.GetSpeed();
+            _selfAgent.UpdateState(latitude, longitude, altitude, heading, speed);
 
-        // Update the agent's state based on the sensor readings
-        var latitude = _sensorSystem.GetLatitude();
-        var longitude = _sensorSystem.GetLongitude();
-        var altitude = _sensorSystem.GetAltitude();
-        var heading = _sensorSystem.GetHeading();
-        var speed = _sensorSystem.GetSpeed();
-        _selfAgent.UpdateState(latitude, longitude, altitude, heading, speed);
+            if (agentStateUpdateCallback! != null && count % 10 == 0) // Update CMS every 10 cycles
+            {
+                await agentStateUpdateCallback(_selfAgent);
+            }
 
-        return await _autoPilot.Work(cancellationToken);
+            var delayCount = _autoPilot.IsRunning ? 10 : 100;
+            await Task.Delay(delayCount, cancellationToken); // Adjust the delay as needed
+            count++;
+        }
+    }
+
+    public async Task ControlDrone(ActuatorActionTypes actionType)
+    {
+        switch (actionType)
+        {
+            case ActuatorActionTypes.MoveForward:
+                await _actuatorSystem.MoveForward(100);
+                break;
+            case ActuatorActionTypes.MoveBackward:
+                await _actuatorSystem.MoveBackward();
+                break;
+            case ActuatorActionTypes.MoveUp:
+                await _actuatorSystem.MoveUp();
+                break;
+            case ActuatorActionTypes.MoveDown:
+                await _actuatorSystem.MoveDown();
+                break;
+            case ActuatorActionTypes.TurnLeft:
+                await _actuatorSystem.TurnLeft();
+                break;
+            case ActuatorActionTypes.TurnRight:
+                await _actuatorSystem.TurnRight();
+                break;
+            case ActuatorActionTypes.OpenAutopilot:
+                await _autoPilot.Start(_cancellationToken);
+                break;
+            case ActuatorActionTypes.CloseAutopilot:
+                await _autoPilot.Stop();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(actionType), actionType, null);
+        }
     }
 }

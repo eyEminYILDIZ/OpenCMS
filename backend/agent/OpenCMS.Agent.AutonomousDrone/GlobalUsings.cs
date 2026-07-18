@@ -9,3 +9,4 @@ global using OpenCMS.CMS.Domain.Entities;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
+global using OpenCMS.Agent.AutonomousDrone.Services;
