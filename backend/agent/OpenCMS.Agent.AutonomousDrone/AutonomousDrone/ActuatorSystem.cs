@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 namespace OpenCMS.Agent.AutonomousDrone;
 
 public class ActuatorSystem

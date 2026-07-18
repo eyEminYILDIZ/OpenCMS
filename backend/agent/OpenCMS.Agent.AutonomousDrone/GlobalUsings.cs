@@ -1,4 +1,5 @@
 global using OpenCMS.Libraries.ApiClient;
+global using OpenCMS.Libraries.FlightComputer;
 global using OpenCMS.Libraries.Common.Models;
 global using OpenCMS.Libraries.Common.Contracts;
 global using OpenCMS.Agent.AutonomousDrone;

@@ -1,6 +1,6 @@
-namespace OpenCMS.Libraries.ApiClient.Utilities;
+namespace OpenCMS.Libraries.FlightComputer.Calculators;
 
-public class CoordinateUtils
+public class CoordinateCalculator
 {
     public static double CalculateDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude)
     {

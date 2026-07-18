@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\libraries\OpenCMS.Libraries.ApiClient\OpenCMS.Libraries.ApiClient.csproj" />
+    <ProjectReference Include="..\..\libraries\OpenCMS.Libraries.FlightComputer\OpenCMS.Libraries.FlightComputer.csproj" />
   </ItemGroup>
 
 </Project>
