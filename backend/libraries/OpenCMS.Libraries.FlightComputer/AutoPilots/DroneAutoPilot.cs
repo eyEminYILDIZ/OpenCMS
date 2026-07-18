@@ -5,7 +5,8 @@ public class OpenCmsDroneAutoPilot
     private readonly OpenCmsFlightComputer _flightComputer;
     private readonly IDroneActuator _actuatorSystem;
     private readonly bool _loggingEnabled = false;
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource? _internalCts;
+    private CancellationTokenSource? _linkedCts;
     public bool IsRunning { get; private set; } = false;
 
     public OpenCmsDroneAutoPilot(OpenCmsFlightComputer flightComputer, IDroneActuator droneActuator, bool loggingEnabled = false)
@@ -13,7 +14,6 @@ public class OpenCmsDroneAutoPilot
         _flightComputer = flightComputer;
         _actuatorSystem = droneActuator;
         _loggingEnabled = loggingEnabled;
-        _cancellationTokenSource = new CancellationTokenSource();
     }
 
     private bool isCirclingCompleted = false;
@@ -21,24 +21,44 @@ public class OpenCmsDroneAutoPilot
     private bool isOrderTypeObserve = false;
     private int circleCount = 0;
 
-    public async Task<bool> Start(CancellationToken cancellationToken)
+    public Task<bool> Start(CancellationToken cancellationToken)
     {
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
-        var linkedToken = linkedCts.Token;
+        if (IsRunning)
+        {
+            return Task.FromResult(true);
+        }
 
-        _ = Task.Run(() => Work(linkedToken), linkedToken);
+        // Dispose the previous generation's sources now that their Work loop has long since
+        // observed cancellation (a fresh CancellationTokenSource is required per run since a
+        // canceled source can never be un-canceled).
+        _linkedCts?.Dispose();
+        _internalCts?.Dispose();
+
+        _internalCts = new CancellationTokenSource();
+        _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _internalCts.Token);
+        var linkedToken = _linkedCts.Token;
+
         IsRunning = true;
+
+        _ = Task.Run(() => Work(linkedToken), linkedToken).ContinueWith(t =>
+        {
+            IsRunning = false;
+            if (t.Exception != null)
+            {
+                Console.WriteLine($"Autopilot work loop crashed: {t.Exception.GetBaseException()}");
+            }
+        }, TaskScheduler.Default);
+
         Console.WriteLine("Autopilot started");
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Stop()
+    public Task<bool> Stop()
     {
-        // Implement any necessary cleanup or stopping logic here
-        _cancellationTokenSource.Cancel();
+        _internalCts?.Cancel();
         IsRunning = false;
         Console.WriteLine("Autopilot stopped");
-        return true;
+        return Task.FromResult(true);
     }
 
     private async Task Work(CancellationToken cancellationToken)

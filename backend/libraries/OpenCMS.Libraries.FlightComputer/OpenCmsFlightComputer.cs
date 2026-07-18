@@ -128,23 +128,39 @@ public class OpenCmsFlightComputer
         {
             var wayPoint = _waypoints[i];
 
+            wayPoint.DirectDistance = CoordinateCalculator.CalculateDistance(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
+            wayPoint.DirectBearing = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
+            wayPoint.DirectEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.Speed);
+
             if (i > 0)
             {
                 var previousWayPoint = _waypoints[i - 1];
                 wayPoint.DistanceToPreviousWayPoint = CoordinateCalculator.CalculateDistance(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
                 wayPoint.BearingToPreviousWayPoint = CoordinateCalculator.CalculateHeading(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
-                wayPoint.SequentialEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DistanceToPreviousWayPoint / wayPoint.Speed).TotalSeconds;
+                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DistanceToPreviousWayPoint, wayPoint.Speed);
             }
             else
             {
                 wayPoint.DistanceToPreviousWayPoint = 0.0;
                 wayPoint.BearingToPreviousWayPoint = 0.0;
-                wayPoint.SequentialEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DirectDistance / _selfAgent.Speed).TotalSeconds;
+                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.Speed);
             }
 
-            wayPoint.DirectDistance = CoordinateCalculator.CalculateDistance(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
-            wayPoint.DirectBearing = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
-            wayPoint.DirectEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DirectDistance / _selfAgent.Speed).TotalSeconds;
         }
+    }
+
+    // Speed can be 0 (default/unset agent state) or a negative sentinel (e.g. seeded
+    // TargetPointSpeed = -1), which previously produced Infinity/NaN "hours" and blew up
+    // TimeSpan.FromHours with an OverflowException. We compute seconds directly instead
+    // of round-tripping through TimeSpan, and guard against the non-finite cases.
+    private static double CalculateEstimatedTimeOfArrivalSeconds(double distanceMeters, double speed)
+    {
+        if (speed <= 0 || double.IsNaN(distanceMeters) || double.IsInfinity(distanceMeters))
+        {
+            return 0;
+        }
+
+        var hours = distanceMeters / speed;
+        return hours * 3600.0;
     }
 }

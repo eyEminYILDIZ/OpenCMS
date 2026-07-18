@@ -18,7 +18,8 @@ public class AgentState
 
     public AgentState()
     {
-
+        Speed = 1;
+        _fuelPercentage = 100.0;
     }
 
     public AgentState(Guid agentId, Guid assetId, string name, AssetTypesContract assetType, ThreatTypesContract threatType)
