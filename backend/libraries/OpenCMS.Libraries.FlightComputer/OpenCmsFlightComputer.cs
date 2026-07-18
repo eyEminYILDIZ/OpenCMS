@@ -68,6 +68,7 @@ public class OpenCmsFlightComputer
     public void SetHomeWayPoint()
     {
         _homeWayPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.Speed, OrderTypesContract.Move);
+        System.Console.WriteLine("Home waypoint set");
     }
 
     ////////////////////////////////////////////////////////////

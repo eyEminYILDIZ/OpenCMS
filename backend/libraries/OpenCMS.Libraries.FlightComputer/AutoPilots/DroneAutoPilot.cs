@@ -28,6 +28,7 @@ public class OpenCmsDroneAutoPilot
 
         _ = Task.Run(() => Work(linkedToken), linkedToken);
         IsRunning = true;
+        Console.WriteLine("Autopilot started");
         return true;
     }
 
@@ -36,6 +37,7 @@ public class OpenCmsDroneAutoPilot
         // Implement any necessary cleanup or stopping logic here
         _cancellationTokenSource.Cancel();
         IsRunning = false;
+        Console.WriteLine("Autopilot stopped");
         return true;
     }
 

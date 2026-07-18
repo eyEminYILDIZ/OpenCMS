@@ -85,6 +85,12 @@ public class AutonomousDrone : IDisposable
 
     public async Task ControlDrone(ActuatorActionTypes actionType)
     {
+        if (_autoPilot.IsRunning && actionType != ActuatorActionTypes.CloseAutopilot)
+        {
+            _logger.LogWarning("Cannot control drone manually while autopilot is running. Please stop the autopilot first by pressing 'B' key.");
+            return;
+        }
+
         switch (actionType)
         {
             case ActuatorActionTypes.MoveForward:

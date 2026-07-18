@@ -134,6 +134,10 @@ while (!cts.Token.IsCancellationRequested)
         System.Console.WriteLine("Closing Autopilot");
         await autonomousDrone.ControlDrone(ActuatorActionTypes.CloseAutopilot);
     }
+    else
+    {
+        System.Console.WriteLine($"Key {readKey.Key} pressed. No action assigned.");
+    }
 }
 
 logger.LogInformation("Autonomous Drone agent shutting down");
