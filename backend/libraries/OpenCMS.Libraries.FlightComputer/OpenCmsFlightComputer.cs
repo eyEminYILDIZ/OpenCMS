@@ -1,7 +1,4 @@
-﻿using OpenCMS.Libraries.Common.Contracts;
-using OpenCMS.Libraries.Common.Models;
-using OpenCMS.Libraries.FlightComputer.Calculators;
-
+﻿
 namespace OpenCMS.Libraries.FlightComputer;
 
 public class OpenCmsFlightComputer
@@ -11,14 +8,10 @@ public class OpenCmsFlightComputer
     private int _currentSteerPointIndex = 0;
     private WayPoint _homeWayPoint;
 
-    public OpenCmsFlightComputer()
-    {
-        _waypoints = new List<WayPoint>();
-    }
-
-    public void SetSelfAgent(AgentState selfAgent)
+    public OpenCmsFlightComputer(AgentState selfAgent)
     {
         _selfAgent = selfAgent;
+        _waypoints = new List<WayPoint>();
     }
 
     public void SetWayPoints(List<WayPoint> wayPoints)

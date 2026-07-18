@@ -18,7 +18,7 @@ public class AutonomousDrone
         _loggingEnabled = loggingEnabled;
         _actuatorSystem = new ActuatorSystem(world, selfAgent.GetAssetId(), loggingEnabled);
         _sensorSystem = new SensorSystem(world, selfAgent.GetAssetId(), loggingEnabled);
-        _flightComputer = new OpenCmsFlightComputer();
+        _flightComputer = new OpenCmsFlightComputer(_selfAgent);
         _autoPilot = new OpenCmsDroneAutoPilot(_flightComputer, _actuatorSystem, loggingEnabled);
     }
 
