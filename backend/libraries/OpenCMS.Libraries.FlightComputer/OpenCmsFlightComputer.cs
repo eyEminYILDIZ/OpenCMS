@@ -7,24 +7,24 @@ namespace OpenCMS.Libraries.FlightComputer;
 public class OpenCmsFlightComputer
 {
     private AgentState _selfAgent;
-    private List<WayPoint> _steerPoints;
+    private List<WayPoint> _waypoints;
     private int _currentSteerPointIndex = 0;
-    private WayPoint _homeSteerPoint;
+    private WayPoint _homeWayPoint;
 
     public OpenCmsFlightComputer()
     {
-        _steerPoints = new List<WayPoint>();
+        _waypoints = new List<WayPoint>();
     }
 
-    public void SetSteerPoints(List<WayPoint> steerPoints)
+    public void SetWayPoints(List<WayPoint> wayPoints)
     {
-        _steerPoints = steerPoints;
+        _waypoints = wayPoints;
     }
 
     // Steer point related works
     public async Task ChangeSteerPoint()
     {
-        if (_steerPoints.Count == 0)
+        if (_waypoints.Count == 0)
         {
             // _logger.LogWarning("No steer points available.");
             return;
@@ -36,7 +36,7 @@ public class OpenCmsFlightComputer
             return;
         }
 
-        if (_steerPoints.Count == _currentSteerPointIndex + 1)
+        if (_waypoints.Count == _currentSteerPointIndex + 1)
         {
             // _logger.LogInformation("No more steer points available. Returning to home position.");
             _currentSteerPointIndex = -1;
@@ -50,7 +50,7 @@ public class OpenCmsFlightComputer
     {
         if (_currentSteerPointIndex == -1)
         {
-            return _homeSteerPoint;
+            return _homeWayPoint;
         }
 
         if (_currentSteerPointIndex == -2)
@@ -58,18 +58,18 @@ public class OpenCmsFlightComputer
             return null;
         }
 
-        if (_steerPoints.Count == 0 || _currentSteerPointIndex >= _steerPoints.Count)
+        if (_waypoints.Count == 0 || _currentSteerPointIndex >= _waypoints.Count)
         {
             // _logger.LogWarning("No steer points available.");
             return null;
         }
 
-        return _steerPoints[_currentSteerPointIndex];
+        return _waypoints[_currentSteerPointIndex];
     }
 
     public void SetHomeWayPoint()
     {
-        _homeSteerPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.Speed, OrderTypesContract.Move);
+        _homeWayPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.Speed, OrderTypesContract.Move);
     }
 
     ////////////////////////////////////////////////////////////
@@ -108,5 +108,39 @@ public class OpenCmsFlightComputer
         }
 
         return currentSteerPoint.Altitude - _selfAgent.Altitude;
+    }
+
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+    public void Work()
+    {
+        CalculateWayPoints();
+    }
+
+    public void CalculateWayPoints()
+    {
+        for (int i = 0; i < _waypoints.Count; i++)
+        {
+            var wayPoint = _waypoints[i];
+
+            if (i > 0)
+            {
+                var previousWayPoint = _waypoints[i - 1];
+                wayPoint.DistanceToPreviousWayPoint = CoordinateCalculator.CalculateDistance(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
+                wayPoint.BearingToPreviousWayPoint = CoordinateCalculator.CalculateHeading(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
+                wayPoint.SequentialEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DistanceToPreviousWayPoint / wayPoint.Speed).TotalSeconds;
+            }
+            else
+            {
+                wayPoint.DistanceToPreviousWayPoint = 0.0;
+                wayPoint.BearingToPreviousWayPoint = 0.0;
+                wayPoint.SequentialEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DirectDistance / _selfAgent.Speed).TotalSeconds;
+            }
+
+            wayPoint.DirectDistance = CoordinateCalculator.CalculateDistance(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
+            wayPoint.DirectBearing = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
+            wayPoint.DirectEstimatedTimeOfArrival = TimeSpan.FromHours(wayPoint.DirectDistance / _selfAgent.Speed).TotalSeconds;
+        }
     }
 }

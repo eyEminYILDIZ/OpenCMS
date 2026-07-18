@@ -12,6 +12,19 @@ public class WayPoint
     public double Speed { get; set; }
     public OrderTypesContract OrderType { get; set; }
 
+    // calculated properties
+    // meters
+    public double DistanceToPreviousWayPoint { get; set; }
+    // meters
+    public double DirectDistance { get; set; }
+    // degrees
+    public double BearingToPreviousWayPoint { get; set; }
+    // degrees
+    public double DirectBearing { get; set; }
+    // seconds
+    public double DirectEstimatedTimeOfArrival { get; set; }
+    public double SequentialEstimatedTimeOfArrival { get; set; }
+
     public WayPoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypesContract orderType)
     {
         Name = name;

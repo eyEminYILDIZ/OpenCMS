@@ -20,9 +20,9 @@ public class AutonomousDrone
         _flightComputer = new OpenCmsFlightComputer();
     }
 
-    public void SetSteerPoints(List<WayPoint> steerPoints)
+    public void SetWayPoints(List<WayPoint> wayPoints)
     {
-        _flightComputer.SetSteerPoints(steerPoints);
+        _flightComputer.SetWayPoints(wayPoints);
     }
 
 

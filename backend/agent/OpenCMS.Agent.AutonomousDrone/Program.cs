@@ -87,7 +87,7 @@ while (!cts.Token.IsCancellationRequested)
         }
 
         // set waypoints and start autonomous drone
-        autonomousDrone.SetSteerPoints(waypoints);
+        autonomousDrone.SetWayPoints(waypoints);
         await autonomousDrone.Start();
 
         // main work loop
