@@ -6,7 +6,7 @@ namespace OpenCMS.Libraries.FlightComputer;
 
 public class OpenCmsFlightComputer
 {
-    private AgentState _selfAgent;
+    public AgentState _selfAgent { get; private set; }
     private List<WayPoint> _waypoints;
     private int _currentSteerPointIndex = 0;
     private WayPoint _homeWayPoint;
@@ -14,6 +14,11 @@ public class OpenCmsFlightComputer
     public OpenCmsFlightComputer()
     {
         _waypoints = new List<WayPoint>();
+    }
+
+    public void SetSelfAgent(AgentState selfAgent)
+    {
+        _selfAgent = selfAgent;
     }
 
     public void SetWayPoints(List<WayPoint> wayPoints)
@@ -115,6 +120,11 @@ public class OpenCmsFlightComputer
     /////////////////////////////////////////////////////////////
     public void Work()
     {
+        if (_selfAgent == null || _waypoints == null || _waypoints.Count == 0)
+        {
+            throw new InvalidOperationException("Self agent or waypoints are not set.");
+        }
+
         CalculateWayPoints();
     }
 

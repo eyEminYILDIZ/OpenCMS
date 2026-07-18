@@ -1,9 +1,7 @@
 namespace OpenCMS.Agent.AutonomousDrone;
 
-public class ActuatorSystem
+public class ActuatorSystem : IDroneActuator
 {
-    private double _horizontalSpeed = 0.0;
-    private double _verticalSpeed = 0.0;
     private bool _logginEnabled = false;
 
     private readonly ThreeDimensionWorld _world;
@@ -17,12 +15,12 @@ public class ActuatorSystem
         _logginEnabled = logginEnabled;
     }
 
-    public async Task TurnRight()
+    public async Task TurnRight(double degrees = 1.0)
     {
         await Task.CompletedTask;
 
         var currentHeading = _world.GetAssetById(_assetId)?.Heading ?? 0;
-        var newHeading = (currentHeading + 1) % 360;
+        var newHeading = (currentHeading + degrees) % 360;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset != null)
@@ -36,12 +34,12 @@ public class ActuatorSystem
         }
     }
 
-    public async Task TurnLeft()
+    public async Task TurnLeft(double degrees = 1.0)
     {
         await Task.CompletedTask;
 
         var currentHeading = _world.GetAssetById(_assetId)?.Heading ?? 0;
-        var newHeading = (currentHeading - 1 + 360) % 360;
+        var newHeading = (currentHeading - degrees + 360) % 360;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset != null)
@@ -55,12 +53,12 @@ public class ActuatorSystem
         }
     }
 
-    public async Task MoveForward()
+    public async Task MoveForward(double distanceMeters = 10.0)
     {
         await Task.CompletedTask;
 
         const double EarthRadiusMeters = 6371000;
-        const double distanceMeters = 10.0;
+        // const double distanceMeters = 10.0;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset == null)
@@ -90,12 +88,17 @@ public class ActuatorSystem
         }
     }
 
-    public async Task MoveUp()
+    public async Task MoveBackward(double distanceMeters = 1.0)
+    {
+        throw new NotImplementedException("MoveBackward is not implemented yet.");
+    }
+
+    public async Task MoveUp(double distanceMeters = 1.0)
     {
         await Task.CompletedTask;
 
         var currentAltitude = _world.GetAssetById(_assetId)?.Altitude ?? 0;
-        var newAltitude = currentAltitude + 1;
+        var newAltitude = currentAltitude + distanceMeters;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset != null)
@@ -109,12 +112,12 @@ public class ActuatorSystem
         }
     }
 
-    public async Task MoveDown()
+    public async Task MoveDown(double distanceMeters = 1.0)
     {
         await Task.CompletedTask;
 
         var currentAltitude = _world.GetAssetById(_assetId)?.Altitude ?? 0;
-        var newAltitude = currentAltitude - 1;
+        var newAltitude = currentAltitude - distanceMeters;
 
         var asset = _world.GetAssetById(_assetId);
         if (asset != null)
