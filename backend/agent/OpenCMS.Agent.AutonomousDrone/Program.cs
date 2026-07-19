@@ -89,54 +89,14 @@ var waypoints = await operationService.GetActiveOperationWayPoints();
 autonomousDrone.SetWayPoints(waypoints);
 await autonomousDrone.Start();
 
+// control drone
+var keyboardInputController = new KeyboardInputController();
 while (!cts.Token.IsCancellationRequested)
 {
-    var readKey = Console.ReadKey(intercept: true);
-    if (readKey.Key == ConsoleKey.UpArrow)
-    {
-        System.Console.WriteLine("Moving Forward");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.MoveForward);
-    }
-    else if (readKey.Key == ConsoleKey.DownArrow)
-    {
-        System.Console.WriteLine("Moving Backward");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.MoveBackward);
-    }
-    else if (readKey.Key == ConsoleKey.LeftArrow)
-    {
-        System.Console.WriteLine("Turning Left");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.TurnLeft);
-    }
-    else if (readKey.Key == ConsoleKey.RightArrow)
-    {
-        System.Console.WriteLine("Turning Right");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.TurnRight);
-    }
-    else if (readKey.Key == ConsoleKey.PageUp)
-    {
-        System.Console.WriteLine("Moving Up");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.MoveUp);
-    }
-    else if (readKey.Key == ConsoleKey.PageDown)
-    {
-        System.Console.WriteLine("Moving Down");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.MoveDown);
-    }
-    else if (readKey.Key == ConsoleKey.A)
-    {
-        System.Console.WriteLine("Opening Autopilot");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.OpenAutopilot);
-    }
-    else if (readKey.Key == ConsoleKey.B)
-    {
-        System.Console.WriteLine("Closing Autopilot");
-        await autonomousDrone.ControlDrone(ActuatorActionTypes.CloseAutopilot);
-    }
-    else
-    {
-        System.Console.WriteLine($"Key {readKey.Key} pressed. No action assigned.");
-    }
+    var keyboardInstruction = keyboardInputController.ProcessInput();
+    await autonomousDrone.ControlDrone(keyboardInstruction.Action, keyboardInstruction.Value);
 }
 
 logger.LogInformation("Autonomous Drone agent shutting down");
+autonomousDrone.Dispose();
 await host.StopAsync();

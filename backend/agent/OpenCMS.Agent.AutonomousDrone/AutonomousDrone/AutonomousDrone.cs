@@ -1,5 +1,3 @@
-using OpenCMS.Libraries.FlightComputer.Models;
-
 namespace OpenCMS.Agent.AutonomousDrone;
 
 public class AutonomousDrone : IDisposable
@@ -83,7 +81,7 @@ public class AutonomousDrone : IDisposable
         }
     }
 
-    public async Task ControlDrone(ActuatorActionTypes actionType)
+    public async Task ControlDrone(ActuatorActionTypes actionType, double value = 1.0)
     {
         if (_autoPilot.IsRunning && actionType != ActuatorActionTypes.CloseAutopilot)
         {
@@ -94,22 +92,22 @@ public class AutonomousDrone : IDisposable
         switch (actionType)
         {
             case ActuatorActionTypes.MoveForward:
-                await _actuatorSystem.MoveForward(100);
+                await _actuatorSystem.MoveForward(value);
                 break;
             case ActuatorActionTypes.MoveBackward:
-                await _actuatorSystem.MoveBackward();
+                await _actuatorSystem.MoveBackward(value);
                 break;
             case ActuatorActionTypes.MoveUp:
-                await _actuatorSystem.MoveUp();
+                await _actuatorSystem.MoveUp(value);
                 break;
             case ActuatorActionTypes.MoveDown:
-                await _actuatorSystem.MoveDown();
+                await _actuatorSystem.MoveDown(value);
                 break;
             case ActuatorActionTypes.TurnLeft:
-                await _actuatorSystem.TurnLeft();
+                await _actuatorSystem.TurnLeft(value);
                 break;
             case ActuatorActionTypes.TurnRight:
-                await _actuatorSystem.TurnRight();
+                await _actuatorSystem.TurnRight(value);
                 break;
             case ActuatorActionTypes.OpenAutopilot:
                 await _autoPilot.Start(_cancellationToken);
