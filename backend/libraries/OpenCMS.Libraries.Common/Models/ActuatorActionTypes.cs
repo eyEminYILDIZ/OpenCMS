@@ -1,4 +1,4 @@
-namespace OpenCMS.Libraries.FlightComputer.Models;
+namespace OpenCMS.Libraries.Common.Models;
 
 public enum ActuatorActionTypes
 {

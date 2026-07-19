@@ -1,5 +1,3 @@
-using OpenCMS.Libraries.FlightComputer.Models;
-
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
