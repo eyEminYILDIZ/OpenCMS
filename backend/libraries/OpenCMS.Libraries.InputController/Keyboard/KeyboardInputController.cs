@@ -1,9 +1,15 @@
+using OpenCms.Libraries.InputController.Common;
 using OpenCMS.Libraries.Common.Models;
 
 namespace OpenCMS.Libraries.InputController.Keyboard;
 
-public class KeyboardInputController
+public class KeyboardInputController : IInputController
 {
+    public void Initialize()
+    {
+        System.Console.WriteLine("Keyboard Input Controller Initialized.");
+    }
+
     public (ActuatorActionTypes Action, double Value) ProcessInput()
     {
         var readKey = Console.ReadKey(intercept: true);
