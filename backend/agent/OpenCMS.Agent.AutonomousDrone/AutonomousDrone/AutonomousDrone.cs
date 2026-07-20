@@ -75,7 +75,7 @@ public class AutonomousDrone : IDisposable
                 await agentStateUpdateCallback(_selfAgent);
             }
 
-            var delayCount = _autoPilot.IsRunning ? 10 : 100;
+            var delayCount = _autoPilot.IsRunning ? 10 : 50;
             await Task.Delay(delayCount, cancellationToken); // Adjust the delay as needed
             count++;
         }
@@ -97,6 +97,12 @@ public class AutonomousDrone : IDisposable
             case ActuatorActionTypes.MoveBackward:
                 await _actuatorSystem.MoveBackward(value);
                 break;
+            case ActuatorActionTypes.MoveRight:
+                await _actuatorSystem.MoveRight(value);
+                break;
+            case ActuatorActionTypes.MoveLeft:
+                await _actuatorSystem.MoveLeft(value);
+                break;
             case ActuatorActionTypes.MoveUp:
                 await _actuatorSystem.MoveUp(value);
                 break;
@@ -114,6 +120,9 @@ public class AutonomousDrone : IDisposable
                 break;
             case ActuatorActionTypes.CloseAutopilot:
                 await _autoPilot.Stop();
+                break;
+            case ActuatorActionTypes.None:
+                // Do nothing
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(actionType), actionType, null);

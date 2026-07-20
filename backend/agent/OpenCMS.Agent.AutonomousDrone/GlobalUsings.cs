@@ -2,6 +2,8 @@ global using OpenCMS.Libraries.ApiClient;
 global using OpenCMS.Libraries.FlightComputer;
 global using OpenCMS.Libraries.FlightComputer.AutoPilots;
 global using OpenCMS.Libraries.InputController.Keyboard;
+global using OpenCMS.Libraries.InputController.Common;
+global using OpenCMS.Libraries.InputController.Joysticks.LogitechExtreme3dPro;
 global using OpenCMS.Libraries.Common.Models;
 global using OpenCMS.Libraries.Common.Contracts;
 global using OpenCMS.Agent.AutonomousDrone;
@@ -11,3 +13,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
 global using OpenCMS.Agent.AutonomousDrone.Services;
+

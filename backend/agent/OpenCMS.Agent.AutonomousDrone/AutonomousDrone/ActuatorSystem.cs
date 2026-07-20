@@ -95,6 +95,20 @@ public class ActuatorSystem : IDroneActuator
         Console.WriteLine("MoveBackward is not implemented yet.");
     }
 
+    public async Task MoveRight(double distanceMeters = 1.0)
+    {
+        await Task.CompletedTask;
+
+        Console.WriteLine("MoveRight is not implemented yet.");
+    }
+
+    public async Task MoveLeft(double distanceMeters = 1.0)
+    {
+        await Task.CompletedTask;
+
+        Console.WriteLine("MoveLeft is not implemented yet.");
+    }
+
     public async Task MoveUp(double distanceMeters = 1.0)
     {
         await Task.CompletedTask;

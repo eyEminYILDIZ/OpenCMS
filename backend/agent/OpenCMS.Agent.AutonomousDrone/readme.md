@@ -1,5 +1,10 @@
 # Autonomous Drone
 
+## Input Controllers
+
+When the program runs, it first looks for the Logitech Extreme 3D Pro Joystick. If it is not found, it will use the Keyboard as Input Controller.
+
+For keyboard mappings, please refer to the [Input Controllers](../../libraries/OpenCMS.Libraries.InputController/readme.md) documentation.
 
 ## Terms
 

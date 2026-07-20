@@ -89,12 +89,22 @@ var waypoints = await operationService.GetActiveOperationWayPoints();
 autonomousDrone.SetWayPoints(waypoints);
 await autonomousDrone.Start();
 
-// control drone
-var keyboardInputController = new KeyboardInputController();
+// Detect input controller
+IInputController inputController = new LogitechExtreme3dProInputController();
+var isInitialized = inputController.Initialize(AircraftTypes.Drone);
+if (!isInitialized)
+{
+    inputController.Dispose();
+    inputController = new KeyboardInputController();
+    inputController.Initialize(AircraftTypes.Drone);
+}
+
+// control drone by input controller
 while (!cts.Token.IsCancellationRequested)
 {
-    var keyboardInstruction = keyboardInputController.ProcessInput();
-    await autonomousDrone.ControlDrone(keyboardInstruction.Action, keyboardInstruction.Value);
+    var instruction = inputController.ProcessInput();
+    await autonomousDrone.ControlDrone(instruction.Action, instruction.Value);
+    await Task.Delay(33, cts.Token); // Adjust the delay as needed
 }
 
 logger.LogInformation("Autonomous Drone agent shutting down");
