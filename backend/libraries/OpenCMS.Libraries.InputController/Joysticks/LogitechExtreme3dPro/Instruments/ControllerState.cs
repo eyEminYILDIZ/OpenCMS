@@ -1,6 +1,6 @@
-using OpenCms.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Joystick;
+using OpenCMS.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Joystick;
 
-namespace OpenCms.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Instruments;
+namespace OpenCMS.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Instruments;
 
 /// <summary>
 /// Axis/button layout for a Logitech Extreme 3D Pro (USB 046d:c215) under Linux's joydev
@@ -19,7 +19,7 @@ static class AxisMap
 }
 
 /// <summary>Derived flight instrument readings, updated each tick from raw joystick state.</summary>
-class ControllerState
+internal class ControllerState
 {
     // The twist (yaw) axis on this stick doesn't rest at raw 0 -- it was observed resting
     // around -18918 with +-1000 of counts of jitter. Roll/pitch/yaw are calibrated against

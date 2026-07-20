@@ -1,9 +1,11 @@
 using OpenCMS.Libraries.Common.Models;
 
-namespace OpenCms.Libraries.InputController.Common;
+namespace OpenCMS.Libraries.InputController.Common;
 
 public interface IInputController
 {
-    void Initialize();
+    bool Initialize(AircraftTypes aircraftType);
+    void Dispose();
+
     (ActuatorActionTypes Action, double Value) ProcessInput();
 }

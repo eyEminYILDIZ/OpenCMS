@@ -1,13 +1,14 @@
-using OpenCms.Libraries.InputController.Common;
+using OpenCMS.Libraries.InputController.Common;
 using OpenCMS.Libraries.Common.Models;
 
 namespace OpenCMS.Libraries.InputController.Keyboard;
 
-public class KeyboardInputController : IInputController
+public class KeyboardInputController : IInputController, IDisposable
 {
-    public void Initialize()
+    public bool Initialize(AircraftTypes aircraftType)
     {
-        System.Console.WriteLine("Keyboard Input Controller Initialized.");
+        System.Console.WriteLine($"Keyboard Input Controller Initialized for aircraft type: {aircraftType}.");
+        return true;
     }
 
     public (ActuatorActionTypes Action, double Value) ProcessInput()
@@ -58,5 +59,10 @@ public class KeyboardInputController : IInputController
             System.Console.WriteLine($"Key {readKey.Key} pressed. No action assigned.");
             return (ActuatorActionTypes.None, 0.0);
         }
+    }
+
+    public void Dispose()
+    {
+        System.Console.WriteLine("Keyboard Input Controller Disposed.");
     }
 }

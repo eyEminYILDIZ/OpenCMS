@@ -1,4 +1,4 @@
-namespace OpenCms.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Joystick;
+namespace OpenCMS.Libraries.InputController.JoySticks.LogitechExtreme3dPro.Joystick;
 
 /// <summary>Resolves which /dev/input/jsN node belongs to a given device name.</summary>
 static class JoystickDevice
