@@ -16,4 +16,7 @@ static class FlightDisplayColors
     public static readonly (byte, byte, byte) Ground = (168, 203, 60);
     public static readonly (byte, byte, byte) Navy = (17, 45, 74);
     public static readonly (byte, byte, byte) Olive = (58, 74, 26);
+
+    public static readonly (byte, byte, byte) PanelDividerFg = (90, 90, 90);
+    public static readonly (byte, byte, byte) PanelDividerBg = Black;
 }
