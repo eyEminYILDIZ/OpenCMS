@@ -14,8 +14,8 @@ static class NavigationDisplayRenderer
     // curved compass dome above it (same dome-projection trick as the PFD roll arc).
 
     /// <summary>
-    /// The range of the display is fixed at 5km (2.7NM). 
-    /// Waypoints beyond that distance are not shown, 
+    /// The range of the display is fixed at 5000 meters.
+    /// Waypoints beyond that distance are not shown,
     /// and the distance labels are scaled to fit within that range.
     /// </summary>
     private const double RangeMeter = 5000;
@@ -60,7 +60,7 @@ static class NavigationDisplayRenderer
     private static readonly (byte, byte, byte) TitleFg = (20, 20, 20);
 
     private readonly record struct ProjectedWaypoint(
-        Waypoint Wp, string Name, double DistanceNm, double BearingDeg, double RelBearingDeg, bool InView, int Row, int Col);
+        Waypoint Wp, string Name, double DistanceMeters, double BearingDeg, double RelBearingDeg, bool InView, int Row, int Col);
 
     public static Canvas BuildFrame(AircraftState aircraftState, List<Waypoint> waypoints, int activeWaypointIndex)
     {
@@ -128,17 +128,15 @@ static class NavigationDisplayRenderer
     }
 
     /// <summary>
-    /// Formats the estimated time enroute (ETE) to a waypoint based on the distance in nautical miles and the ground speed in meters per second.
+    /// Formats the estimated time enroute (ETE) to a waypoint based on the distance in meters and the ground speed in meters per second.
     /// </summary>
-    /// <param name="distanceNm"></param>
+    /// <param name="distanceMeters"></param>
     /// <param name="groundSpeedMps"></param>
     /// <returns></returns>
-    private static string FormatEte(double distanceNm, double groundSpeedMps)
+    private static string FormatEte(double distanceMeters, double groundSpeedMps)
     {
-        double knots = groundSpeedMps * 1.943844;
-        if (knots < 1) return "--:--";
-        double hours = distanceNm / knots;
-        int totalSeconds = (int)Math.Round(hours * 3600);
+        if (groundSpeedMps < 0.5) return "--:--";
+        int totalSeconds = (int)Math.Round(distanceMeters / groundSpeedMps);
         int mm = totalSeconds / 60;
         int ss = totalSeconds % 60;
         return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}", mm, ss);
@@ -174,9 +172,9 @@ static class NavigationDisplayRenderer
         {
             var (row, col) = ProjectPoint(RangeLabelBearingDeg, frac);
             if (row < (int)ArcTopRow || row > (int)ApexRow) continue;
-            int nm = (int)Math.Round(RangeMeter * frac);
+            int meters = (int)Math.Round(RangeMeter * frac);
             cv.SetChar(row, col - 1, '-', Gray);
-            cv.DrawText(row, col, nm.ToString(CultureInfo.InvariantCulture), Gray);
+            cv.DrawText(row, col, meters.ToString(CultureInfo.InvariantCulture), Gray);
         }
     }
 
@@ -248,7 +246,7 @@ static class NavigationDisplayRenderer
             cv.DrawText(p.Row - 1, p.Col - p.Wp.Name.Length / 2, p.Wp.Name, Green);
 
             string distLabel = string.Format(CultureInfo.InvariantCulture,
-                "{0:F1}NM {1}", p.DistanceNm, FormatEte(p.DistanceNm, aircraftState.GroundSpeed));
+                "{0:F0}m {1}", p.DistanceMeters, FormatEte(p.DistanceMeters, aircraftState.GroundSpeed));
             cv.DrawText(p.Row + 1, p.Col - distLabel.Length / 2, distLabel, White);
         }
     }
@@ -266,10 +264,8 @@ static class NavigationDisplayRenderer
 
     private static void DrawTopInfo(Canvas cv, AircraftState aircraftState)
     {
-        double gsKts = aircraftState.GroundSpeed * 1.943844;
-        double tasKts = aircraftState.AirSpeed * 1.943844;
-        cv.DrawText(1, 2, string.Format(CultureInfo.InvariantCulture, "GS  {0,3:F0}", gsKts), Green);
-        cv.DrawText(2, 2, string.Format(CultureInfo.InvariantCulture, "TAS {0,3:F0}", tasKts), Green);
+        cv.DrawText(1, 2, string.Format(CultureInfo.InvariantCulture, "GS  {0,3:F0}", aircraftState.GroundSpeed), Green);
+        cv.DrawText(2, 2, string.Format(CultureInfo.InvariantCulture, "TAS {0,3:F0}", aircraftState.AirSpeed), Green);
     }
 
     private static void DrawSteerpointPanel(Canvas cv, AircraftState aircraftState, List<ProjectedWaypoint> pts, int activeWaypointIndex)
@@ -280,8 +276,8 @@ static class NavigationDisplayRenderer
         // Dedicated "to waypoint" readout: always visible, bottom-right of the display.
         int panelCol = W - 19;
         cv.DrawText(26, panelCol, "TO " + active.Wp.Name, Magenta);
-        cv.DrawText(27, panelCol, string.Format(CultureInfo.InvariantCulture, "DST {0,5:F1}M", active.DistanceNm), White);
-        cv.DrawText(28, panelCol, "TM  " + FormatEte(active.DistanceNm, aircraftState.GroundSpeed), White);
+        cv.DrawText(27, panelCol, string.Format(CultureInfo.InvariantCulture, "DST {0,5:F0}M", active.DistanceMeters), White);
+        cv.DrawText(28, panelCol, "TM  " + FormatEte(active.DistanceMeters, aircraftState.GroundSpeed), White);
     }
 
     private static void DrawStatusPanel(Canvas cv, AircraftState aircraftState, List<ProjectedWaypoint> pts, int activeWaypointIndex)
@@ -292,16 +288,16 @@ static class NavigationDisplayRenderer
             "LAT {0,9:F4}  LON {1,9:F4}",
             aircraftState.Latitude, aircraftState.Longitude);
         string line2 = string.Format(CultureInfo.InvariantCulture,
-            "HDG {0,5:F1}  GS {1,5:F1}kt  ALT{2,7:F1}m",
-            aircraftState.Heading, aircraftState.GroundSpeed * 1.943844, aircraftState.Altitude);
+            "HDG {0,5:F1}  GS {1,5:F1}m/s  ALT{2,7:F1}m",
+            aircraftState.Heading, aircraftState.GroundSpeed, aircraftState.Altitude);
 
         string line3;
         if (pts.Count > 0)
         {
             var active = pts[activeWaypointIndex];
             line3 = string.Format(CultureInfo.InvariantCulture,
-                "TO {0,-6} BRG{1,5:F1} DST{2,6:F1}NM ETE {3}",
-                active.Wp.Name, active.BearingDeg, active.DistanceNm, FormatEte(active.DistanceNm, aircraftState.GroundSpeed));
+                "TO {0,-6} BRG{1,5:F1} DST{2,6:F0}M ETE {3}",
+                active.Wp.Name, active.BearingDeg, active.DistanceMeters, FormatEte(active.DistanceMeters, aircraftState.GroundSpeed));
         }
         else
         {
