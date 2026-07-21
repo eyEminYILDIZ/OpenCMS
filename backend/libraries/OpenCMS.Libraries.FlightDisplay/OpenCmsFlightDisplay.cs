@@ -29,6 +29,8 @@ public class OpenCmsFlightDisplay
             if (key.Key == ConsoleKey.Q || key.Key == ConsoleKey.Escape) return false;
         }
 
+        Console.Clear();
+
         return true;
     }
 

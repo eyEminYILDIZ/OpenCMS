@@ -17,12 +17,12 @@ public class KeyboardInputController : IInputController, IDisposable
         if (readKey.Key == ConsoleKey.UpArrow)
         {
             System.Console.WriteLine("Moving Forward");
-            return (ActuatorActionTypes.MoveForward, 1.0);
+            return (ActuatorActionTypes.MoveForward, 10.0);
         }
         else if (readKey.Key == ConsoleKey.DownArrow)
         {
             System.Console.WriteLine("Moving Backward");
-            return (ActuatorActionTypes.MoveBackward, 1.0);
+            return (ActuatorActionTypes.MoveBackward, 10.0);
         }
         else if (readKey.Key == ConsoleKey.LeftArrow)
         {
@@ -37,12 +37,12 @@ public class KeyboardInputController : IInputController, IDisposable
         else if (readKey.Key == ConsoleKey.PageUp)
         {
             System.Console.WriteLine("Moving Up");
-            return (ActuatorActionTypes.MoveUp, 1.0);
+            return (ActuatorActionTypes.MoveUp, 10.0);
         }
         else if (readKey.Key == ConsoleKey.PageDown)
         {
             System.Console.WriteLine("Moving Down");
-            return (ActuatorActionTypes.MoveDown, 1.0);
+            return (ActuatorActionTypes.MoveDown, 10.0);
         }
         else if (readKey.Key == ConsoleKey.A)
         {

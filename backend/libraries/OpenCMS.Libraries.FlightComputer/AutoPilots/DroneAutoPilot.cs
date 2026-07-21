@@ -73,13 +73,6 @@ public class OpenCmsDroneAutoPilot
                 throw new InvalidOperationException("No current steer point available.");
             }
 
-            if (_loggingEnabled)
-            {
-                Console.WriteLine($"Target Steer Point: {currentSteerPoint.Name}");
-                Console.WriteLine($"Target  => Lat: {currentSteerPoint.Latitude} \tLon: {currentSteerPoint.Longitude} \tAlt: {currentSteerPoint.Altitude} \tHeading: {currentSteerPoint.Heading} \tSpeed: {currentSteerPoint.Speed}");
-                Console.WriteLine($"Current => Lat: {_flightComputer._selfAgent.Latitude} \tLon: {_flightComputer._selfAgent.Longitude} \tAlt: {_flightComputer._selfAgent.Altitude} \tHeading: {_flightComputer._selfAgent.Heading} \tSpeed: {_flightComputer._selfAgent.GroundSpeed}");
-            }
-
             isOrderTypeObserve = currentSteerPoint.OrderType == OrderTypesContract.Observe;
             var headingChanged = false;
             var bearing = 0.0;
@@ -105,11 +98,6 @@ public class OpenCmsDroneAutoPilot
                     await _actuatorSystem.TurnLeft();
                     headingChanged = true;
                 }
-                if (_loggingEnabled)
-                {
-                    System.Console.WriteLine($"Calculations: IsCircling: {isCircling}  | Difference: {headingDifference} | Bearing: {bearing} | Heading: {_flightComputer._selfAgent.Heading} ");
-                }
-
                 // await Task.Delay(100, cancellationToken);
             } while (Math.Abs(bearing - _flightComputer._selfAgent.Heading) > 1 && !cancellationToken.IsCancellationRequested);
 
@@ -146,7 +134,7 @@ public class OpenCmsDroneAutoPilot
             if (distance < 500 && isOrderTypeObserve && !isCircling)
             {
                 isCircling = true;
-                System.Console.WriteLine("\n\n\n CIRCLE TURNED ON \n\n\n");
+                // System.Console.WriteLine("\n\n\n CIRCLE TURNED ON \n\n\n");
             }
 
             if (distance > 1 && !isCircling)
@@ -164,7 +152,7 @@ public class OpenCmsDroneAutoPilot
                     isCirclingCompleted = true;
                     isCircling = false;
                     circleCount = 0;
-                    System.Console.WriteLine("\n\n\n CIRCLE COMPLETED \n\n\n");
+                    // System.Console.WriteLine("\n\n\n CIRCLE COMPLETED \n\n\n");
                     await _flightComputer.ChangeSteerPoint();
                 }
             }

@@ -9,7 +9,7 @@ static class NavigationDisplayRenderer
 
     // Arc-mode geometry: ownship sits at the apex, waypoints fan out toward a
     // curved compass dome above it (same dome-projection trick as the PFD roll arc).
-    private const double RangeNm = 80;
+    private const double RangeMeter = 5000;
     private const double HalfFovDeg = 55;
     private const double CenterCol = 30.0;
     private const double ApexRow = 29.0;
@@ -86,9 +86,9 @@ static class NavigationDisplayRenderer
             double dist = CoordinateCalculator.CalculateDistance(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
             double brg = CoordinateCalculator.CalculateHeading(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
             double rel = AngleDiff(brg, aircraftState.Heading);
-            double frac = Math.Clamp(dist / RangeNm, 0, 1);
+            double frac = Math.Clamp(dist / RangeMeter, 0, 1);
             var (row, col) = ProjectPoint(rel, frac);
-            bool inView = Math.Abs(rel) <= HalfFovDeg && dist <= RangeNm;
+            bool inView = Math.Abs(rel) <= HalfFovDeg && dist <= RangeMeter;
             list.Add(new ProjectedWaypoint(wp, wp.Name, dist, brg, rel, inView, row, col));
         }
         return list;
@@ -135,7 +135,7 @@ static class NavigationDisplayRenderer
         {
             var (row, col) = ProjectPoint(RangeLabelBearingDeg, frac);
             if (row < (int)ArcTopRow || row > (int)ApexRow) continue;
-            int nm = (int)Math.Round(RangeNm * frac);
+            int nm = (int)Math.Round(RangeMeter * frac);
             cv.SetChar(row, col - 1, '-', Gray);
             cv.DrawText(row, col, nm.ToString(CultureInfo.InvariantCulture), Gray);
         }
@@ -241,7 +241,7 @@ static class NavigationDisplayRenderer
         // Dedicated "to waypoint" readout: always visible, bottom-right of the display.
         int panelCol = W - 19;
         cv.DrawText(26, panelCol, "TO " + active.Wp.Name, Magenta);
-        cv.DrawText(27, panelCol, string.Format(CultureInfo.InvariantCulture, "DST {0,5:F1}NM", active.DistanceNm), White);
+        cv.DrawText(27, panelCol, string.Format(CultureInfo.InvariantCulture, "DST {0,5:F1}M", active.DistanceNm), White);
         cv.DrawText(28, panelCol, "TM  " + FormatEte(active.DistanceNm, aircraftState.GroundSpeed), White);
     }
 
