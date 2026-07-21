@@ -38,9 +38,10 @@ public class OpenCmsFlightDisplay
     {
         try
         {
-            var aircraftState = _flightComputer._selfAgent;
-            var waypoints = _flightComputer.GetWayPoints();
-            var activeWaypointIndex = _flightComputer.GetActiveWaypointIndex();
+
+
+            var aircraftState = _flightComputer._selfAgent.CreateSnapshot();
+            var (waypoints, activeWaypointIndex) = _flightComputer.GetRenderSnapshot();
 
             var pfd = PrimaryFlightDisplayRenderer.BuildFrame(aircraftState);
             var nd = NavigationDisplayRenderer.BuildFrame(aircraftState, waypoints, activeWaypointIndex);

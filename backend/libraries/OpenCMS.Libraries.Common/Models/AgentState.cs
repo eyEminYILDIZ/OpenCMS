@@ -50,6 +50,8 @@ public class AircraftState
 
 public class AgentState : AircraftState
 {
+    private readonly Lock _stateLock = new();
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public AssetTypesContract AssetType { get; set; }
@@ -82,12 +84,40 @@ public class AgentState : AircraftState
 
     public void UpdateState(double latitude, double longitude, double altitude, double heading, double speed)
     {
-        Latitude = latitude;
-        Longitude = longitude;
-        Altitude = altitude;
-        Heading = heading;
-        GroundSpeed = speed;
-        AirSpeed = speed;
+        lock (_stateLock)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+            Altitude = altitude;
+            Heading = heading;
+            GroundSpeed = speed;
+            AirSpeed = speed;
+        }
+    }
+
+    /// <summary>
+    /// Takes a consistent point-in-time copy of the aircraft state. Other threads (flight
+    /// computer calculations, display rendering) read multiple fields together and must not
+    /// observe a partially applied <see cref="UpdateState"/> write.
+    /// </summary>
+    public AircraftState CreateSnapshot()
+    {
+        lock (_stateLock)
+        {
+            return new AircraftState
+            {
+                Latitude = Latitude,
+                Longitude = Longitude,
+                Altitude = Altitude,
+                Heading = Heading,
+                GroundSpeed = GroundSpeed,
+                AirSpeed = AirSpeed,
+                PitchDeg = PitchDeg,
+                RollDeg = RollDeg,
+                TurnRate = TurnRate,
+                VerticalSpeed = VerticalSpeed
+            };
+        }
     }
 
     public Guid GetAssetId()

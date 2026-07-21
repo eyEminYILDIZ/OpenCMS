@@ -128,7 +128,7 @@ static class NavigationDisplayRenderer
 
     private static void DrawRoute(Canvas cv, AircraftState aircraftState, List<Waypoint> pts, int activeWaypointIndex)
     {
-        if (pts.Count == 0) return;
+        if (pts.Count == 0 || activeWaypointIndex < 0 || activeWaypointIndex >= pts.Count) return;
         int startIdx = activeWaypointIndex;
         var prevPoint = ((int)ApexRow, (int)CenterCol);
 
@@ -174,7 +174,7 @@ static class NavigationDisplayRenderer
 
     private static void DrawSteerpointPanel(Canvas cv, AircraftState aircraftState, List<Waypoint> pts, int activeWaypointIndex)
     {
-        if (pts.Count == 0) return;
+        if (pts.Count == 0 || activeWaypointIndex < 0 || activeWaypointIndex >= pts.Count) return;
         var active = pts[activeWaypointIndex];
 
         // Dedicated "to waypoint" readout: always visible, bottom-right of the display.
@@ -196,7 +196,7 @@ static class NavigationDisplayRenderer
             aircraftState.Heading, aircraftState.GroundSpeed, aircraftState.Altitude);
 
         string line3;
-        if (pts.Count > 0)
+        if (activeWaypointIndex >= 0 && activeWaypointIndex < pts.Count)
         {
             var active = pts[activeWaypointIndex];
             line3 = string.Format(CultureInfo.InvariantCulture,

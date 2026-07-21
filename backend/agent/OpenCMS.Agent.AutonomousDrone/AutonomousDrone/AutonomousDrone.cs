@@ -75,6 +75,11 @@ public class AutonomousDrone : IDisposable
             var speed = _sensorSystem.GetSpeed();
             _selfAgent.UpdateState(latitude, longitude, altitude, heading, speed);
 
+            // Waypoint distance/bearing/screen-position are otherwise only recalculated by the
+            // autopilot's own Work loop, which only runs while the autopilot is engaged. Recompute
+            // here too so the nav display stays accurate under manual (keyboard/joystick) control.
+            _flightComputer.Work();
+
             if (agentStateUpdateCallback! != null && count % 10 == 0) // Update CMS every 10 cycles
             {
                 await agentStateUpdateCallback(_selfAgent);

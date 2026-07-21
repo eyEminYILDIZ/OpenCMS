@@ -1,3 +1,5 @@
+using OpenCMS.Libraries.FlightComputer.Constants;
+
 namespace OpenCMS.Libraries.FlightComputer.AutoPilots;
 
 public class OpenCmsDroneAutoPilot
@@ -147,7 +149,7 @@ public class OpenCmsDroneAutoPilot
                 await _actuatorSystem.MoveForward();
 
                 circleCount++;
-                if (circleCount >= 360)
+                if (circleCount >= ComputerConstants.SteerpointCircleCompletionDegrees)
                 {
                     isCirclingCompleted = true;
                     isCircling = false;
@@ -156,7 +158,7 @@ public class OpenCmsDroneAutoPilot
                     await _flightComputer.ChangeSteerPoint();
                 }
             }
-            else if (distance <= 10)
+            else if (distance <= ComputerConstants.SteerpointProximityRange)
             {
                 // _logger.LogInformation("Reached steer point.");
                 await _flightComputer.ChangeSteerPoint();

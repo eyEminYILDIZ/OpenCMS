@@ -40,4 +40,13 @@ public class Waypoint
         Speed = speed;
         OrderType = orderType;
     }
+
+    /// <summary>
+    /// Copies all fields to a new instance. Used to hand callers (e.g. rendering) a
+    /// point-in-time snapshot instead of a reference into a list another thread may be mutating.
+    /// </summary>
+    public Waypoint Clone()
+    {
+        return (Waypoint)MemberwiseClone();
+    }
 }
