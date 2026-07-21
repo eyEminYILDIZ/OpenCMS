@@ -1,30 +1,13 @@
 using OpenCMS.Libraries.Common.Models;
 using OpenCMS.Libraries.FlightDisplay.Rendering;
+using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayColors;
+using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayConstants;
+using static OpenCMS.Libraries.FlightDisplay.Displays.PrimaryFlightDisplay.PrimaryFlightDisplayConstants;
 
 namespace OpenCMS.Libraries.FlightDisplay.Displays.PrimaryFlightDisplay;
 
 static class PrimaryFlightDisplayRenderer
 {
-    public const int W = 60, H = 34;
-
-    // Main horizon body geometry.
-    private const int R0 = 4, R1 = 29;
-    private const int C0 = 8, C1 = 51;
-    private const double BaseCenterRow = 16.5;
-    private static double ColCenter => (C0 + C1) / 2.0;
-
-    private static readonly (byte, byte, byte) Sky = (33, 150, 215);
-    private static readonly (byte, byte, byte) Ground = (168, 203, 60);
-    private static readonly (byte, byte, byte) Navy = (17, 45, 74);
-    private static readonly (byte, byte, byte) Olive = (58, 74, 26);
-    private static readonly (byte, byte, byte) Black = (0, 0, 0);
-    private static readonly (byte, byte, byte) White = (255, 255, 255);
-    private static readonly (byte, byte, byte) TitleBg = (210, 210, 210);
-    private static readonly (byte, byte, byte) TitleFg = (20, 20, 20);
-
-    // Index n = how many eighths (from the bottom) of the cell are filled.
-    private static readonly char[] EighthBlocks = { ' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' };
-
     public static Canvas BuildFrame(AircraftState aircraftState)
     {
         var cv = new Canvas(W, H);
@@ -70,13 +53,12 @@ static class PrimaryFlightDisplayRenderer
     private static void DrawHeadingTape(Canvas cv, AircraftState aircraftState)
     {
         cv.FillRect(1, 0, 3, W, ' ', White, Navy);
-        const double unitsPerCol = 2.0;
         double centerCol = (W - 1) / 2.0;
 
         for (int labelVal = 0; labelVal < 360; labelVal += 10)
         {
             double diff = AngleDiff(labelVal, aircraftState.Heading);
-            int col = (int)Math.Round(centerCol + diff / unitsPerCol);
+            int col = (int)Math.Round(centerCol + diff / HeadingTapeUnitsPerCol);
             if (col < 1 || col > W - 2) continue;
 
             string? letter = CardinalLetter(labelVal);
@@ -96,7 +78,7 @@ static class PrimaryFlightDisplayRenderer
         {
             if (labelVal % 10 == 0) continue;
             double diff = AngleDiff(labelVal, aircraftState.Heading);
-            int col = (int)Math.Round(centerCol + diff / unitsPerCol);
+            int col = (int)Math.Round(centerCol + diff / HeadingTapeUnitsPerCol);
             if (col < 1 || col > W - 2) continue;
             cv.SetChar(3, col, '.', White);
         }
@@ -106,15 +88,13 @@ static class PrimaryFlightDisplayRenderer
 
     private static void DrawHorizonAndLadder(Canvas cv, AircraftState aircraftState)
     {
-        const double rowsPerDeg = 0.35;
-        const double aspect = 0.5;
         double colCenter = ColCenter;
         double rollRad = aircraftState.RollDeg * Math.PI / 180.0;
 
         for (int col = C0; col <= C1; col++)
         {
             double dcol = col - colCenter;
-            double hRow = BaseCenterRow - aircraftState.PitchDeg * rowsPerDeg - dcol * Math.Tan(rollRad) * aspect;
+            double hRow = BaseCenterRow - aircraftState.PitchDeg * HorizonRowsPerDeg - dcol * Math.Tan(rollRad) * HorizonAspect;
             for (int row = R0; row <= R1; row++)
             {
                 double rowTop = row, rowBottom = row + 1;
@@ -144,10 +124,9 @@ static class PrimaryFlightDisplayRenderer
         }
 
         int cc = (int)colCenter;
-        int[] majors = { -20, -10, 10, 20 };
-        foreach (var v in majors)
+        foreach (var v in LadderMajorAngles)
         {
-            int row = (int)Math.Round(BaseCenterRow - (aircraftState.PitchDeg + v) * rowsPerDeg);
+            int row = (int)Math.Round(BaseCenterRow - (aircraftState.PitchDeg + v) * HorizonRowsPerDeg);
             if (row < R0 || row > R1) continue;
             string label = v.ToString(CultureInfo.InvariantCulture);
             cv.DrawText(row, cc - 8, label.PadLeft(3), White);
@@ -156,39 +135,34 @@ static class PrimaryFlightDisplayRenderer
             cv.DrawText(row, cc + 6, label, White);
         }
 
-        int[] minors = { -15, -5, 5, 15 };
-        foreach (var v in minors)
+        foreach (var v in LadderMinorAngles)
         {
-            int row = (int)Math.Round(BaseCenterRow - (aircraftState.PitchDeg + v) * rowsPerDeg);
+            int row = (int)Math.Round(BaseCenterRow - (aircraftState.PitchDeg + v) * HorizonRowsPerDeg);
             if (row < R0 || row > R1) continue;
             for (int c = cc - 2; c <= cc + 2; c++) cv.SetChar(row, c, '-', White);
         }
 
-        int zeroRow = (int)Math.Round(BaseCenterRow - aircraftState.PitchDeg * rowsPerDeg) - 2;
+        int zeroRow = (int)Math.Round(BaseCenterRow - aircraftState.PitchDeg * HorizonRowsPerDeg) - 2;
         if (zeroRow >= R0 && zeroRow <= R1) cv.DrawTextCentered(zeroRow, cc, "0", White);
     }
 
     private static void DrawRollArc(Canvas cv, AircraftState aircraftState)
     {
         double colCenter = ColCenter;
-        const double arcTopRow = 5;
-        const double radiusRows = 4;
-        const double radiusCols = 20;
 
-        int[] tickAngles = { -60, -45, -30, -15, 15, 30, 45, 60 };
-        foreach (var a in tickAngles)
+        foreach (var a in RollArcTickAngles)
         {
             double th = a * Math.PI / 180.0;
-            int r = (int)Math.Round(arcTopRow + radiusRows * (1 - Math.Cos(th)));
-            int c = (int)Math.Round(colCenter + radiusCols * Math.Sin(th));
+            int r = (int)Math.Round(RollArcTopRow + RollArcRadiusRows * (1 - Math.Cos(th)));
+            int c = (int)Math.Round(colCenter + RollArcRadiusCols * Math.Sin(th));
             cv.DrawTextCentered(r, c, Math.Abs(a).ToString(CultureInfo.InvariantCulture), White);
         }
 
         for (double a = -60; a <= 60; a += 3)
         {
             double th = a * Math.PI / 180.0;
-            int r = (int)Math.Round(arcTopRow + radiusRows * (1 - Math.Cos(th)));
-            int c = (int)Math.Round(colCenter + radiusCols * Math.Sin(th));
+            int r = (int)Math.Round(RollArcTopRow + RollArcRadiusRows * (1 - Math.Cos(th)));
+            int c = (int)Math.Round(colCenter + RollArcRadiusCols * Math.Sin(th));
             if (r < 0 || r >= cv.Height || c < 0 || c >= cv.Width) continue;
             if (cv.Cells[r, c].Ch == ' ' || cv.Cells[r, c].Ch == '\0')
                 cv.SetChar(r, c, '·', White);
@@ -196,8 +170,8 @@ static class PrimaryFlightDisplayRenderer
 
         double rollClamped = Math.Clamp(aircraftState.RollDeg, -60, 60);
         double thr = rollClamped * Math.PI / 180.0;
-        int pr = (int)Math.Round(arcTopRow + radiusRows * (1 - Math.Cos(thr)));
-        int pc = (int)Math.Round(colCenter + radiusCols * Math.Sin(thr));
+        int pr = (int)Math.Round(RollArcTopRow + RollArcRadiusRows * (1 - Math.Cos(thr)));
+        int pc = (int)Math.Round(colCenter + RollArcRadiusCols * Math.Sin(thr));
         cv.SetChar(Math.Max(pr - 1, 0), pc, '▲', White);
     }
 

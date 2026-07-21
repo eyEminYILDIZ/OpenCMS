@@ -1,64 +1,13 @@
 using OpenCMS.Libraries.Common.Models;
 using OpenCMS.Libraries.FlightDisplay.Rendering;
+using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayColors;
+using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayConstants;
+using static OpenCMS.Libraries.FlightDisplay.Displays.NavigationDisplay.NavigationDisplayConstants;
 
 namespace OpenCMS.Libraries.FlightDisplay.Displays.NavigationDisplay;
 
 static class NavigationDisplayRenderer
 {
-    /// <summary>
-    /// The display is 60 columns wide and 34 rows tall.
-    /// </summary>
-    public const int W = 60, H = 34;
-
-    // Arc-mode geometry: ownship sits at the apex, waypoints fan out toward a
-    // curved compass dome above it (same dome-projection trick as the PFD roll arc).
-
-    /// <summary>
-    /// The range of the display is fixed at 5000 meters.
-    /// Waypoints beyond that distance are not shown,
-    /// and the distance labels are scaled to fit within that range.
-    /// </summary>
-    private const double RangeMeter = 5000;
-
-    /// <summary>
-    /// The field of view is 110 degrees, so waypoints more than 55 degrees off the nose are not shown.
-    /// </summary>
-    private const double HalfFieldOfViewDeg = 55;
-
-    /// <summary>
-    /// The dome is a circular arc with a radius of 4 rows and 25 columns, centered at (29,30).
-    /// </summary>
-    private const double CenterCol = 30.0;
-
-    /// <summary>
-    /// The apex of the dome is at row 29, which is the bottom of the display.
-    /// </summary>
-    private const double ApexRow = 29.0;
-
-    /// <summary>
-    /// The top row of the arc is at row 5, which is 24 rows above the apex.
-    /// </summary>
-    private const double ArcTopRow = 5.0;
-
-    /// <summary>
-    /// The dome radius is 4 rows and 25 columns, which defines the curvature of the compass arc.
-    /// </summary>
-    private const double DomeRadiusRows = 4.0;
-
-    /// <summary>
-    /// The dome radius is 4 rows and 25 columns, which defines the curvature of the compass arc.
-    /// </summary>
-    private const double DomeRadiusCols = 25.0;
-
-    private static readonly (byte, byte, byte) Black = (0, 0, 0);
-    private static readonly (byte, byte, byte) White = (255, 255, 255);
-    private static readonly (byte, byte, byte) Gray = (140, 140, 140);
-    private static readonly (byte, byte, byte) Green = (110, 235, 110);
-    private static readonly (byte, byte, byte) Magenta = (235, 90, 235);
-    private static readonly (byte, byte, byte) Cyan = (90, 220, 235);
-    private static readonly (byte, byte, byte) TitleBg = (210, 210, 210);
-    private static readonly (byte, byte, byte) TitleFg = (20, 20, 20);
-
     private readonly record struct ProjectedWaypoint(
         Waypoint Wp, string Name, double DistanceMeters, double BearingDeg, double RelBearingDeg, bool InView, int Row, int Col);
 
@@ -160,10 +109,6 @@ static class NavigationDisplayRenderer
             if (e2 < dr) { err += dr; c += sc; }
         }
     }
-
-    // Placed off to the side (rather than on the centerline) so they don't collide
-    // with the route line and waypoint labels, which usually sit near dead-ahead.
-    private const double RangeLabelBearingDeg = -42;
 
     private static void DrawRangeTicks(Canvas cv)
     {

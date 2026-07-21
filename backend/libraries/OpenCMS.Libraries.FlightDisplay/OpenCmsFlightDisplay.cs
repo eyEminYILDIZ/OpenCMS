@@ -1,3 +1,4 @@
+using OpenCMS.Libraries.FlightDisplay.Common;
 using OpenCMS.Libraries.FlightDisplay.Displays.NavigationDisplay;
 using OpenCMS.Libraries.FlightDisplay.Displays.PrimaryFlightDisplay;
 using OpenCMS.Libraries.FlightDisplay.Rendering;
@@ -7,8 +8,8 @@ namespace OpenCMS.Libraries.FlightDisplay;
 public class OpenCmsFlightDisplay
 {
     private const int Gap = 1;
-    private const int TotalW = PrimaryFlightDisplayRenderer.W + Gap + NavigationDisplayRenderer.W;
-    private const int TotalH = PrimaryFlightDisplayRenderer.H;
+    private const int TotalW = FlightDisplayConstants.W + Gap + FlightDisplayConstants.W;
+    private const int TotalH = FlightDisplayConstants.H;
     private readonly (byte, byte, byte) dividerFg = ((byte)90, (byte)90, (byte)90);
     private readonly (byte, byte, byte) dividerBg = ((byte)0, (byte)0, (byte)0);
 
@@ -47,8 +48,8 @@ public class OpenCmsFlightDisplay
 
             var combined = new Canvas(TotalW, TotalH);
             combined.Blit(pfd, 0, 0);
-            combined.FillRect(0, PrimaryFlightDisplayRenderer.W, TotalH, Gap, '│', dividerFg, dividerBg);
-            combined.Blit(nd, 0, PrimaryFlightDisplayRenderer.W + Gap);
+            combined.FillRect(0, FlightDisplayConstants.W, TotalH, Gap, '│', dividerFg, dividerBg);
+            combined.Blit(nd, 0, FlightDisplayConstants.W + Gap);
 
             Console.Write("\x1b[H");
             Console.Out.Write(combined.ToAnsi());
