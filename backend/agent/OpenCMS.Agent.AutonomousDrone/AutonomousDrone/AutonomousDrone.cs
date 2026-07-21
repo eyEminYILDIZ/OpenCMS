@@ -36,7 +36,7 @@ public class AutonomousDrone : IDisposable
         agentStateUpdateCallback = callback;
     }
 
-    public void SetWayPoints(List<WayPoint> wayPoints)
+    public void SetWayPoints(List<Waypoint> wayPoints)
     {
         _flightComputer.SetWayPoints(wayPoints);
     }

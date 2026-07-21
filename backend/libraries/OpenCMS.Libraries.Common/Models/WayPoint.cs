@@ -2,7 +2,7 @@ using OpenCMS.Libraries.Common.Contracts;
 
 namespace OpenCMS.Libraries.Common.Models;
 
-public class WayPoint
+public class Waypoint
 {
     public string Name { get; set; }
     public double Latitude { get; set; }
@@ -25,7 +25,7 @@ public class WayPoint
     public double DirectEstimatedTimeOfArrival { get; set; }
     public double SequentialEstimatedTimeOfArrival { get; set; }
 
-    public WayPoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypesContract orderType)
+    public Waypoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypesContract orderType)
     {
         Name = name;
         Latitude = latitude;

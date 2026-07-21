@@ -5,16 +5,49 @@ namespace OpenCMS.Libraries.FlightDisplay.Displays.NavigationDisplay;
 
 static class NavigationDisplayRenderer
 {
+    /// <summary>
+    /// The display is 60 columns wide and 34 rows tall.
+    /// </summary>
     public const int W = 60, H = 34;
 
     // Arc-mode geometry: ownship sits at the apex, waypoints fan out toward a
     // curved compass dome above it (same dome-projection trick as the PFD roll arc).
+
+    /// <summary>
+    /// The range of the display is fixed at 5km (2.7NM). 
+    /// Waypoints beyond that distance are not shown, 
+    /// and the distance labels are scaled to fit within that range.
+    /// </summary>
     private const double RangeMeter = 5000;
-    private const double HalfFovDeg = 55;
+
+    /// <summary>
+    /// The field of view is 110 degrees, so waypoints more than 55 degrees off the nose are not shown.
+    /// </summary>
+    private const double HalfFieldOfViewDeg = 55;
+
+    /// <summary>
+    /// The dome is a circular arc with a radius of 4 rows and 25 columns, centered at (29,30).
+    /// </summary>
     private const double CenterCol = 30.0;
+
+    /// <summary>
+    /// The apex of the dome is at row 29, which is the bottom of the display.
+    /// </summary>
     private const double ApexRow = 29.0;
+
+    /// <summary>
+    /// The top row of the arc is at row 5, which is 24 rows above the apex.
+    /// </summary>
     private const double ArcTopRow = 5.0;
+
+    /// <summary>
+    /// The dome radius is 4 rows and 25 columns, which defines the curvature of the compass arc.
+    /// </summary>
     private const double DomeRadiusRows = 4.0;
+
+    /// <summary>
+    /// The dome radius is 4 rows and 25 columns, which defines the curvature of the compass arc.
+    /// </summary>
     private const double DomeRadiusCols = 25.0;
 
     private static readonly (byte, byte, byte) Black = (0, 0, 0);
@@ -27,9 +60,9 @@ static class NavigationDisplayRenderer
     private static readonly (byte, byte, byte) TitleFg = (20, 20, 20);
 
     private readonly record struct ProjectedWaypoint(
-        WayPoint Wp, string Name, double DistanceNm, double BearingDeg, double RelBearingDeg, bool InView, int Row, int Col);
+        Waypoint Wp, string Name, double DistanceNm, double BearingDeg, double RelBearingDeg, bool InView, int Row, int Col);
 
-    public static Canvas BuildFrame(AircraftState aircraftState, List<WayPoint> wayPoints, int activeWaypointIndex)
+    public static Canvas BuildFrame(AircraftState aircraftState, List<Waypoint> waypoints, int activeWaypointIndex)
     {
         var cv = new Canvas(W, H);
         cv.FillRect(0, 0, H, W, ' ', White, Black);
@@ -37,7 +70,7 @@ static class NavigationDisplayRenderer
         cv.FillRect(0, 0, 1, W, ' ', TitleFg, TitleBg);
         cv.DrawTextCentered(0, W / 2, "MavlinkNavigationDisplay", TitleFg, TitleBg);
 
-        var pts = ProjectWaypoints(aircraftState, wayPoints);
+        var pts = ProjectWaypoints(aircraftState, waypoints);
 
         DrawRangeTicks(cv);
         DrawCompassArc(cv, aircraftState);
@@ -69,7 +102,7 @@ static class NavigationDisplayRenderer
 
     private static (int row, int col) ProjectPoint(double relBearingDeg, double frac)
     {
-        double clamped = Math.Clamp(relBearingDeg, -HalfFovDeg, HalfFovDeg);
+        double clamped = Math.Clamp(relBearingDeg, -HalfFieldOfViewDeg, HalfFieldOfViewDeg);
         double theta = clamped * Math.PI / 180.0;
         double arcRow = ArcTopRow + DomeRadiusRows * (1 - Math.Cos(theta));
         double arcCol = CenterCol + DomeRadiusCols * Math.Sin(theta);
@@ -78,22 +111,28 @@ static class NavigationDisplayRenderer
         return ((int)Math.Round(row), (int)Math.Round(col));
     }
 
-    private static List<ProjectedWaypoint> ProjectWaypoints(AircraftState aircraftState, List<WayPoint> wayPoints)
+    private static List<ProjectedWaypoint> ProjectWaypoints(AircraftState aircraftState, List<Waypoint> wayPoints)
     {
         var list = new List<ProjectedWaypoint>();
         foreach (var wp in wayPoints)
         {
-            double dist = CoordinateCalculator.CalculateDistance(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
-            double brg = CoordinateCalculator.CalculateHeading(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
-            double rel = AngleDiff(brg, aircraftState.Heading);
-            double frac = Math.Clamp(dist / RangeMeter, 0, 1);
-            var (row, col) = ProjectPoint(rel, frac);
-            bool inView = Math.Abs(rel) <= HalfFovDeg && dist <= RangeMeter;
-            list.Add(new ProjectedWaypoint(wp, wp.Name, dist, brg, rel, inView, row, col));
+            double distance = CoordinateCalculator.CalculateDistance(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
+            double bearing = CoordinateCalculator.CalculateHeading(aircraftState.Latitude, aircraftState.Longitude, wp.Latitude, wp.Longitude);
+            double relativeBearing = AngleDiff(bearing, aircraftState.Heading);
+            double frac = Math.Clamp(distance / RangeMeter, 0, 1);
+            var (row, col) = ProjectPoint(relativeBearing, frac);
+            bool inView = Math.Abs(relativeBearing) <= HalfFieldOfViewDeg && distance <= RangeMeter;
+            list.Add(new ProjectedWaypoint(wp, wp.Name, distance, bearing, relativeBearing, inView, row, col));
         }
         return list;
     }
 
+    /// <summary>
+    /// Formats the estimated time enroute (ETE) to a waypoint based on the distance in nautical miles and the ground speed in meters per second.
+    /// </summary>
+    /// <param name="distanceNm"></param>
+    /// <param name="groundSpeedMps"></param>
+    /// <returns></returns>
     private static string FormatEte(double distanceNm, double groundSpeedMps)
     {
         double knots = groundSpeedMps * 1.943844;
@@ -154,7 +193,7 @@ static class NavigationDisplayRenderer
         for (int labelVal = 0; labelVal < 360; labelVal += 10)
         {
             double rel = AngleDiff(labelVal, aircraftState.Heading);
-            if (Math.Abs(rel) > HalfFovDeg) continue;
+            if (Math.Abs(rel) > HalfFieldOfViewDeg) continue;
             double theta = rel * Math.PI / 180.0;
             int row = (int)Math.Round(ArcTopRow + DomeRadiusRows * (1 - Math.Cos(theta)));
             int col = (int)Math.Round(CenterCol + DomeRadiusCols * Math.Sin(theta));
@@ -177,7 +216,7 @@ static class NavigationDisplayRenderer
         {
             if (labelVal % 10 == 0) continue;
             double rel = AngleDiff(labelVal, aircraftState.Heading);
-            if (Math.Abs(rel) > HalfFovDeg) continue;
+            if (Math.Abs(rel) > HalfFieldOfViewDeg) continue;
             double theta = rel * Math.PI / 180.0;
             int row = (int)Math.Round(ArcTopRow + DomeRadiusRows * (1 - Math.Cos(theta)));
             int col = (int)Math.Round(CenterCol + DomeRadiusCols * Math.Sin(theta));

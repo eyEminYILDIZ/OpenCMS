@@ -4,22 +4,22 @@ namespace OpenCMS.Libraries.FlightComputer;
 public class OpenCmsFlightComputer
 {
     public AgentState _selfAgent { get; private set; }
-    private List<WayPoint> _waypoints;
+    private List<Waypoint> _waypoints;
     private int _currentSteerPointIndex = 0;
-    private WayPoint _homeWayPoint;
+    private Waypoint _homeWayPoint;
 
     public OpenCmsFlightComputer(AgentState selfAgent)
     {
         _selfAgent = selfAgent;
-        _waypoints = new List<WayPoint>();
+        _waypoints = new List<Waypoint>();
     }
 
-    public void SetWayPoints(List<WayPoint> wayPoints)
+    public void SetWayPoints(List<Waypoint> wayPoints)
     {
         _waypoints = wayPoints;
     }
 
-    public List<WayPoint> GetWayPoints()
+    public List<Waypoint> GetWayPoints()
     {
         return _waypoints;
     }
@@ -54,7 +54,7 @@ public class OpenCmsFlightComputer
         _currentSteerPointIndex++;
     }
 
-    public WayPoint GetCurrentSteerPoint()
+    public Waypoint GetCurrentSteerPoint()
     {
         if (_currentSteerPointIndex == -1)
         {
@@ -77,7 +77,7 @@ public class OpenCmsFlightComputer
 
     public void SetHomeWayPoint()
     {
-        _homeWayPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.GroundSpeed, OrderTypesContract.Move);
+        _homeWayPoint = new Waypoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.GroundSpeed, OrderTypesContract.Move);
         System.Console.WriteLine("Home waypoint set");
     }
 

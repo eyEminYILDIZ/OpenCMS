@@ -24,7 +24,7 @@ public class OperationService
         return await _openCmsClient.Ping();
     }
 
-    public async Task<List<WayPoint>> GetActiveOperationWayPoints()
+    public async Task<List<Waypoint>> GetActiveOperationWayPoints()
     {
         var activeOperations = await _openCmsClient.GetActiveOperations();
         logger.LogInformation("Received {Count} active operation(s)", activeOperations.Count);
@@ -51,7 +51,7 @@ public class OperationService
         }
 
         // detect waypoints
-        var waypoints = new List<WayPoint>();
+        var waypoints = new List<Waypoint>();
         foreach (var order in operation.Orders)
         {
             if (order.OrderStatus == OrderStatus.NotStarted || order.ResponsibleOperationAssetId != operationAsset.Id)
@@ -64,7 +64,7 @@ public class OperationService
             logger.LogInformation("Executing order {OrderId} — Type: {Type}, Target: {Lat}/{Lon}",
                 order.Id, order.OrderType, order.TargetPointLatitude, order.TargetPointLongitude);
 
-            var waypoint = new WayPoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed, (OrderTypesContract)order.OrderType);
+            var waypoint = new Waypoint(order.Code, order.TargetPointLatitude, order.TargetPointLongitude, order.TargetPointAltitude, order.TargetPointHeading, order.TargetPointSpeed, (OrderTypesContract)order.OrderType);
             waypoints.Add(waypoint);
         }
         return waypoints;
