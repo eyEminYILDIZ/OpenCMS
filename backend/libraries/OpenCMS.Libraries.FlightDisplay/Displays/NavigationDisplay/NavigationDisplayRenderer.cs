@@ -17,6 +17,7 @@ static class NavigationDisplayRenderer
 
         DrawRangeTicks(cv);
         DrawCompassArc(cv, aircraftState);
+        DrawHeadingLine(cv);
         DrawRoute(cv, aircraftState, waypoints, activeWaypointIndex);
         DrawAircraftSymbol(cv);
         DrawTopInfo(cv, aircraftState);
@@ -152,6 +153,23 @@ static class NavigationDisplayRenderer
             string distLabel = string.Format(CultureInfo.InvariantCulture,
                 "{0:F0}m {1}", p.DirectDistance, FormatEte(p.DirectDistance, aircraftState.GroundSpeed));
             cv.DrawText(p.DisplayRow + 1, p.DisplayCol - distLabel.Length / 2, distLabel, White);
+        }
+    }
+
+    /// <summary>
+    /// Static lubber line straight up the center column, from the aircraft's nose to the
+    /// top of the display. This display is heading-up (the compass rotates, not the aircraft),
+    /// so this line always shows the current heading and doubles as a quick visual check for
+    /// steering to the active steerpoint.
+    /// </summary>
+    private static void DrawHeadingLine(Canvas cv)
+    {
+        int cc = (int)CenterCol;
+        int topRow = (int)ArcTopRow - 2;
+        int bottomRow = (int)ApexRow - 2;
+        for (int r = topRow; r <= bottomRow; r++)
+        {
+            cv.SetChar(r, cc, '│', Green);
         }
     }
 
