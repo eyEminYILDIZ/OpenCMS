@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenCMS.Libraries.Common\OpenCMS.Libraries.Common.csproj" />
+    <ProjectReference Include="..\OpenCMS.Libraries.FlightComputer\OpenCMS.Libraries.FlightComputer.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
