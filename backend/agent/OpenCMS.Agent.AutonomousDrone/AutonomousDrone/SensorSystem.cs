@@ -37,6 +37,6 @@ public class SensorSystem
 
     public double GetSpeed()
     {
-        return _world.GetAssetById(_assetId)?.Speed ?? 0;
+        return _world.GetAssetById(_assetId)?.GroundSpeed ?? 0;
     }
 }

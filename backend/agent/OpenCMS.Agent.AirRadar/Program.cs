@@ -53,7 +53,7 @@ while (!cts.Token.IsCancellationRequested)
                 Longitude = aircraft.Longitude,
                 Altitude = aircraft.Altitude,
                 Heading = aircraft.Heading,
-                Speed = aircraft.Speed,
+                GroundSpeed = aircraft.Speed,
                 AssetType = AssetTypesContract.Aircraft,
                 ThreatType = ThreatTypesContract.Hostile
             });

@@ -19,6 +19,16 @@ public class OpenCmsFlightComputer
         _waypoints = wayPoints;
     }
 
+    public List<WayPoint> GetWayPoints()
+    {
+        return _waypoints;
+    }
+
+    public int GetActiveWaypointIndex()
+    {
+        return _currentSteerPointIndex;
+    }
+
     // Steer point related works
     public async Task ChangeSteerPoint()
     {
@@ -67,7 +77,7 @@ public class OpenCmsFlightComputer
 
     public void SetHomeWayPoint()
     {
-        _homeWayPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.Speed, OrderTypesContract.Move);
+        _homeWayPoint = new WayPoint("Home Waypoint", _selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, _selfAgent.Heading, _selfAgent.GroundSpeed, OrderTypesContract.Move);
         System.Console.WriteLine("Home waypoint set");
     }
 
@@ -130,7 +140,7 @@ public class OpenCmsFlightComputer
 
             wayPoint.DirectDistance = CoordinateCalculator.CalculateDistance(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
             wayPoint.DirectBearing = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
-            wayPoint.DirectEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.Speed);
+            wayPoint.DirectEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.GroundSpeed);
 
             if (i > 0)
             {
@@ -143,7 +153,7 @@ public class OpenCmsFlightComputer
             {
                 wayPoint.DistanceToPreviousWayPoint = 0.0;
                 wayPoint.BearingToPreviousWayPoint = 0.0;
-                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.Speed);
+                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.GroundSpeed);
             }
 
         }

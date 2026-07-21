@@ -49,7 +49,7 @@ public class OpenCmsClient
             Longitude = asset.Longitude,
             Altitude = asset.Altitude,
             Heading = asset.Heading,
-            Speed = asset.Speed,
+            Speed = asset.GroundSpeed,
             AssetType = (AssetTypes)asset.AssetType,
             ThreatType = (ThreatTypes)asset.ThreatType,
             RelatedAgentId = asset.RelatedAgentId

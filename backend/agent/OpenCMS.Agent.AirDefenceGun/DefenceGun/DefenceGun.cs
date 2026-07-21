@@ -16,7 +16,7 @@ public class DefenceGun
 
         // calculate heading
         var heading = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, targetAsset.Latitude, targetAsset.Longitude);
-        _selfAgent.UpdateState(_selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, heading, _selfAgent.Speed);
+        _selfAgent.UpdateState(_selfAgent.Latitude, _selfAgent.Longitude, _selfAgent.Altitude, heading, _selfAgent.GroundSpeed);
 
         _logger.LogInformation("Positioned Heading:{Heading} to target {AssetId} at {Latitude}/{Longitude}/{Altitude}",
            heading, targetAsset.Id, targetAsset.Latitude, targetAsset.Longitude, targetAsset.Altitude);

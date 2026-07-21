@@ -2,24 +2,67 @@ using OpenCMS.Libraries.Common.Contracts;
 
 namespace OpenCMS.Libraries.Common.Models;
 
-public class AgentState
+public class AircraftState
+{
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+
+    /// <summary>
+    /// Altitude: Metres above mean sea level (AMSL)
+    /// </summary>
+    public double Altitude { get; set; }
+
+    /// <summary>
+    /// Heading: Degrees, relative to true north
+    /// </summary>
+    public double Heading { get; set; }
+
+    /// <summary>
+    /// Ground Speed: Metres per Second (GS)
+    /// </summary>
+    public double GroundSpeed { get; set; }
+
+    /// <summary>
+    /// Airspeed: Indicated Airspeed (IAS) in metres per second
+    /// </summary>
+    public double AirSpeed { get; set; }
+
+    /// <summary>
+    /// Pitch: Degrees, relative to the horizon
+    /// </summary>
+    public double PitchDeg { get; set; } = 0;
+
+    /// <summary>
+    /// Roll: Degrees, relative to the horizon
+    /// </summary>
+    public double RollDeg { get; set; } = 0;
+
+    /// <summary>
+    /// Turn Rate: Degree per Second
+    /// </summary>
+    public double TurnRate { get; set; } = 0;
+
+    /// <summary>
+    /// Vertical Speed: Metres per Second, positive upwards
+    /// </summary>
+    public double VerticalSpeed { get; set; } = 0;
+}
+
+public class AgentState : AircraftState
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
-    public double Altitude { get; set; }
-    public double Heading { get; set; }
-    public double Speed { get; set; }
     public AssetTypesContract AssetType { get; set; }
     public ThreatTypesContract ThreatType { get; set; }
     public Guid? RelatedAgentId { get; set; }
-    public double _fuelPercentage;
+    public double FuelPercentage { get; set; }
 
     public AgentState()
     {
-        Speed = 1;
-        _fuelPercentage = 100.0;
+        Name = "";
+        GroundSpeed = 1;
+        AirSpeed = 1;
+        FuelPercentage = 100.0;
     }
 
     public AgentState(Guid agentId, Guid assetId, string name, AssetTypesContract assetType, ThreatTypesContract threatType)
@@ -31,10 +74,10 @@ public class AgentState
         Longitude = 0;
         Altitude = 0;
         Heading = 0;
-        Speed = 0;
+        GroundSpeed = 0;
         AssetType = assetType;
         ThreatType = threatType;
-        _fuelPercentage = 100.0;
+        FuelPercentage = 100.0;
     }
 
     public void UpdateState(double latitude, double longitude, double altitude, double heading, double speed)
@@ -43,7 +86,8 @@ public class AgentState
         Longitude = longitude;
         Altitude = altitude;
         Heading = heading;
-        Speed = speed;
+        GroundSpeed = speed;
+        AirSpeed = speed;
     }
 
     public Guid GetAssetId()
@@ -60,11 +104,6 @@ public class AgentState
     ///////////////////////////// Fuel Management //////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public double GetFuelPercentage()
-    {
-        return _fuelPercentage;
-    }
-
     public double ConsumeFuel(double amount)
     {
         if (amount < 0)
@@ -72,11 +111,11 @@ public class AgentState
             throw new ArgumentException("Fuel consumption amount cannot be negative.");
         }
 
-        _fuelPercentage -= amount;
-        if (_fuelPercentage < 0)
+        FuelPercentage -= amount;
+        if (FuelPercentage < 0)
         {
-            _fuelPercentage = 0;
+            FuelPercentage = 0;
         }
-        return _fuelPercentage;
+        return FuelPercentage;
     }
 }

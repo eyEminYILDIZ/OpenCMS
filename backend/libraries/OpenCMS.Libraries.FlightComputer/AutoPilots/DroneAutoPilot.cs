@@ -77,7 +77,7 @@ public class OpenCmsDroneAutoPilot
             {
                 Console.WriteLine($"Target Steer Point: {currentSteerPoint.Name}");
                 Console.WriteLine($"Target  => Lat: {currentSteerPoint.Latitude} \tLon: {currentSteerPoint.Longitude} \tAlt: {currentSteerPoint.Altitude} \tHeading: {currentSteerPoint.Heading} \tSpeed: {currentSteerPoint.Speed}");
-                Console.WriteLine($"Current => Lat: {_flightComputer._selfAgent.Latitude} \tLon: {_flightComputer._selfAgent.Longitude} \tAlt: {_flightComputer._selfAgent.Altitude} \tHeading: {_flightComputer._selfAgent.Heading} \tSpeed: {_flightComputer._selfAgent.Speed}");
+                Console.WriteLine($"Current => Lat: {_flightComputer._selfAgent.Latitude} \tLon: {_flightComputer._selfAgent.Longitude} \tAlt: {_flightComputer._selfAgent.Altitude} \tHeading: {_flightComputer._selfAgent.Heading} \tSpeed: {_flightComputer._selfAgent.GroundSpeed}");
             }
 
             isOrderTypeObserve = currentSteerPoint.OrderType == OrderTypesContract.Observe;
