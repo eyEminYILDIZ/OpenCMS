@@ -139,7 +139,7 @@ if (!isInputControllerInitialized)
 // control drone by input controller
 while (!cts.Token.IsCancellationRequested)
 {
-    var instruction = inputController.ProcessInput();
+    var instruction = inputController.ProcessInput(cts.Token);
     await autonomousDrone.ControlDrone(instruction.Action, instruction.Value);
     await Task.Delay(33, cts.Token); // Adjust the delay as needed
 }

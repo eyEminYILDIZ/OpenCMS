@@ -7,5 +7,5 @@ public interface IInputController
     bool Initialize(AircraftTypes aircraftType);
     void Dispose();
 
-    (ActuatorActionTypes Action, double Value) ProcessInput();
+    (ActuatorActionTypes Action, double Value) ProcessInput(CancellationToken cancellationToken);
 }

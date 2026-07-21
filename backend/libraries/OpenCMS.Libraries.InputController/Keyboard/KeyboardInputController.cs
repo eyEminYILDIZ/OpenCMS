@@ -11,8 +11,18 @@ public class KeyboardInputController : IInputController, IDisposable
         return true;
     }
 
-    public (ActuatorActionTypes Action, double Value) ProcessInput()
+    public (ActuatorActionTypes Action, double Value) ProcessInput(CancellationToken cancellationToken)
     {
+        while (!Console.KeyAvailable)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return (ActuatorActionTypes.None, 0.0);
+            }
+
+            Thread.Sleep(10);
+        }
+
         var readKey = Console.ReadKey(intercept: true);
         if (readKey.Key == ConsoleKey.UpArrow)
         {

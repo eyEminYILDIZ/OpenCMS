@@ -88,7 +88,7 @@ public class LogitechExtreme3dProInputController : IInputController, IDisposable
     //     }
     // }
 
-    public (ActuatorActionTypes Action, double Value) ProcessInput()
+    public (ActuatorActionTypes Action, double Value) ProcessInput(CancellationToken cancellationToken)
     {
         if (!reader.IsConnected)
         {
