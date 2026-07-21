@@ -1,6 +1,7 @@
 global using OpenCMS.Libraries.ApiClient;
 global using OpenCMS.Libraries.FlightComputer;
 global using OpenCMS.Libraries.FlightComputer.AutoPilots;
+global using OpenCMS.Libraries.FlightDisplay;
 global using OpenCMS.Libraries.InputController.Keyboard;
 global using OpenCMS.Libraries.InputController.Common;
 global using OpenCMS.Libraries.InputController.Joysticks.LogitechExtreme3dPro;

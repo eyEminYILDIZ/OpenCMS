@@ -1,5 +1,3 @@
-using OpenCMS.Libraries.FlightDisplay;
-
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
@@ -67,10 +65,13 @@ _ = Task.Run(async () =>
         try
         {
             var pingResult = await openCmsClient.Ping();
-            logger.LogInformation("Ping {Result}", pingResult ? "succeeded" : "failed");
+            if (!pingResult)
+                logger.LogInformation("Ping failed");
 
             var selfFeedResult = await openCmsClient.FeedAsset(agentState);
-            logger.LogInformation("Self asset feed {Result}", selfFeedResult ? "succeeded" : "failed");
+            if (!selfFeedResult)
+                logger.LogInformation("Self asset feed failed");
+
         }
         catch (OperationCanceledException)
         {
