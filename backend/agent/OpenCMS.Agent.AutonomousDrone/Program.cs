@@ -1,3 +1,5 @@
+using OpenCMS.Libraries.FlightDisplay;
+
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddHttpClient();
@@ -11,6 +13,7 @@ var longitude = double.Parse(builder.Configuration["Agent:Longitude"]!);
 var altitude = double.Parse(builder.Configuration["Agent:Altitude"]!);
 var heading = double.Parse(builder.Configuration["Agent:Heading"]!);
 var speed = double.Parse(builder.Configuration["Agent:Speed"]!);
+var isLoggingEnabled = false;
 
 var host = builder.Build();
 await host.StartAsync();
@@ -32,7 +35,7 @@ var operationService = new OperationService(builder.Configuration, openCmsClient
 var agentState = new AgentState(agentId, assetId, agentName, AssetTypesContract.Drone, ThreatTypesContract.Own);
 var world = new ThreeDimensionWorld();
 world.AddAsset(agentState);
-var autonomousDrone = new AutonomousDrone(agentState, world, loggerFactory.CreateLogger<AutonomousDrone>(), cts.Token, true);
+var autonomousDrone = new AutonomousDrone(agentState, world, loggerFactory.CreateLogger<AutonomousDrone>(), cts.Token, isLoggingEnabled);
 agentState.UpdateState(latitude, longitude, altitude, heading, speed);
 
 autonomousDrone.SetAgentStateUpdateCallback(async (AgentState agentState) =>
@@ -56,6 +59,7 @@ autonomousDrone.SetAgentStateUpdateCallback(async (AgentState agentState) =>
 
 logger.LogInformation("Autonomous Drone agent started");
 
+// Ping constantly to OpenCMS and feed self asset
 _ = Task.Run(async () =>
 {
     while (!cts.Token.IsCancellationRequested)
@@ -89,10 +93,42 @@ var waypoints = await operationService.GetActiveOperationWayPoints();
 autonomousDrone.SetWayPoints(waypoints);
 await autonomousDrone.Start();
 
+// render flight displays
+var flightComputer = autonomousDrone.GetFlightComputer();
+var flightDisplay = new OpenCmsFlightDisplay(flightComputer);
+var isFlightDisplayInitialized = flightDisplay.Initialize();
+if (!isFlightDisplayInitialized)
+{
+    logger.LogWarning("Flight display initialization failed");
+}
+
+// render constantly in a separate task to avoid blocking the main control loop
+_ = Task.Run(async () =>
+{
+    while (!cts.Token.IsCancellationRequested)
+    {
+        try
+        {
+            flightDisplay.Render();
+        }
+        catch (OperationCanceledException)
+        {
+            break;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error in flight display rendering loop");
+        }
+
+        await Task.Delay(50, cts.Token).ConfigureAwait(false);
+    }
+}, cts.Token);
+
+
 // Detect input controller
 IInputController inputController = new LogitechExtreme3dProInputController();
-var isInitialized = inputController.Initialize(AircraftTypes.Drone);
-if (!isInitialized)
+var isInputControllerInitialized = inputController.Initialize(AircraftTypes.Drone);
+if (!isInputControllerInitialized)
 {
     inputController.Dispose();
     inputController = new KeyboardInputController();

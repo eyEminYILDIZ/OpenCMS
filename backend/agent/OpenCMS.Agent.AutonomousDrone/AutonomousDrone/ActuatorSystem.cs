@@ -27,11 +27,6 @@ public class ActuatorSystem : IDroneActuator
         {
             asset.Heading = newHeading;
         }
-
-        if (_logginEnabled)
-        {
-            Console.WriteLine($"Turned right. New heading: {newHeading} degrees");
-        }
     }
 
     public async Task TurnLeft(double degrees = 1.0)
@@ -45,11 +40,6 @@ public class ActuatorSystem : IDroneActuator
         if (asset != null)
         {
             asset.Heading = newHeading;
-        }
-
-        if (_logginEnabled)
-        {
-            Console.WriteLine($"Turned left. New heading: {newHeading} degrees");
         }
     }
 
@@ -81,11 +71,6 @@ public class ActuatorSystem : IDroneActuator
 
         asset.Latitude = lat2Rad * 180.0 / Math.PI;
         asset.Longitude = lon2Rad * 180.0 / Math.PI;
-
-        if (_logginEnabled)
-        {
-            Console.WriteLine($"Moved forward. New position: Latitude {asset.Latitude}, Longitude {asset.Longitude}");
-        }
     }
 
     public async Task MoveBackward(double distanceMeters = 1.0)
@@ -121,11 +106,6 @@ public class ActuatorSystem : IDroneActuator
         {
             asset.Altitude = newAltitude;
         }
-
-        if (_logginEnabled)
-        {
-            Console.WriteLine($"Moved up. New altitude: {newAltitude}");
-        }
     }
 
     public async Task MoveDown(double distanceMeters = 1.0)
@@ -139,11 +119,6 @@ public class ActuatorSystem : IDroneActuator
         if (asset != null)
         {
             asset.Altitude = newAltitude;
-        }
-
-        if (_logginEnabled)
-        {
-            Console.WriteLine($"Moved down. New altitude: {newAltitude}");
         }
     }
 }

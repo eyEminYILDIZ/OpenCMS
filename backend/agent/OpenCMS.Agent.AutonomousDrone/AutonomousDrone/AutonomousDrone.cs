@@ -41,6 +41,11 @@ public class AutonomousDrone : IDisposable
         _flightComputer.SetWayPoints(wayPoints);
     }
 
+    public OpenCmsFlightComputer GetFlightComputer()
+    {
+        return _flightComputer;
+    }
+
     public async Task Start()
     {
         // save home position
