@@ -1,4 +1,5 @@
-﻿
+﻿using static OpenCMS.Libraries.FlightComputer.Constants.NavigationConstants;
+
 namespace OpenCMS.Libraries.FlightComputer;
 
 public class OpenCmsFlightComputer
@@ -136,26 +137,34 @@ public class OpenCmsFlightComputer
     {
         for (int i = 0; i < _waypoints.Count; i++)
         {
-            var wayPoint = _waypoints[i];
+            var waypoint = _waypoints[i];
+            var aircraftState = _selfAgent;
 
-            wayPoint.DirectDistance = CoordinateCalculator.CalculateDistance(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
-            wayPoint.DirectBearing = CoordinateCalculator.CalculateHeading(_selfAgent.Latitude, _selfAgent.Longitude, wayPoint.Latitude, wayPoint.Longitude);
-            wayPoint.DirectEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.GroundSpeed);
+            waypoint.DirectDistance = CoordinateCalculator.CalculateDistance(aircraftState.Latitude, aircraftState.Longitude, waypoint.Latitude, waypoint.Longitude);
+            waypoint.DirectBearing = CoordinateCalculator.CalculateHeading(aircraftState.Latitude, aircraftState.Longitude, waypoint.Latitude, waypoint.Longitude);
+            waypoint.DirectEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(waypoint.DirectDistance, aircraftState.GroundSpeed);
 
             if (i > 0)
             {
                 var previousWayPoint = _waypoints[i - 1];
-                wayPoint.DistanceToPreviousWayPoint = CoordinateCalculator.CalculateDistance(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
-                wayPoint.BearingToPreviousWayPoint = CoordinateCalculator.CalculateHeading(wayPoint.Latitude, wayPoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
-                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DistanceToPreviousWayPoint, wayPoint.Speed);
+                waypoint.DistanceToPreviousWayPoint = CoordinateCalculator.CalculateDistance(waypoint.Latitude, waypoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
+                waypoint.BearingToPreviousWayPoint = CoordinateCalculator.CalculateHeading(waypoint.Latitude, waypoint.Longitude, previousWayPoint.Latitude, previousWayPoint.Longitude);
+                waypoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(waypoint.DistanceToPreviousWayPoint, waypoint.Speed);
             }
             else
             {
-                wayPoint.DistanceToPreviousWayPoint = 0.0;
-                wayPoint.BearingToPreviousWayPoint = 0.0;
-                wayPoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(wayPoint.DirectDistance, _selfAgent.GroundSpeed);
+                waypoint.DistanceToPreviousWayPoint = 0.0;
+                waypoint.BearingToPreviousWayPoint = 0.0;
+                waypoint.SequentialEstimatedTimeOfArrival = CalculateEstimatedTimeOfArrivalSeconds(waypoint.DirectDistance, aircraftState.GroundSpeed);
             }
 
+            double relativeBearing = CoordinateCalculator.AngleDiff(waypoint.DirectBearing, aircraftState.Heading);
+            double fraction = Math.Clamp(waypoint.DirectDistance / RangeMeter, 0, 1);
+            var (row, col) = CoordinateCalculator.ProjectPoint(relativeBearing, fraction);
+            bool inView = Math.Abs(relativeBearing) <= HalfFieldOfViewDeg && waypoint.DirectDistance <= RangeMeter;
+            waypoint.DisplayRow = row;
+            waypoint.DisplayCol = col;
+            waypoint.IsInDisplayView = inView;
         }
     }
 

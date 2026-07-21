@@ -1,7 +1,7 @@
 using OpenCMS.Libraries.Common.Models;
 using OpenCMS.Libraries.FlightDisplay.Rendering;
 using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayColors;
-using static OpenCMS.Libraries.FlightDisplay.Common.FlightDisplayConstants;
+using static OpenCMS.Libraries.FlightComputer.Constants.NavigationConstants;
 using static OpenCMS.Libraries.FlightDisplay.Displays.PrimaryFlightDisplay.PrimaryFlightDisplayConstants;
 
 namespace OpenCMS.Libraries.FlightDisplay.Displays.PrimaryFlightDisplay;
@@ -10,11 +10,11 @@ static class PrimaryFlightDisplayRenderer
 {
     public static Canvas BuildFrame(AircraftState aircraftState)
     {
-        var cv = new Canvas(W, H);
-        cv.FillRect(0, 0, H, W, ' ', White, Sky);
+        var cv = new Canvas(DisplayWidth, DisplayHeight);
+        cv.FillRect(0, 0, DisplayHeight, DisplayWidth, ' ', White, Sky);
 
-        cv.FillRect(0, 0, 1, W, ' ', TitleFg, TitleBg);
-        cv.DrawTextCentered(0, W / 2, "MavlinkPrimaryFlightDisplay", TitleFg, TitleBg);
+        cv.FillRect(0, 0, 1, DisplayWidth, ' ', TitleFg, TitleBg);
+        cv.DrawTextCentered(0, DisplayWidth / 2, "MavlinkPrimaryFlightDisplay", TitleFg, TitleBg);
 
         DrawHeadingTape(cv, aircraftState);
         DrawHorizonAndLadder(cv, aircraftState);
@@ -52,14 +52,14 @@ static class PrimaryFlightDisplayRenderer
 
     private static void DrawHeadingTape(Canvas cv, AircraftState aircraftState)
     {
-        cv.FillRect(1, 0, 3, W, ' ', White, Navy);
-        double centerCol = (W - 1) / 2.0;
+        cv.FillRect(1, 0, 3, DisplayWidth, ' ', White, Navy);
+        double centerCol = (DisplayWidth - 1) / 2.0;
 
         for (int labelVal = 0; labelVal < 360; labelVal += 10)
         {
             double diff = AngleDiff(labelVal, aircraftState.Heading);
             int col = (int)Math.Round(centerCol + diff / HeadingTapeUnitsPerCol);
-            if (col < 1 || col > W - 2) continue;
+            if (col < 1 || col > DisplayWidth - 2) continue;
 
             string? letter = CardinalLetter(labelVal);
             if (letter != null)
@@ -79,7 +79,7 @@ static class PrimaryFlightDisplayRenderer
             if (labelVal % 10 == 0) continue;
             double diff = AngleDiff(labelVal, aircraftState.Heading);
             int col = (int)Math.Round(centerCol + diff / HeadingTapeUnitsPerCol);
-            if (col < 1 || col > W - 2) continue;
+            if (col < 1 || col > DisplayWidth - 2) continue;
             cv.SetChar(3, col, '.', White);
         }
 
@@ -241,7 +241,7 @@ static class PrimaryFlightDisplayRenderer
 
     private static void DrawStatusPanel(Canvas cv, AircraftState aircraftState)
     {
-        cv.FillRect(30, 0, 4, W, ' ', White, Black);
+        cv.FillRect(30, 0, 4, DisplayWidth, ' ', White, Black);
 
         string line1 = string.Format(CultureInfo.InvariantCulture,
             "LAT {0,9:F4}  LON {1,9:F4}",

@@ -1,9 +1,15 @@
-namespace OpenCMS.Libraries.FlightDisplay.Displays.NavigationDisplay;
+namespace OpenCMS.Libraries.FlightComputer.Constants;
 
-static class NavigationDisplayConstants
+public static class NavigationConstants
 {
+
     // Arc-mode geometry: ownship sits at the apex, waypoints fan out toward a
     // curved compass dome above it (same dome-projection trick as the PFD roll arc).
+
+    /// <summary>
+    /// Every display is 60 columns wide and 34 rows tall.
+    /// </summary>
+    public const int DisplayWidth = 60, DisplayHeight = 34;
 
     /// <summary>
     /// The range of the display is fixed at 5000 meters.

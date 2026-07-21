@@ -25,6 +25,11 @@ public class Waypoint
     public double DirectEstimatedTimeOfArrival { get; set; }
     public double SequentialEstimatedTimeOfArrival { get; set; }
 
+    // displaying related properties
+    public int DisplayRow { get; set; }
+    public int DisplayCol { get; set; }
+    public bool IsInDisplayView { get; set; }
+
     public Waypoint(string name, double latitude, double longitude, double altitude, double heading, double speed, OrderTypesContract orderType)
     {
         Name = name;

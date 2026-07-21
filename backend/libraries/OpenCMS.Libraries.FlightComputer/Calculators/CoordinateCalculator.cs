@@ -1,3 +1,5 @@
+using static OpenCMS.Libraries.FlightComputer.Constants.NavigationConstants;
+
 namespace OpenCMS.Libraries.FlightComputer.Calculators;
 
 public class CoordinateCalculator
@@ -57,5 +59,24 @@ public class CoordinateCalculator
         double horizontalDistance = CalculateDistance(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
         double altDiff = targetAltitude - sourceAltitude;
         return Math.Atan2(altDiff, horizontalDistance) * 180.0 / Math.PI;
+    }
+
+    public static (int row, int col) ProjectPoint(double relBearingDeg, double frac)
+    {
+        double clamped = Math.Clamp(relBearingDeg, -HalfFieldOfViewDeg, HalfFieldOfViewDeg);
+        double theta = clamped * Math.PI / 180.0;
+        double arcRow = ArcTopRow + DomeRadiusRows * (1 - Math.Cos(theta));
+        double arcCol = CenterCol + DomeRadiusCols * Math.Sin(theta);
+        double row = ApexRow + frac * (arcRow - ApexRow);
+        double col = CenterCol + frac * (arcCol - CenterCol);
+        return ((int)Math.Round(row), (int)Math.Round(col));
+    }
+
+    public static double AngleDiff(double target, double reference)
+    {
+        double diff = (target - reference) % 360;
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+        return diff;
     }
 }
