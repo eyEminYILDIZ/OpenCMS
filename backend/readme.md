@@ -40,6 +40,10 @@ Backend parts of OpenCMS
 
 ## Projects
 
+### OpenCMS.Aspire.AppHost
+
+AppHost project uses for Aspire services.
+
 ### OpenCMS.CMS.AgentApi
 
 AgentApi serves CMS application for Agent applications like radars, personal phones, missiles etc.
@@ -60,10 +64,6 @@ Includes application flows as command and queries.
 
 Includes persistence and other external layers.
 
-### OpenCMS.Libraries.ApiClient
-
-Library project includes classes and other definitions for c# applications that integrates agents with CMS.
-
 ### OpenCMS.Agent.AirRadar
 
 Console application for example agent input flow demonstration.
@@ -72,8 +72,28 @@ Console application for example agent input flow demonstration.
 
 Console application for example agent output flow demonstration.
 
-### OpenCMS.Aspire.AppHost
+### OpenCMS.Agent.AutonomousDrone
 
-AppHost project uses for Aspire services.
+Console application simulating an autonomous drone agent, combining sensor, actuator, and 3D world simulation with the flight computer and flight display libraries.
+
+### OpenCMS.Libraries.ApiClient
+
+Library project includes classes and other definitions for c# applications that integrates agents with CMS.
+
+### OpenCMS.Libraries.Common
+
+Library project with shared contracts and models (threat/asset/order types, waypoints, agent state, aircraft types) used across agent and CMS projects.
+
+### OpenCMS.Libraries.FlightComputer
+
+Library project implementing flight computer logic for autonomous agents, including auto-pilot, drone actuator abstractions, and coordinate calculations.
+
+### OpenCMS.Libraries.FlightDisplay
+
+Library project rendering console-based flight instruments (Primary Flight Display, Navigation Display) for agent applications.
+
+### OpenCMS.Libraries.InputController
+
+Library project for input devices, supporting keyboard input and joystick (Logitech Extreme 3D Pro) input with actuator mapping for drone control.
 
 
