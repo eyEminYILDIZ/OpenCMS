@@ -16,6 +16,11 @@ You can access project boards and see current status
 - [C4 Diagram](./_docs/c4-diagram.drawio) (Note: Make sure you have installed `drawio` extension on your IDE)
 
 
+## Screenshots
+
+- [Screenshots](./_docs/screenshots/readme.md)
+
+
 ## Run Applications
 
 Run this command on repository root directory:
